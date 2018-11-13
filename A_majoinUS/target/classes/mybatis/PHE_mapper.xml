@@ -89,7 +89,7 @@
 	<!-- 프로젝트 수정 -->
 	<update id="projectModify" parameterType="project.DTO.ProjectroomDTO">
 		update PROJECTROOM set
-		pj_name=#{pj_name},pj_info=#{pj_info},mem_limit=#{mem_limit},start_d=#{start_d},end_d=#{end_d}
+		pj_name=#{pj_name},pj_info=#{pj_info},mem_limit=#{mem_limit},end_d=#{end_d}
 		where pj_num=#{pj_num}
 	</update>
 
@@ -181,7 +181,7 @@
   	
   	<!-- 내가 신청한 프로젝트 :: sender가 본인, 참가-->
   	<select id="apply_projectList" parameterType="map" resultType="project.DTO.AlarmDTO">
-  		select * from alarm a, projectroom p where a.pj_num = p.pj_num and sender=#{sender} and a_type=#{a_type}
+  		select * from alarm, projectroom where alarm.pj_num = projectroom.pj_num and sender=#{sender} and a_type=#{a_type}
   	</select>
   	
   	<select id="project_Date" parameterType="Integer" resultType="Map">

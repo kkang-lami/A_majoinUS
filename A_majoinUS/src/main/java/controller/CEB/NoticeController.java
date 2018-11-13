@@ -112,19 +112,10 @@ public class NoticeController {
 
 	@RequestMapping(value="/delete", method = RequestMethod.GET) 
 	public String delete(ModelMap model,@RequestParam("num")int num) {
-		model.addAttribute("num", num);
+		noticeDAO.delete(num);
 		
-		return "CEB/notice/delete"; 
+		return "redirect:/aus/notice";
 	}
-	
-	@RequestMapping(value="/delete", method = RequestMethod.POST) 
-	public String delete_pro(ModelMap model,@RequestParam("num") int num) {
-			noticeDAO.delete(num);
-			
-			return "redirect:/aus/notice";
-		
-		}
-	
 	
 	
 	@RequestMapping(value="/update", method = RequestMethod.GET) 
@@ -141,10 +132,6 @@ public class NoticeController {
 		noticeDAO.update(dto);
 		
 			return "redirect:/aus/notice";  
-	
-			
-		
-		
 	}
 	
 	

@@ -96,13 +96,21 @@
 	<!-- <mapper namespace="inquiry_board"> -->
 
 	<select id="show_count_2" resultType="int">  
-		select count(*) from inquiry 
+		select count(*) from inquiry  
+	</select>
+	
+	<select id="show_count_id" resultType="int">  
+		select count(*) from inquiry where id=#{id}  
 	</select>
 	
 	<select id="show_list_2" resultType="project.DTO.InquiryDTO">
-		select*from inquiry order by i_num desc
-	</select>
-
+		select * from inquiry order by i_num desc
+	</select>  
+	
+	<select id="show_list_id" parameterType="map" resultType="project.DTO.InquiryDTO">
+		select * from inquiry where id=#{id} order by i_num desc
+	</select>  
+	
 	<select id="get_search_count_2" parameterType="project.DTO.PageDTO" resultType="int">
 		select count(*) from inquiry where ${string} like '%'||#{search}||'%'
 	</select>	
@@ -110,8 +118,11 @@
 	<select id="get_search_list_2" parameterType="project.DTO.PageDTO" resultType="project.DTO.InquiryDTO">
 		<![CDATA[select i_num, i_subject, id, i_content, i_date, i_state, r from (select i_num, i_subject, id, i_content, i_date, i_state, rownum r from (select*from inquiry where ${string} like '%'||#{search}||'%' order by i_num desc) order by r) where r>=${startRow} and r<=${endRow}]]>
 	</select>
-	
-	
+
+     <select id="show_count_answer" resultType="int">    
+		 select count(*) from inquiry where i_date <![CDATA[ < ]]> sysdate and i_state='미답변'       
+	</select> 
+	  
 	
 	<insert id="insert_list_2" parameterType="project.DTO.InquiryDTO">
 		insert into inquiry(I_NUM,ID,I_SUBJECT,I_CONTENT,I_DATE) values(inquiry_seq.nextval,#{id},#{i_subject},#{i_content},sysdate)
@@ -126,7 +137,7 @@
 	</update>
 	
 	<select id="get_list_2" parameterType="project.DTO.PageDTO" resultType="project.DTO.InquiryDTO">
-		<![CDATA[select i_num, i_subject, id, i_content, i_date, i_state, r from (select i_num, i_subject, id, i_content, i_date, i_state, rownum r from (select*from inquiry order by i_num desc) order by r) where r>=#{startRow} and r<=#{endRow}]]>
+		select i_num, i_subject, id, i_content, i_date, i_state, r from (select i_num, i_subject, id, i_content, i_date, i_state, rownum r from (select*from inquiry order by i_num desc) order by r)<![CDATA[ where r>=#{startRow} and r<=#{endRow}]]>
 	</select>
 	
 	<select id="next_num_2" resultType="String">
@@ -201,10 +212,6 @@
 		select count(*) from point where id=#{id}
 	</select>
 	
-	<!-- <select id="show_list_point" resultType="project.DTO.PointDTO">
-		select * from point where id=#{id} order by p_num desc
-	</select> -->
-	
 	<select id="show_list_point" parameterType="map" resultType="project.DTO.PointDTO">
 		select * from point where id=#{id} order by p_num desc  
 	</select>
@@ -237,7 +244,7 @@
 		  order by r) where r>=${startRow} and r<=${endRow} and id=#{id} ]]>
 	</select>
 	  
-	  <select id="show_count_ticket" parameterType="String" resultType="int">    
+	 <select id="show_count_ticket" parameterType="String" resultType="int">    
 		 select count(*) from ticket where t_date<![CDATA[ < ]]> sysdate and t_status='미사용' and id=#{id}     
 	</select>          
 	          

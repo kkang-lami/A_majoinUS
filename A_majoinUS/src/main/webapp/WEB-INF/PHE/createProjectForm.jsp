@@ -14,9 +14,9 @@
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
 	function chk1() {
-	    var url="<%=cp%>/aus/PHE/countTicket";
-		alert(url);
-		alert($("input:checkbox[id='unlimit']").is(":checked"));
+	    var url="<%=cp%>/aus/countTicket";
+		//alert(url);
+		//alert($("input:checkbox[id='unlimit']").is(":checked"));
 
 		if ($("input:checkbox[id='unlimit']").is(":checked")==true) {
 			$.ajax({
@@ -68,6 +68,7 @@
 <script type="text/javascript">
 	function writeFormCheck() {
 		var today = new Date();
+		alert("프로젝트의 기간은 수정할 수 없습니다.")
 
 		if (!document.form.pj_name.value) {
 			alert("제목을 입력해 주세요!");
@@ -114,31 +115,40 @@
 </head>
 
 <body>
-	<tiles:insertDefinition name="header" />
 
+	<tiles:insertDefinition name="header" />
+	<!-- 전체영역 -->
 	<div class="wrapper">
+		<!-- 콘텐츠 헤더 -->
 		<div class="content-wrapper">
 			<section class="content-header">
-
-
 				<h2>새로운 프로젝트 생성</h2>
+			</section>
 
-
+				<section class="content">
+					<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="box box-info">
 				<form name="form" method="post" onSubmit="return writeFormCheck()">
+				<br>
+				<br>
+				<br>
+					<center>
 
 					<table width="1000">
 						<tr>
-							<td>프로젝트명 :</td>
+							<td>프로젝트명 :</td>                               
 							<td><input type="text" name="pj_name" class="pj_name"
-								id="pj_name" size="50" /></td>
+								id="pj_name" size="50" />
+								<br></td>
 						</tr>
 
 						<tr>
-							<td>프로젝트소개 :</td>
-							<td><textarea name="pj_info" rows=5 cols=20></textarea></td>
+							<td>프로젝트 소개  :</td>
+							<td><br><textarea name="pj_info" rows=8 cols=50 style="resize: none;"></textarea></td>
 						</tr>
 						<tr>
-							<td>총원:</td>
+							<td><br>총원:</td>
 							<td><select name="mem_limit">
 									<option value="" selected>인원 선택</option>
 									<%
@@ -153,12 +163,12 @@
 							</select></td>
 						</tr>
 						<tr>
-							<td>기간 :</td>
-							<td>시작일 : <input type="date" id="start_d" name="start_d"><br>
-								종료일 : <input type="date" name="end_d" id="end_d">
+							<td><br>기간 :</td>
+							<td><br>시작일 : <input type="date" id="start_d" name="start_d"><br>
+								<br>종료일 : <input type="date" name="end_d" id="end_d">
 								<div id="inHere" style="display: inline-block;"></div> <br>
 
-								<input type="checkbox" name="unlimit" id="unlimit" onClick="chk1();">
+								<br><input type="checkbox" name="unlimit" id="unlimit" onClick="chk1();">
 								무기한<br>
 							</td>
 
@@ -166,24 +176,25 @@
 						</tr>
 
 						<tr>
-							<td>관심분야 :</td>
-							<td><input type="text" name="pj_cate" size="10"></td>
+							<td><br>관심분야 :</td>
+							<td><br><input type="text" name="pj_cate" size="10"></td>
 						</tr>
 						<tr>
-							<td>선호지역 :</td>
-							<td><input type="text" name="pj_loc" size="10"></td>
-					</table>
+							<td><br>선호지역 :</td>
+							<td><br><input type="text" name="pj_loc" size="10"></td>
+					</table></center>
 
-					<input type="submit" value="입력">
+					<center><br><br><input type="submit" value="입력" class="btn btn-block btn-primary" width="50px"/><br><br></center>
 					<%-- 	<c:if test="{sessionScope.id == userId}" /> --%>
-					<input type="hidden" name="id" value="${sessionScope.userId}" />
+					<input type="hidden" name="id" value="${sessionScope.id}" />
 				</form>
-
+			</div></div></div>
 			</section>
 		</div>
 	</div>
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
+	
 </body>
 </html>

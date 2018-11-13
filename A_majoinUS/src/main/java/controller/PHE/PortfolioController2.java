@@ -86,21 +86,4 @@ public class PortfolioController2{
 		return mav;
 	}
 	
-	@RequestMapping(value = "/download")
-	 public ModelAndView download(@RequestParam("file_path") String file_path) {
-		ModelAndView mav = new ModelAndView();
-		String realFolder = "D://item//portfolio//";
-
-        mav = new ModelAndView();
- 
-        mav.addObject("file_path", new File(realFolder + file_path));
-        mav.setViewName("downloadView");
-        return mav;
-    }
-
-
-	
-	
-	
-	
 }

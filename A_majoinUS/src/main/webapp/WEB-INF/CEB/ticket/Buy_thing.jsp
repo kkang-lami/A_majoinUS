@@ -13,10 +13,11 @@
     function checkForm(){
     	 var ticketform = document.forms['ticketform'];
     	 var mypoint = ${member.total_point};
+    	 
  	    if( ticketform['ticket'].value.length < 1) {
  	        alert( '구입할 수량을 입력해 주세요. ');
  	        return false; 
- 	    }    
+ 	    }      
  	   if( mypoint - 3000 < 0) {
 	        alert( '티켓을 사기에 포인트가 충분하지 않습니다.');
 	        return false;   
@@ -65,8 +66,6 @@
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                     title="Collapse">
               <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
           </div>
         </div>
         <div class="box-body">
@@ -79,7 +78,7 @@
           <div class="box box-widget widget-user" >
             <!-- Add the bg color to the header using any of the bg-* classes -->
              <div class="widget-user-header">
-              <img onclick="location.href='Payment_write'" src="<%=request.getContextPath() %>/resources/dist/img/credit-card-851506_1920.jpg"
+              <img onclick="location.href='aus/Payment_write'" src="<%=request.getContextPath() %>/resources/dist/img/credit-card-851506_1920.jpg"
               style="cursor:pointer;" align="center" width="600" height="150">  
              
              
@@ -138,7 +137,6 @@
                 <h4 class="modal-title">Buying ticket</h4>
               </div>
               <div class="modal-body">
-          
                 <form name="ticketform" onsubmit="return checkForm();" action="buy_ticket" method="post">              
                 <table class="table">  
                 <tr>  
@@ -168,7 +166,7 @@
                   </td>    
                 </tr>
                 <tr><td>      
-                <h6 class="text-center">잔액이 부족하다면 <a href="Payment_write">포인트 결제</a>를 먼저 해 주시기 바랍니다.</h6>
+                <h6 class="text-center">잔액이 부족하다면 <a href="aus/Payment_write">포인트 결제</a>를 먼저 해 주시기 바랍니다.</h6>
                 </td></tr>
                 <div class="box box-default">
                 <div class="box-header with-border">

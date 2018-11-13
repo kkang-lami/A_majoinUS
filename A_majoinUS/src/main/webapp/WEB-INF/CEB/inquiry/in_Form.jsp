@@ -5,78 +5,200 @@
 
 <html>
 <head>
-<title>글목록 보여주기</title>
+<title>1:1 문의</title>
+<style type="text/css">  
+
+
+select {
+    width: 100px;  
+    height: 30px;    
+    padding-left: 10px;
+    font-size: 18px;  
+    color: black;    
+    border: 1px solid #338033;
+    border-radius: 3px;
+    -webkit-appearance: none;   
+   -moz-appearance: none;     
+   appearance: none;  
+   background: url('select-arrow.png') no-repeat 95% 50%; 
+   font: 300 18px/1.5 'Roboto', sans-serif;      
+}  
+
+select::-ms-expand {
+   display: none;         
+   border: 1px dashed #D0CBCB;  
+   cursor: pointer;
+}
+
+select option:checked, 
+select option:hover {    
+    background: #2E2E2E;     
+    color: #fff;  
+    cursor: pointer;
+}
+
+select option:checked,
+select option:hover { 
+    box-shadow: 0 0 15px 100px #ff00ff inset;  
+    color: #fff;
+    cursor: pointer;
+}
+ 
+ 
+   
+ input{
+ 
+ background: none;
+ color: #ccc;
+ width: 150px;
+ height: 30px;
+ border: 1px solid #338033;
+ font-size: 18px;
+ border-radius: 4px;
+ transition: .6s;
+ overflow: hidden;
+ }
+   
+ 
+	input:hover{
+background: #338033;
+cursor: pointer;
+color: white;
+  
+}
+	
+	
+ input:hover:before {
+transform: translateX(300px) skewX(-15deg);
+opacity: .6;
+transition:.7s;	
+}
+ 
+ input:hover:after {
+transform: translateX(300px) skewX(-15deg);
+opacity: 1;
+transition:.7s;	
+}
+    
+</style>  
 </head>
+	<body>
+	<tiles:insertDefinition name="header" />
 	
-	
-<body>
-<tiles:insertDefinition name="header" />
-	<div class="wrapper">
-		<div class="content-wrapper">
-			<section class="content-header">
-				<!-- 들어갈 내용 -->
-	<div align="center">
-	
-		<b>내가 한 질문 목록(전체 글 : ${count})</b>
-	</div>
+	    
+	 <div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Inquiry
+        <small>...</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">supports</a></li>  
+        <li class="active">Inquiry</li>
+      </ol>  
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+  
+      <!-- Default box --> 
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-fw fa-bullhorn"></i>Inquiry</h3>
+  
 	<br>
-	<table width="700" align="center">
-		<tr>
-			<td align="right" >
-				<a href="in_writeForm">글쓰기</a>
-			</td>
-		</tr>  
-	</table>
-	<c:set var="no" value="1" /> 
-	
-	<c:if test="${count == 0}">
-		<table width="700" border="1" cellpadding="0" cellspacing="0" align="center">
-			<tr height="30">
-				<td align="center" width="50">번호</td>
-				<td align="center" width="250">제목</td>
-				<td align="center" width="250">작성일</td>
-				<td align="center" width="50">상태</td>
-			</tr>			
-			<tr>
-				<td colspan="5" align="center">
-					게시판에 저장된 글이 없습니다.
-				</td>
+	<div align="right" class="search">
+		<form >  
+		    <select name="string" class="accordion">
+		          <option value="subject">제목</option>  
+		          <option value="content">내용</option>
+		    </select>
+		         <input type="text" size="15" maxlength="50" name="search"/>&nbsp;
+		         <input type="submit" value="검색" class="btn btn-success btn-sm"/>
+		</form>    
+	</div>  
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                    title="Collapse">
+              <i class="fa fa-minus"></i></button>
+          </div>  
+        </div>  
+        <div class="box-body">
+<hr />
+<p style="text-align:center;">INPUIRY(ALL_CONTENTS : ${count })&nbsp;&nbsp;&nbsp;&nbsp;Current Unanswered Inquiry(미답변 갯수 : ${count1 })</p>        </div>
+  
+<p style=" left: 56%; margin-left: -200px;">         
+            
+               
+            <div class="box-body">  
+            <c:set var="no" value="1" /> 
+	        <c:if test="${count == 0}">    
+              <table class="table table-bordered">
+                <tr>  
+                <th></th>
+                  <th>NO</th>
+                  <th>SUBJECT</th>
+                  <th>WRITE_DATE</th>
+                  <th>STATUS</th>
+                  <th></th>
+                </tr>
+                <tr>
+				<th>
+					찾으시는 내용이 없습니다. 
+				</th>
 			</tr>
-		</table>
-	</c:if>
-	
-	<c:if test="${count > 0}">
-		<table width="700" border="1" cellpadding="0" cellspacing="0" align="center">
-			<tr height="30">
-				<td align="center" width="50">번호</td>
-				<td align="center" width="250">제목</td>
-				<td align="center" width="250">작성일</td>
-				<td align="center" width="50">상태</td>
-			</tr>
-			
-			<c:forEach var="inquiry" items="${inquiryList}">
-				<tr height="30">
-					<td align="center" width="50">
-						<c:out value="${no}" />
-					</td>
-					
+			</table>
+			</c:if>
+            <c:if test="${count > 0}">
+            <table class="table table-bordered">
+                <tr>
+                 <th></th>
+                  <th>NO </th>
+                  <th>SUBJECT</th>  
+                  <th>WRITE_DATE</th>
+                  <th>STATUS</th>
+                   <th></th>
+                </tr>  
+                <c:forEach var="inquiry" items="${inquiryList}">  
+            <%-- <c:out value="${no}" /> --%>
+					<tr>
+					<td></td>
 					<td width="250">				
-						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}">${inquiry.i_subject}</a>
-					</td>
-					
-					<td align="center" width="250">
-						${inquiry.i_date}
-					</td>  
-					<td align="center" width="250">
-						${inquiry.i_state}
+						${inquiry.i_num}
 					</td> 
-					
+                    <td width="340">				
+						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
+					</td>   
+
+					<td align="center" width="340">
+						${inquiry.i_date}
+					</td> 
+					<td align="center" width="340">
+						${inquiry.i_state}  
+					</td>   
+					<td></td>
 					<c:set var="no" value="${no+1}" />
 				</tr>
 			</c:forEach>			
 		</table>
-	</c:if>
+	</c:if>     
 	<br>
+            </div>
+            <!-- /.box-body -->   
+				<!-- 들어갈 내용 -->
+				
+				
+				<div class="modal fade" id="modal-default">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              </div>    
+            </div>
+          </div>  
+	
+	
 	<div align="center">
 		<c:if test="${count > 0}">
 		   <c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}"/>
@@ -84,7 +206,7 @@
 		   <c:set var="pageBlock" value="${10}"/>
 		   <!-- pageBlock:10 -->
 		   <fmt:parseNumber var="result" value="${currentPage / 10}" integerOnly="true" />
-		   <!-- result:0 -->   
+		   <!-- result:0 -->
 		   <c:set var="startPage" value="${result * 10 + 1}" />
 		   <!-- startPage:1 -->
 		   <c:set var="endPage" value="${startPage + pageBlock-1}"/>
@@ -94,7 +216,7 @@
 		        <!-- endPage:10 -->
 		   </c:if>
 		         
-		   <c:if test="${startPage > 10}">
+		 <c:if test="${startPage > 10}">
 		       <c:if test="${search1 != 1 }">
 		   	   		<a href="inquiry?pageNum=${startPage - 10 }">[이전]</a>
 		   	   </c:if>
@@ -118,30 +240,28 @@
 		   	   </c:if>
 		   	   <c:if test="${search1 == 1 }">
 		   	   		<a href="inquiry?pageNum=${startPage + 10 }&search=${search}&string=${string}">[이후]</a>
-		   	   </c:if>
+		   	   </c:if>  
 		   </c:if>
 		</c:if>	
 	</div>
-	
-	<br>
-	<div align="center">
-		<form >
-		    <select name="string">
-		          <option value="subject">제목</option>
-		          <option value="content">내용</option>
-		    </select>
-		         <input type="text" size="15" maxlength="50" name="search"/>&nbsp;
-		         <input type="submit" value="검색"/>
-		         <input type="button" value="글목록" onclick="document.location.href='inquiry'">
-		</form>
-	</div>
-			
-			</section>
+	        
+	  
+	  
+	 	<div class="box-footer">  
+					<td>
+					<p>
+						<div class="btn-group"  style=" left: 52%; margin-left: -200px;" >
+							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/in_writeForm'">
+							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='inquiry'">
+						
+						</div>
+						</p>  
+					</td>          
+				</div>      
+    			</section>  
 		</div>
-	</div>
-	
+    
 </body>
-
 <tiles:insertDefinition name="left" />
 <tiles:insertDefinition name="footer" />
 </html>

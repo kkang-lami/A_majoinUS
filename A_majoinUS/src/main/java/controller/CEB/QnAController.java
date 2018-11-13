@@ -117,15 +117,7 @@ public class QnAController {
 		return "CEB/qna/qna_content"; 
 	}
 	
-
 	@RequestMapping(value="/qna_delete", method = RequestMethod.GET) 
-	public String delete_1(ModelMap model,@RequestParam("num")int num) {
-		model.addAttribute("num", num);
-		
-		return "CEB/qna/qna_delete"; 
-	}
-	
-	@RequestMapping(value="/qna_delete", method = RequestMethod.POST) 
 	public String delete_pro_1(ModelMap model,@RequestParam("num") int num) {
 			QnADAO.delete_1(num);
 			return "redirect:/aus/qna";
@@ -149,10 +141,6 @@ public class QnAController {
 		QnADAO.update_1(qna);
 		
 			return "redirect:/aus/qna";  
-	
-			
-		
-		
 	}
 	
 	

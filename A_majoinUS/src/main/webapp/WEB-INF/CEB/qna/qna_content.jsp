@@ -4,62 +4,77 @@
 <html>
 <head>
 <title>상세보기</title>
+<script>    
+function check(){
+	if(confirm("삭제하시겠습니까?")){
+		alert('삭제되었습니다');
+		document.location.href='qna_delete?num=${qna.qna_num}';
+	}else {  
+		alert("글목록으로 돌아갑니다.")
+		document.location.href='qna';
+	}
+}    	
+
+</script>  
 </head>
-<tiles:insertDefinition name="header" />
+  <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Notice</h4>
+              </div>
 
-<br>
-<div class="wrapper">
-		<div class="content-wrapper">  
-			<section class="content-header">
-<form>
+	<form>
+		<table class="table">
+			<tr>
+				<td>글번호</td>
+				<td><input class="form-control" id="q_number" name="q_number"
+					readonly="readonly" value="${qna.qna_num}"></td>
+			</tr>
+			<tr>  
+				<td>글내용</td>
+				<td><textarea class="form-control" id="content" 
+					readonly="readonly" >${qna.q_content}</textarea>
+				    </td>    
+			</tr>    
 
-	<table width="500" border="1" cellspacing="0" cellpadding="0" align="center"> 
-	  <tr height="30">
-	    <td align="center" width="125" >글번호</td>
-	    <td align="center" width="125" align="center">${qna.qna_num}</td>
-	    
-	  </tr>
-	  
-	  
-	  <tr height="30">
-	    <td align="center" width="125">글제목</td>
-	    <td align="center" width="375" align="center" colspan="3">${qna.q_subject}</td>
-	  </tr>
-	  
-	  <tr height="200">
-	    <td align="center" width="125">글내용</td>
-	    <td align="left" width="375" colspan="3">${qna.q_content}</td>
-	  </tr>
-	 
-	 
- 	  <tr height="30">     
-	    <td colspan="4" align="right" >
-	   <%--  <c:if test="${!empty sessionScope.id}">
-			<c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}"> --%>
-	  <input type="button" value="글수정"
-	       onclick="document.location.href='qna_update?num=${qna.qna_num}'">
-	   &nbsp;&nbsp;&nbsp;&nbsp;
-	  <input type="button" value="글삭제"
-	       onclick="document.location.href='qna_delete?num=${qna.qna_num}'">
-	   &nbsp;&nbsp;&nbsp;&nbsp;
-	  <%--  </c:if>
-	   </c:if>   --%>
-	     
-	       <input type="button" value="글목록"
-	       onclick="history.back()">
-	       
-	    </td>
-	  </tr> 
-	</table>   
-	
-</form> 
 			
-			</section>
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<h4>찾으시는 내용이 없으시다면 <a href="aus/inquiry">1:1문의</a>로 문의 부탁드립니다.</h4>
+				</div>
+			</div>
+		</table>
+     
+		<div class="modal-footer">
+		
+<%-- 	<c:if test="${!empty sessionScope.id}">
+			<c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">
+	  <input type="button" value="글수정" class="btn btn-warning pull-left"
+	        onclick="document.location.href='qna_update?num=${qna.qna_num}'">
+	   &nbsp;&nbsp;&nbsp;&nbsp;
+	  <input type="button" value="글삭제" class="btn btn-danger pull-left"
+	       onclick="document.location.href='delete?num=${notice.notice_num}'">
+	   &nbsp;&nbsp;&nbsp;&nbsp;  
+	   </c:if>
+	   </c:if>  --%>       
+		
+	 
+		  
+	  <input type="button" value="글수정" class="btn btn-warning pull-left" 
+	   class="btn btn-primary"   onclick="document.location.href='qna_update?num=${qna.qna_num}'" >
+	         
+	   &nbsp;&nbsp;&nbsp;&nbsp;  
+	  <input type="button" value="글삭제" class="btn btn-danger pull-left"
+	       onclick="check();">  
+	       
+	   &nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="submit" class="btn btn-success" id="submit"
+				value="Cancel">
 		</div>
-	</div>
+      
+	</form>    
 	</body>
-<tiles:insertDefinition name="left" />
-<tiles:insertDefinition name="footer" />
+
 
 
 </html>

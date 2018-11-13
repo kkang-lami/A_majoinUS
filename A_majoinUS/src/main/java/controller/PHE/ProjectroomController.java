@@ -134,18 +134,30 @@ public class ProjectroomController {
 
 	@RequestMapping(value = "/modifyProject", method = RequestMethod.POST)
 	public ModelAndView modifyProjectPro(ProjectroomDTO command1, Pj_jobDTO command2, Pj_locationDTO command3,
-			@RequestParam("pj_num") int pj_num, HttpSession session) {
+			@RequestParam("pj_num") int pj_num, HttpSession session,HttpServletRequest request, String end_d) {
 
+
+		System.out.println("modifyProjectCon");
+		session= request.getSession();
+		session = request.getSession(true);
+		String sessionId =(String)session.getAttribute("userId");
+		
 		dao.projectModify(command1);
 		dao.projectModify_job(command2);
 		dao.projectModify_location(command3);
+		String end = "2099-12-31";
+		
+		if(end.equals(end_d)) {
+			dao.useTicket(sessionId);
+		}
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pj_num", command1.getPj_num());
 		mav.addObject("pj_num", command2.getPj_num());
 		mav.addObject("pj_num", command3.getPj_num());
 
-		mav.setViewName("redirect:/aus/projectContent");
+		
+		mav.setViewName("redirect:/aus/projectList");
 		return mav;
 	}
 
@@ -185,13 +197,5 @@ public class ProjectroomController {
 		out.print(jso.toString());
 
 	}
-	
-
-
-	
-	
-	
-	
-	
 
 }

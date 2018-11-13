@@ -48,6 +48,8 @@ public class InquiryController {
 		
 		List<InquiryDTO> inquiryList = null;
 		
+		 int count1 = inquiryDAO.show_count_answer();
+		
         if(search==null) { // 서치가 없을떄
         	count = inquiryDAO.show_count_2(); // 전체 글 수
         	if(count > 0) {
@@ -73,12 +75,58 @@ public class InquiryController {
 		
 		model.addAttribute("number",number);
 		model.addAttribute("count",count);
+		model.addAttribute("count1",count1); 
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("inquiryList",inquiryList);
 		
 		return "CEB/inquiry/in_Form"; 
 	}
+	
+	@RequestMapping("/inquiry_user") 
+	public String show_list_user(ModelMap model,
+			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) {
+		
+		System.out.println("sssss");
+		int pageSize = 5;  
+		int currentPage = pageNum;
+		int startRow = (currentPage - 1) * pageSize + 1;
+		int endRow = currentPage * pageSize;
+		int number = 0;
+		int count = 0;
+		  
+		List<InquiryDTO> inquiryList = null;
+		
+        if(search==null) {
+        	count = inquiryDAO.show_count_id("test.amajo@gmail.com");   
+        	  
+        	if(count > 0) {  
+    			inquiryList = inquiryDAO.show_list_id(startRow, endRow, "test.amajo@gmail.com");
+        	}
+        	
+        } else { // 서치가 있을때  
+
+        	count = inquiryDAO.show_search_count_2(search, string);
+        	if(count > 0) {
+        		
+        		inquiryList = inquiryDAO.show_search_list_2(search, string, startRow, endRow);
+        		model.addAttribute("search1",1);
+        		model.addAttribute("string",string);
+        		model.addAttribute("search",search);
+        	}
+        }
+			
+		number=count-(currentPage-1)*pageSize;
+		
+		model.addAttribute("number",number);
+		model.addAttribute("count",count);
+		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("inquiryList",inquiryList);
+		
+		return "CEB/inquiry/in_Form_user"; 
+	}
+	
 	
 	@RequestMapping(value="/in_writeForm", method = RequestMethod.GET)
 	public String write_list_2() {

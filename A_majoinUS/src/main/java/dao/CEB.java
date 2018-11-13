@@ -179,6 +179,11 @@ public class CEB extends SqlSessionDaoSupport{
 			return count;
 		}	
 		
+		public int show_count_id(String id) {  
+			int count = getSqlSession().selectOne("CEB_AUS.show_count_id", id);
+			return count;
+		} 
+		
 		public List<InquiryDTO> show_list_2() {
 			List<InquiryDTO> list = getSqlSession().selectList("CEB_AUS.show_list_2");
 			return list;
@@ -195,6 +200,10 @@ public class CEB extends SqlSessionDaoSupport{
 			 return dto;
 		}
 		
+		public int show_count_answer() {
+			int count = getSqlSession().selectOne("CEB_AUS.show_count_answer");
+			return count;  
+		}      
 		
 		public void update_2(InquiryDTO dto) {
 
@@ -206,6 +215,31 @@ public class CEB extends SqlSessionDaoSupport{
 			 List<InquiryDTO> list = getSqlSession().selectList("CEB_AUS.get_list_2",dto);
 			 return list;
 		}
+		
+		
+		public List<InquiryDTO> show_list_id(int startRow, int endRow, String id) {
+		    
+			PageDTO s = new PageDTO();
+			MemberDTO s1 = new MemberDTO(); 
+			
+			s.setEndRow(endRow);
+			s.setStartRow(startRow);
+			s1.setId(id);
+			 
+			 
+			 Map<String,Object> dto = new HashMap<String,Object>();
+				
+				dto.put("endRow", endRow);
+				dto.put("startRow", startRow);    
+				dto.put("id", id);
+				
+				List<InquiryDTO> list = getSqlSession().selectList("CEB_AUS.show_list_id",dto);
+				
+				return list;
+				
+		}
+		
+		
 		
 		public int show_search_count_2(String search, String string) {
 

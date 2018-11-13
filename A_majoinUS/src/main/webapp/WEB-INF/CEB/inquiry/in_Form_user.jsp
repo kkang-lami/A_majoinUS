@@ -5,14 +5,13 @@
 
 <html>
 <head>
-<title>공지사항</title>
-<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<title>1:1 문의</title>
 <style type="text/css">  
 
 
 select {
     width: 100px;  
-    height: 30px;  
+    height: 30px;    
     padding-left: 10px;
     font-size: 18px;  
     color: black;    
@@ -82,40 +81,38 @@ transition:.7s;
 }
     
 </style>  
-
 </head>
+	<body>
+	<tiles:insertDefinition name="header" />
 	
-	
-<body>
-<tiles:insertDefinition name="header" />
-
- <div class="content-wrapper">
+	    
+	 <div class="content-wrapper">
    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Notice
+        Inquiry
         <small>...</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">supports</a></li>  
-        <li class="active">Notice</li>
-      </ol>
+        <li class="active">Inquiry</li>
+      </ol>  
     </section>
 
     <!-- Main content -->
     <section class="content">
-
+  
       <!-- Default box --> 
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title"><i class="fa fa-fw fa-bullhorn"></i>Notice</h3>
+          <h3 class="box-title"><i class="fa fa-fw fa-bullhorn"></i>Inquiry</h3>
   
 	<br>
 	<div align="right" class="search">
 		<form >  
 		    <select name="string" class="accordion">
-		          <option value="subject">제목</option>
+		          <option value="subject">제목</option>  
 		          <option value="content">내용</option>
 		    </select>
 		         <input type="text" size="15" maxlength="50" name="search"/>&nbsp;
@@ -131,19 +128,21 @@ transition:.7s;
         </div>  
         <div class="box-body">
 <hr />
-<p style="text-align:center;">NOTICE(ALL_CONTENTS : ${count })</p>        </div>
+<p style="text-align:center;">INPUIRY(MY ASKING : ${count })</p>        </div>
+  
 <p style=" left: 56%; margin-left: -200px;">         
             
                
             <div class="box-body">  
-            <c:set var="no" value="1" />   
+            <c:set var="no" value="1" /> 
 	        <c:if test="${count == 0}">    
               <table class="table table-bordered">
                 <tr>  
                 <th></th>
                   <th>NO</th>
                   <th>SUBJECT</th>
-                  <th>WRITE_DATE</th>  
+                  <th>WRITE_DATE</th>
+                  <th>STATUS</th>
                   <th></th>
                 </tr>
                 <tr>
@@ -159,23 +158,27 @@ transition:.7s;
                  <th></th>
                   <th>NO </th>
                   <th>SUBJECT</th>  
-                  <th>WRITE_DATE</th>  
+                  <th>WRITE_DATE</th>
+                  <th>STATUS</th>
                    <th></th>
                 </tr>  
-                <c:forEach var="notice" items="${noticeList}">  
+                <c:forEach var="inquiry" items="${inquiryList}">  
             <%-- <c:out value="${no}" /> --%>
 					<tr>
 					<td></td>
 					<td width="250">				
-						${no}    
+						${no}  
 					</td> 
                     <td width="340">				
-						<a href="content?num=${notice.notice_num }&pageNum=${currentPage}"  data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modal-default">${notice.subject}</a>
+						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
 					</td>   
-					
+
 					<td align="center" width="340">
-						${notice.notice_date}
+						${inquiry.i_date}
 					</td> 
+					<td align="center" width="340">
+						${inquiry.i_state}  
+					</td>   
 					<td></td>
 					<c:set var="no" value="${no+1}" />
 				</tr>
@@ -184,19 +187,16 @@ transition:.7s;
 	</c:if>     
 	<br>
             </div>
-            <!-- /.box-body -->
+            <!-- /.box-body -->   
 				<!-- 들어갈 내용 -->
-				   
 				
-		<div class="modal fade" id="modal-default">
+				
+				<div class="modal fade" id="modal-default">
           <div class="modal-dialog">
             <div class="modal-content">
               </div>    
             </div>
           </div>  
-				
-				
-				
 	
 	
 	<div align="center">
@@ -216,55 +216,52 @@ transition:.7s;
 		        <!-- endPage:10 -->
 		   </c:if>
 		         
-		   <c:if test="${startPage > 10}">
+		 <c:if test="${startPage > 10}">
 		       <c:if test="${search1 != 1 }">
-		   	   		<a href="notice?pageNum=${startPage - 10 }">[이전]</a>
+		   	   		<a href="inquiry?pageNum=${startPage - 10 }">[이전]</a>
 		   	   </c:if>
 		   	   <c:if test="${search1 == 1 }">
-		   	   		<a href="notice?pageNum=${startPage - 10 }&search=${search}&string=${string}">[이전]</a>
+		   	   		<a href="inquiry?pageNum=${startPage - 10 }&search=${search}&string=${string}">[이전]</a>
 		   	   </c:if>	
-		   </c:if>  
+		   </c:if>
 		
 		   <c:forEach var="i" begin="${startPage}" end="${endPage}">
 		   	   <c:if test="${search1 != 1 }">
-		   	   		<a href="notice?pageNum=${i}">[${i}]</a>
+		   	   		<a href="inquiry?pageNum=${i}">[${i}]</a>
 		   	   </c:if>
 		   	   <c:if test="${search1 == 1 }">
-		   	   		<a href="notice?pageNum=${i}&search=${search}&string=${string}">[${i}]</a>
+		   	   		<a href="inquiry?pageNum=${i}&search=${search}&string=${string}">[${i}]</a>
 		   	   </c:if>				   	   
-		   </c:forEach>     
+		   </c:forEach>
 		
 		   <c:if test="${endPage < pageCount}">
 		   	   <c:if test="${search1 != 1 }">
-		   	   		<a href="notice?pageNum=${startPage + 10}">[다음]</a>
+		   	   		<a href="inquiry?pageNum=${startPage + 10}">[다음]</a>
 		   	   </c:if>
 		   	   <c:if test="${search1 == 1 }">
-		   	   		<a href="notice?pageNum=${startPage + 10 }&search=${search}&string=${string}">[이후]</a>
-		   	   </c:if>
+		   	   		<a href="inquiry?pageNum=${startPage + 10 }&search=${search}&string=${string}">[이후]</a>
+		   	   </c:if>  
 		   </c:if>
 		</c:if>	
 	</div>
-	  
+	        
 	  
 	  
 	 	<div class="box-footer">  
 					<td>
 					<p>
-						<div class="btn-group"  style=" left: 53%; margin-left: -200px;" >
-							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/writeForm'">
-							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='notice'">
+						<div class="btn-group"  style=" left: 52%; margin-left: -200px;" >
+							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='/AMAJOINUS/aus/in_writeForm'">
+							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='inquiry'">
 						
 						</div>
 						</p>  
 					</td>          
 				</div>      
-			   
-			 
-			</section>  
+    			</section>  
 		</div>
-	
+    
 </body>
-
 <tiles:insertDefinition name="left" />
-	<tiles:insertDefinition name="footer" />
+<tiles:insertDefinition name="footer" />
 </html>
