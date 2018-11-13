@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CEB_AUS">
+<!-- <mapper namespace="Notice_board"> -->
+
+	<select id="show_count" resultType="int">
+		select count(*) from notice 
+	</select>
+	
+	<select id="show_list" resultType="project.DTO.NoticeDTO">
+		select*from notice order by notice_num desc
+	</select>
+
+	<insert id="insert_list" parameterType="project.DTO.NoticeDTO">
+		insert into notice values(notice_seq.nextval,#{subject},#{content},sysdate)
+	</insert>
+
+	<select id="show_listOne" parameterType="int" resultType="project.DTO.NoticeDTO">
+		select*from notice where notice_num=#{notice_num}
+	</select>
+		
+	
+	<delete id="delete" parameterType="int">
+		delete from notice where notice_num=#{notice_num}
+	</delete>
+
+	
+	<update id="update" parameterType="project.DTO.NoticeDTO">
+		update notice set subject=#{subject}, content=#{content} where notice_num=#{notice_num} 
+	</update>
+	
+	<select id="get_list" parameterType="project.DTO.PageDTO" resultType="project.DTO.NoticeDTO">
+		<![CDATA[select notice_num, subject,  content, notice_date, r from (select notice_num, subject, content, notice_date, rownum r from (select*from notice order by notice_num desc) order by r) where r>=#{startRow} and r<=#{endRow}]]>
+	</select>
+	
+	<select id="get_search_count" parameterType="project.DTO.PageDTO" resultType="int">
+		select count(*) from notice where ${string} like '%'||#{search}||'%'
+	</select>	
+	
+	<select id="get_search_list" parameterType="project.DTO.PageDTO" resultType="project.DTO.NoticeDTO">
+		<![CDATA[select notice_num, subject, content, notice_date r from (select notice_num, subject,  content, notice_date, rownum r from (select*from notice where ${string} like '%'||#{search}||'%' order by notice_num desc) order by r) where r>=${startRow} and r<=${endRow}]]>
+	</select>
+	
+	<select id="next_num" resultType="String">
+		select max(notice_num) from notice
+	</select>
+<!-- </mapper> -->
+
+
+
+
+<!-- <mapper namespace="QnA_board"> -->
+
+	<select id="show_count_1" resultType="int">
+		select count(*) from qna 
+	</select>
+	
+	<select id="show_list_1" resultType="project.DTO.QnADTO">
+		select*from qna order by qna_num desc          
+	</select>  
+
+	<insert id="insert_list_1" parameterType="project.DTO.QnADTO">
+		insert into qna values(qna_seq.nextval,#{q_subject},#{q_content})
+	</insert>  
+        
+	<select id="show_listOne_1" parameterType="int" resultType="project.DTO.QnADTO">
+		select*from qna where qna_num=#{qna_num}  
+	</select>
+	
+	<delete id="delete_1" parameterType="int">        
+		delete from qna where qna_num=#{qna_num}
+	</delete>
+	
+	<update id="update_1" parameterType="project.DTO.QnADTO">
+		update qna set q_subject=#{q_subject}, q_content=#{q_content} where qna_num=#{qna_num} 
+	</update>
+	
+	<select id="get_list_1" parameterType="project.DTO.PageDTO" resultType="project.DTO.QnADTO">
+		<![CDATA[select qna_num, q_subject, q_content, r from (select qna_num, q_subject, q_content, rownum r from (select*from qna order by qna_num desc) order by r) where r>=#{startRow} and r<=#{endRow}]]>
+	</select>
+	
+	<select id="get_search_count_1" parameterType="project.DTO.PageDTO" resultType="int">
+		select count(*) from qna where ${string} like '%'||#{search}||'%'
+	</select>	
+	
+	<select id="get_search_list_1" parameterType="project.DTO.PageDTO" resultType="project.DTO.QnADTO">
+		<![CDATA[select qna_num, q_subject, q_content r from (select qna_num, q_subject, q_content, rownum r from (select*from qna where ${string} like '%'||#{search}||'%' order by qna_num desc) order by r) where r>=${startRow} and r<=${endRow}]]>
+	</select>
+	
+	<select id="next_num_1" resultType="String">
+		select max(qna_num) from qna
+	</select>
+	
+	<!-- <mapper namespace="inquiry_board"> -->
+
+	<select id="show_count_2" resultType="int">  
+		select count(*) from inquiry 
+	</select>
+	
+	<select id="show_list_2" resultType="project.DTO.InquiryDTO">
+		select*from inquiry order by i_num desc
+	</select>
+
+	<select id="get_search_count_2" parameterType="project.DTO.PageDTO" resultType="int">
+		select count(*) from inquiry where ${string} like '%'||#{search}||'%'
+	</select>	
+	
+	<select id="get_search_list_2" parameterType="project.DTO.PageDTO" resultType="project.DTO.InquiryDTO">
+		<![CDATA[select i_num, i_subject, id, i_content, i_date, i_state, r from (select i_num, i_subject, id, i_content, i_date, i_state, rownum r from (select*from inquiry where ${string} like '%'||#{search}||'%' order by i_num desc) order by r) where r>=${startRow} and r<=${endRow}]]>
+	</select>
+	
+	
+	
+	<insert id="insert_list_2" parameterType="project.DTO.InquiryDTO">
+		insert into inquiry(I_NUM,ID,I_SUBJECT,I_CONTENT,I_DATE) values(inquiry_seq.nextval,#{id},#{i_subject},#{i_content},sysdate)
+	</insert>  
+
+	<select id="show_listOne_2" parameterType="int" resultType="project.DTO.InquiryDTO">
+		select*from inquiry where i_num=#{i_num}
+	</select>
+	
+	<update id="update_2" parameterType="project.DTO.InquiryDTO">
+		update inquiry set id=#{id}, i_subject=#{i_subject}, i_content=#{i_content}, i_state='답변완료' where i_num=#{i_num} 
+	</update>
+	
+	<select id="get_list_2" parameterType="project.DTO.PageDTO" resultType="project.DTO.InquiryDTO">
+		<![CDATA[select i_num, i_subject, id, i_content, i_date, i_state, r from (select i_num, i_subject, id, i_content, i_date, i_state, rownum r from (select*from inquiry order by i_num desc) order by r) where r>=#{startRow} and r<=#{endRow}]]>
+	</select>
+	
+	<select id="next_num_2" resultType="String">
+		select max(i_num) from inquiry
+	</select>
+
+	
+	<!-- <mapper namespace="point_board","pay_board"> -->
+	
+	<!-- oo -->
+	<select id="get_member" parameterType="string" resultType="project.DTO.MemberDTO">
+		select id, name, phone, total_point from member where id=#{id}  
+	</select>
+	<!-- oo -->
+	<select id="selectPayment" parameterType="Integer" resultType="project.DTO.PaymentDTO">
+	   select * from payment where pay_no=#{pay_no}
+	</select>
+	<!-- oo -->
+	
+	<insert id="insert_paylist" parameterType="project.DTO.PaymentDTO">
+		insert into payment(pay_no,p_name,pg,pay_method,reg_date,id,pay_price,imp_uid,state,name,phone) values(payment_seq.nextval,#{p_name},#{pg},#{pay_method},sysdate,#{id},#{pay_price},'0',0,#{name},#{phone})
+	</insert>  
+
+<!-- oo -->	
+	<update id="insert_impuid" parameterType="map">
+		update payment set imp_uid=#{imp_uid} where pay_no=#{pay_no}
+	</update>
+<!-- oo -->	
+	<update id="insert_state" parameterType="map">
+		update payment set state=1 where pay_no=#{pay_no}
+		<!-- if 문 안에 집어넣기 -->  
+	</update>
+	
+
+    <select id="get_point" parameterType="map" resultType="project.DTO.PaymentDTO">
+		select pay_price=#{pay_price} from payment where pay_no=#{pay_no}  
+	</select> 
+ 
+    <update id="update_allpoint" parameterType="map">
+		update member set total_point=(select sum(total_point+#{pay_price}) update_point from member where id = #{id}) where id=#{id}
+	</update>
+	
+	<select id="get_impuid" parameterType="string" resultType="project.DTO.PaymentDTO">
+		select imp_uid from payment where pay_no=#{pay_no}  
+	</select>
+	
+	<select id="next_num_3" resultType="String">
+		select payment_seq.currval from dual
+	</select>
+	
+	<select id="next_num_5" resultType="String">
+		select point_seq.currval from dual
+	</select>
+	
+	<select id="selectPoint" parameterType="Integer" resultType="project.DTO.PaymentDTO">
+	   select * from point where p_num=#{p_num}
+	</select>
+	
+	<select id="check_insert" parameterType="int" resultType="project.DTO.PaymentDTO">
+		select payment_seq.currval from payment  
+	</select>
+	
+	
+	<!-- <mapper namespace="point_board" 마이페이지> -->
+	
+	
+	<select id="show_listOne_3" parameterType="String" resultType="Integer">
+		select total_point from member where id=#{id}  
+	</select>
+	
+	<select id="show_count_3" parameterType="String" resultType="int">
+		select count(*) from point where id=#{id}
+	</select>
+	
+	<!-- <select id="show_list_point" resultType="project.DTO.PointDTO">
+		select * from point where id=#{id} order by p_num desc
+	</select> -->
+	
+	<select id="show_list_point" parameterType="map" resultType="project.DTO.PointDTO">
+		select * from point where id=#{id} order by p_num desc  
+	</select>
+	
+	<insert id="insert_pointlist" parameterType="project.DTO.PointDTO">
+		insert into point(p_num,id,update_date,type,update_point,after_point) values(point_seq.nextval,#{id},sysdate,'point-charge',#{pay_price},(select sum(total_point+#{pay_price}) update_point from member where id = #{id}))
+	</insert>
+	
+	<insert id="insert_pointlist_2" parameterType="project.DTO.PointDTO">
+		insert into point(p_num,id,update_date,type,update_point,after_point) values(point_seq.nextval,#{id},sysdate,'buying-ticket','-3000',(select sum(total_point-3000) update_point from member where id = #{id}))
+	</insert>    
+   
+  <!--    <select id="get_list_point" parameterType="project.DTO.PageDTO" resultType="project.DTO.PointDTO">
+		<![CDATA[select p_num, id, update_date, type, update_point, after_point , r from (select p_num, id, update_date, type, update_point, after_point, rownum r from (select*from point order by p_num desc) order by r) where r>=#{startRow} and r<=#{endRow}]]>
+	</select>
+	 -->  
+	 
+	 <select id="show_listOne_point" parameterType="int" resultType="project.DTO.PointDTO">
+		select * from point where q_num=#{q_num}  
+	</select>
+	
+	<select id="get_search_count_point" parameterType="project.DTO.PageDTO" resultType="int">
+		select count(*) from point where ${string} like '%'||#{search}||'%'
+	</select>
+	  
+	<select id="get_search_list_point" parameterType="map" resultType="project.DTO.PointDTO">
+		<![CDATA[select p_num, id, update_date, type, update_point, after_point , r from
+		 (select p_num, id, update_date, type, update_point, after_point, rownum r from
+		  (select * from point where ${string} like '%'||#{search}||'%' order by p_num desc) 
+		  order by r) where r>=${startRow} and r<=${endRow} and id=#{id} ]]>
+	</select>
+	  
+	  <select id="show_count_ticket" parameterType="String" resultType="int">    
+		 select count(*) from ticket where t_date<![CDATA[ < ]]> sysdate and t_status='미사용' and id=#{id}     
+	</select>          
+	          
+	    
+	<!-- <mapper namespace="ticket_board"> -->	
+	         
+	
+	<select id="get_member_modal" parameterType="string" resultType="project.DTO.MemberDTO">
+		select id,name,total_point from member where id=#{id}  
+	</select>    
+	
+	<update id="update_ticketpoint" parameterType="map">
+		update member set total_point=(select sum(total_point-3000) update_point from member where id = #{id}) where id=#{id}
+	</update>  
+	  
+	<insert id="buying_ticket" parameterType="project.DTO.TicketDTO">
+		insert into ticket(t_num,id,name,t_date,t_status) values(ticket_seq.nextval,#{id},#{name},sysdate,'미사용')
+		 <selectKey keyProperty="t_num" resultType="Integer" order="AFTER">
+             select TICKET_SEQ.currval from dual
+       </selectKey>
+	</insert>	
+	
+	<select id="get_ticket" parameterType="string" resultType="project.DTO.TicketDTO">
+		select id,t_date,t_status from ticket where t_status > sysdate and t_status='미사용' and id=#{id} order by t_status  
+	</select>
+	
+	<update id="using_ticket" parameterType="project.DTO.TicketDTO">
+		update ticket(id,t_date,t_status,t_point) set id=#{id}, t_date=#{t_date}, t_status='사용완료',  where t_num=#{t_num} 
+	</update>
+	
+	<select id="selecTicket" parameterType="Integer" resultType="project.DTO.TicketDTO">
+	   select * from ticket where t_num=#{t_num}
+	</select> 
+	  
+	
+	
+	<!-- select t1.name, t2.age from table1 t1, table2 t2 where t1.no = t2.no;
+	 
+ -->
+
+</mapper>

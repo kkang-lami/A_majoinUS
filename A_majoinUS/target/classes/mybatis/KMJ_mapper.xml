@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="KMJ_AUS">
+	
+	<select id="memCheck" parameterType="project.DTO.Pj_memDTO" resultType="Integer">
+		select count(*) from pj_mem where pj_num=#{pj_num} and id=#{id}
+	</select>
+	
+	<select id="fileboardlist" parameterType="Integer" resultType="project.DTO.FileboardDTO">
+		select fb_num,id,filename,file_path,file_size,file_date,name,pj_num from fileboard natural join member where pj_num=#{pj_num} order by fb_num
+	</select>
+	
+	<select id="selectfile" parameterType="Integer" resultType="project.DTO.FileboardDTO">
+		select * from fileboard where fb_num=#{fb_num}
+	</select>
+	
+	<insert id="fileboardInsert" parameterType="project.DTO.FileboardDTO">
+		insert into fileboard values(FILEBOARD_SEQ.NEXTVAL,#{pj_num},#{id},#{filename},#{file_path},#{file_size},sysdate,#{pjm_num})
+	</insert>
+	
+	<delete id="deletefile" parameterType="Integer">
+		delete from fileboard where fb_num=#{fb_num}
+	</delete>
+	
+	
+	
+	<update id="updatestate" parameterType="Integer">
+		update project_workboard set state='지연' where pj_num=#{pj_num} and w_date &lt; sysdate and state!='완료' 
+	</update>
+	
+	<select id="workboardlist" parameterType="Integer" resultType="project.DTO.Project_workboardDTO">
+		SELECT PW_NUM,W_SUBJECT,W_CONTENT,W_DATE,STATE,name FROM PROJECT_WORKBOARD natural join member WHERE PJ_NUM=#{pj_num} order by pw_num
+	</select>
+	
+	<select id="memberwork" parameterType="project.DTO.Project_workboardDTO" resultType="project.DTO.Project_workboardDTO">
+		SELECT PW_NUM,W_SUBJECT,ID,W_CONTENT,W_DATE,STATE,name FROM PROJECT_WORKBOARD natural join member WHERE PJ_NUM=#{pj_num} and id=#{id}
+	</select>
+	
+	<select id="projectMaster" parameterType="Integer" resultType="String">
+		select id from projectroom where pj_num=#{pj_num}
+	</select>
+	
+	<select id="MemberWorkCount" parameterType="Integer" resultType="project.DTO.MemberWorkCountDTO">
+		select * from (SELECT id,name,state FROM project_workboard natural join member where pj_num=#{pj_num})pivot (count(*) for state in('진행중' as ongoing,'완료' as complet,'지연' as delay))
+	</select>
+	
+	<select id="selectMember" parameterType="Integer" resultType="project.DTO.Pj_memDTO">
+		select * from pj_mem natural join member where pj_num=#{pj_num}
+	</select>
+	
+	<select id="workdetail" parameterType="Integer" resultType="project.DTO.Project_workboardDTO">
+		select PW_NUM,PJ_NUM,W_SUBJECT,ID,W_CONTENT,W_DATE,STATE,name from project_workboard natural join member where pw_num=#{pw_num}
+	</select>
+	
+	<insert id="insertworkboard" parameterType="project.DTO.Project_workboardDTO">
+		insert into PROJECT_WORKBOARD values(PROJECT_WORKBOARD_SEQ.NEXTVAL,#{pj_num},#{w_subject},#{id},#{w_content},#{w_date},'진행중',#{pjm_num})
+	</insert>
+	
+	<update id="complet" parameterType="Integer">
+		update project_workboard set state='완료' where pw_num=#{pw_num}
+	</update>
+	
+	<update id="editmemberwork" parameterType="project.DTO.Project_workboardDTO">
+		update project_workboard set w_subject=#{w_subject},w_content=#{w_content},w_date=#{w_date},state='진행중' where pw_num=#{pw_num}
+	</update>
+	
+	<delete id="deleteMemberwork" parameterType="Integer">
+		delete from project_workboard where pw_num=#{pw_num}
+	</delete>
+	
+	<insert id="insertcomment" parameterType="project.DTO.Workboard_commentDTO">
+		insert into workboard_comment values(WORKBOARD_COMMENT_SEQ.nextval, #{pw_num}, #{id}, sysdate, #{wc_content})
+	</insert>
+	
+	<select id="selectcomment" parameterType="Integer" resultType="project.DTO.Workboard_commentDTO">
+		select wc_num,pw_num,id,pw_date,wc_content,name from workboard_comment natural join member where pw_num=#{pw_num} order by wc_num
+	</select>
+	
+	<select id="commentcount" parameterType="Integer" resultType="Integer">
+		select count(*) from workboard_comment where pw_num=#{pw_num}
+	</select>
+	
+	<select id="newComment" parameterType="Map" resultType="project.DTO.Workboard_commentDTO"><!-- Integer -->
+		select wc_num,pw_num,id,pw_date,wc_content,name from (select wc_num,pw_num,id,pw_date,wc_content,name,rownum r from (select wc_num,pw_num,id,pw_date,wc_content,name from workboard_comment natural join member where pw_num=#{pw_num} order by wc_num)) where r=#{count}
+	</select>
+	
+	<delete id="delcomment" parameterType="Integer">
+		delete from workboard_comment where wc_num=#{wc_num}
+	</delete>
+	
+	
+	
+	
+	<select id="chatlist" parameterType="Integer" resultType="project.DTO.Project_chatDTO">
+		select chat_num,pj_num,id,chat_content,to_char(CHAT_DATE,'YY/mm/dd HH24:MI') chat_date,name from project_chat natural join member where pj_num=#{pj_num} order by chat_num
+	</select>
+	
+	<insert id="insertChat" parameterType="project.DTO.Project_chatDTO">
+		insert into project_chat values(PROJECT_CHAT_SEQ.nextval, #{pj_num}, #{id}, #{chat_content}, sysdate)
+	</insert>
+	
+	<select id="searchName" parameterType="Map" resultType="String">
+		select name from pj_mem natural join member where pj_num=#{pj_num} and id=#{id}
+	</select>
+	
+	
+	
+	
+	<select id="projectDate" parameterType="Integer" resultType="Map">
+		select to_char(start_d,'YYYY-mm-dd') start_d, to_char(end_d,'YYYY-mm-dd') end_d from projectroom where pj_num=#{pj_num}
+	</select>
+	
+	<insert id="portfolioinsert" parameterType="project.DTO.PortfolioDTO">
+		insert into portfolio values(PORTFOLIO_SEQ.nextval,#{id},#{subject},#{tech_info},#{start_d},#{end_d},#{file_path},#{p_private},#{pj_num})
+		 <selectKey keyProperty="port_num" resultType="Integer" order="AFTER">
+       		select PORTFOLIO_SEQ.currval from dual
+    	</selectKey>
+	</insert>
+	
+	<select id="pf_detail_seq" resultType="String">
+		select max(pd_num) from port_detail
+	</select>
+	
+	<insert id="pofolDetail" parameterType="Map">
+		insert all 
+			<foreach collection="list" separator=" " item="item">
+			into PORT_DETAIL values (#{item.pd_num},#{item.port_num},#{item.pd_img},#{item.pd_content})
+			</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<select id="searchpofol" parameterType="Map" resultType="project.DTO.PortfolioDTO">
+		select * from portfolio where id=#{id} and port_num=#{port_num}
+	</select>
+	
+	<select id="search_pfDetail" parameterType="Integer" resultType="project.DTO.Port_detailDTO">
+		select * from port_detail where port_num=#{port_num} order by pd_num
+	</select>
+	
+	<delete id="delete_pf_Detail" parameterType="Map">
+		<foreach collection="list" separator=";" item="item" open="DECLARE BEGIN" close="; END;">
+         	delete from port_detail where pd_num=#{item.pd_num}
+      </foreach>
+	</delete>
+	
+	<update id="update_pf_Detail" parameterType="Map">
+		<foreach collection="list" separator=";" item="item" open="DECLARE BEGIN" close="; END;">
+         	update port_detail set pd_content=#{item.pd_content} where pd_num=#{item.pd_num}
+      </foreach>
+	</update>
+	
+	<update id="updatepf" parameterType="project.DTO.PortfolioDTO">
+		update portfolio
+		<trim prefix="set" suffixOverrides=",">
+			subject=#{subject},
+			tech_info=#{tech_info},
+			start_d=#{start_d},
+			end_d=#{end_d},
+			p_private=#{p_private},
+			<if test="file_path != ''">file_path=#{file_path},</if>
+		</trim>
+		where port_num=#{port_num}
+	</update>
+	
+	
+	
+	<select id="memberlist" parameterType="Map" resultType="project.DTO.Pj_memDTO">
+		select pjm_num,pj_num,id,pj_name,name,u_img from (select a.pjm_num,a.pj_num,a.id,b.pj_name from pj_mem a,projectroom b where a.pj_num = b.pj_num) natural join member where pj_num=#{pj_num} and id !=#{id}
+	</select>
+	
+	<select id="countReview" resultType="Integer">
+		select count(*) from review
+	</select>
+	
+	<insert id="memberReview" parameterType="Map">
+		insert all
+			<foreach collection="list" separator=" " item="item">
+				into review values(#{item.review_num},#{item.id},#{item.target_id},#{item.score},#{item.review_content},#{item.pj_num})
+			</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<insert id="review2Admin" parameterType="project.DTO.Review_adminDTO">
+		insert into REVIEW_ADMIN values(REVIEW_ADMIN_SEQ.nextval,#{id},#{ra_content},#{pj_num})
+	</insert>
+	
+	<insert id="presentPoint" parameterType="project.DTO.PointDTO">
+		insert into point values(point_seq.nextval,#{id},sysdate,'Review_Write',10,(select sum(total_point+10) from member where id = #{id}))
+		
+		<selectKey keyProperty="p_num" resultType="Integer" order="AFTER">
+       		select POINT_SEQ.currval from dual
+    	</selectKey>
+	</insert>
+	
+	<update id="memberTP" parameterType="project.DTO.PointDTO">
+		update member set total_point=(select after_point from point where id=#{id} and p_num=#{p_num}) where id=#{id}
+	</update>
+	
+	
+	
+	
+	<select id="ReviewWriteCheck" parameterType="Map" resultType="Integer">
+		select count(*) from review where id=#{id} and pj_num=#{pj_num}
+	</select>
+	
+	<select id="PortfolioWriteCheck" parameterType="Map" resultType="Integer">
+		select count(*) from portfolio where id=#{id} and pj_num=#{pj_num}
+	</select>
+	
+</mapper>

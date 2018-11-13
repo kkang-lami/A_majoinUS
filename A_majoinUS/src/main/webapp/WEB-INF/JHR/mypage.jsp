@@ -1,0 +1,137 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String cp = request.getContextPath();
+	request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("euc-kr");
+%>
+<html>
+<head>
+<title>정보 수정</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(document).ready(function(){
+	$("#btnUpdate").click(function(){
+		alert("수정하시겠습니까?");
+		
+	});
+});
+
+$(document).ready(function(){	
+	$('.editable .field').focus(function() {
+		$(this).addClass('focused');
+	}).blur(function(){
+		$(this).removeClass('focused');
+	});
+});
+
+</script>
+</head>
+<body>
+<form name="form1" method="post" action="./memberUpdate" id="member" class="editable">
+<h1> 정보 수정</h1>
+<input type="button" value="회원 탈퇴" onclick="location.href='secession'" >
+<fieldset>
+
+<div>
+<label> 아이디:</label>
+<input name="id" value="${dto.id}" readonly="readonly" />
+<br />
+<label> 비밀번호:</label>
+<input name="password" type="password" class="field" value="" />
+<br  />
+<label> 이름:</label>
+<input name="name" class="field" value="${dto.name}"readonly="readonly" />
+<br />
+<label> 생년 월 일:</label>
+<input name="birth" class="field "value="${dto.birth}" />
+<br />
+<label> 핸드폰 번호:</label>
+<input name="phone" class="field" value="${dto.phone}" />
+</div>
+
+<div>
+<label>프로필 사진</label>
+<input type="file" name="file_my" accept="image/*" value="${dto.u_img}"/>
+</div>
+
+<div>
+<label> 선호 지역:</label>
+<select id="local1" class="show-level2"></select>
+<select id="local12" ></select>
+<button type="button" value="file_" class="add_btn">추가</button>
+</div>
+<div>
+<label> 관심 분야:</label>
+<select id="job1" class="show-level2"></select>
+<select id="job12" ></select>
+<button type="button" value="job" class="add_btn">추가</button>
+</div>
+
+<div title="넘겨질 job과 local" id="hidden"></div>
+검색조건
+<input name="job" value="${dto.job}" />
+<div id="result" >
+</div>
+
+<div>
+<label>자기 소개</label>
+<textarea cols="100" rows="8" name="profile"></textarea>
+</div>
+<input type="submit" onclick="go_submit()" value="수정" >
+<input type="button" class="btn btn-danger" onclick="history.go(-1)" value="뒤로가기">
+</fieldset>
+</form>
+
+<script src="<%=request.getContextPath()%>/resources/LSH/category.js"></script>
+<script>
+
+var global = {
+		    i : 0
+		};
+	
+	$(document).ready(initPage);
+	
+	function initPage() {
+		level1();
+		show();								// 파일불러올때 사용! -- 기존에 있는 카테고리 입력값 버튼생성
+	}
+	
+	function getContext(){
+		var context = "<%=cp%>";
+		return context;
+	}  
+
+	function show() {
+
+		var html1 = "<div id='job_list'>",
+			html2 = "";
+
+		<c:forEach var="item" items="${command.job}">
+			html1 += "<div id="+global.i+">${item} ";
+			html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
+
+			html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
+			global.i++;
+		</c:forEach>
+
+			html1 += "</div><br><div id='local_list'>";
+
+		<c:forEach var="item" items="${command.local}" >
+			html1 += "<div id="+global.i+">${item} ";
+			html1 += "<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+			html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
+			global.i++;
+		</c:forEach>
+
+		html1 += "</div>";
+
+		$('#result').append(html1);
+		$('#hidden').append(html2);
+	}
+	</script>	
+	
+</body>
+</html>

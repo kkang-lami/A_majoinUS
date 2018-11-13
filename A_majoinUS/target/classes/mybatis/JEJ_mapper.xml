@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="JEJ_AUS">
+<!-- 스케줄 -->
+<insert id="add_schedule" parameterType="project.DTO.ScheduleDTO">
+	insert into schedule values (SCHEDULE_SEQ.NEXTVAL, #{s_start}, #{s_end}, #{s_content}, #{pj_num})
+</insert>
+
+<select id="select_schedule" resultType="project.DTO.ScheduleDTO">
+	select * from holiday natural join schedule where pj_num = #{pj_num}
+</select>
+
+<!-- * 스케쥴 수정 * -->
+<insert id="schedule_add" parameterType="project.DTO.ScheduleDTO">
+	insert into schedule values(#{h_num},#{s_date})
+</insert>
+
+<insert id="holiday_add" parameterType="project.DTO.HolidayDTO">
+	insert into holiday values(holiday_seq.nextval,#{h_name},#{h_start},#{h_end},#{pj_num})
+</insert>
+
+
+<select id="h_num" resultType="int">
+	select max(h_num) from schedule
+</select>
+
+<!-- 통계 -->
+<select id="static_inquiry" resultType="int">
+	select count(*) from inquiry where i_state='미답변'
+</select>
+
+<select id="static_inquiry_ok" resultType="int">
+	select count(*) from inquiry where i_state='답변완료'
+</select>
+
+<select id="static_visit" resultType="project.DTO.Visit_statDTO">
+	select SUBSTR(visit_date,0,8) as visit_date, count from visit_stat order by visit_date desc
+</select>
+
+<select id="static_pay" resultType="project.DTO.Point_statDTO">
+	select SUBSTR(pay_date,4,8) as pay_date, pay_price from point_stat order by pay_date desc
+</select>
+
+<select id="static_project" resultType="int">
+	select count(*) from PROJECTROOM
+</select>
+
+<select id="count_project" resultType="int">
+	select distinct pj_num from PROJECTROOM
+</select>
+
+<select id="static_project_match" parameterType="java.util.Map" resultType="int">
+	select count(*) from PROJECTROOM where pj_num=#{pj_num} and mem_limit = (select count(*) from pj_mem where pj_num=#{pj_num1})
+</select>
+
+<!-- 결제 내역 -->
+<select id="payment_list123" resultType="project.DTO.PaymentDTO">
+	select * from payment
+</select>
+
+<select id="payment_list" parameterType="java.util.Map" resultType="project.DTO.PaymentDTO">
+	select * from payment where SUBSTR(reg_date,1,2)= #{d_yy} and SUBSTR(reg_date,4,2) = #{d_mm}
+</select> 
+
+<!-- 카테고리 관리 -->
+<select id="select_cate" resultType="project.DTO.Category_2DTO">
+	<![CDATA[select cate_name.cate_num, cate_name.c_name, category_1.cate_1_num, category_1.c_1_name, category_2.c_2_num, category_2.c_2_name 
+	from cate_name, category_1, category_2 
+		where category_1.cate_num = cate_name.CATE_NUM and category_2.cate_1_num = category_1.CATE_1_NUM]]>
+</select>
+
+<delete id="delete_cate" parameterType="project.DTO.Category_2DTO"><!-- 파라미터 타입을 카테고리로.. -->
+	delete from category_2 where c_2_num=#{c_2_num}
+</delete>
+
+<select id="select_one_cate" resultType="project.DTO.Category_2DTO">
+	<![CDATA[select cate_name.c_name, category_1.cate_1_num, category_1.c_1_name, category_2.c_2_num, category_2.c_2_name 
+		from CATE_NAME,CATEGORY_1,CATEGORY_2 
+			where category_1.cate_num = cate_name.CATE_NUM and category_2.cate_1_num = category_1.CATE_1_NUM and category_2.c_2_num=#{c_2_num}]]>
+</select>
+
+<update id="update_cate1" parameterType="project.DTO.Category_2DTO">
+	update category_1 set c_1_name=#{c_1_name} where cate_1_num=#{cate_1_num}
+</update>
+
+<update id="update_cate2" parameterType="project.DTO.Category_2DTO">
+	update category_2 set c_2_name=#{c_2_name} where c_2_num=#{c_2_num}
+</update>
+
+<update id="update_favorite" parameterType="java.util.Map">
+	update ${table} set ${column}='${c_1_name}>${c_2_name}' where ${column} = '${c_1_past}>${c_2_past}'
+</update>
+
+<!-- <update id="update_favoriteJob" parameterType="project.DTO.Pj_jobDTO">
+	update pj_location set pj_loc='${c_1_name}>${c_2_name}' where PJ_LOC = '${c_1_past}>${c_2_past}'
+</update>
+ -->
+
+<!-- 회원 관리 -->
+<select id="excel_member" resultType="project.DTO.MemberDTO">
+	select * from member
+</select>
+
+<select id="count_member" resultType="int">
+	select count(*) from member
+</select>
+
+<select id="admin_member" parameterType="project.DTO.PageDTO" resultType="project.DTO.MemberDTO">
+	<![CDATA[select id, password, name, birth, phone, profile, blacklist, follower, eval, r 
+	from (select id, password, name, birth, phone, profile, blacklist, follower, eval, rownum r 
+	from (select*from member where id not in ('amajoinus@gmail.com')) order by r) 
+		where r>=#{startRow} and r<=#{endRow}]]>
+</select>
+
+<select id="member_search_count" parameterType="project.DTO.PageDTO" resultType="int">
+	select count(*) from member where ${string} like '%'||#{search}||'%'
+</select>
+
+<select id="member_search_list" parameterType="project.DTO.PageDTO" resultType="project.DTO.MemberDTO">
+	<![CDATA[select id, password, name, birth, phone, profile, blacklist, follower, eval, r 
+	from (select id, password, name, birth, phone, profile, blacklist, follower, eval, rownum r 
+	from (select*from member where ${string} like '%'||#{search}||'%') order by r) 
+		where r>=${startRow} and r<=${endRow}]]>
+</select>
+
+<update id="update_blackList" parameterType="project.DTO.MemberDTO">
+	update member set blacklist='YES' where id=#{id}
+</update>
+
+<!-- 블랙리스트 조회 -->
+<select id="view_blackList" resultType="project.DTO.MemberDTO">
+	select * from member where blacklist='YES'
+</select>
+
+<update id="update_blackList_Back" parameterType="project.DTO.MemberDTO">
+	update member set blacklist='NO' where id=#{id}
+</update>
+
+<update id="auto_blackList" parameterType="project.DTO.MemberDTO">
+	update member set blacklist='YES' where id = (select issue_id as id from issue group by issue_id having count(*)>=3)
+</update>
+
+<!-- 프로젝트 전체 조회 -->
+<select id="count_projectroom" resultType="int">
+	select count(*) from PROJECTROOM
+</select>
+
+<select id="admin_projectroom" parameterType="project.DTO.PageDTO" resultType="project.DTO.ProjectroomDTO">
+	<![CDATA[select pj_name, id, start_d, end_d, regdate, r 
+	from (select pj_name, id, start_d, end_d, regdate, rownum r 
+	from (select*from projectroom) order by r) 
+		where r>=#{startRow} and r<=#{endRow}]]>
+</select>
+
+<select id="projectroom_search_count" parameterType="project.DTO.PageDTO" resultType="int">
+	select count(*) from PROJECTROOM where ${string} like '%'||#{search}||'%'
+</select>
+
+<select id="projectroom_search_list" parameterType="project.DTO.PageDTO" resultType="project.DTO.ProjectroomDTO">
+	<![CDATA[select pj_num, pj_name, id, start_d, end_d, regdate, r 
+	from (select pj_num, pj_name, id, start_d, end_d, regdate, rownum r 
+	from (select*from projectroom where ${string} like '%'||#{search}||'%' order by start_d desc) order by r) 
+		where r>=${startRow} and r<=${endRow}]]>
+</select>
+
+
+
+  
+<!-- 신고 관리 --> 
+<select id="count_member_issue" resultType="int">
+	select count(*) from issue where pj_num is null
+</select>
+
+<select id="count_room_issue" resultType="int">
+	select count(*) from issue where pj_num is not null
+</select>
+
+<select id="admin_issue_member" resultType="project.DTO.IssueDTO">
+	select * from issue where pj_num is null
+</select> 
+
+<select id="admin_issue_page_mem" parameterType="project.DTO.PageDTO" resultType="project.DTO.IssueDTO">
+	<![CDATA[select id,issue_id,pj_num,is_content,is_date, r 
+	from (select id,issue_id,pj_num,is_content,is_date, rownum r 
+		from (select*from issue where pj_num is null) order by r) 
+		where r>=#{startRow} and r<=#{endRow}]]>
+</select>
+
+<select id="admin_issue_page_room" parameterType="project.DTO.PageDTO" resultType="project.DTO.IssueDTO">
+	<![CDATA[select pj_name,id,issue_id,pj_num,is_content,is_date, r 
+	from (select pj_name, id,issue_id,pj_num,is_content,is_date, rownum r 
+	from (select projectroom.pj_name, projectroom.id, issue_id, issue.pj_num,is_content,is_date 
+	from issue, projectroom where issue.pj_num is not null and projectroom.pj_num = issue.pj_num) order by r)
+		where r>=#{startRow} and r<=#{endRow}]]>
+</select>
+
+<select id="admin_issue_project" resultType="project.DTO.IssueDTO">
+	select * from issue, projectroom where issue.pj_num = projectroom.pj_num
+</select> 
+
+<!-- 평가 관리 -->
+<select id="count_review_admin" resultType="int">
+	select count(*) from review_admin
+</select>
+
+
+<select id="admin_reviewList" resultType="project.DTO.Review_adminDTO">
+	select projectroom.PJ_NAME, review_admin.PJ_NUM, review_admin.id, pj_name, ra_content, end_d 
+	from projectroom, review_admin where projectroom.pj_num = review_admin.pj_num
+</select>
+	
+<select id="admin_review_page" resultType="project.DTO.Review_adminDTO">
+	<![CDATA[select pj_num,id, ra_content,pj_name,end_d, r 
+	from (select pj_num,id, pj_name,end_d,ra_content, rownum r 
+	from (select ra_content,review_admin.pj_num,end_d,review_admin.id, projectroom.pj_name 
+	from review_admin, projectroom where projectroom.pj_num = review_admin.pj_num) order by r) 
+		where r>=#{startRow} and r<=#{endRow}]]>
+</select>
+</mapper>

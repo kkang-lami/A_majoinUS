@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LSH_AUS">
+
+	<!--//////////////////////////////////////////////// 프로젝트룸 메인///////////////////////////////////// -->
+	<select id="getProgress" parameterType="int" resultType="map" >
+		select * from
+		( 
+			select c.id mem_id,a.pj_num, pj_name,start_d, end_d , a.id leader, u_img, name,blacklist, state
+				From projectroom a
+				LEFT OUTER join PJ_MEM c on (a.pj_num = c.pj_num)
+				Inner join member d on (c.id = d.id)
+				LEFT OUTER join project_workboard b on (c.id = b.id)
+			Where a.pj_num = #{pj_num}
+		)
+		pivot (count(*) for state in('진행중' as ongoing,'완료' as complete,'지연' as delay))
+	</select>
+
+	<update id="update_leader" parameterType="Map">
+		update projectroom set id = #{id} where pj_num=#{pj_num}
+	</update>
+	
+	
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!-- 유저프로필 -->
+	<select id="getProfile" parameterType="map" resultType="controller.LSH.ProfileDTO">
+		<![CDATA[
+		select a.*,local,job,isfriend,review_content,port_num,subject,start_d,end_d,p_private from (
+			(SELECT id,name,profile,u_img,eval from member m where id=#{id}) a
+            LEFT OUTER join
+			(SELECT id,LISTAGG(f_loc,', ') WITHIN GROUP (ORDER BY f_loc) local from f_location where id=#{id} group by id) b
+            on(a.id = b.id) LEFT OUTER join
+			(SELECT id,LISTAGG(f_cate,', ') WITHIN GROUP (ORDER BY f_cate) job from f_job where id=#{id} group by id)c on(a.id = c.id)
+			LEFT OUTER join
+			(SELECT friend_id,count(*) isfriend from follow where id=#{login_id} and friend_id=#{id} group by friend_id)d on(a.id = d.friend_id)
+			LEFT OUTER join
+			(select target_id,review_content from REVIEW where target_id=#{id}) e on(a.id = e.target_id)
+			LEFT OUTER join
+			(select id,port_num,subject,start_d,end_d,p_private from PORTFOLIO where id =#{id}) f on(a.id = f.id)
+		) 
+		]]>
+	</select>
+	
+	<!-- 프로젝트룸 -->
+	<select id="getProjectRoom" parameterType="String" resultType="hashmap">
+		select * from (
+			(SELECT * from projectroom where pj_num=#{pj_num}) a
+			LEFT OUTER join
+			(SELECT pj_num,LISTAGG(pj_loc,', ') WITHIN GROUP (ORDER BY pj_loc) local from PJ_LOCATION where pj_num=#{pj_num} group by pj_num) b
+			on (a.pj_num = b.pj_num)
+			LEFT OUTER join 
+			(SELECT pj_num,LISTAGG(pj_cate,', ') WITHIN GROUP (ORDER BY pj_cate) job from PJ_JOB where pj_num=#{pj_num} group by pj_num) c
+			on(a.pj_num = c.pj_num)
+		)
+	</select>
+
+	<!-- 뷰 증가 -->
+	<update id="update_view" parameterType="map">
+		update ${table} set ${colum} = ${colum}+1  where ${where}=#{what}
+	</update>
+
+	<!-- 신고갯수 가져오기 -->
+	<select id="check_issue" parameterType="project.DTO.IssueDTO" resultType="int">
+		select count(*) from issue where id = #{id} 
+		<if test="pj_num == 0">
+			and pj_num is null and issue_id = #{issue_id} 
+		</if>
+		<if test="pj_num != 0">
+			and pj_num = #{pj_num}
+		</if>
+	</select>
+	
+	<insert id="insert_issue" parameterType="project.DTO.IssueDTO">
+			INSERT INTO ISSUE VALUES(ISSUE_SEQ.NEXTVAL,#{id},#{issue_id},
+		<if test="pj_num == 0">
+			null
+		</if>
+		<if test="pj_num != 0">
+			#{pj_num}
+		</if>
+			,#{is_content},sysdate)
+	</insert>
+	
+	<select id="count_issue" parameterType="project.DTO.IssueDTO" resultType="int">
+		select count(*) from issue where
+		<if test="pj_num == 0">
+			pj_num is null and issue_id = #{issue_id}
+		</if>
+		<if test="pj_num != 0">
+			pj_num = #{pj_num}
+		</if>
+	</select>
+	
+	<update id="update_black" parameterType="String">
+		update MEMBER set BLACKLIST ='YES' where id =#{id}
+	</update>
+	
+	<!-- //////////////////////////////////////////////////////////////팔로우 전송/////////////////////////////////////////////////////// -->
+	<insert id="follow" parameterType="map">
+		INSERT INTO FOLLOW VALUES(FOLLOW_SEQ.NEXTVAL,#{id},#{friend_id})
+	</insert>
+
+	<delete id="unfollow" parameterType="map">
+		delete FOLLOW where id=#{id} and friend_id = #{friend_id}
+	</delete>
+	
+	<!-- //////////////////////////////////////////////////////////////즐겨찾기 /////////////////////////////////////////////////////// -->
+	<insert id="star" parameterType="map">
+		INSERT INTO Favorite VALUES(favorite_SEQ.NEXTVAL,#{id},#{pj_num})
+	</insert>
+
+	<delete id="unstar" parameterType="map">
+		delete Favorite where pj_num=#{pj_num} and id = #{id}
+	</delete>
+
+	<!-- 메세지 전송 -->
+	<insert id="insert_A" parameterType="project.DTO.AlarmDTO">
+		INSERT INTO ALARM VALUES(ALARM_SEQ.NEXTVAL,#{sender},#{receiver},#{pj_num},sysdate,#{a_type})
+	</insert>
+
+	<!-- 프로젝트 가져오기 -->
+	<select id="myProject" parameterType="String" resultType="Map">
+		<![CDATA[ select PJ_NUM,PJ_name from projectroom where end_d > trunc(sysdate) and id = #{id} ]]>
+	</select>
+
+	<!-- 카테고리 sql -->
+	<select id="select1" parameterType="String" resultType="String">
+		select distinct C_1_NAME from CATE_NAME natural join CATEGORY_1 natural join CATEGORY_2 where C_NAME=#{c_name} order by C_1_NAME asc
+	</select>
+
+	<select id="select2" parameterType="String" resultType="String">
+		select distinct C_2_NAME from CATE_NAME natural join CATEGORY_1 natural join CATEGORY_2 where C_1_NAME=#{C_1_NAME} order by C_2_NAME asc
+	</select>
+
+	<!-- 맴버검색 sql -->
+	<select id="search" parameterType="controller.LSH.SearchDTO" resultType="controller.LSH.ResultDTO">
+		select * from(
+			select fin.*, rownum r 
+		    from(
+				select total.*
+				from(
+				    SELECT ROW_NUMBER() OVER (PARTITION BY id ORDER BY f_cate)  AS RNUM, base.* 
+				    from(
+				        SELECT member.id id,name,u_img,eval,joindate,mem_view,f_cate,f_loc 
+				        FROM member 
+				            LEFT OUTER join f_location on(member.id = f_location.id) 
+				            LEFT OUTER join f_job ON (member.id = f_job.id )
+				        where blacklist = 'NO' and member.id != 'amajoinus@gmail.com'
+			    		<if test="eval != null">
+		    			<![CDATA[	and eval >= #{eval} ]]>
+		  				</if>
+		  				<if test="job != null">
+		    				and F_CATE in
+			  				<foreach item="item" collection="job" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+		  				<if test="local != null">
+		    				and f_loc in
+			  				<foreach item="item" collection="local" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+						<if test="keyword != ''">
+			    			and (PROFILE like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' or member.id like '%'||#{keyword}||'%')
+			  			</if>
+				    ) base
+				) total
+				WHERE  total.RNUM = 1
+				order by ${sort} ${sort_way}
+			) fin
+			<![CDATA[ WHERE rownum <= #{endRow} ]]>
+		) <![CDATA[ where r >= #{startRow} ]]>
+	</select>
+	
+	<select id="searchNumber" parameterType="controller.LSH.SearchDTO" resultType="int">
+			SELECT count(*)
+				from(
+				    SELECT ROW_NUMBER() OVER (PARTITION BY id ORDER BY f_cate)  AS RNUM, base.* 
+				    from(
+				        SELECT member.id id,name,u_img,eval,joindate,mem_view,f_cate,f_loc 
+				        FROM member 
+				            LEFT OUTER join f_location on(member.id = f_location.id) 
+				            LEFT OUTER join f_job ON (member.id = f_job.id )
+				        where blacklist = 'NO' and member.id != 'amajoinus@gmail.com'
+			    		<if test="eval != null">
+		    			<![CDATA[ and eval >= #{eval} ]]>
+		  				</if>
+		  				<if test="job != null">
+		    			and F_CATE in
+			  				<foreach item="item" collection="job" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+		  				<if test="local != null">
+		    			and f_loc in
+			  				<foreach item="item" collection="local" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+						<if test="keyword != ''">
+			    		and (PROFILE like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' or member.id like '%'||#{keyword}||'%')
+			  			</if>
+				    ) base
+				) total
+				WHERE  total.RNUM = 1
+	</select>
+	
+	<!-- 팀검색 sql -->
+	<select id="searchTeam" parameterType="controller.LSH.SearchTeamDTO" resultType="controller.LSH.ResultTeamDTO">
+		SELECT * FROM(
+			SELECT fin.*, rownum r 
+			FROM(
+				SELECT total.*
+			    FROM(
+			    	SELECT ROW_NUMBER() OVER (PARTITION BY PJ_NUM ORDER BY regdate)  AS RNUM, base.* 
+			    	FROM(
+			        	SELECT pj.PJ_NUM,pj_name,start_d,end_d,pj.id,regdate,pj_view,name,pj_loc,pj_cate,favs
+			        	FROM PROJECTROOM pj
+		                    LEFT OUTER join PJ_LOCATION lo on(pj.PJ_NUM = lo.PJ_NUM) 
+		                    LEFT OUTER join PJ_JOB jo ON (pj.PJ_NUM = jo.PJ_NUM )
+		                    LEFT OUTER join (select id, listagg(pj_num,',') within group (order by pj_num) favs from favorite group by id) fav ON (pj.id = fav.id)
+		                    INNER JOIN member m ON (pj.id = m.id)
+		                <![CDATA[ where blacklist = 'NO' and trunc(sysdate) <= end_d ]]>
+		                <if test="start_d != ''">
+		    			<![CDATA[ and start_d >= #{start_d} ]]>
+		  				</if>
+		  				<if test="job != null">
+		    				and PJ_CATE in
+			  				<foreach item="item" collection="job" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+		  				<if test="local != null">
+		    				and PJ_loc in
+			  				<foreach item="item" collection="local" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+						<if test="keyword != ''">
+			    			and (PJ_INFO like '%'||#{keyword}||'%' or pj_name like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%')
+			  			</if>
+				    ) base
+				) total
+				WHERE  total.RNUM = 1
+				order by ${sort} ${sort_way}
+			) fin
+			<![CDATA[ WHERE rownum <= #{endRow} ]]>
+		) <![CDATA[ where r >= #{startRow} ]]>
+	</select>
+	
+	<select id="searchTeamNumber" parameterType="controller.LSH.SearchTeamDTO" resultType="int">
+			SELECT count(*)
+				from(
+			    	SELECT ROW_NUMBER() OVER (PARTITION BY PJ_NUM ORDER BY regdate)  AS RNUM, base.* 
+			    	FROM(
+			        	SELECT pj.PJ_NUM,pj_name,start_d,end_d,regdate,pj_view,name,pj_loc,pj_cate
+			        	FROM PROJECTROOM pj
+		                    LEFT OUTER join PJ_LOCATION lo on(pj.PJ_NUM = lo.PJ_NUM) 
+		                    LEFT OUTER join PJ_JOB jo ON (pj.PJ_NUM = jo.PJ_NUM)
+		                    INNER JOIN member m ON (pj.id = m.id)
+		                where blacklist = 'NO' and <![CDATA[ trunc(sysdate) <= end_d ]]>
+		                 <if test="start_d != ''">
+		    				<![CDATA[ and start_d >= #{start_d} ]]>
+		  				</if>
+		                <if test="job != null">
+		    				and PJ_CATE in
+			  				<foreach item="item" collection="job" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+		  				<if test="local != null">
+		    				and PJ_loc in
+			  				<foreach item="item" collection="local" open="(" separator="," close=")">
+			        			#{item}
+			  				</foreach>
+			  			</if>
+						<if test="keyword != ''">
+			    			and (PJ_INFO like '%'||#{keyword}||'%' or pj_name like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%')
+			  			</if>
+			    ) base
+			) total
+			WHERE  total.RNUM = 1
+	</select>
+
+</mapper>
