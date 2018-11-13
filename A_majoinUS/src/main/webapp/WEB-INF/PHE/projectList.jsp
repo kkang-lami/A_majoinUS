@@ -213,8 +213,8 @@ a {
 													<fmt:formatDate value="${end}" pattern="yyyy/MM/dd" />
 												</c:otherwise>
 											</c:choose></td>
-										<td><a
-											href="projectContent?pj_num=${ongoing_list.pj_num}">
+										<td><a    
+											href="ProejctRoom/Main?pj_Num=${ongoing_list.pj_num}">		<%-- ************************* --%>
 												${ongoing_list.pj_name} </a></td>
 										<td>${ongoing_list.leaderId}: 팀장 //
 											${sessionScope.userId} 세션아이디 <c:if

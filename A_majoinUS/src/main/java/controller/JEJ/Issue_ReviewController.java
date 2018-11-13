@@ -23,8 +23,8 @@ public class Issue_ReviewController {
 		this.service = service;
 	}
 	
-	@RequestMapping(value = "/aus/JEJ/issue_admin")
-	public void issue(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum,@RequestParam(value="pageNum2", defaultValue="1")int pageNum2, String search, String string) throws Exception {
+	@RequestMapping(value = "/aus/issue_admin")
+	public String issue(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum,@RequestParam(value="pageNum2", defaultValue="1")int pageNum2, String search, String string) throws Exception {
 		//회원 신고
 		//model.addAttribute("memberIssue", service.getMemberIssue());
 		int pageSize = 5;
@@ -70,11 +70,13 @@ public class Issue_ReviewController {
 		model.addAttribute("pageSize1",pageSize1);
 		model.addAttribute("currentPage1",currentPage1);
 		model.addAttribute("projectIssue", service.getRoomIssuePage(dto1));
+		
+		return "JEJ/issue_admin";
 	}
 	
 	
-	@RequestMapping(value = "/aus/JEJ/review_admin")
-	public void review(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
+	@RequestMapping(value = "/aus/review_admin")
+	public String review(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
 		//model.addAttribute("reviewList", service.getReviewpage(dto));
 		//return "JEJ/review_admin";
 		
@@ -100,6 +102,8 @@ public class Issue_ReviewController {
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("reviewList", service.getReviewPage(dto));
+		
+		return "JEJ/review_admin";
 	}
 	
 	

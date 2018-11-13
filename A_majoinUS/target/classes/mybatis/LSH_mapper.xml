@@ -4,7 +4,24 @@
 
 <mapper namespace="LSH_AUS">
 
-	<!--//////////////////////////////////////////////// 프로젝트룸 메인///////////////////////////////////// -->
+	<!-- ///////////////////////////////////////// 마이페이지 ///////////////////////////////////////////// -->
+	<select id="getTodo" parameterType="String" resultType="project.DTO.Todo_listDTO" >
+		select * from Todo_list where id = #{id} order by todo_num
+	</select>
+	
+	<insert id="insertTodo" parameterType="project.DTO.Todo_listDTO">
+		insert into Todo_list values(#{todo_num},#{id},#{todo})
+	</insert>
+	
+	<update id="updateTodo" parameterType="project.DTO.Todo_listDTO">
+		update Todo_list set TODO = #{todo} where TODO_NUM = #{todo_num}
+	</update>
+	
+	<delete id="deleteTodo" parameterType="String">
+		delete * from Todo_list where TODO_NUM = #{todo_num}
+	</delete>
+
+	<!-- ////////////////////////////////////////// 프로젝트룸 메인 ///////////////////////////////////////// -->
 	<select id="getProgress" parameterType="int" resultType="map" >
 		select * from
 		( 
@@ -25,6 +42,11 @@
 	
 
 	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!-- 장바구니 -->
+	<select id="getCart" parameterType="String" resultType="project.DTO.ProjectroomDTO">
+		select p.* from favorite f inner join projectroom p on(f.pj_num = p.pj_num) where f.id =#{id}
+	</select>
 	
 	<!-- 유저프로필 -->
 	<select id="getProfile" parameterType="map" resultType="controller.LSH.ProfileDTO">
@@ -221,10 +243,10 @@
 			    	FROM(
 			        	SELECT pj.PJ_NUM,pj_name,start_d,end_d,pj.id,regdate,pj_view,name,pj_loc,pj_cate,favs
 			        	FROM PROJECTROOM pj
-		                    LEFT OUTER join PJ_LOCATION lo on(pj.PJ_NUM = lo.PJ_NUM) 
-		                    LEFT OUTER join PJ_JOB jo ON (pj.PJ_NUM = jo.PJ_NUM )
-		                    LEFT OUTER join (select id, listagg(pj_num,',') within group (order by pj_num) favs from favorite group by id) fav ON (pj.id = fav.id)
+		                    LEFT JOIN PJ_LOCATION lo on(pj.PJ_NUM = lo.PJ_NUM) 
+		                    LEFT JOIN PJ_JOB jo ON (pj.PJ_NUM = jo.PJ_NUM )
 		                    INNER JOIN member m ON (pj.id = m.id)
+							LEFT JOIN (select id, listagg(pj_num,',') within group (order by pj_num) favs from favorite group by id) on 1 = 1
 		                <![CDATA[ where blacklist = 'NO' and trunc(sysdate) <= end_d ]]>
 		                <if test="start_d != ''">
 		    			<![CDATA[ and start_d >= #{start_d} ]]>

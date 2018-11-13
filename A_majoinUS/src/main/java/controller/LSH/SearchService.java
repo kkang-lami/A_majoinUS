@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +18,7 @@ import dao.LSH;
 import project.DTO.AlarmDTO;
 import project.DTO.IssueDTO;
 import project.DTO.PortfolioDTO;
+import project.DTO.ProjectroomDTO;
 
 @Service
 public class SearchService {
@@ -221,7 +221,16 @@ public class SearchService {
 		}
 		return map;
 	}
-
+	
+	public List<ProjectroomDTO> getCart(String id){
+		List<ProjectroomDTO> list = new ArrayList<ProjectroomDTO>();
+		try {
+			list = dao.getCart("LSH_AUS.getCart",id);
+		}catch (Exception e) {
+			System.out.println("[에러] 장바구니 서비스 실패 ::"+e.toString());
+		}
+		return list;	
+	}
 	
 	public byte[] getportfolioImage(String imagePath) throws IOException {
 		//위에서 정의한 변수명을 갖고와서 사용

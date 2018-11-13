@@ -27,8 +27,8 @@ public class PaymentListController {
 		this.service = service;
 	}
 	
-	@RequestMapping(value = "/aus/JEJ/PaymentList")
-	public void payment_list123(Model model, @RequestParam(value="d_yy", defaultValue="0")int d_yy, @RequestParam(value="d_mm", defaultValue="0")int d_mm) throws Exception {	
+	@RequestMapping(value = "/aus/PaymentList")
+	public String payment_list123(Model model, @RequestParam(value="d_yy", defaultValue="0")int d_yy, @RequestParam(value="d_mm", defaultValue="0")int d_mm) throws Exception {	
 		Calendar cal = Calendar.getInstance();
 		
 		if (d_yy == 0) {
@@ -47,10 +47,12 @@ public class PaymentListController {
 		
 		model.addAttribute("d_yy",d_yy);
 		model.addAttribute("d_mm",d_mm);
+		
+		return "JEJ/PaymentList";
 	}
 	
-	@RequestMapping(value = "/aus/JEJ/PaymentAjax", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
-	public void payment_list(Model model, @RequestParam(value="d_yy", defaultValue="0")int d_yy, @RequestParam(value="d_mm", defaultValue="0")int d_mm) throws Exception {	
+	@RequestMapping(value = "/aus/PaymentAjax", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	public String payment_list(Model model, @RequestParam(value="d_yy", defaultValue="0")int d_yy, @RequestParam(value="d_mm", defaultValue="0")int d_mm) throws Exception {	
 		Calendar cal = Calendar.getInstance();
 		
 		if (d_yy == 0) {
@@ -70,10 +72,12 @@ public class PaymentListController {
 		
 		model.addAttribute("d_yy",d_yy);
 		model.addAttribute("d_mm",d_mm);
+		
+		return "JEJ/PaymentAjax";
 	}
 	
-	@RequestMapping(value = "/aus/JEJ/PaymentListPro")
-	public void payment_list_submit(Model model, int d_yy, int d_mm) throws Exception {
+	@RequestMapping(value = "/aus/PaymentListPro")
+	public String payment_list_submit(Model model, int d_yy, int d_mm) throws Exception {
 		System.out.println("년도:"+d_yy);
 		System.out.println("월:"+d_mm);
 		
@@ -83,6 +87,8 @@ public class PaymentListController {
 		
 		model.addAttribute("d_yy",d_yy);
 		model.addAttribute("d_mm",d_mm);
+		
+		return "JEJ/PaymentListPro";
 	}
 	
 	
@@ -92,7 +98,7 @@ public class PaymentListController {
 	
 	
 	
-	@RequestMapping(value = "/aus/JEJ/PaymentAjax", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value = "/aus/PaymentAjax", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String payment_list1(Model model,  HttpServletResponse resp, @RequestParam(value="d_yy", defaultValue="0")int d_yy, @RequestParam(value="d_mm", defaultValue="0")int d_mm) throws Exception {	
 		

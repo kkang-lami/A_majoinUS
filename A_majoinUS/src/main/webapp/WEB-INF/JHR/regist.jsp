@@ -60,7 +60,7 @@ function fn_signUp(){
 <body>
 
 <h1>회원가입</h1>
-<form action="./register" method ="post" enctype="multipart/form-data" >
+<form action="register" method ="post" enctype="multipart/form-data" >
 
 <table class="regist-list">
 
@@ -151,7 +151,7 @@ function fn_signUp(){
 <tr>
 <td><input type="submit" name="signUpBtn" value="회원가입" /></td>
 <td>
-<input type="reset" value="로그인" onclick="history.go(-1)" /><!-- //a href="./loginMain" -->
+<input type="reset" value="취소" onclick="history.go(-1)" /><!-- //a href="./loginMain" -->
 </td></tr>
 
 

@@ -19,7 +19,7 @@ import project.DTO.FileboardDTO;
 import project.DTO.Pj_memDTO;
 
 @Controller
-@RequestMapping("/aus/pr_fileboard")
+@RequestMapping("/aus/ProejctRoom/pr_fileboard")
 public class FileBoardController {
 	
 	@Autowired

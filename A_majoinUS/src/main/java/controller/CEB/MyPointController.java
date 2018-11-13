@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,11 +49,12 @@ public class MyPointController {
 
 	
 	@RequestMapping(value = "/MyPoint")
-	public String show_content(ModelMap model,
-			@RequestParam(value="pageNum", defaultValue="1")int pageNum,
-			String search, String string) {
-		
-		int myPoint = memberDAO.show_listOne_3("amajoinus@gmail.com");/*id*/
+	public String show_content(ModelMap model, @RequestParam(value="pageNum", defaultValue="1")int pageNum,	String search, String string, HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "main";
+		}
+		int myPoint = memberDAO.show_listOne_3(id);/*id*/
 		model.addAttribute("myPoint", myPoint);    
       
 		int pageSize = 10;          
@@ -63,16 +66,16 @@ public class MyPointController {
 		       
 		  
 		List<PointDTO> pointList = null;      
-		int count1 = memberDAO.show_count_ticket("amajoinus@gmail.com");
+		int count1 = memberDAO.show_count_ticket(id);
      
 		System.out.println(count1);  
 		    
         if(search==null) {
-        	count = memberDAO.show_count_3("amajoinus@gmail.com");
+        	count = memberDAO.show_count_3(id);
         	
         	  
         	if(count > 0) {
-    			pointList = memberDAO.show_list_point(startRow, endRow, "amajoinus@gmail.com");  
+    			pointList = memberDAO.show_list_point(startRow, endRow, id);  
         	}
         	
         }      
@@ -163,17 +166,6 @@ public class MyPointController {
 	      return "CEB/payment/InsertSuccess"; 
 	   } 
 	
-	
-	   
-	   
-	
-	  
-	
-	
-	
-	
-
-		
 	}
 	
 

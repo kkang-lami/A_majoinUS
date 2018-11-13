@@ -29,7 +29,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
       <div class="container">
       <!-- 위 메뉴 하이퍼 링크 -->
-        <a class="navbar-brand" href="index.html">A_majoinUs</a>
+        <a class="navbar-brand" href="<%=request.getContextPath() %>/aus/main">A_majoinUs</a>
         <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#probootstrap-menu" aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
           <span><i class="ion-navicon"></i></span>
         </button>
@@ -49,7 +49,7 @@
     <!-- END nav -->
     
 
-    <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('MainTemplate/images/bg_1.jpg');" data-stellar-background-ratio="0.5"  id="section-home">
+    <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('<%=request.getContextPath() %>/MainTemplate/images/bg_1.jpg');" data-stellar-background-ratio="0.5"  id="section-home">
       <div class="overlay"></div>
       <div class="container">
         <div class="row align-items-center">
@@ -64,7 +64,7 @@
           </div> 
           
          <div class="col-md-6  probootstrap-animate">
-            <form method="post" class="probootstrap-form probootstrap-form-box mb40">
+            <form method="post" class="probootstrap-form probootstrap-form-box mb40" action="loginCheck">
            <h3>create you are project and team </h3>
            <h5 class="display-4 border-bottom probootstrap-section-heading"></h5>
            <h3></h3>
@@ -89,10 +89,10 @@
               
               <h3></h3> 
               <div class="col-md-12 text-center">
-              Did you forget your <a href="aus/JHR/loginMain">ID</a> or <a href="">password</a>?
+              Did you forget your <a href="findMain">ID</a> or <a href="findMain">password</a>?
              </div>
              <div class="col-md-12 text-center">
-              Are you not a joinUs member yet? <a href="">Join a Member</a> 
+              Are you not a joinUs member yet? <a href="regist">Join a Member</a> 
              </div>
            
             </form>

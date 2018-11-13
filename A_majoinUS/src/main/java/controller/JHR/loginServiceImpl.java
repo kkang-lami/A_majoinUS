@@ -21,12 +21,12 @@ public class loginServiceImpl implements loginService{
 	public boolean loginCheck(MemberDTO dto, HttpSession session) {
 		boolean result = dao.loginCheck(dto);
 
-		if(result) {//true 일 경우 세션에 등록
+		/*if(result) {//true 일 경우 세션에 등록		//세션이 안먹는다
 			MemberDTO member=checkMember(dto);
 			//세션 변수 등록
 			session.setAttribute("id", member.getId());
 			session.setAttribute("name", member.getName());
-		}
+		}*/
 		return result;
 	}
 	//회원 로그인 정보

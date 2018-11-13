@@ -33,25 +33,6 @@ $(document).on('click','#findId',function(){
     });    
 });      
 
-<%-- $('#sendmail').on('click',function(){
-	var name = $('#pw_name').val();
- 	var id = $('#pw_id').val();    
- 	
- 	alert(id);
- 	alert(name);
- 	    
-	var url = "<%=request.getContextPath()%>/aus/JHR/findMail";
-	var param = "id="+id+"&name="+name;
-	 $.ajax({
-		type:"post",
-		url:url,
-		data:param,
-		success:function(args){
-			alert('aaa');	
-		}
-	});
-}); --%>
-
 </script>
 
 <body>
@@ -90,14 +71,14 @@ $('#sendmail').on('click',function(){
 	var name = $('#pw_name').val();
  	var id = $('#pw_id').val();    
  	
-	var url = "<%=request.getContextPath()%>/aus/JHR/findMail";
+	var url = "<%=request.getContextPath()%>/aus/findMail";
 	var param = "id="+id+"&name="+name;
 	 $.ajax({
 		type:"post",
 		url:url,
 		data:param,
 		success:function(args){
-			alert('임시 비밀번호를 보냈습니다.');	
+			alert('이메일로 임시 비밀번호를 보냈습니다.');	
 		}
 	});
 });

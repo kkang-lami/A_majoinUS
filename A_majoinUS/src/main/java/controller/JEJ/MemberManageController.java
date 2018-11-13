@@ -38,7 +38,7 @@ public class MemberManageController {
 	}
 	
 	//엑셀 파일 다운로드	
-	@RequestMapping(value = "/aus/JEJ/ExcelDownload")
+	@RequestMapping(value = "/aus/ExcelDownload")
 	public void excelDown(HttpServletResponse response) throws Exception {
 		
 		// 회원 목록조회
@@ -127,8 +127,8 @@ public class MemberManageController {
 	}
 	
 	
-	@RequestMapping(value = "/aus/JEJ/MemberManage")
-	public void member_manage(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
+	@RequestMapping(value = "/aus/MemberManage")
+	public String member_manage(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
 		
 		//
 		int pageSize = 4;
@@ -175,21 +175,23 @@ public class MemberManageController {
 		
 		//신고 3번 누적 시 자동으로 블랙리스트에 추가
 		//service.autoBlackList();
+		
+		return "JEJ/MemberManage";
 	}
 	
 
 	//블랙리스트에 추가
-	@RequestMapping(value = "/aus/JEJ/blacklistMember")
+	@RequestMapping(value = "/aus/blacklistMember")
 	public String blacklistMember(Model model, String id) {
 		service.updateBlackList(id);
-		return "redirect:/aus/JEJ/MemberManage";
+		return "redirect:/aus/MemberManage";
 	}
 	
 	
 	//블랙리스트 권한복귀
-	@RequestMapping(value = "/aus/JEJ/authorityBack")
+	@RequestMapping(value = "/aus/authorityBack")
 	public String authorityBack(Model model, String id) {		
 		service.updateBlackListBack(id);				
-		return "redirect:/aus/JEJ/MemberManage";
+		return "redirect:/aus/MemberManage";
 	}
 }

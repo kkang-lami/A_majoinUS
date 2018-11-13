@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%
+	String cp = request.getContextPath();
+	request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,10 +55,9 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${reviewList}" var="review">
-										<tr>
+										<tr id="${review.pj_num}">
 											<td>${review.id}</td>
-											<td><a href="<%=request.getContextPath()%>"
-												alt="여기 상세페이지 링크 넣자~">${review.pj_name}</a></td>
+											<td><a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${review.pj_name}</a></td>
 											<td>${review.ra_content}</td>
 											<td><c:set var="end_d1"
 													value="${fn:substring(review.end_d,0,10)}" /> ${end_d1}</td>
@@ -131,13 +134,34 @@
 					<!-- 이고 하나 추가 >> --></div>
 				</div>
 				<!-- /.box -->
-
+	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
+       	
 			</section>
 		</div>
 	</div>
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
-
+<script>
+		var global = {
+			    i : 0,
+			    origin_d : "",
+			    receiver : "",
+			    pj_num: 0
+		};
+		
+		function getContext(){
+			var context = "<%=cp%>";
+			return context;
+		}
+    
+		function getSessionId(){    
+			var sessionid = '${sessionScope.id}';
+			return sessionid;
+		}         
+		
+    	</script>
+	   <script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
+	
 </body>
 </html>

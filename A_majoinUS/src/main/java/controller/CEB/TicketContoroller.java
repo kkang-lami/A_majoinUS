@@ -3,6 +3,8 @@ package controller.CEB;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,20 +38,21 @@ public class TicketContoroller {
 	
 	    
 	@RequestMapping(value = "/buying")
-	public String content (ModelMap model) {
+	public String content (ModelMap model,HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "redirect:/aus/main";
+		}
 		
-		MemberDTO member = ticketDAO.get_member_modal("amajoinus@gmail.com");
+		MemberDTO member = ticketDAO.get_member_modal(id);
 		model.addAttribute("member", member);
-	    
 		
 		return "CEB/ticket/Buy_thing";
 	}  
 
           
 	@RequestMapping(value="/buy_ticket", method = RequestMethod.POST)
-	public String modallist(@ModelAttribute("dto")TicketDTO dto,
-			@ModelAttribute("dto1")PointDTO dto1,Model m
-			 ) {      
+	public String modallist(@ModelAttribute("dto")TicketDTO dto,@ModelAttribute("dto1")PointDTO dto1,Model m) {      
 		
 		ticketDAO.buying_ticket(dto);               
 		ticketDAO.insert_pointlist_2(dto1); 
@@ -68,16 +71,16 @@ public class TicketContoroller {
 	}
 	
 	@RequestMapping(value="/Insert_Ticket", method = RequestMethod.GET) 
-	   public String Insert_Ticket(ModelMap model,
-			   @RequestParam(value="t_num") int t_num
-			   /*@RequestParam(value="total_point") String total_point*/ 
-			   ) {
-		 
+	   public String Insert_Ticket(ModelMap model, @RequestParam(value="t_num") int t_num, HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "redirect:/aus/main";
+		}
 		System.out.println("::::::::::여기");
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("t_num", t_num);
-		map.put("id","amajoinus@gmail.com");/*세션으로 넣어라*/
+		map.put("id",id);/*세션으로 넣어라*/
 		
 		System.out.println(map);    
 		

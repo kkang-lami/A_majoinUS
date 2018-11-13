@@ -21,8 +21,8 @@ public class StatsManageController {
 		this.service = service;
 	}
 	
-	@RequestMapping(value = "/aus/JEJ/StaticManage")
-	public void stats_test3(Model model) throws Exception {
+	@RequestMapping(value = "/aus/StaticManage")
+	public String stats_test3(Model model) throws Exception {
 		//방문 통계
 		model.addAttribute("visit_stat",service.visit_stat());
 		
@@ -48,11 +48,13 @@ public class StatsManageController {
 		//System.out.println("또잉"+match);
 		model.addAttribute("all_project",service.all_project());
 		model.addAttribute("match",match);
+		
+		return "JEJ/StaticManage";
 	}
 
 
 	
-	@RequestMapping(value = "/aus/JEJ/StatsManage")
+	@RequestMapping(value = "/aus/StatsManage")
 	public void stats_list(Model model) throws Exception {
 		
 	}

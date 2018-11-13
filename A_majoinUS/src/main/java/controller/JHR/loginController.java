@@ -27,17 +27,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import net.sf.json.JSONObject;
 
 @Controller
-@RequestMapping("/aus/JHR")
+@RequestMapping("/aus")
 public class loginController {
 	
 	@Autowired
 	private loginServiceImpl service;
 	
-	//로그인 페이지
+	/*//로그인 페이지
 	@RequestMapping("/loginMain")
 	public String login() {
 		return "JHR/loginMain";
-	}
+	}*/
 	//로그인 확인
 	@RequestMapping("/loginCheck")
 	public ModelAndView loginCheck(@ModelAttribute MemberDTO dto, HttpSession session) {
@@ -45,24 +45,45 @@ public class loginController {
 		boolean result = service.loginCheck(dto,session);
 		ModelAndView mav = new ModelAndView();
 		if(result == true) {
-			mav.setViewName("JHR/Main");
-			mav.addObject("msg","success");
-			session.setAttribute("id", dto.getId());
+			
+			MemberDTO user = service.checkMember(dto);
+			session.setAttribute("id", user.getId());
+			session.setAttribute("name", user.getName());
+			mav.setViewName("redirect:/aus/MyPageMain");				
+		//	mav.addObject("msg","success");					//로그인시 바로 이동할거라 없어도됨
+			
 		}else {
 			mav.setViewName("JHR/loginMain");
 			mav.addObject("msg","failure");
 		}
 		return mav;
 	}
+	
+	//로그인 성공시 바로 이동
+	@RequestMapping("/MyPageMain")
+	public String main(HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "main";
+		}else {
+			return "JHR/MypageMain";
+		}
+	}
+	
 	//로그 아웃
 	@RequestMapping("/logout")
 	public ModelAndView logout(HttpSession session) {
 		service.logout(session);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("JHR/loginMain");
-		mav.addObject("msg","logout");
+		mav.setViewName("redirect:/aus/main");
+		//mav.addObject("msg","logout");			//메인화면으로 이동함
 		return mav;
 	}
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////아직 안함////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	
 	//회원 정보 페이지
 	@RequestMapping(value="/mypage")

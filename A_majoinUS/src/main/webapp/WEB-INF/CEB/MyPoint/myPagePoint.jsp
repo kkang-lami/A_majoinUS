@@ -43,7 +43,7 @@
         <div class="box-body">
         <strong>
 <h3 class="sub-header" style=text-align:center;> <i class="fa fa-fw fa-optin-monster"></i> happy to meet!! <i class="fa fa-fw fa-angle-left"></i>
- <%-- ${sessionScope.id }  --%><i class="fa fa-fw fa-angle-right"></i> . currently you are point is  ${myPoint }point   !</h3>
+ ${sessionScope.name } <i class="fa fa-fw fa-angle-right"></i> . currently you are point is  ${myPoint }point   !</h3>
 </strong>  
 <hr />
 <p style="text-align:center;">포인트사용내역(결제시도 : ${count })&nbsp;&nbsp;&nbsp;&nbsp;현재 사용가능 티켓(개수 : ${count1 })</p>        </div>
@@ -64,11 +64,11 @@
                   <th>업데이트 포인트</th>
                   <th>총 포인트</th>
                 </tr>
-                <tr>
-				<th>
-					포인트 이용내역이 없습니다
-				</th>
-			</tr>
+                <tr>     
+					<td colspan="6" align=center>
+						포인트 이용내역이 없습니다
+					</td>
+				</tr>
 			</table>
 			</c:if>
 			
@@ -170,11 +170,11 @@
 					<td>
 					<p>
 						<div class="btn-group"  style=" left: 56%; margin-left: -200px;" >
-							<input type="button" value="포인트 충전하기" class="btn btn-success" onclick="document.location.href='/AMAJOINUS/aus/Payment_write'">
-							<input type="button" value="티켓 사기" class="btn btn-success" onclick="document.location.href='/AMAJOINUS/aus/buying'">
+							<input type="button" value="포인트 충전하기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/Payment_write'">
+							<input type="button" value="티켓 사기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/buying'">
 						
 						</div>
-						</p>
+						</p>	
 					</td>        
 				</div>    
 			   

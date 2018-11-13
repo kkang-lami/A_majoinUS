@@ -22,8 +22,8 @@ public class ProjectManageController {
 		this.service = service;
 	}
 	
-	@RequestMapping(value = "/aus/JEJ/ProjectManage")
-	public void project_manage(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
+	@RequestMapping(value = "/aus/ProjectManage")
+	public String project_manage(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
 		int pageSize = 6;
 		int currentPage = pageNum;
 		int startRow = (currentPage - 1) * pageSize + 1;
@@ -58,11 +58,12 @@ public class ProjectManageController {
         }
 			
 		number=count-(currentPage-1)*pageSize;
-		
 		model.addAttribute("number",number);
 		model.addAttribute("count",count);
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("projectroomList",projectroomList);
+		
+		return "JEJ/ProjectManage";
 	}
 }

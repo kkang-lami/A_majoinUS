@@ -21,7 +21,7 @@ import net.sf.json.JSONObject;
 import project.DTO.*;
 
 @Controller
-@RequestMapping("/aus/workboard")
+@RequestMapping("/aus/ProejctRoom/workboard")
 public class WorkboardController {
 	@Autowired
 	private KMJ mj_dao;

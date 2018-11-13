@@ -76,11 +76,11 @@
 
 
 							<c:forEach var="project" items="${projectroomList}">
-								<tr>
+								<tr id="${project.pj_num}">
 									<td>
 									<%-- <a href="content.do?num=${project.pj_num}&pageNum=${currentPage}"> </a>--%>
 									<%-- <a href="#" id="${item.id}" class="user_btn" data-toggle='modal' data-target='#modal_user'>${item.name}</a> --%>
-									<a id="${project.pj_num}" class="user_btn" data-toggle="modal" data-target="#modal_user">${project.pj_name}</a>
+									<a href ="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${project.pj_name}</a>
 									</td>
 									<td>${project.id}</td>
 									<td><c:set var="reg" value="${fn:substring(project.regdate,0,10)}" />${reg}</td>
@@ -90,7 +90,7 @@
 							</tr>
 							</c:forEach>
 						</table>
-				</div>
+				</div>  
 					<!-- /.table-responsive -->
 			</div>
 				<!-- /.box-body -->
@@ -159,136 +159,36 @@
 					</c:if>
 				</div>
 </div>
+			<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
+			
 			</section>
 		</div>
-	</div>
-	
-	<div class="modal fade" id="modal_Team">
-	          <div class="modal-dialog modal-lg">
-	            <div class="modal-content">
-	            
-	            	<!-- 멤버상세 헤더 -->
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                  <span aria-hidden="true">&times;</span></button>
-		                <h4 class="modal-title">프로젝트 상세정보</h4>
-		            </div>
-		        	
-		        	<!-- 멤버상세 내용 -->
-		           	<div class="modal-body">
-
-						<!-- Profile Image -->
-						
-						<div class="box box-body box-primary">
-							<h3 class="team-name"></h3>
-							
-						<div class="modal-body">
-							<ul class="list-group">
-								 <li class="list-group-item">
-					               <b><i class="fa fa-book margin-r-5"></i>프로젝트 기간</b> 
-					               <p class="team-date text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-book margin-r-5"></i>관심직군</b> 
-					               <p class="team-job text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-map-marker margin-r-5"></i>선호지역</b>
-					               <p class="team-local text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-map-marker margin-r-5"></i>모집인원</b>
-					               <p class="team-memnum text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-map-marker margin-r-5"></i>프로젝트 소개</b>
-					               <p class="team-text text-muted"></p>
-					             </li>
-				          	</ul>
-				        </div>
-
-						<div class="modal-footer">
-							<div class="col-md-8 ">
-								<a id="join_btn" data-toggle="modal" href="#modal-join"><b>프로젝트 신청</b></a>
-							</div>
-							<div class="col-md-4">
-								<a href="#" id="Teamissue_btn" data-toggle="popover" title="신고사유"><b>신고</b></a>
-							</div>
-			      		</div>
-			        </div>
-	            
-	            </div>
-	          </div>
-	        </div>
-        	
-        <!-- /모달창 -->
-		
 	</div>
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
-
-<script src="<%=request.getContextPath()%>/resources/JEJ/Team_modal.js"></script>	
-<script>
-	function projectRoom(pj_num){
-		var url="<%=cp%>/aus/LSH/Team/profile";
-		$.ajax({
-			type:"post",
-			url:url,
-			data:{"pj_num": pj_num},
-			dataType:"json",
-			success:function(args){
-				load_projectRoom(args.x);
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		});
-	}
-		
-	function load_projectRoom(data){
-		global.receiver = data.ID;
-		global.pj_num = data.PJ_NUM;
-		
-		$('.team-name').html("&ensp;"+data.PJ_NAME);
-		$('.team-date').html(data.START_D+" ~ "+data.END_D);
-		$('.team-memnum').html(data.MEM_LIMIT+"명");
-
-		if(data.JOB){
-			$('.team-job').html(data.JOB);
-		}
-		
-		if(data.LOCAL){
-			$('.team-local').html(data.LOCAL);
-		}
-		
-		if(data.PJ_INFO){
-			$('.team-text').html(data.PJ_INFO);
-		}
-		
-		if('${sessionScope.userId}'.indexOf(data.ID) !== -1){
-			$('#join_btn').attr('class','btn btn-default btn-block disabled');
-			$('#join_btn').html('<span class="text-muted">본인이 개설한 프로젝트는 신청할 수 없습니다</span>');
-			$('#Teamissue_btn').attr('class','btn btn-default btn-block disabled');
-		}else{
-			$('#join_btn').html('<b>프로젝트 참가</b>');
-		}
-	}
-		
-	function remove_Teamdata(){
-		global.pj_num = 0;
-		global.receiver = "";
-		$('.team-job').html('관심있는 직군이 없습니다');
-		$('.team-local').html('선호하는 지역이 없습니다');
-		$('.team-text').html('프로젝트의 소개가 없습니다');
-		$('#join_btn').attr('class','btn btn-primary btn-block');
-		$('#Teamissue_btn').attr('class','btn btn-danger btn-block');
-	}
 	
-	$('#modal_Team').on('hide.bs.modal', function (e) {
-		console.log("팝오버제거");
-		$("[data-toggle=popover]").popover('hide');
-	})
-	</script>
+	<script>
+		var global = {
+			    i : 0,
+			    origin_d : "",
+			    receiver : "",
+			    pj_num: 0
+		};
+		
+		function getContext(){
+			var context = "<%=cp%>";
+			return context;
+		}
+    
+		function getSessionId(){    
+			var sessionid = '${sessionScope.id}';
+			return sessionid;
+		}         
+		
+    	</script>
+	
+<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
+	
 </body>
 </html>

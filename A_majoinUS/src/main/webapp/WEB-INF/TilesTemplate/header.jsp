@@ -130,8 +130,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-fw fa-magic"></i></a>
+          <li>   
+          <a href="#" data-toggle="control-sidebar"><i class="fa fa-fw fa-magic"></i></a>
           </li>
         </ul>
       </div>
@@ -141,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
  
 
 
-  
+  <%--
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
@@ -253,7 +253,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div>
       <!-- /.tab-pane -->
     </div>
-  </aside>
+  </aside>--%>    
   <div class="control-sidebar-bg"></div>
   
 </body>

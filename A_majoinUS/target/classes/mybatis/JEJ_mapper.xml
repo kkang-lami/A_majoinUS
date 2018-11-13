@@ -148,8 +148,8 @@
 </select>
 
 <select id="admin_projectroom" parameterType="project.DTO.PageDTO" resultType="project.DTO.ProjectroomDTO">
-	<![CDATA[select pj_name, id, start_d, end_d, regdate, r 
-	from (select pj_name, id, start_d, end_d, regdate, rownum r 
+	<![CDATA[select pj_num, pj_name, id, start_d, end_d, regdate, r 
+	from (select pj_num,pj_name, id, start_d, end_d, regdate, rownum r 
 	from (select*from projectroom) order by r) 
 		where r>=#{startRow} and r<=#{endRow}]]>
 </select>

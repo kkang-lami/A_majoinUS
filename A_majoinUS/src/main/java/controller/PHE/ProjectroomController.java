@@ -25,7 +25,7 @@ import project.DTO.Pj_locationDTO;
 import project.DTO.ProjectroomDTO;
 
 @Controller
-@RequestMapping(value = "/aus/PHE")
+@RequestMapping(value = "/aus")
 public class ProjectroomController {
 	@Autowired
 	PHE dao;
@@ -53,7 +53,7 @@ public class ProjectroomController {
 		}
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("userId");
+		String sessionId =(String)session.getAttribute("id");
 		
 		System.out.println(end_d);
 		  
@@ -72,7 +72,7 @@ public class ProjectroomController {
 
 		
 		
-		return "redirect:/aus/PHE/projectList";
+		return "redirect:/aus/projectList";
 	}
 
 	// list
@@ -80,7 +80,7 @@ public class ProjectroomController {
 	public ModelAndView listAll(HttpServletRequest request) throws Exception {// public List<Board> listAll() {
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("userId");
+		String sessionId =(String)session.getAttribute("id");
 		String a_type="참가";
 		List<ProjectListDTO> ongoing_list = dao.ongoing_getListData(sessionId);
 		List<ProjectListDTO> finish_list = dao.finish_getListData(sessionId);
@@ -145,7 +145,7 @@ public class ProjectroomController {
 		mav.addObject("pj_num", command2.getPj_num());
 		mav.addObject("pj_num", command3.getPj_num());
 
-		mav.setViewName("redirect:/aus/PHE/projectContent");
+		mav.setViewName("redirect:/aus/projectContent");
 		return mav;
 	}
 
@@ -156,7 +156,7 @@ public class ProjectroomController {
 		dao.deleteProject(pj_num);
 		dao.deleteProject_job(pj_num);
 		dao.deleteProject_location(pj_num);
-		return "redirect:/aus/PHE/projectList";
+		return "redirect:/aus/projectList";
 	}
 
 	// ticket 개수
@@ -164,7 +164,7 @@ public class ProjectroomController {
 	public void countTicket(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String sessionId = (String) session.getAttribute("userId");
+		String sessionId = (String) session.getAttribute("id");
 
 		JSONObject jso = new JSONObject();
 		PrintWriter out;

@@ -32,7 +32,7 @@ import project.DTO.Port_detailDTO;
 import project.DTO.PortfolioDTO;
 
 @Controller
-@RequestMapping(value = "/aus/PHE")
+@RequestMapping(value = "/aus")
 public class PortfolioController2{
 	@Autowired
 	PHE dao;
@@ -44,7 +44,7 @@ public class PortfolioController2{
 	/********************************* 포트폴리오 *************************************/
 	@RequestMapping(method=RequestMethod.GET)
 	public String start(HttpSession session,@RequestParam("pj_num") int pj_num,Model m) {
-		String id = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("id");
 		if(id == null) {
 			return "id 없음";
 		}
@@ -61,7 +61,7 @@ public class PortfolioController2{
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("userId");
+		String sessionId =(String)session.getAttribute("id");
 
 		List<PortfolioDTO> portfolioList = dao.getPortfolioList(sessionId);
 		ModelAndView mav = new ModelAndView();

@@ -14,10 +14,36 @@ import controller.LSH.SearchDTO;
 import controller.LSH.SearchTeamDTO;
 import project.DTO.AlarmDTO;
 import project.DTO.IssueDTO;
+import project.DTO.ProjectroomDTO;
+import project.DTO.Todo_listDTO;
 
 @Repository
 public class LSH extends SqlSessionDaoSupport{
 
+	public List<Todo_listDTO> getTodo(String mapper,String id){
+		List<Todo_listDTO> list = getSqlSession().selectList(mapper,id);
+		return list;
+	}
+	
+	public int insertTodo(String mapper,Todo_listDTO dto){
+		int x = getSqlSession().update(mapper,dto);
+		return x;
+	}
+	
+	public int updateTodo(String mapper,Todo_listDTO dto){
+		int x = getSqlSession().update(mapper,dto);
+		return x;
+	}
+	
+	public int deleteTodo(String mapper,String num){
+		int x = getSqlSession().delete(mapper,num);
+		return x;
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////////////
+	
+	
 	public List<String> getCategory1(String mapper,String col){
 		List<String> cate1 = getSqlSession().selectList(mapper,col);
 		return cate1;
@@ -113,6 +139,11 @@ public class LSH extends SqlSessionDaoSupport{
 	
 	public int updateLeader(String mapper,Map<String,Object> m) {
 		int x = getSqlSession().update(mapper,m);
+		return x;
+	}
+	
+	public List<ProjectroomDTO> getCart(String mapper,String id) {
+		List<ProjectroomDTO> x = getSqlSession().selectList(mapper,id);
 		return x;
 	}
 }

@@ -41,14 +41,9 @@ function chk(s){
 			<fmt:formatDate value="${end}" pattern="yyyy/MM/dd"/>
 		
 		</td>
-		<td><button onclick = "location.href = 'aus/PHE/modifyPortfolio?portNum=' ">수정</button></td>
-		<td>
-			<input type="button" value="포트폴리오 수정" 
-			onclick="document.location.href='modifyPortfolio?port_num=${portfolioList.port_num}'"/>
-		</td>
-		
+		<td><input type="button" value="수정하기" onclick = "location.href='portfolio/edit?port_num=${portfolioList.port_num}' "></td>
 	</tr>
-	</c:forEach>
+	</c:forEach>    
 </table>
 		
  </section>

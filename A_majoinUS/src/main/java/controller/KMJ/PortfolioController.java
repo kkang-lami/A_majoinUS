@@ -22,7 +22,7 @@ import project.DTO.Port_detailDTO;
 import project.DTO.PortfolioDTO;
 
 @Controller
-@RequestMapping("/aus/portfolio")
+@RequestMapping("/aus/ProejctRoom/portfolio")
 public class PortfolioController {
 
 	

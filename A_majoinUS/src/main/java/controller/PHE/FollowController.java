@@ -15,7 +15,7 @@ import dao.PHE;
 import project.DTO.FollowDTO;
 
 @Controller
-@RequestMapping(value = "/aus/PHE")
+@RequestMapping(value = "/aus")
 public class FollowController {
 	@Autowired
 	PHE dao;
@@ -30,7 +30,7 @@ public class FollowController {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("userId");
+		String sessionId =(String)session.getAttribute("id");
 		System.out.println("followListCon");
 		List<FollowDTO> followList = dao.getFollowList(sessionId);
 		ModelAndView mav = new ModelAndView();

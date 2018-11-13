@@ -20,30 +20,21 @@ body {
         <li class="header">MY PAGE</li>    
         
         <li class="active">
-          <a href="index.jsp">
+          <a href="<%=request.getContextPath()%>/aus/MyPageMain">
            <i class="fa fa-fw fa-thumb-tack"></i> <span>My Dashboard</span>
             
           </a>      
         </li>    
         
-        <li class="treeview">
-          <a href="#">      
-            <i class="fa fa-fw fa-object-group"></i> <span>Project 관리</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <li>
+          <a href="<%=request.getContextPath()%>/aus/projectList">      
+            <i class="fa fa-fw fa-file-text"></i> <span>Project 관리</span>
           </a>
-          
-          <ul class="treeview-menu">
-            <!-- <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li> -->
-            <li><a href="#"><i class="fa fa-spinner fa-pulse fa-fw"></i> ongoing-Projects</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-check-circle"></i> Completed-Projects</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-child"></i> applied-Projects</a></li>
-          </ul>    
+                
         </li>
         
          <li>
-          <a href="#">
+          <a href="<%=request.getContextPath()%>/aus/portfolioList">
             <i class="fa fa-fw fa-file-text"></i> <span>My Portfolio</span>
           </a>
         </li>
@@ -59,8 +50,8 @@ body {
           </a>
           
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-fw fa-hand-o-left"></i>review to me</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-hand-o-right"></i> review from other</a></li>
+            <li><a href="<%=request.getContextPath()%>/aus/reviewListForMe"><i class="fa fa-fw fa-hand-o-left"></i>review to me</a></li>
+            <li><a href="<%=request.getContextPath()%>/aus/reviewListByMe"><i class="fa fa-fw fa-hand-o-right"></i> review from other</a></li>
           </ul>
         </li>
         
@@ -71,23 +62,23 @@ body {
             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<%=request.getContextPath() %>/aus/buying"><i class="fa fa-fw fa-opencart"></i> Charge Point/Buy Ticket</a></li>
-            <li><a href="<%=request.getContextPath() %>/aus/MyPoint"><i class="fa fa-spinner fa-spin fa-fw"></i>  My Point History</a></li>
+            <li><a href="<%=request.getContextPath()%>/aus/buying"><i class="fa fa-fw fa-opencart"></i> Charge Point/Buy Ticket</a></li>
+            <li><a href="<%=request.getContextPath()%>/aus/MyPoint"><i class="fa fa-spinner fa-spin fa-fw"></i>  My Point History</a></li>
           </ul>
         </li>    
       
         <li>
-          <a href="#">
+          <a href="<%=request.getContextPath()%>/aus/followList">
             <i class="fa fa-fw fa-users"></i> <span>My Friends</span>
           </a>
         </li>
         
         <li>
-          <a href="#">
+          <a href="<%=request.getContextPath()%>/aus/projectAlarm">
             <i class="fa fa-fw fa-paper-plane"></i><span>Invitation/Notification</span>
           </a>
         </li>
-        
+          
         <li class="treeview">
           <a href="#">
             <i class="fa fa-fw fa-info"></i>
@@ -98,19 +89,23 @@ body {
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<%=request.getContextPath() %>/aus/notice"><i class="fa fa-fw fa-bullhorn"></i>notice</a></li>
+            <li><a href="<%=request.getContextPath()%>/aus/notice"><i class="fa fa-fw fa-bullhorn"></i>notice</a></li>
             <small class="label pull-right bg-red">3</small>
-            <li><a href="<%=request.getContextPath() %>/aus/qna"><i class="fa fa-fw fa-lightbulb-o"></i>F&Q</a></li>
-            <li><a href="<%=request.getContextPath() %>/aus/inquiry"><i class="fa fa-fw fa-comments-o"></i>Talk to us</a></li>
+            <li><a href="<%=request.getContextPath()%>/aus/qna"><i class="fa fa-fw fa-lightbulb-o"></i>F&Q</a></li>
+            <li><a href="<%=request.getContextPath()%>/aus/inquiry"><i class="fa fa-fw fa-comments-o"></i>Talk to us</a></li>
           </ul>
-        </li>    
+        </li>   
+        
+         
+      <%--   <c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">
+         --%>
         
         <li class="header">Management</li>
-        <li><a href="<%=request.getContextPath() %>/aus/JEJ/ProjectManage"><i class="fa fa-fw fa-object-ungroup"></i> <span>Managing Projects</span></a></li>
-        <li><a href="<%=request.getContextPath() %>/aus/JEJ/CategoryManage"><i class="fa fa-fw fa-home"></i> <span>Managing Search-Category</span></a></li>
-        <li><a href="<%=request.getContextPath() %>/aus/JEJ/PaymentList"><i class="fa fa-fw fa-credit-card"></i> <span>Payment list</span></a></li>
-        <li><a href="<%=request.getContextPath() %>/aus/JEJ/review_admin"><i class="fa fa-fw fa-clipboard"></i> <span>Evaluation</span></a></li>
-        <li><a href="<%=request.getContextPath() %>/aus/JEJ/StaticManage"><i class="fa fa-fw fa-bar-chart"></i> <span>AUS Static</span></a></li>
+        <li><a href="<%=request.getContextPath() %>/aus/ProjectManage"><i class="fa fa-fw fa-object-ungroup"></i> <span>Managing Projects</span></a></li>
+        <li><a href="<%=request.getContextPath() %>/aus/CategoryManage"><i class="fa fa-fw fa-home"></i> <span>Managing Search-Category</span></a></li>
+        <li><a href="<%=request.getContextPath() %>/aus/PaymentList"><i class="fa fa-fw fa-credit-card"></i> <span>Payment list</span></a></li>
+        <li><a href="<%=request.getContextPath() %>/aus/review_admin"><i class="fa fa-fw fa-clipboard"></i> <span>Evaluation</span></a></li>
+        <li><a href="<%=request.getContextPath() %>/aus/StaticManage"><i class="fa fa-fw fa-bar-chart"></i> <span>AUS Static</span></a></li>
          
         <li class="treeview">
           <a href="#">
@@ -131,10 +126,14 @@ body {
             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<%=request.getContextPath() %>/aus/JEJ/MemberManage"><i class="fa fa-fw fa-group"></i> Managing User</a></li>
-            <li><a href="<%=request.getContextPath() %>/aus/JEJ/issue_admin"><i class="fa fa-fw fa-ban"></i> Report management</a></li>
+            <li><a href="<%=request.getContextPath() %>/aus/MemberManage"><i class="fa fa-fw fa-group"></i> Managing User</a></li>
+            <li><a href="<%=request.getContextPath() %>/aus/issue_admin"><i class="fa fa-fw fa-ban"></i> Report management</a></li>
           </ul>
         </li>
+        
+        
+       <%--  </c:if> --%>
+     
       </ul>
       
  

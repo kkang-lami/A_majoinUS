@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/aus/LSH/ProejctRoom")
+@RequestMapping("/aus/ProejctRoom")
 public class ProejctRoomController {
 	
 	public ProejctRoomController() {System.out.println("[공지]프로젝트룸 컨트롤러생성");}
@@ -32,6 +32,7 @@ public class ProejctRoomController {
 		for(Map<String,Object> m : list) {
 			System.out.println(m);
 		}
+		model.addAttribute("pj_num",pageNum);
 		model.addAttribute("list", list);
 		return "LSH/ProjectRoom";
 	}

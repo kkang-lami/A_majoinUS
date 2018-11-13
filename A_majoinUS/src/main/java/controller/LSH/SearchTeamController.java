@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.sf.json.JSONObject;
+import project.DTO.ProjectroomDTO;
 
 @Controller
 @RequestMapping("/aus/LSH/Team")
@@ -31,22 +32,32 @@ public class SearchTeamController {
 	}
 	
 	@RequestMapping(value="/SearchTeamForm",method=RequestMethod.GET)
-	public String form(@ModelAttribute("command") SearchTeamDTO dto,Model model) {
+	public String form(@ModelAttribute("command") SearchTeamDTO dto,HttpServletRequest req,Model model) {
+		
 		dto.setSort("regdate");
 		dto.setSort_way("DESC");
 		
+		model.addAttribute("cart",getCart(req));
 		System.out.println("[-] 겟실행"+dto);
 		return "LSH/SearchTeam"; 
 	}
 	
 	@RequestMapping(value="/SearchTeamForm",method=RequestMethod.POST)
-	public String post(@ModelAttribute("command") SearchTeamDTO dto,Model model) {
-		System.out.print("[0] 포스트실행"+dto+" ");
+	public String post(@ModelAttribute("command") SearchTeamDTO dto,HttpServletRequest req,Model model) {
+		System.out.print("[0] 포스트실행"+dto);
 
 		PagingDTO pdto = DB(dto,0);
 		
 		model.addAttribute("pdto",pdto);
+		model.addAttribute("cart",getCart(req));
 		return "LSH/SearchTeam";
+	}
+	
+	public List<ProjectroomDTO> getCart(HttpServletRequest req) {
+		System.out.println("[-] 카트목록");
+		String id = req.getSession().getAttribute("userId").toString();
+		List<ProjectroomDTO> list = service.getCart(id);
+		return list;
 	}
 
 	@RequestMapping(value="/sort",method=RequestMethod.POST)
@@ -107,16 +118,6 @@ public class SearchTeamController {
 		System.out.println("결과는? 두구두구:: "+result);
 	}
 	
-	@RequestMapping(value="/cart")
-	public String cart(HttpServletRequest req) {
-		String id = req.getSession().getAttribute("userId").toString();
-		System.out.println(id+"[장바구니]");
-		
-
-		return "LSH/FavoriteProject";
-	}
-	
-	
 	public PagingDTO DB(SearchTeamDTO dto,int pageNum) {
 
 		if(pageNum == 0) {
@@ -150,6 +151,8 @@ public class SearchTeamController {
 		dto.setEndRow(endRow);
 		List<ResultTeamDTO> list = service.getResultTeam(dto);
 		
+		System.out.println("[경고]"+list);
+		
 		for(ResultTeamDTO mm : list) {
 			if(mm.getFavs() != null) {
 				String[] strarr = mm.getFavs().split(",");
@@ -162,6 +165,7 @@ public class SearchTeamController {
 		}
 		
 		PagingDTO pdto = new PagingDTO(pageNum,rowCount,pageCount,startPage,endPage,list,pageBlock);
+		
 		
 		return pdto;
 	}

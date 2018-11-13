@@ -17,7 +17,7 @@ import dao.PHE;
 import project.DTO.AlarmDTO;
 
 @Controller
-@RequestMapping(value = "/aus/PHE")
+@RequestMapping(value = "/aus")
 public class AlarmController {
 	@Autowired
 	PHE dao;
@@ -32,7 +32,7 @@ public class AlarmController {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("userId");			
+		String sessionId =(String)session.getAttribute("id");			
 		
 		List<AlarmDTO> projectAlarmList = dao.getProjectAlarmList(sessionId);
 		
@@ -51,7 +51,7 @@ public class AlarmController {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String receiver =(String)session.getAttribute("userId");	
+		String receiver =(String)session.getAttribute("id");	
 		
 		String a_type = "참가";
 		List<AlarmDTO> projectApplyAlarm = dao.getProjectApplyAlarm(receiver, a_type);
@@ -79,7 +79,7 @@ public class AlarmController {
 		System.out.println("pj_num : " + pj_num);
 		System.out.println("a_type : " + a_type);
 		System.out.println("=====================");
-		return "redirect:/aus/PHE/projectAlarm";
+		return "redirect:/aus/projectAlarm";
 		
 		// 나에게 참가 신청을 하는거니까, 
 		//메세지 보낸 사람 아이디+프로젝트 번호 가져와서 Alarm 에서 "내 아이디는 필요없고 " 보낸이와 프로젝트 번호 가져와서 삭제
@@ -94,7 +94,7 @@ public class AlarmController {
 		dao.removeFromAlarm_invitation(receiver, pj_num);
 		System.out.println("receiver : " + receiver);
 		System.out.println("pj_num : " + pj_num);
-		return "redirect:/aus/PHE/projectAlarm";
+		return "redirect:/aus/projectAlarm";
 		
 		//다른 사람이 나에게 프로젝트에 초대한거니까
 		//그 팀장이 나 말고도 다른 사람에게 초대장을 보냈을 수도 있기 때문에 sender 로 잡지 말고

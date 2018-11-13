@@ -24,7 +24,7 @@ import net.sf.json.JSONObject;
 import project.DTO.Project_chatDTO;
 
 @Controller
-@RequestMapping("/aus/chatting")
+@RequestMapping("/aus/ProejctRoom/chatting")
 public class ChatController {
 	
 	@Autowired

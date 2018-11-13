@@ -79,7 +79,7 @@
           <div class="box box-widget widget-user" >
             <!-- Add the bg color to the header using any of the bg-* classes -->
              <div class="widget-user-header">
-              <img onclick="location.href='aus/Payment_write'" src="<%=request.getContextPath() %>/resources/dist/img/credit-card-851506_1920.jpg"
+              <img onclick="location.href='Payment_write'" src="<%=request.getContextPath() %>/resources/dist/img/credit-card-851506_1920.jpg"
               style="cursor:pointer;" align="center" width="600" height="150">  
              
              
@@ -168,7 +168,7 @@
                   </td>    
                 </tr>
                 <tr><td>      
-                <h6 class="text-center">잔액이 부족하다면 <a href="aus/Payment_write">포인트 결제</a>를 먼저 해 주시기 바랍니다.</h6>
+                <h6 class="text-center">잔액이 부족하다면 <a href="Payment_write">포인트 결제</a>를 먼저 해 주시기 바랍니다.</h6>
                 </td></tr>
                 <div class="box box-default">
                 <div class="box-header with-border">

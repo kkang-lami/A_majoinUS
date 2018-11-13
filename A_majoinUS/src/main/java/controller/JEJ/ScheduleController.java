@@ -23,6 +23,7 @@ import dao.JEJ;
 import project.DTO.ScheduleDTO;
 
 @Controller
+@RequestMapping("/aus/ProejctRoom")
 public class ScheduleController {
 
    @Autowired
@@ -32,11 +33,8 @@ public class ScheduleController {
       this.service = service;
    }
    
-   @RequestMapping(value = "/aus/JEJ/ProjectSchedule")
-   public void moveSchedule(ModelMap model,String year, String month,HttpSession session) {
-	   session.setAttribute("userNo", 500);
-	   int pj_num = (int)session.getAttribute("userNo");
-	   
+   @RequestMapping(value = "/ProjectSchedule")
+   public String moveSchedule(ModelMap model,String year, String month,HttpSession session,@RequestParam("pj_num")int pj_num) {
        String strYear = year;
        String strMonth = month;
      
@@ -86,20 +84,18 @@ public class ScheduleController {
 
        model.addAttribute("vacation_number", vacation_number);
 
-     //return "aus/JEJ/ProjectSchedule";
+     return "JEJ/ProjectSchedule";
   }
 
    
-   @RequestMapping(value = "/aus/JEJ/AddSchedule", method = RequestMethod.GET)
+   @RequestMapping(value = "/AddSchedule", method = RequestMethod.GET)
    public void add_schedule(Model model, HttpServletRequest request) {
-	   
+	   System.out.println("나 여기잇음");
    }
   
    
-   @RequestMapping(value = "/aus/JEJ/AddSchedule", method = RequestMethod.POST)
-   public String Schedule_add(HttpSession session, @RequestParam(value="s_content")String holiday_name, @RequestParam(value="s_start")String holiday_start, @RequestParam(value="s_end")String holiday_end) throws ParseException, java.text.ParseException {      
-	   int pj_num = (int)session.getAttribute("userNo");
-	   
+   @RequestMapping(value = "/AddSchedule", method = RequestMethod.POST)
+   public String Schedule_add(HttpSession session, @RequestParam(value="s_content")String holiday_name, @RequestParam(value="s_start")String holiday_start, @RequestParam(value="s_end")String holiday_end,@RequestParam("pj_num")int pj_num) throws ParseException, java.text.ParseException {      
 	   System.out.println(pj_num);
 	   System.out.println(holiday_name);
 	   System.out.println(holiday_start);
@@ -131,7 +127,7 @@ public class ScheduleController {
          service.insert_schedule(dto);
       }
       System.out.println("asdfas112132123132123df");
-      return "redirect:/aus/JEJ/ProjectSchedule";
+      return "redirect:/aus/ProjectSchedule";
 /*      return "redirect:aus/JEJ/AddSchedule"; //추후에 수정할것
 */
    }

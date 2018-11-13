@@ -15,7 +15,7 @@ import dao.PHE;
 import project.DTO.ReviewDTO;
 
 @Controller
-@RequestMapping(value = "/aus/PHE")
+@RequestMapping(value = "/aus")
 public class ReviewController {
 	@Autowired
 	PHE dao;
@@ -32,7 +32,7 @@ public class ReviewController {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
-		String sessionId = (String) session.getAttribute("userId");
+		String sessionId = (String) session.getAttribute("id");
 
 		List<ReviewDTO> reviewListForMe = dao.getReviewListForMe(sessionId);
 		ModelAndView mav = new ModelAndView();
@@ -41,14 +41,14 @@ public class ReviewController {
 
 		return mav;
 	}
-
+  
 	// reviewListByMe
 		@RequestMapping(value = "/reviewListByMe")
 		public ModelAndView ReviewlistByMe(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			request.setCharacterEncoding("utf-8");
 			HttpSession session = request.getSession();
 			session = request.getSession(true);
-			String sessionId = (String) session.getAttribute("userId");
+			String sessionId = (String) session.getAttribute("id");
 
 			List<ReviewByMeDTO> reviewListByMe = dao.getReviewListByMe(sessionId);
 			ModelAndView mav = new ModelAndView();

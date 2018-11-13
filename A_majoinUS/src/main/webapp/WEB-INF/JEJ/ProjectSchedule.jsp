@@ -9,8 +9,6 @@
 <html>
 <head>
 <title>프로젝트 스케줄</title>
-</head>
-<body>
 <style>
 #calendar {
 	position: relative;
@@ -22,17 +20,9 @@
 	/* background-color: white; */
 }
 </style>
+</head>
+<body>
 <!-- <script src="jquery-2.1.4.js" type="text/javascript"></script> -->
-<script language="JavaScript">
-
-function add_schedule() {
-	url = "./AddSchedule";
-	window.open(
-				url,
-				"post4",
-				"toolbar=no ,width=500 ,height=450,directories=no,status=yes,scrollbars=yes,menubar=no,left=750,top=280");
-}
-</script>
 	<tiles:insertDefinition name="header" />
 
 	<div class="wrapper">
@@ -224,12 +214,23 @@ function add_schedule() {
 		</div>
 
 
-
+    
 			</section>
 		</div>
 	</div>
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
+	    
+	<script>    
+
+function add_schedule() {
+	url = "./AddSchedule";
+	window.open(    
+				url,
+				"post",
+				"toolbar=no ,width=500 ,height=450,directories=no,status=yes,scrollbars=yes,menubar=no,left=750,top=280");
+}
+</script>
 </body>
 </html>

@@ -156,7 +156,6 @@
 							<td>${item.regdate}</td>
 						</tr>
 						</c:forEach>
-					
 					</table>
 				</div>
 								
@@ -189,120 +188,17 @@
 			
 		</section>
 		
-		<!-- 모달창 -->
-			<!-- 멤버초대 모달 -->
-			<div class="modal fade" id="modal-join">
-		    <div class="modal-dialog modal-sm">
-		    	<div class="modal-content">
-		            
-		        	<div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                <span aria-hidden="true">&times;</span></button>
-		                <h4 class="modal-title">프로젝트 신청</h4>
-		    		</div>
-		              
-		        	<div class="modal-body text-center">
-		                <p>프로젝트 참가 신청하시겠습니까?</p>
-		           	</div>
-		              
-		           	<div class="modal-footer">
-						<button type="button" class="send_btn btn btn-primary pull-left" data-dismiss="modal">OK</button>
-		                <button type="button" class="btn btn-default" data-dismiss="modal">CANCLE</button>
-		      		</div>
-		            
-	            </div>
-		    </div>
-	        </div>
-		        
-        	<!-- 프로젝트룸 모달 -->
-        	<div class="modal fade" id="modal_Team">
-	          <div class="modal-dialog modal-lg">
-	            <div class="modal-content">
-	            
-	            	<!-- 멤버상세 헤더 -->
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                  <span aria-hidden="true">&times;</span></button>
-		                <h4 class="modal-title">프로젝트 상세정보</h4>
-		            </div>
-		        	
-		        	<!-- 멤버상세 내용 -->
-		           	<div class="modal-body">
+		<!-- 멤버초대 모달 -->
+		<c:import url="${cp}/resources/LSH/Modal/join.jsp"/>
+	        
+       	<!-- 프로젝트룸 모달 -->
+       	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
 
-						<!-- Profile Image -->
-						
-						<div class="box box-body box-primary">
-							<h3 class="team-name"></h3>
-							
-						<div class="modal-body">
-							<ul class="list-group">
-								 <li class="list-group-item">
-					               <b><i class="fa fa-book margin-r-5"></i>프로젝트 기간</b> 
-					               <p class="team-date text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-book margin-r-5"></i>관심직군</b> 
-					               <p class="team-job text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-map-marker margin-r-5"></i>선호지역</b>
-					               <p class="team-local text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-map-marker margin-r-5"></i>모집인원</b>
-					               <p class="team-memnum text-muted"></p>
-					             </li>
-					             <li class="list-group-item">
-					               <b><i class="fa fa-map-marker margin-r-5"></i>프로젝트 소개</b>
-					               <p class="team-text text-muted"></p>
-					             </li>
-				          	</ul>
-				        </div>
+		<!-- 프로필 모달 -->
+		<c:import url="${cp}/resources/LSH/Modal/User.jsp"/>
 
-						<div class="modal-footer">
-							<div class="col-md-8 ">
-								<a id="join_btn" data-toggle="modal" href="#modal-join"><b>프로젝트 신청</b></a>
-							</div>
-							<div class="col-md-4">
-								<a href="#" id="Teamissue_btn" data-toggle="popover" title="신고사유"><b>신고</b></a>
-							</div>
-			      		</div>
-			        </div>
-	            
-	            </div>
-	          </div>
-	        </div>
-        	
-        <!-- /모달창 -->
-		
-	</div>
-		
-			<!-- 프로필 모달 -->
-			<div id="getModal"></div>
-			
-			<!-- 장바구니 모달 -->
-			<div class="modal fade" id="modal_cart">
-	          <div class="modal-dialog modal-lg">
-	            <div class="modal-content">
-	            
-	            	<!-- 멤버상세 헤더 -->
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                  <span aria-hidden="true">&times;</span></button>
-		                <h4 class="modal-title">프로젝트 스크랩</h4>
-		            </div>
-		        	
-		        	<!-- 멤버상세 내용 -->
-		           	<div class="modal-body">
-
-	
-
-
-			        </div>
-	            
-	            </div>
-	          </div>
-	        </div>
+		<!-- 장바구니 모달 -->
+		<c:import url="${cp}/resources/LSH/Modal/Cart.jsp"/>
 			
 	</div>
 	<!-- /content-wrapper -->
@@ -315,7 +211,6 @@
 		$(document).ready(initPage);
 		
 		function initPage() {
-			$("#getModal").load(getContext()+"/resources/LSH/modal_profile.html");
 			level1();
 			show_search_tag();
 			show_sort();	
@@ -659,37 +554,33 @@
         }
 	});
 	
-	$('#result_table').on('click','.Team_btn', function() {
-		console.log("11.프로젝트 상세보기 - ${sessionScope.userId}");
-		global.pj_num = 0;
-		global.receiver = "";
-		remove_Teamdata();
-		projectRoom($(this).parents("tr").attr('id'));
-	});
-	
-	$('#result_table').on('click','.user_btn', function() {
+	$('body').on('click','.user_btn', function() {
 		console.log("12.[유저 프로필]");
 		remove_data();
 		profile($(this).attr('id'));
 	});
 	
-	///////////////////////////////////////////////////////////////////////////////////////////
+	</script>
+	
+	<!-- 즐겨찾기 모달 -->
+	<script>
 	$("body").on('click','.unstar', function() {
 		console.log("13.즐겨찾기 추가");
-		star(this,"add");
+		var pj_num = $(this).parents("tr").attr('id');
+		add_cart(pj_num);
+		star(pj_num,"add");
 	});
-
+	
 	$("body").on('click','.star', function() {
 		console.log("14.즐겨찾기 제거");
-		star(this,"del");
+		var pj_num = $(this).parents("tr").attr('id');
+		del_cart(pj_num);
+		star(pj_num,"del");
 	});
 	
-	
-	function star(element,status){
+	function star(pj_num,status){
 		var url=getContext()+"/aus/LSH/Team/favorite";
-		var pj_num = $(element).parents("tr").attr('id');
 		var params = "pj_num="+pj_num+"&login_id="+getSessionId()+"&status="+status;
-
 		$.ajax({
 			type:"post",
 			url:url,
@@ -710,8 +601,34 @@
 		}); 
 		
 	}
-	</script>
 	
+	function add_cart(pj_num){
+		var html = "";
+		var pj_name = $('#result_table tr[id="'+pj_num+'"] li:eq(0)').text();
+		var date = $('#result_table tr[id="'+pj_num+'"] td:eq(3)').text();
+
+		html += "<tr id='"+pj_num+"'>";
+		html += "<td><a href='#' id='star_btn' class='star'><i class='fa fa-fw fa-star text-yellow'></i></a></td>";
+		html += "<td><a href='#' class='Team_btn' data-toggle='modal' data-target='#modal_Team'>"+pj_name+"</a></td>";
+		html += "<td>"+date+"</td></tr>";
+		
+ 		if($('#cart_table td:first').attr('class') === "none"){
+ 			$('#cart_table tr:eq(1)').remove();
+		}
+ 		$('#cart_table').append(html);
+	}
+	
+	function del_cart(pj_num){
+		$('#cart_table tr[id="'+pj_num+'"]').remove();
+		
+		console.log($('#cart_table').children().is("#star_btn"));
+		
+		if(!$('#cart_table').children().is("td")){
+			$('#cart_table').append('<tr><td colspan="7" class="none">스크랩을 삭제했습니다</td></tr>');
+		}
+	}
+	</script>
+		
 	<!-- 플젝초대 모달 -->
 	<script>
 	$(document).on('show.bs.modal', '.modal', function (event) {
@@ -744,90 +661,10 @@
 	}
 	</script>
 
-	<!-- 프로젝트룸 모달 -->
-	<script>
-	function projectRoom(pj_num){
-		var url="<%=cp%>/aus/LSH/Team/profile";
-		$.ajax({
-			type:"post",
-			url:url,
-			data:{"pj_num": pj_num},
-			dataType:"json",
-			success:function(args){
-				load_projectRoom(args.x);
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		});
-	}
-		
-	function load_projectRoom(data){
-		global.receiver = data.ID;
-		global.pj_num = data.PJ_NUM;
-		
-		$('.team-name').html("&ensp;"+data.PJ_NAME);
-		$('.team-date').html(data.START_D+" ~ "+data.END_D);
-		$('.team-memnum').html(data.MEM_LIMIT+"명");
-
-		if(data.JOB){
-			$('.team-job').html(data.JOB);
-		}
-		
-		if(data.LOCAL){
-			$('.team-local').html(data.LOCAL);
-		}
-		
-		if(data.PJ_INFO){
-			$('.team-text').html(data.PJ_INFO);
-		}
-		
-		if('${sessionScope.userId}'.indexOf(data.ID) !== -1){
-			$('#join_btn').attr('class','btn btn-default btn-block disabled');
-			$('#join_btn').html('<span class="text-muted">본인이 개설한 프로젝트는 신청할 수 없습니다</span>');
-			$('#Teamissue_btn').attr('class','btn btn-default btn-block disabled');
-		}else{
-			$('#join_btn').html('<b>프로젝트 참가</b>');
-		}
-	}
-		
-	function remove_Teamdata(){
-		global.pj_num = 0;
-		global.receiver = "";
-		$('.team-job').html('관심있는 직군이 없습니다');
-		$('.team-local').html('선호하는 지역이 없습니다');
-		$('.team-text').html('프로젝트의 소개가 없습니다');
-		$('#join_btn').attr('class','btn btn-primary btn-block');
-		$('#Teamissue_btn').attr('class','btn btn-danger btn-block');
-	}
-	
-	$('#modal_Team').on('hide.bs.modal', function (e) {
-		console.log("팝오버제거");
-		$("[data-toggle=popover]").popover('hide');
-	})
-	</script>
-
-	<!-- 장바구니 -->
-	<script>
-	function cart(){
-		var url="<%=cp%>/aus/LSH/Team/cart";
-		$.ajax({
-			type:"post",
-			url:url,
-			dataType:"json",
-			success:function(args){
-				console.log("도착"+args.x);
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		});
-	}
-	</script>
-
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 	
 </body>
 	<style>

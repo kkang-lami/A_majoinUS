@@ -23,7 +23,7 @@ import project.DTO.ReviewDTO;
 import project.DTO.Review_adminDTO;
 
 @Controller
-@RequestMapping("/aus/EnR")
+@RequestMapping("/aus/ProejctRoom/EnR")
 public class EvalNReviewController {
 
 	@Autowired
