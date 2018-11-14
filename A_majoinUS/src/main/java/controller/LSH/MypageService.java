@@ -38,17 +38,29 @@ public class MypageService {
 		return x;
 	}
 
-	public int updateTodo(Todo_listDTO dto){
+	public int updateFin(String num){
 		int x = 0;
 		try {
-			x = dao.updateTodo("LSH_AUS.updateTodo",dto);
+			x = dao.updateFin("LSH_AUS.updateFin",num);
 		}catch (Exception e) {
-			System.out.println("[에러] updateTodo서비스실패 ::"+e.toString());
+			System.out.println("[에러] updateFin서비스실패 ::"+e.toString());
 		}
 		return x;
 	}
 	
-	public int deleteTodo(String num){
+	public int deleteFin(String num){
+		int x = 0;
+		try {
+			System.out.println("실행");
+			x = dao.deleteFin("LSH_AUS.deleteFin",num);
+			System.out.println(x);
+		}catch (Exception e) {
+			System.out.println("[에러] deleteFin서비스실패 ::"+e.toString());
+		}
+		return x;
+	}
+	
+	public int deleteTodo(List<String> num){
 		int x = 0;
 		try {
 			x = dao.deleteTodo("LSH_AUS.deleteTodo",num);

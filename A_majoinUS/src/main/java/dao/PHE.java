@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import controller.PHE.ProjectAlarmListDTO;
 import controller.PHE.ProjectListDTO;
 import controller.PHE.ReviewByMeDTO;
 import project.DTO.AlarmDTO;
@@ -48,7 +49,8 @@ public class PHE extends SqlSessionDaoSupport {
 		List<ProjectListDTO> dto = getSqlSession().selectList("PHE_AUS.ongoing_projectList", id);
 		return dto;
 	}
-	//완료
+
+	// 완료
 	public List<ProjectListDTO> finish_getListData(String id) {
 		System.out.println("완료된 프로젝트 리스트 ");
 		List<ProjectListDTO> dto = getSqlSession().selectList("PHE_AUS.finish_projectList", id);
@@ -147,14 +149,10 @@ public class PHE extends SqlSessionDaoSupport {
 
 	/********************************* 알람 리스트 *************************************/
 
-	// 알람 리스트
-	public List<AlarmDTO> getProjectAlarmList(String receiver) {
-		List<AlarmDTO> dto = getSqlSession().selectList("PHE_AUS.projectAlarmList", receiver);
-		return dto;
-	}
-
 	// 프로젝트 참가+초대 알림
-	public List<AlarmDTO> getProjectApplyAlarm(String receiver, String a_type) {
+	public List<ProjectAlarmListDTO> getProjectApplyAlarm(String receiver, String a_type) {
+		// key : string
+		// value : 어떤 값이 와도 상관없는 object 타입
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 
 		parameters.put("receiver", receiver);
@@ -165,41 +163,29 @@ public class PHE extends SqlSessionDaoSupport {
 		return getSqlSession().selectList("PHE_AUS.projectApplyAlarm", parameters);
 	}
 
-	// 참가 하고있는지 확인
-	public int searchMember(String id, int pj_num) {
-		HashMap<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("id", id);
-		parameters.put("pj_num", pj_num);
-		int x = getSqlSession().selectOne("PHE_AUS.searchMember", parameters);
-		System.out.println("pj_mem search : "+x);
-		return x;
-	}
-	
-	public int projectMember(int pj_num) {
-		int x = getSqlSession().selectOne("PHE_AUS.projectMember", pj_num);
-		return x;
-	}
-	
-	public int project_Max_count(int pj_num) {
-		int x = getSqlSession().selectOne("PHE_AUS.project_Max_count", pj_num);
-		return x;
-	}
-	
-	// 프로젝트 참가 수락 -초대/제안 모두-
-	public int acceptMember(String id, int pj_num) {
+	// 프로젝트 참가 수락
+	public int joinMember(String id, int pj_num) {
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 
 		parameters.put("id", id);
 		parameters.put("pj_num", pj_num);
 		System.out.println("참가신청 수락DAO-Pj_mem에 insert");
 		System.out.println("parameters : " + parameters);
-		int x = getSqlSession().insert("PHE_AUS.acceptMember", parameters);
-		System.out.println("pj_mem에 insert"+x);
+		int x = getSqlSession().insert("PHE_AUS.joinMember", parameters);
 		return x;
 	}
 
-	// 알람테이블에서 제거 -참가-
+	public int removeFromAlarm(String sender, int pj_num) {
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
+
+		parameters.put("sender", sender);
+		parameters.put("pj_num", pj_num);
+		System.out.println("참가신청 수락DAO-Alarm에서 delete");
+		System.out.println("parameters : " + parameters);
+		int x = getSqlSession().delete("PHE_AUS.removeFromAlarm", parameters);
+		return x;
+	}
+
 	public int removeFromAlarm_apply(String sender, int pj_num) {
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 
@@ -208,11 +194,9 @@ public class PHE extends SqlSessionDaoSupport {
 		System.out.println("참가신청 수락DAO-Alarm에서 delete");
 		System.out.println("parameters : " + parameters);
 		int x = getSqlSession().delete("PHE_AUS.removeFromAlarm_apply", parameters);
-		System.out.println("alarm테이블에서 삭제 x : "+ x);
 		return x;
 	}
 
-	// 알람테이블에서 제거 -초대-
 	public int removeFromAlarm_invitation(String receiver, int pj_num) {
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 

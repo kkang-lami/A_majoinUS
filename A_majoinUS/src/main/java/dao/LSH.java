@@ -30,16 +30,22 @@ public class LSH extends SqlSessionDaoSupport{
 		return x;
 	}
 	
-	public int updateTodo(String mapper,Todo_listDTO dto){
-		int x = getSqlSession().update(mapper,dto);
-		return x;
-	}
-	
-	public int deleteTodo(String mapper,String num){
+	public int deleteTodo(String mapper,List<String> num){
 		int x = getSqlSession().delete(mapper,num);
 		return x;
 	}
-	
+
+	public int updateFin(String mapper,String dto){
+		System.out.println("실행");
+		int x = getSqlSession().update(mapper,dto);
+		return x;
+	}
+
+	public int deleteFin(String mapper,String dto){
+		System.out.println("실행");
+		int x = getSqlSession().update(mapper,dto);
+		return x;
+	}
 	
 	//////////////////////////////////////////////////////////////////////////
 	
@@ -77,6 +83,11 @@ public class LSH extends SqlSessionDaoSupport{
 	public List<HashMap<String,Object>> getMyProject(String mapper,String id){
 		List<HashMap<String,Object>> list = getSqlSession().selectList(mapper,id);
 		return list;
+	}
+	
+	public List<ProjectroomDTO> getCart(String mapper,String id) {
+		List<ProjectroomDTO> x = getSqlSession().selectList(mapper,id);
+		return x;
 	}
 	
 	public int insert_Message(String mapper,AlarmDTO dto){
@@ -141,9 +152,9 @@ public class LSH extends SqlSessionDaoSupport{
 		int x = getSqlSession().update(mapper,m);
 		return x;
 	}
-	
-	public List<ProjectroomDTO> getCart(String mapper,String id) {
-		List<ProjectroomDTO> x = getSqlSession().selectList(mapper,id);
-		return x;
+
+    public int kick(String mapper,int pjm_mem) {
+	      int x = getSqlSession().delete(mapper,pjm_mem);
+	      return x;
 	}
 }

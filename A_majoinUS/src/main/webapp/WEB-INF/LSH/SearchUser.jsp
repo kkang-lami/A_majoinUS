@@ -238,9 +238,9 @@
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/category.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
 
-	<!-- 시작 자바스트립트 -->
+	<!-- 기본 이벤트 -->
 	<script>
 	$(document).ready(initPage);
 	
@@ -258,17 +258,26 @@
 	}
 
 	function getSessionId(){
-		var sessionid = '${sessionScope.userId}';
+		var sessionid = '${sessionScope.id}';
 		return sessionid;
 	}
-	</script>
-	
-	<!-- 검색실행 이벤트 -->
-	<script>
 	var global = {
 		    i : 0,
 		    receiver: ""
 		};
+	</script>
+	
+	<!-- 검색창 이벤트 -->
+	<script>
+	$("#eval").on('change', function() {
+		var val = $(this).val();
+		$("#choose").html(val);
+	});
+	
+	$('.clear_btn').on('click', function() {
+		console.log("5.초기화");
+		clear();
+	});
 
 	function show_search_tag() {
 
@@ -360,7 +369,7 @@
 	}
 	
 	function sort(paramStr) {
-		var url="<%=cp%>/aus/LSH/sort";
+		var url="<%=cp%>/aus/sort";
 		var params = $("#SearchForm").serialize()+"&"+paramStr;
 
  			$.ajax({
@@ -411,16 +420,6 @@
 	<!-- 자동 이벤트  -->
 	<script>
 	
-	$("#eval").on('change', function() {
-		var val = $(this).val();
-		$("#choose").html(val);
-	});
-	
-	$('.clear_btn').on('click', function() {
-		console.log("5.초기화");
-		clear();
-	});
-	
 	$('.sort-btn').on('click', function() {
 		console.log("6.정렬변경");
 		sort_change(this);
@@ -442,9 +441,9 @@
 		console.log("9.멤버초대");
 		global.receiver = $(this).parents("tr").attr('id');
 		
-		console.log(global.receiver+"~"+"${sessionScope.userId}");
+		console.log(global.receiver+"~"+"${sessionScope.id}");
 		
-		if(global.receiver === "${sessionScope.userId}"){
+		if(global.receiver === "${sessionScope.id}"){
 			$(this).attr('data-target',"");
 			global.receiver = "";
 			alert("본인은 초대할 수 없습니다");
@@ -469,12 +468,12 @@
 	<script>
 	
 	function get_myPro(){
-		var url="<%=cp%>/aus/LSH/show";
+		var url="<%=cp%>/aus/show";
 		
  		$.ajax({
 			type:"post",
 			url:url,
-			data : { "id": '${sessionScope.userId}'},
+			data : { "id": '${sessionScope.id}'},
 			dataType:"json",
 			success:function(args){
 				show_myPro(args.mine);
@@ -503,8 +502,8 @@
 	function joinUs(){
 		
 		var pj_num = $("#my_project").val();
-		var url="<%=cp%>/aus/LSH/insert_Message";
-		var params = "receiver="+global.receiver+"&sender=${sessionScope.userId}"+"&pj_num="+pj_num+"&a_type=초대";
+		var url="<%=cp%>/aus/insert_Message";
+		var params = "receiver="+global.receiver+"&sender=${sessionScope.id}"+"&pj_num="+pj_num+"&a_type=초대";
 		console.log(params);
 		
  		$.ajax({

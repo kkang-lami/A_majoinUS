@@ -124,13 +124,13 @@ function surak(obj){
 	<c:forEach items="${projectProposalAlarm}" var="projectProposalAlarm">
 	
 	<tr id="${projectProposalAlarm.pj_num}">
-		<td>${projectProposalAlarm.sender}님께서 회원님께  &lt; <a href ="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team"> ${projectProposalAlarm.pj_name} </a> &gt;프로젝트에  
+		<td>${projectProposalAlarm.name} (${projectProposalAlarm.sender})님께서 회원님께  &lt; <a href ="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team"> ${projectProposalAlarm.pj_name} </a> &gt;프로젝트에  
 		${projectProposalAlarm.a_type} 하셨습니다.</td>
 		<td>
 			<input type="hidden" name="pj_num"  id="pj_num" value="${projectProposalAlarm.pj_num}" />
 			
 			<input type="button" id="${projectProposalAlarm.pj_num}"  onclick = "surak(this) " value="수락" > 
-			<button onclick = "refuse('${projectProposalAlarm.pj_num}') "> 거절 </button>
+			<button onclick = "refuse('${projectProposalAlarm.pj_num}') "> 거절(NotYet) </button>
 		</td>
 	</tr>
 	</c:forEach>

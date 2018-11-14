@@ -60,7 +60,7 @@ public class loginController {
 	}
 	
 	//로그인 성공시 바로 이동
-	@RequestMapping("/MyPageMain")
+	/*@RequestMapping("/MyPageMain")
 	public String main(HttpSession session) {
 		String id = (String) session.getAttribute("id");
 		if(id == null) {
@@ -68,7 +68,7 @@ public class loginController {
 		}else {
 			return "JHR/MypageMain";
 		}
-	}
+	}*/
 	
 	//로그 아웃
 	@RequestMapping("/logout")

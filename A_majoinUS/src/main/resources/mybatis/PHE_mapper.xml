@@ -152,56 +152,41 @@
 	</update>
 	  
 	  
-  	<!-- ++++++++++++++++++++++++++++++ 알림 초대/참가 +++++++++++++++++++++++++++++++ -->
-  	<!-- 1. 본인이 팀장일 경우, 타 회원이 내가 진행하는 프로젝트에 참가를 원할 때 :: (receiver==aa)+"참가" -->
-	<select id="projectApplyAlarm" parameterType="map" resultType="project.DTO.AlarmDTO">
-		select * from alarm a, projectroom p where receiver=#{receiver} and a_type=#{a_type} and a.pj_num = p.pj_num
-	</select>
-	
-	<!-- 2. 본인이 일반회원일 경우, 외부 프로젝트에서 초대 제안 알림 올 때 == receiver+"초대" -->
-	<select id="projectProposalAlarm" parameterType="map" resultType="project.DTO.AlarmDTO">
-		select * from alarm a, projectroom p, member m where m.id=p.id and a.pj_num = p.pj_num and receiver=#{receiver} and a_type=#{a_type}
-	</select>
-	
-	<!-- 이미 참가하고있는지 확인 -->
-	<select id="searchMember" parameterType="map" resultType="Integer">
-		select count(*) from pj_mem where id=#{id} and pj_num=#{pj_num}
-	</select>
-	
-	<select id="projectMember" parameterType="Integer" resultType="Integer">
-		select count(*) from pj_mem where pj_num=#{pj_num}
-	</select>
-	
-	<select id="project_Max_count" parameterType="Integer" resultType="Integer">
-		select mem_limit from projectroom where pj_num=#{pj_num}
-	</select>
-  	
-  	<!-- 프로젝트 초대/제안 수락 (둘 다 같은 sql 씀)  pj_mem에 보낸사람 id 추가 -->
-  	<insert id="acceptMember" parameterType="map">
-  		insert into pj_mem values (PJ_MEM_SEQ.NEXTVAL,#{pj_num},#{id})
-  	</insert>
-  	
-  	<!-- 팀장인 '나'에게 외부 회원이 프로젝트 참가를 희망할 때:: alarm 테이블에서 제거-->
-  	<delete id="removeFromAlarm_apply" parameterType="map">
-  		delete from alarm where sender=#{sender} and pj_num=#{pj_num}
-  	</delete>
-  	
-  	<!-- 일반회원인 '나'에게 외부 프로젝트에서 초대했을 때 :: alarm 테이블에서 제거-->
-  	<delete id="removeFromAlarm_invitation" parameterType="map">
-  		delete from alarm where receiver=#{receiver} and pj_num=#{pj_num}
-  	</delete>
+  	<!-- ++++++++++++++++++++++++++++++ 알림 초대/참가 + Pj_mem +++++++++++++++++++++++++++++++ -->
+	  	<!-- 1. 본인이 팀장일 경우, 타 회원이 내가 진행하는 프로젝트에 참가를 원할 때 :: (receiver==aa)+"참가" -->
+		<select id="projectApplyAlarm" parameterType="map" resultType="controller.PHE.ProjectAlarmListDTO">
+			select * from alarm a, projectroom p, member m 
+			where receiver=#{receiver} and a_type=#{a_type} and a.pj_num = p.pj_num and a.sender=m.id order by a_date desc
+
+		</select>
+		
+		<!-- 2. 본인이 일반회원일 경우, 외부 프로젝트에서 초대 제안 알림 올 때 == receiver+"초대" -->
+		<!-- <select id="projectProposalAlarm" parameterType="map" resultType="controller.PHE.ProjectAlarmListDTO">
+			select * from alarm a, projectroom p, member m 
+			where receiver=#{receiver} and a_type=#{a_type} and a.pj_num = p.pj_num and a.sender=m.id order by a_date desc
+		</select> -->
+	  	
+	  	<!-- 프로젝트 초대/제안 수락 (둘 다 같은 sql 씀) -->
+	  	<insert id="joinMember" parameterType="map">
+	  		insert into pj_mem values (PJ_MEM_SEQ.NEXTVAL,#{pj_num},#{id})
+	  	</insert>
+	  	
+	  	<!-- 팀장인 '나'에게 외부 회원이 프로젝트 참가를 희망할 때:: pj_mem에 보낸사람 id 추가 + alarm 테이블에서 제거-->
+	  	<delete id="removeFromAlarm_apply" parameterType="map">
+	  		delete from alarm where sender=#{sender} and pj_num=#{pj_num}
+	  	</delete>
+	  	
+	  	<!-- 일반회원인 '나'에게 외부 프로젝트에서 초대했을 때 :: pj_mem에 내 id 추가 + alarm 테이블에서 제거-->
+	  	<delete id="removeFromAlarm_invitation" parameterType="map">
+	  		delete from alarm where receiver=#{receiver} and pj_num=#{pj_num}
+	  	</delete>
   	
   	
-  	<!-- 내가 신청한 프로젝트 :: sender가 본인, 참가-->
-  	<select id="apply_projectList" parameterType="map" resultType="project.DTO.AlarmDTO">
-  		select * from alarm, projectroom where alarm.pj_num = projectroom.pj_num and sender=#{sender} and a_type=#{a_type}
-  	</select>
-  	
-  	<select id="project_Date" parameterType="Integer" resultType="Map">
-		select to_char(start_d,'YYYY-mm-dd') start_d, to_char(end_d,'YYYY-mm-dd') end_d from projectroom where pj_num=#{pj_num}
-	</select>
-	
-	<!-- 멤버 총원 카운트  -->
+	  	<!-- 내가 신청한 프로젝트 :: sender가 본인, 참가-->
+	  	<select id="apply_projectList" parameterType="map" resultType="project.DTO.AlarmDTO">
+	  		select * from alarm, projectroom where alarm.pj_num = projectroom.pj_num and sender=#{sender} and a_type=#{a_type}
+	  	</select>
+	  	<!-- 멤버 총원 카운트  -->
 	  	<select id="memberCount" parameterType="Integer" resultType="Integer">
 	  		select COUNT(*) from pj_mem where pj_num=#{pj_num} 		
 	  	</select>
@@ -215,6 +200,13 @@
 	  	<select id="memberCheck" parameterType="map" resultType="String">
 	  		select id from pj_mem where pj_num=#{pj_num} and id=#{id}
 	  	</select>
+  	
+  		<!-- 날짜 -->
+	  	<select id="project_Date" parameterType="Integer" resultType="Map">
+			select to_char(start_d,'YYYY-mm-dd') start_d, to_char(end_d,'YYYY-mm-dd') end_d from projectroom where pj_num=#{pj_num}
+		</select>
+		
+	
 	  	
 	  	<!--+++++++++++++++++++++++++++++ Ticket ++++++++++++++++++++++++++++++++++++++++++++++  -->
 	  	<!-- 티켓 개수  -->

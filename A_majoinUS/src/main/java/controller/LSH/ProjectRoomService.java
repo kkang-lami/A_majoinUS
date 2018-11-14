@@ -45,7 +45,8 @@ public class ProjectRoomService {
 				}
 			}
 			
-			list.get(0).put("percent", ((complete*100)/total));
+	        total = (total == 0)? 0: (complete*100)/total;
+	        list.get(0).put("percent", total);
 			
 			temp = list.get(0).get("END_D").toString().split("-");
 			
@@ -91,4 +92,13 @@ public class ProjectRoomService {
 		return x;
 	}
 	
+	public int kick(int pjm_num) {
+	      int x = 0;
+	      try {
+	         x = dao.kick("LSH_AUS.kick", pjm_num);
+	      }catch (Exception e) {
+	    	  System.out.println("[에러] 킥 서비스실패 ::"+e.toString());
+	      }
+	      return x;
+	}
 }

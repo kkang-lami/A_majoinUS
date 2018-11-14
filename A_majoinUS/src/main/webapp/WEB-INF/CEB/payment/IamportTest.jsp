@@ -33,12 +33,12 @@ IMP.request_pay({
         msg += '결제 금액 : ' + rsp.paid_amount;
         msg += '카드 승인번호 : ' + rsp.apply_num;
         alert(msg); 
-        setTimeout(location.href="/AMAJOINUS/aus/Insert_Impuid?imp_uid="+rsp.imp_uid+"&pay_price="+${payment.pay_price}+"&pay_no="+${pay_no}, 0);
+        setTimeout(location.href="<%=request.getContextPath() %>/aus/Insert_Impuid?imp_uid="+rsp.imp_uid+"&pay_price="+${payment.pay_price}+"&pay_no="+${pay_no}, 0);
                            
     } else {
         var msg = '결제에 실패하였습니다.';
         msg += '에러내용 : ' + rsp.error_msg;   
-        setTimeout(location.href="/AMAJOINUS/aus/Fail")  
+        setTimeout(location.href="<%=request.getContextPath() %>/aus/Fail")  
     }  
 }); 
 

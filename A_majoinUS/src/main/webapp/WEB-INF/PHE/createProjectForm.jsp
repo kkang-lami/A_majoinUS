@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+
+</style>
 <title>새로운 프로젝트 생성하기</title>
 <%
 	String cp = request.getContextPath();
@@ -184,8 +187,33 @@
 							<td><br><input type="text" name="pj_loc" size="10"></td>
 					</table></center>
 
-					<center><br><br><input type="submit" value="입력" class="btn btn-block btn-primary" width="50px"/><br><br></center>
-					<%-- 	<c:if test="{sessionScope.id == userId}" /> --%>
+					<!-- 관심직종 -->
+					<div class="form-group">
+						<label for="job1" class="col-sm-2 control-label">관심분야</label>
+						<div class="col-sm-10">
+							<select id="job1" class="show-level2"></select> <select
+								id="job12"></select>
+							<button type="button" value="job" class="add_btn">추가</button>
+						</div>
+					</div>
+					
+					<!-- 선호지역 -->
+					<div class="form-group">
+						<label for="local1" class="col-sm-2 control-label">선호직역</label>
+						<div class="col-sm-10">
+							<select id="local1" class="show-level2"></select> <select
+								id="local12"></select>
+							<button type="button" value="local" class="add_btn">추가</button>
+						</div>
+					</div>
+					
+					<div title="넘겨질 job과 local" id="hidden" ></div>
+					<hr>
+					검색조건
+					<div id="result" ></div>
+
+					<center><br><br><input type="submit" value="입력" class="btn btn-primary" width="50px"/><br><br></center>
+					<%-- 	<c:if test="{sessionScope.id == id}" /> --%>
 					<input type="hidden" name="id" value="${sessionScope.id}" />
 				</form>
 			</div></div></div>
@@ -195,6 +223,58 @@
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
-	
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
+	<script>
+		$(document).ready(initPage);
+		
+		function initPage() {
+			level1();
+			show_search_tag();
+		}
+		
+		function getPageNum(){
+			var pageNum = $('.pagination .active').attr('id');
+			return (pageNum === undefined)? 1 : pageNum;
+		}
+		
+		function getContext(){
+			var context = "<%=cp%>";
+			return context;
+		}
+
+		function getSessionId(){
+			var sessionid = '${sessionScope.id}';
+			return sessionid;
+		}
+		
+		var global = {
+			    i : 0
+		};
+		               
+		function show_search_tag() {
+
+			var html1 = "<div id='job_list' class='inline'>",
+				html2 = "";
+
+			<c:forEach var="item" items="${command.job}">
+				html1 += "<div class="gogo" id="+global.i+"  style='display: inline-block;'>${item}<button id="+global.i+" class='del_btn'>x</button></div>";
+				html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
+				global.i++;
+			</c:forEach>
+
+				html1 += "</div><br><div id='local_list' class='inline'>";
+
+			<c:forEach var="item" items="${command.local}" >
+				html1 += "<div id="+global.i+">${item}<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+				html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
+				global.i++;
+			</c:forEach>
+
+				html1 += "</div>";
+
+				$('#result').append(html1);
+				$('#hidden').append(html2);
+		}
+	</script>
 </body>
 </html>

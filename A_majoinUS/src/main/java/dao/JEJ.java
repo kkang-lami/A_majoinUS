@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import controller.PHE.ProjectAlarmListDTO;
+import controller.PHE.ProjectListDTO;
+import project.DTO.AlarmDTO;
 import project.DTO.Category_2DTO;
 import project.DTO.HolidayDTO;
 import project.DTO.IssueDTO;
@@ -19,17 +22,26 @@ import project.DTO.ScheduleDTO;
 import project.DTO.Visit_statDTO;
 
 public class JEJ extends SqlSessionDaoSupport{
-	//프로젝트 스케줄
-	/*public void Addschedule(int pj_num, String s_start, String s_end, String s_content) {		
-		ScheduleDTO s = new ScheduleDTO();
-		s.setPj_num(pj_num);
-		s.setS_start(s_start);
-		s.setS_end(s_end);
-		s.setS_content(s_content);
-		
-		getSqlSession().insert("JEJ_AUS.add_schedule", s);
-	}*/
+	//회원 마이페이지 메인	
+	// 프로젝트 참가+초대 알림
+	public List<ProjectAlarmListDTO> getProjectApplyAlarm(String receiver, String a_type) {
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
+
+		parameters.put("receiver", receiver);
+		parameters.put("a_type", a_type);
+
+		System.out.println("초대알림DAO");
+		System.out.println("parameters : " + parameters);
+		return getSqlSession().selectList("JEJ_AUS.projectApplyAlarm", parameters);
+	}
 	
+	//진행중인 프로젝트
+	public List<ProjectListDTO> ongoing_getListData(String id) {
+		List<ProjectListDTO> dto = getSqlSession().selectList("JEJ_AUS.ongoing_projectList", id);
+		return dto;
+	}
+	
+	//프로젝트 스케줄	
 	public int get_h_num() {
 		int h_num = getSqlSession().selectOne("JEJ_AUS.h_num");
 		return h_num;

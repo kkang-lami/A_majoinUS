@@ -27,8 +27,7 @@
 //<div id="result"></div>
 
 
-
-/*<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
+/*<script src="<%=request.getContextPath()%>/resources/LSH/JS/profile_modal.js"></script>
  * 
 	$(document).ready(initPage);
 	
@@ -65,7 +64,7 @@ function level1(){
 			}
 			$("#job1").html(array.join(''));
 			
-			for(i=0; i < joblen; i += 1){
+			for(i=0; i < locallen; i += 1){
 			    array[i] = "<option value='"+args.local_list[i]+"'>"+args.local_list[i]+"</option>";
 			}
 			$("#local1").html(array.join(''));

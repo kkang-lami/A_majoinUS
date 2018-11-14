@@ -99,18 +99,18 @@
 		select count(*) from inquiry  
 	</select>
 	
-	<select id="show_count_id" resultType="int">  
+<!--	<select id="show_count_id" resultType="int">  
 		select count(*) from inquiry where id=#{id}  
 	</select>
-	
+	-->
 	<select id="show_list_2" resultType="project.DTO.InquiryDTO">
 		select * from inquiry order by i_num desc
 	</select>  
 	
-	<select id="show_list_id" parameterType="map" resultType="project.DTO.InquiryDTO">
+<!--	<select id="show_list_id" parameterType="map" resultType="project.DTO.InquiryDTO">
 		select * from inquiry where id=#{id} order by i_num desc
 	</select>  
-	
+	-->
 	<select id="get_search_count_2" parameterType="project.DTO.PageDTO" resultType="int">
 		select count(*) from inquiry where ${string} like '%'||#{search}||'%'
 	</select>	
@@ -118,8 +118,9 @@
 	<select id="get_search_list_2" parameterType="project.DTO.PageDTO" resultType="project.DTO.InquiryDTO">
 		<![CDATA[select i_num, i_subject, id, i_content, i_date, i_state, r from (select i_num, i_subject, id, i_content, i_date, i_state, rownum r from (select*from inquiry where ${string} like '%'||#{search}||'%' order by i_num desc) order by r) where r>=${startRow} and r<=${endRow}]]>
 	</select>
-
-     <select id="show_count_answer" resultType="int">    
+	
+	<!-- all inquiry -->
+    <select id="show_count_answer" resultType="int">    
 		 select count(*) from inquiry where i_date <![CDATA[ < ]]> sysdate and i_state='미답변'       
 	</select> 
 	  
@@ -212,10 +213,10 @@
 		select count(*) from point where id=#{id}
 	</select>
 	
-	<select id="show_list_point" parameterType="map" resultType="project.DTO.PointDTO">
+<!--	<select id="show_list_point" parameterType="map" resultType="project.DTO.PointDTO">
 		select * from point where id=#{id} order by p_num desc  
 	</select>
-	
+	-->
 	<insert id="insert_pointlist" parameterType="project.DTO.PointDTO">
 		insert into point(p_num,id,update_date,type,update_point,after_point) values(point_seq.nextval,#{id},sysdate,'point-charge',#{pay_price},(select sum(total_point+#{pay_price}) update_point from member where id = #{id}))
 	</insert>

@@ -3,6 +3,25 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="JEJ_AUS">
+<!-- 마이페이지 메인 -->
+<!-- 최근 알람 -->
+<!-- 1. 본인이 팀장일 경우, 타 회원이 내가 진행하는 프로젝트에 참가를 원할 때 :: (receiver==aa)+"참가" -->
+<select id="projectAlarm" parameterType="map" resultType="project.DTO.AlarmDTO">
+	<![CDATA[select * from alarm a, PROJECTROOM p where receiver=#{receiver} and a_type=#{a_type} and a.pj_num = p.pj_num and ROWNUM < 4 ]]>
+</select>
+<select id="projectApplyAlarm" parameterType="map" resultType="controller.PHE.ProjectAlarmListDTO">
+	<![CDATA[select * from alarm a, projectroom p, member m 
+	where receiver=#{receiver} and a_type=#{a_type} and a.pj_num = p.pj_num and a.sender=m.id and rownum < 4 order by a_date desc ]]>
+</select>
+
+<!-- 진행중인 스케줄 조회 -->
+<select id="ongoing_projectList" resultType="controller.PHE.ProjectListDTO">
+<![CDATA[ 
+		select pj.id leaderId, pm.id memId, pj.*,pm.* from pj_mem pm inner join projectroom pj on pj.pj_num=pm.pj_num 
+		where pm.id=#{id} and pj.end_d >= trunc(sysdate) order by regdate desc
+]]>
+</select>
+
 <!-- 스케줄 -->
 <insert id="add_schedule" parameterType="project.DTO.ScheduleDTO">
 	insert into schedule values (SCHEDULE_SEQ.NEXTVAL, #{s_start}, #{s_end}, #{s_content}, #{pj_num})
@@ -148,8 +167,8 @@
 </select>
 
 <select id="admin_projectroom" parameterType="project.DTO.PageDTO" resultType="project.DTO.ProjectroomDTO">
-	<![CDATA[select pj_num, pj_name, id, start_d, end_d, regdate, r 
-	from (select pj_num,pj_name, id, start_d, end_d, regdate, rownum r 
+	<![CDATA[select pj_name, id, start_d, end_d, regdate, r 
+	from (select pj_name, id, start_d, end_d, regdate, rownum r 
 	from (select*from projectroom) order by r) 
 		where r>=#{startRow} and r<=#{endRow}]]>
 </select>

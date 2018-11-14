@@ -13,13 +13,19 @@
 		insert into Todo_list values(#{todo_num},#{id},#{todo})
 	</insert>
 	
-	<update id="updateTodo" parameterType="project.DTO.Todo_listDTO">
-		update Todo_list set TODO = #{todo} where TODO_NUM = #{todo_num}
-	</update>
-	
-	<delete id="deleteTodo" parameterType="String">
-		delete * from Todo_list where TODO_NUM = #{todo_num}
+	<delete id="deleteTodo" parameterType="list">
+		<foreach collection="list" separator=";" item="item" open="DECLARE BEGIN" close="; END;">
+			delete Todo_list where TODO_NUM = #{item}
+		</foreach>
 	</delete>
+	
+	<update id="updateFin" parameterType="String">
+		update todo_list set TODO = CONCAT('[$완]', todo) where todo_num = #{todo_num}
+	</update>
+
+	<update id="deleteFin" parameterType="String">
+		update todo_list set TODO =  REPLACE(todo, '[$완]','') where todo_num = #{todo_num}
+	</update>
 
 	<!-- ////////////////////////////////////////// 프로젝트룸 메인 ///////////////////////////////////////// -->
 	<select id="getProgress" parameterType="int" resultType="map" >
@@ -39,7 +45,9 @@
 		update projectroom set id = #{id} where pj_num=#{pj_num}
 	</update>
 	
-	
+	<delete id="kick" parameterType="int">
+      delete pj_mem where pjm_num = #{pjm_num};
+   	</delete>
 
 	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 	

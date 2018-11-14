@@ -188,7 +188,7 @@
 			
 		</section>
 		
-		<!-- 프로젝트 참가 모달 -->
+		<!-- 멤버초대 모달 -->
 		<c:import url="${cp}/resources/LSH/Modal/join.jsp"/>
 	        
        	<!-- 프로젝트룸 모달 -->
@@ -213,7 +213,7 @@
 		function initPage() {
 			level1();
 			show_search_tag();
-			show_sort();	
+			show_sort();
 			$('.pagination #${pdto.pageNum}').addClass("active");
 		}
 		
@@ -228,86 +228,30 @@
 		}
 
 		function getSessionId(){
-			var sessionid = '${sessionScope.userId}';
+			var sessionid = '${sessionScope.id}';
 			return sessionid;
 		}
+		
+		var global = {
+			    i : 0,
+			    origin_d : "",
+			    receiver : "",
+			    pj_num: 0
+		};
 	</script>
 
-	<!-- 셀렉터 이벤트 -->
+	<!-- 검색창 이벤트 -->
 	<script>
-	var global = {
-		    i : 0,
-		    origin_d : "",
-		    receiver : "",
-		    pj_num: 0
-	};
+	$('.clear_btn').on('click', function() {
+		console.log("5.초기화");
+		clear();
+	});
 	
- 	function level1(){
-		var url="<%=cp%>/aus/LSH/first_List";
- 	
-		$.ajax({
-			type:"post",
-			url:url,
-			dataType:"json",
-			success:function(args){
-				var i = 0,
-				    array = [],
-					joblen = args.job_list.length,
-					locallen = args.local_list.length;
-				
-				for(; i < joblen; i += 1){
-				    array[i] = "<option value='"+args.job_list[i]+"'>"+args.job_list[i]+"</option>";
-				}
-				$("#job1").html(array.join(''));
-				
-				for(i=0; i < joblen; i += 1){
-				    array[i] = "<option value='"+args.local_list[i]+"'>"+args.local_list[i]+"</option>";
-				}
-				$("#local1").html(array.join(''));
-				
-				init_level2("job1");
-				init_level2("local1");
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		});
- 	}
+	$(".date_btn").on('change', function() {
+		console.log("6.날짜검사");
+		check_date();
+	});
 	
-	function init_level2(what) {
-		var params ="hint="+$("#"+what+" option:eq(0)").val();
-		var id = what+"2"; 
-		real_level2(params,id);
-	}
- 	
-	function level2(element) {
-		var params = "hint=" + $(element).val();
-		var id = $(element).attr("id") + "2";
-		real_level2(params,id);
-	}
-	
-	function real_level2(params,id){
-		var url="<%=cp%>/aus/LSH/second_List";
-		$.ajax({
-			type : "post",
-			url : url,
-			data : params,
-			dataType : "json",
-			success : function(args) {
-				$("#" + id + " option").each(function() {
-					$("#" + id + " option:eq(0)").remove();
-				});
-
-				for (var idx = 0; idx < args.list.length; idx++) {
-					$("#" + id).append("<option value='"+args.list[idx]+"'>"+ args.list[idx] + "</option>");
-				}
-			},
-			error : function(e) {
-				alert(e.responseText);
-			}
-		});
-	}
-
 	function show_search_tag() {
 
 		var html1 = "<div id='job_list' class='inline'>",
@@ -331,40 +275,6 @@
 
 			$('#result').append(html1);
 			$('#hidden').append(html2);
-	}
-
-	function add(element) {
-		var list = [],
-			html1 = "",
-			html2 = "",
-			i = 0,
-			what = $(element).attr("value"), str = $("#" + what + "1").val() + ">"+ $("#" + what + "12").val(),
-			len = $("input[name=" + what+ "]").length;
-
-			for (; i < len; i += 1) {
-				list.push($("input[name='" + what + "']:eq(" + i + ")").val());
-			}
-
-			if (list.indexOf(str) > -1) {
-				alert("이미 추가된 검색어 입니다.");
-			} else if (len >= 3) {
-				alert("3개 까지 지정가능합니다. (현재 입력수:" + len + ")");
-			} else {
-				html1 += "<div id="+global.i+">" + str + " ";
-				html1 += "<button type='button' id="+global.i+" class='del_btn'>x</button></div>";
-				html2 += "<input type='hidden' id='"+global.i+"' name='"+what+"' value='"+str+"'>";
-
-				$('#' + what + '_list').append(html1);
-				$('#hidden').append(html2);
-				global.i++;
-			}
-		}
-
-	function del(elements) {
-		var num = $(elements).attr("id");
-		
-		$("#result #" +num).remove();
-		$("#hidden #" +num).remove();
 	}
 
 	function clear() {
@@ -407,7 +317,7 @@
 	}
 	
 	function sort(paramStr) {
-		var url="<%=cp%>/aus/LSH/Team/sort";
+		var url="<%=cp%>/aus/Team/sort";
 		var params = $("#SearchForm").serialize()+"&"+paramStr;
 
 		console.log(params);
@@ -504,31 +414,7 @@
 	
 	<!-- 자동 이벤트  -->
 	<script>
-	$('.show-level2').on('change', function() {
-		console.log("2.레벨2");
-		level2(this);
-	});
 
-	$('.add_btn').on('click', function() {
-		console.log("3.에드");
-		add(this);
-	});
-
-	$('#result').on('click', '.del_btn', function() {
-		console.log("4.삭제");
-		del(this);
-	});
-
-	$('.clear_btn').on('click', function() {
-		console.log("5.초기화");
-		clear();
-	});
-	
-	$(".date_btn").on('change', function() {
-		console.log("6.날짜검사");
-		check_date();
-	});
-	
 	$('.sort-btn').on('click', function() {
 		console.log("7.정렬변경");
 		sort_change(this);
@@ -579,7 +465,7 @@
 	});
 	
 	function star(pj_num,status){
-		var url=getContext()+"/aus/LSH/Team/favorite";
+		var url=getContext()+"/aus/Team/favorite";
 		var params = "pj_num="+pj_num+"&login_id="+getSessionId()+"&status="+status;
 		$.ajax({
 			type:"post",
@@ -645,8 +531,8 @@
 	});
 	
 	function joinUs(){
-		var url="<%=cp%>/aus/LSH/insert_Message";
-		var params = "receiver="+global.receiver+"&sender=${sessionScope.userId}"+"&pj_num="+global.pj_num+"&a_type=신청";
+		var url="<%=cp%>/aus/insert_Message";
+		var params = "receiver="+global.receiver+"&sender=${sessionScope.id}"+"&pj_num="+global.pj_num+"&a_type=신청";
   		$.ajax({
 			type:"post",
 			url:url,
@@ -665,6 +551,8 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
 	
 </body>
 	<style>
@@ -678,13 +566,13 @@
 		
 		.content-header a{
 			margin-top: 15px;
-    		top: 0;
-    		float: none;
-    		position: absolute;
-    		right: 13px;
-    		border-radius: 2px;
-    		padding: 8px 15px;
-    		margin-bottom: 20px;
+	   		top: 0;
+	   		float: none;
+	   		position: absolute;
+	   		right: 13px;
+	   		border-radius: 2px;
+	   		padding: 8px 15px;
+	   		margin-bottom: 20px;
 		}
 	</style>
 </html>

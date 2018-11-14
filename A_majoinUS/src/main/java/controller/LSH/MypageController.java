@@ -4,35 +4,64 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import controller.PHE.ProjectAlarmListDTO;
+import controller.PHE.ProjectListDTO;
+import dao.JEJ;
 import project.DTO.Todo_listDTO;
 
 @Controller
-@RequestMapping("/aus/LSH/Mypage")
+@RequestMapping("/aus")
 public class MypageController {
 	
 	private MypageService service;
+	
+	@Autowired
+	private JEJ dao;
 	
 	@Autowired	
 	public void setService(MypageService service) {
 		this.service = service;
 	}
 	
-	@RequestMapping(value="/Main")
-	public String main(HttpServletRequest req,Model model) {
+	@RequestMapping(value="/MyPageMain")
+	public String main(HttpServletRequest request,Model model) throws Exception{
+		
+		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		session = request.getSession(true);
+		String receiver =(String)session.getAttribute("id");	
+		
+		String a_type = "참가";
+		List<ProjectAlarmListDTO> projectApplyAlarm = dao.getProjectApplyAlarm(receiver, a_type);
+		
+		a_type="초대";
+		List<ProjectAlarmListDTO> projectProposalAlarm = dao.getProjectApplyAlarm(receiver, a_type);
+		
+		
+		//진행중인 프로젝트
+		List<ProjectListDTO> ongoing_list = dao.ongoing_getListData(receiver);
+		//
+		
 		System.out.println("[투두리스트 실행]");
 		
-		String id = req.getSession().getAttribute("userId").toString();
+		String id = request.getSession().getAttribute("id").toString();
 		
 		List<Todo_listDTO> list = service.getTodo(id);
 		for(Todo_listDTO m : list) {
 			System.out.println(m);
 		}
+		model.addAttribute("ongoing_list",ongoing_list);
+		model.addAttribute("projectApplyAlarm", projectApplyAlarm);
+		model.addAttribute("projectProposalAlarm", projectProposalAlarm);
 		model.addAttribute("todo", list);
 		return "LSH/Mypage";
 	}
@@ -45,19 +74,24 @@ public class MypageController {
 		System.out.println("결과"+x);
 	}
 	
-	@RequestMapping(value="/updateTodo")
-	public void updateTodo(Todo_listDTO dto) {
-		System.out.println("[++]");
-		int x = service.updateTodo(dto);
+	@RequestMapping(value="/Fin")
+	public void Fin(String todo_num,String status,HttpServletResponse resp) throws Exception{
+		System.out.println("[++]"+todo_num+"~"+status);
+		int x = 0;
+		if(status.equals("추가")) {
+			x = service.updateFin(todo_num);
+		}else {
+			x = service.deleteFin(todo_num);
+		}
 		System.out.println("결과"+x);
-
 	}
 	
 	@RequestMapping(value="/deleteTodo")
-	public void deleteTodo(String todo_num) {
-		System.out.println("[-]");
-		int x = service.deleteTodo(todo_num);
-		System.out.println("결과"+x);
+	public void deleteTodo(@RequestParam(value="todo_nums[]") List<String> todo_nums,HttpServletResponse resp) throws Exception{
+		resp.setContentType("text/html;charset=utf-8");
+		System.out.println("[-]"+todo_nums);
+		int x = service.deleteTodo(todo_nums);
+		System.out.println("결과 ::"+x);
 	}
 
 	

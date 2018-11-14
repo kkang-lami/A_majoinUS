@@ -106,8 +106,9 @@ public class MyPointController {
 	
 
 	@RequestMapping(value="/Payment_write", method = RequestMethod.GET)
-	public String paymentlist(ModelMap model) {
-		MemberDTO member = memberDAO.get_member("amajoinus@gmail.com");
+	public String paymentlist(ModelMap model,HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		MemberDTO member = memberDAO.get_member(id);
 		model.addAttribute("member", member);  
 	    
 		return "CEB/payment/Main_Payment";     
