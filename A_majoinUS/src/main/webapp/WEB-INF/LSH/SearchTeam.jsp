@@ -188,7 +188,7 @@
 			
 		</section>
 		
-		<!-- 멤버초대 모달 -->
+		<!-- 프로젝트 참가 모달 -->
 		<c:import url="${cp}/resources/LSH/Modal/join.jsp"/>
 	        
        	<!-- 프로젝트룸 모달 -->

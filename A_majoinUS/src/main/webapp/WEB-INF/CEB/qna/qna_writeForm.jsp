@@ -129,7 +129,7 @@ transition:.7s;
                     <tr>     
 		   <td align="center">
 				<input type="submit" value="글쓰기" > 
-				<input type="reset" value="재작성">
+<!-- 				<input type="reset" value="재작성"> -->
 	     		<input type="button" value="글목록" onclick="document.location.href='qna'">
 		   </td>  
 		</tr>

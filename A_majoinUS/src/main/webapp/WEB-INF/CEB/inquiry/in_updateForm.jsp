@@ -124,8 +124,8 @@ RE :</textarea>
 
 		<tr>     
 		   <td align="center">
-				<input type="submit" value="글수정" > 
-				<input type="reset" value="재작성">
+				<input type="submit" value="답변 완료" > 
+				<!-- <input type="reset" value="재작성"> -->
 	     		<input type="button" value="글목록" onclick="document.location.href='inquiry'">
 		   </td>
 		</tr>

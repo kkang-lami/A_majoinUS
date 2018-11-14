@@ -170,7 +170,7 @@ transition:.7s;
 						${no}  
 					</td> 
                     <td width="340">				
-						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
+						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
 					</td>   
 
 					<td align="center" width="340">
@@ -218,41 +218,41 @@ transition:.7s;
 		         
 		 <c:if test="${startPage > 10}">
 		       <c:if test="${search1 != 1 }">
-		   	   		<a href="inquiry?pageNum=${startPage - 10 }">[이전]</a>
+		   	   		<a href="inquiry_user?pageNum=${startPage - 10 }">[이전]</a>
 		   	   </c:if>
 		   	   <c:if test="${search1 == 1 }">
-		   	   		<a href="inquiry?pageNum=${startPage - 10 }&search=${search}&string=${string}">[이전]</a>
+		   	   		<a href="inquiry_user?pageNum=${startPage - 10 }&search=${search}&string=${string}">[이전]</a>
 		   	   </c:if>	
 		   </c:if>
 		
 		   <c:forEach var="i" begin="${startPage}" end="${endPage}">
 		   	   <c:if test="${search1 != 1 }">
-		   	   		<a href="inquiry?pageNum=${i}">[${i}]</a>
+		   	   		<a href="inquiry_user?pageNum=${i}">[${i}]</a>
 		   	   </c:if>
 		   	   <c:if test="${search1 == 1 }">
-		   	   		<a href="inquiry?pageNum=${i}&search=${search}&string=${string}">[${i}]</a>
+		   	   		<a href="inquiry_user?pageNum=${i}&search=${search}&string=${string}">[${i}]</a>
 		   	   </c:if>				   	   
 		   </c:forEach>
 		
 		   <c:if test="${endPage < pageCount}">
 		   	   <c:if test="${search1 != 1 }">
-		   	   		<a href="inquiry?pageNum=${startPage + 10}">[다음]</a>
+		   	   		<a href="inquiry_user?pageNum=${startPage + 10}">[다음]</a>
 		   	   </c:if>
 		   	   <c:if test="${search1 == 1 }">
-		   	   		<a href="inquiry?pageNum=${startPage + 10 }&search=${search}&string=${string}">[이후]</a>
+		   	   		<a href="inquiry_user?pageNum=${startPage + 10 }&search=${search}&string=${string}">[이후]</a>
 		   	   </c:if>  
 		   </c:if>
 		</c:if>	
 	</div>
 	        
+	    
 	  
-	  
-	 	<div class="box-footer">  
+	 	<div class="box-footer">         
 					<td>
 					<p>
 						<div class="btn-group"  style=" left: 52%; margin-left: -200px;" >
-							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='/AMAJOINUS/aus/in_writeForm'">
-							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='inquiry'">
+							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/in_writeForm'">
+							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='inquiry_user'">
 						
 						</div>
 						</p>  

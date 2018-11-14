@@ -18,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.JEJ;
 import project.DTO.ScheduleDTO;
@@ -81,7 +82,7 @@ public class ScheduleController {
        model.addAttribute("today_year", today_year);
        model.addAttribute("today_month", today_month);
        model.addAttribute("today_date", today_date);
-
+       model.addAttribute("pj_num",pj_num);
        model.addAttribute("vacation_number", vacation_number);
 
      return "JEJ/ProjectSchedule";
@@ -89,19 +90,21 @@ public class ScheduleController {
 
    
    @RequestMapping(value = "/AddSchedule", method = RequestMethod.GET)
-   public void add_schedule(Model model, HttpServletRequest request) {
-	   System.out.println("나 여기잇음");
+   public String add_schedule(Model model, HttpServletRequest request,@RequestParam("pj_num")int pj_num) {
+	   model.addAttribute("pj_num",pj_num);
+	   return "JEJ/AddSchedule";
    }
-  
+      
    
    @RequestMapping(value = "/AddSchedule", method = RequestMethod.POST)
-   public String Schedule_add(HttpSession session, @RequestParam(value="s_content")String holiday_name, @RequestParam(value="s_start")String holiday_start, @RequestParam(value="s_end")String holiday_end,@RequestParam("pj_num")int pj_num) throws ParseException, java.text.ParseException {      
-	   System.out.println(pj_num);
-	   System.out.println(holiday_name);
-	   System.out.println(holiday_start);
-	   System.out.println(holiday_end);
+   @ResponseBody
+   public void Schedule_add(HttpSession session, @RequestParam(value="s_content")String holiday_name, @RequestParam(value="s_start")String holiday_start, @RequestParam(value="s_end")String holiday_end,@RequestParam("pj_num")int pj_num) throws ParseException, java.text.ParseException {      
+	   System.out.println("pj_num : "+pj_num);
+	   System.out.println("holiday_name : "+holiday_name);
+	   System.out.println("holiday_start : "+holiday_start);
+	   System.out.println("holiday_end : "+holiday_end);
       DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-
+      
       Date a[] = new Date[2];
 
 		a[0] = sdFormat.parse(holiday_start);
@@ -127,8 +130,8 @@ public class ScheduleController {
          service.insert_schedule(dto);
       }
       System.out.println("asdfas112132123132123df");
-      return "redirect:/aus/ProjectSchedule";
-/*      return "redirect:aus/JEJ/AddSchedule"; //추후에 수정할것
-*/
+      //return "redirect:/aus/ProejctRoom/AddSchedule";
+      //return "redirect:aus/JEJ/AddSchedule"; //추후에 수정할것
+
    }
 }

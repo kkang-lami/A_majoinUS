@@ -124,13 +124,12 @@ $(function () {
 	 
 		<tr>
 			<td>이름
-			<input type="text" name="id" value="1@gmail.com" readonly><form:errors path="id" />
+			<input type="text" name="id" value="${sessionScope.name}" readonly><form:errors path="id" />
 			</td>  
 		</tr>
 		<tr>
-			<td>제목
-			
-				<input type="text"  maxlength="50" name="i_subject"  width="100" ><form:errors path="subject" />			
+			<td>제목      
+				<input type="text"  maxlength="100" name="i_subject" size="100" ><form:errors path="subject" />			
 			</td>
 		</tr>
 		<tr>
@@ -141,8 +140,8 @@ $(function () {
 		<tr>  
 			<td align="center">
 				<input type="submit" value="글쓰기">
-				<input type="reset" value="재작성">
-				<input type="button" value="글목록" onclick="window.location='inquiry'">
+				<!-- <input type="reset" value="재작성"> -->
+				<input type="button" value="글목록" onclick="window.location='inquiry_user'">
 			</td>
 		</tr>
 		</tbody>

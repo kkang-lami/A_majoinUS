@@ -170,7 +170,7 @@ transition:.7s;
 						${inquiry.i_num}
 					</td> 
                     <td width="340">				
-						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
+						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
 					</td>   
 
 					<td align="center" width="340">
@@ -251,7 +251,7 @@ transition:.7s;
 					<td>
 					<p>
 						<div class="btn-group"  style=" left: 52%; margin-left: -200px;" >
-							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/in_writeForm'">
+							<%-- <input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/in_writeForm'"> --%>
 							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='inquiry'">
 						
 						</div>

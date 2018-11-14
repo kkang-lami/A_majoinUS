@@ -53,7 +53,7 @@ function check(){
 			
 			<div class="box box-default">
 				<div class="box-header with-border">
-					<h4>찾으시는 내용이 없으시다면 <a href="aus/qna">F&Q</a>에서 찾아주세요.</h4>
+					<h4>찾으시는 내용이 없으시다면 <a href="qna">F&Q</a>에서 찾아주세요.</h4>
 				</div>
 			</div>
 		</table>
@@ -105,17 +105,17 @@ function check(){
 	   </c:if>  --%>     
 		
 	 
-		  
+		<c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">  
 	  <input type="button" value="글수정" class="btn btn-warning pull-left" 
 	   class="btn btn-primary"  onclick="document.location.href='update?num=${notice.notice_num}'" >
 	         
 	   &nbsp;&nbsp;&nbsp;&nbsp;  
 	  <input type="button" value="글삭제" class="btn btn-danger pull-left"
 	       onclick="check();">
-	       
+	       </c:if>
 	   &nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="submit" class="btn btn-success" id="submit"
-				value="Cancel">
+			<input type="button" class="btn btn-success" id="submit"
+				value="Cancel" onclick="history.go(0)">
 		</div>
       
 	</form>    

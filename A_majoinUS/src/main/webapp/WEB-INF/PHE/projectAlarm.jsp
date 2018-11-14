@@ -19,33 +19,29 @@ function chk(s){
 }
 
 function surak(obj){
-    var url="<%=cp%>/ama/proposalAccept";
+    var url="<%=cp%>/aus/proposalAccept";
     var pj_num = $(obj).attr('id');
-    alert(url);
-    alert(pj_num);
     var params = "pj_num="+pj_num;
-	console.log(params);
       $.ajax({
        type:"post",
        url:url,
        data: params,
-       dataType: "json",
+       dataType: "text",
        success:function(args){
-			console.log("결과" + args.result);
-			if(args.result === "register"){
+			if(args === "register"){
 				alert("멤버 등록이 완료되었습니다.");
 				var detail = $(obj).parent().parent();
 			    detail.remove(); 
 			}
-			else if(args.result === "already"){
-				alert("이미 참여중인 회원입니다.");
+			else if(args === "already"){
+				alert("이미 참여중입니다.");
 				var detail = $(obj).parent().parent();
 		    	detail.remove(); 
 			}
-			else
+			else{
 				alert("인원이 꽉 찬 프로젝트입니다.");
 			//location.reload();
-			
+			}
        },
        error:function(e){
           alert(e.responseText);
@@ -57,33 +53,29 @@ function surak(obj){
  function surak2(obj){
 	 	var pj_num = $(obj).attr('id');
 	 	var sender = $(obj).attr('class');
-	 	alert(pj_num);
-	 	alert(sender);	 
 	 	
-	    var url="<%=cp%>/ama/acceptMember";
+	    var url="<%=cp%>/aus/acceptMember";
 	    var params = "pj_num="+pj_num+"&sender="+sender;
-		console.log("콘솔로그 : " + params);
 	      $.ajax({
 	       type:"post",
 	       url:url,
 	       data: params,
-	       dataType: "json",
+	       dataType: "text",
 	       success:function(args){
-				console.log("결과" + args.result);
-				if(args.result === "register"){
+				if(args === "register"){
 					alert("멤버 등록이 완료되었습니다.");
 					var detail = $(obj).parent().parent();
 				    detail.remove(); 
 				}
-				else if(args.result === "already"){
+				else if(args === "already"){
 					alert("이미 참여중인 회원입니다.");
 					 var detail = $(obj).parent().parent();
 				     detail.remove(); 
 				}
-					else
+				else{
 					alert("인원이 꽉 찬 프로젝트입니다.");
 				//location.reload();
-				
+				}  
 	       },
 	       error:function(e){
 	          alert(e.responseText);

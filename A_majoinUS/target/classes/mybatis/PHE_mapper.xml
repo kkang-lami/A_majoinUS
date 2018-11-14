@@ -162,6 +162,19 @@
 	<select id="projectProposalAlarm" parameterType="map" resultType="project.DTO.AlarmDTO">
 		select * from alarm a, projectroom p, member m where m.id=p.id and a.pj_num = p.pj_num and receiver=#{receiver} and a_type=#{a_type}
 	</select>
+	
+	<!-- 이미 참가하고있는지 확인 -->
+	<select id="searchMember" parameterType="map" resultType="Integer">
+		select count(*) from pj_mem where id=#{id} and pj_num=#{pj_num}
+	</select>
+	
+	<select id="projectMember" parameterType="Integer" resultType="Integer">
+		select count(*) from pj_mem where pj_num=#{pj_num}
+	</select>
+	
+	<select id="project_Max_count" parameterType="Integer" resultType="Integer">
+		select mem_limit from projectroom where pj_num=#{pj_num}
+	</select>
   	
   	<!-- 프로젝트 초대/제안 수락 (둘 다 같은 sql 씀)  pj_mem에 보낸사람 id 추가 -->
   	<insert id="acceptMember" parameterType="map">

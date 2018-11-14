@@ -361,7 +361,7 @@
           </li>
           
            <li>
-            <a href="ProjectSchedule">
+            <a href="ProjectSchedule?pj_num=${pj_num}">
             <i class="menu-icon fa fa-fw fa-calendar-minus-o bg-purple"></i>
            <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
               <div class="menu-info">
@@ -420,6 +420,8 @@
       <!-- /.tab-pane -->
     </div>
   </aside>
+<div class="control-sidebar-bg"></div>
+
 
 
 

@@ -186,7 +186,7 @@
 		});
 	});
     
-	let sock = new SockJS("/AMAJOINUS/aus/chat");
+	let sock = new SockJS("/A_majoinUS/aus/chat");
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;       
 

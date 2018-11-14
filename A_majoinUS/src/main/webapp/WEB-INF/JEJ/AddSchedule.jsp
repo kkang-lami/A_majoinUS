@@ -98,9 +98,9 @@
 	                return false;
 	            }
 
-	            var url = "<%=request.getContextPath() %>/aus/JEJ/AddSchedule"; 
+	            var url = "<%=request.getContextPath() %>/aus/ProejctRoom/AddSchedule"; 
 	            //수정하시오.
-
+    
 	            var ajax = $.post(url, $(this).serialize(), function(data) {
 
 	            }).success(function(){
@@ -121,7 +121,7 @@
 		});
 		</script>
 		
-	</head>
+	</head>    
 	<body>
 <br /><br />
 	

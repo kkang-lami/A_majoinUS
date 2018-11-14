@@ -251,7 +251,9 @@ transition:.7s;
 					<td>
 					<p>
 						<div class="btn-group"  style=" left: 53%; margin-left: -200px;" >
+						<c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">
 							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/writeForm'">
+							</c:if>
 							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='notice'">
 						
 						</div>

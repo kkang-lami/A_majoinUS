@@ -397,13 +397,17 @@ a {
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%
+	String cp = request.getContextPath();
+	request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Insert title here</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
 
 <script>
 	function confirmDelete(pj_num) {
@@ -612,7 +616,7 @@ a {
    <tr>
    <c:forEach items="${ongoing_list}" var="ongoing_list">
    <tr>
-      <td style="text-align: center;">${ongoing_list.pj_name}</td>
+      <td style="text-align: center;"><a href="ProejctRoom/Main?pj_Num=${ongoing_list.pj_num}">${ongoing_list.pj_name}</a></td>
       <td style="text-align: center;">
       <c:set var="reg" value="${fn:substring(ongoing_list.start_d,0,10)}" />
 		 ${reg}
@@ -625,7 +629,7 @@ a {
       </td>
 
       <%-- <td>${ongoing_list.leaderId} : 팀장  // ${sessionScope.userId} 세션아이디 --%>
-	      <c:if test="${sessionScope.userId == ongoing_list.leaderId}" >   
+	      <c:if test="${sessionScope.id == ongoing_list.leaderId}" >   
 		      	<td>      
 			      <button type="button" class="btn btn-block btn-default"      
 			       onclick="document.location.href='modifyProject?pj_num=${ongoing_list.pj_num}'">프로젝트 수정</button>
@@ -663,8 +667,8 @@ a {
       
    <tr>
    <c:forEach items="${apply_list}" var="apply_list">
-   <tr>
-      <td style="text-align: center;"><a href ="projectContent?pj_num=${apply_list.pj_num}">${apply_list.pj_name}</a></td>
+   <tr id="${apply_list.pj_num}">
+      <td style="text-align: center;"><a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${apply_list.pj_name}</a></td>
    <td style="text-align: center;">
       <c:set var="sday" value="${fn:substring(apply_list.start_d,0,10)}" />
 		 ${sday}
@@ -694,7 +698,7 @@ a {
    <tr>
    <c:forEach items="${finish_list}" var="finish_list">
    <tr>
-      <td style="text-align: center;"><a href ="projectContent?pj_num=${finish_list.pj_num}">${finish_list.pj_name}</a></td>
+      <td style="text-align: center;"><a href="ProejctRoom/Main?pj_Num=${finish_list.pj_num}">${finish_list.pj_name}</a></td>
       <td style="text-align: center;">
       <c:set var="sday" value="${fn:substring(finish_list.start_d,0,10)}" />
 		 ${reg}
@@ -708,11 +712,11 @@ a {
 
      <%-- <td> ${finish_list.leaderId} : 팀장 // ${sessionScope.userId} 세션아이디 </td> --%> 
          
-         <c:if test="${sessionScope.userId == finish_list.leaderId}" > 
+         <c:if test="${sessionScope.id == finish_list.leaderId}" > 
             <td><button type="button" class="btn btn-block btn-default" onclick="document.location.href='modifyProject?pj_num=${finish_list.pj_num}'">프로젝트 수정</button></td>
             <td><button type="button" class="btn btn-block btn-default" onclick="confirmDelete(${finish_list.pj_num})">프로젝트 삭제</button></td>
         </c:if>
-        <c:if test="${sessionScope.userId != finish_list.leaderId}" > 
+        <c:if test="${sessionScope.id != finish_list.leaderId}" > 
         	<td colspan='2' align="center">방장이 아닌 프로젝트룸은 수정/삭제 권한이 없습니다.</td>
         	
         </c:if>
@@ -725,11 +729,40 @@ a {
 
 <!--  -->
 </section>
+	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
+	
+	<!-- 프로젝트 참가 모달 -->
+	<c:import url="${cp}/resources/LSH/Modal/join.jsp"/>
+
+       
 		</div>
 	</div>
 </div>
 
 	<tiles:insertDefinition name="left" />
-	<tiles:insertDefinition name="footer" />				
+	<tiles:insertDefinition name="footer" />	
+	
+	
+	<script>
+		var global = {
+			    i : 0,
+			    origin_d : "",
+			    receiver : "",
+			    pj_num: 0
+		};
+		
+		function getContext(){
+			var context = "<%=cp%>";
+			return context;
+		}
+    
+		function getSessionId(){    
+			var sessionid = '${sessionScope.id}';
+			return sessionid;
+		}         
+		
+    	</script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>			
 </body>
 </html>

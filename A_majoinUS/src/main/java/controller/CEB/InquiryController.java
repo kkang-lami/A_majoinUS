@@ -2,6 +2,8 @@ package controller.CEB;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -85,8 +87,11 @@ public class InquiryController {
 	
 	@RequestMapping("/inquiry_user") 
 	public String show_list_user(ModelMap model,
-			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) {
-		
+			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string,HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "main";
+		}
 		System.out.println("sssss");
 		int pageSize = 5;  
 		int currentPage = pageNum;
@@ -98,10 +103,10 @@ public class InquiryController {
 		List<InquiryDTO> inquiryList = null;
 		
         if(search==null) {
-        	count = inquiryDAO.show_count_id("test.amajo@gmail.com");   
+        	count = inquiryDAO.show_count_id(id);   
         	  
         	if(count > 0) {  
-    			inquiryList = inquiryDAO.show_list_id(startRow, endRow, "test.amajo@gmail.com");
+    			inquiryList = inquiryDAO.show_list_id(startRow, endRow, id);
         	}
         	
         } else { // 서치가 있을때  
@@ -137,7 +142,12 @@ public class InquiryController {
 
 	@RequestMapping(value="/in_writeForm", method = RequestMethod.POST) 
 	public String show_list1_2(/*@ModelAttribute("inquiry")*/InquiryDTO inquiry,
-			BindingResult result, ModelMap model) {
+			BindingResult result, ModelMap model,HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "main";
+		}
+		inquiry.setId(id);
 		int num = inquiryDAO.next_num();
 		
 		System.out.println("post start");
@@ -146,7 +156,7 @@ public class InquiryController {
 		}
 		inquiryDAO.add_article_2(inquiry);
 		System.out.println("post.last");
-		return "redirect:/aus/inquiry"; 
+		return "redirect:/aus/inquiry_user"; 
 	}
 	
 	@RequestMapping(value="/in_content") 
