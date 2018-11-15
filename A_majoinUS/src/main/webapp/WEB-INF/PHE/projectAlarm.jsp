@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!DOCTYPE html>
 <html>
@@ -10,13 +10,68 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <!-- autocomplete from jQuery Ui -->
-	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	
-    
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+
 <script>
-function chk(s){
-	alert(s);
-}
+function refuse2(obj){
+ 	var pj_num = $(obj).attr('id');
+ 	var sender = $(obj).attr('class');
+ 	
+    var url="<%=cp%>/aus/removeFromAlarm_apply";
+    var params = "pj_num="+pj_num+"&sender="+sender;
+      $.ajax({
+       type:"post",
+       url:url,
+       data: params,
+       dataType: "json",
+       success:function(args){
+			console.log("결과" + args.remove);
+			if(args.remove === "removeApply"){
+				alert("멤버 신청을 거절했습니다.");
+				var detail = $(obj).parent().parent();
+			    detail.remove(); 
+			}
+			else{
+				alert("거절이 불가능합니다.");
+			}
+			
+       },
+       error:function(e){
+          alert(e.responseText);
+       }
+    });
+      
+ };
+ 
+
+ function refuse(obj){
+     var url="<%=cp%>/aus/removeFromAlarm_invitation";
+     var pj_num = $(obj).attr('id');
+     var params = "pj_num="+pj_num;
+       $.ajax({
+        type:"post",
+        url:url,
+        data: params,
+        dataType: "json",
+        success:function(args){
+        	console.log("결과" + args.remove);
+			if(args.remove === "removeIvite"){
+				alert("멤버 신청을 거절했습니다.");
+				var detail = $(obj).parent().parent();
+			    detail.remove(); 
+			}
+			else{
+				alert("거절이 불가능합니다.");
+			}
+ 			
+        },
+        error:function(e){
+           alert(e.responseText);
+        }
+     });
+       
+  };
 
 function surak(obj){
     var url="<%=cp%>/aus/proposalAccept";
@@ -87,69 +142,70 @@ function surak(obj){
 </script>
 </head>
 <body>
-<tiles:insertDefinition name="header" />
+	<tiles:insertDefinition name="header" />
 
-   <div class="wrapper">
-      <div class="content-wrapper">
-         <section class="content-header">
+	<div class="wrapper">
+		<div class="content-wrapper">
+			<section class="content-header">
 
-<h2>프로젝트 참가 신청</h2>
+				<h2>프로젝트 참가 신청</h2>
 
-<form>
-<table width="800">
-	
-	<c:forEach items="${projectApplyAlarm}" var="projectApplyAlarm">
-	<tr id="${projectApplyAlarm.pj_num}">
-		<td>${projectApplyAlarm.sender}님께서 회원님의 &lt; <a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team"> ${projectApplyAlarm.pj_name} </a> &gt;프로젝트에  
-		${projectApplyAlarm.a_type} 신청을 하셨습니다.
-			<input type="hidden" id="pj_num" name="pj_num" value="${projectApplyAlarm.pj_num}" />
-			<input type="hidden" id="sender" name="sender" value="${projectApplyAlarm.sender}" />
- 			
- 			<input type="button" id="${projectApplyAlarm.pj_num}" class="${projectApplyAlarm.sender}" onclick = "surak2(this)" value="수락"> 
- 			<button onclick = "refuse2('${projectApplyAlarm.pj_num}','${projectApplyAlarm.sender}')">거절</button>
- 			
-		</td>
-	</tr>
-	</c:forEach>
-</table>
-</form>
+				<form>
+					<table width="800">
+
+						<c:forEach items="${projectApplyAlarm}" var="projectApplyAlarm">
+							<tr id="${projectApplyAlarm.pj_num}">
+								<td>${projectApplyAlarm.sender}님께서회원님의 &lt; 
+									<a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" 	data-target="#modal_Team"> ${projectApplyAlarm.pj_name} </a>
+									&gt;프로젝트에 ${projectApplyAlarm.a_type} 신청을 하셨습니다. 
+									<input type="button" id="${projectApplyAlarm.pj_num}" class="${projectApplyAlarm.sender}" onclick="surak2(this)" value="수락">
+									<input type="button" id="${projectApplyAlarm.pj_num}" class="${projectApplyAlarm.sender}" onclick = "refuse2(this)" value="거절"> 
+
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</form>
 
 
 
-<h2>프로젝트 초대제안 알림</h2>
+				<h2>프로젝트 초대제안 알림</h2>
 
-<form><!--  action="proposalAccept"> -->
-<table width="800">
-	
-	<c:forEach items="${projectProposalAlarm}" var="projectProposalAlarm">
-	
-	<tr id="${projectProposalAlarm.pj_num}">
-		<td>${projectProposalAlarm.name} (${projectProposalAlarm.sender})님께서 회원님께  &lt; <a href ="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team"> ${projectProposalAlarm.pj_name} </a> &gt;프로젝트에  
-		${projectProposalAlarm.a_type} 하셨습니다.</td>
-		<td>
-			<input type="hidden" name="pj_num"  id="pj_num" value="${projectProposalAlarm.pj_num}" />
-			
-			<input type="button" id="${projectProposalAlarm.pj_num}"  onclick = "surak(this) " value="수락" > 
-			<button onclick = "refuse('${projectProposalAlarm.pj_num}') "> 거절(NotYet) </button>
-		</td>
-	</tr>
-	</c:forEach>
-	
-</table>
-</form>
+				<form>
+					<!--  action="proposalAccept"> -->
+					<table width="800">
+
+						<c:forEach items="${projectProposalAlarm}"
+							var="projectProposalAlarm">
+
+							<tr id="${projectProposalAlarm.pj_num}">
+								<td>
+									${projectProposalAlarm.name} (${projectProposalAlarm.sender})님께서 회원님께 &lt; 
+									<a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team"> ${projectProposalAlarm.pj_name}</a>
+									&gt;프로젝트에 ${projectProposalAlarm.a_type} 하셨습니다.
+								</td>
+								<td>
+									<input type="button" id="${projectProposalAlarm.pj_num}" onclick="surak(this) "	value="수락">
+									<input type="button" id="${projectProposalAlarm.pj_num}"  onclick = "refuse(this) " value="거절" > 
+								</td>
+							</tr>
+						</c:forEach>
+
+					</table>
+				</form>
 
 
-</section>
+			</section>
 
-		<!-- 프로젝트룸 모달 -->
-       	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
-       	
-      </div>
-   </div>
+			<!-- 프로젝트룸 모달 -->
+			<c:import url="${cp}/resources/LSH/Modal/Team.jsp" />
 
-   <tiles:insertDefinition name="left" />
-   <tiles:insertDefinition name="footer" />
-   
+		</div>
+	</div>
+
+	<tiles:insertDefinition name="left" />
+	<tiles:insertDefinition name="footer" />
+
 
 	<script>
 		var global = {
@@ -163,21 +219,15 @@ function surak(obj){
 			var context = "<%=cp%>";
 			return context;
 		}
-    
-		function getSessionId(){    
+
+		function getSessionId() {
 			var sessionid = '${sessionScope.id}';
 			return sessionid;
-		}         
-		
-    	</script>
-	   
-  	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
-	<script>
-		function chk(s){
-			alert(s);
 		}
 	</script>
+
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 
 </body>
 </html>

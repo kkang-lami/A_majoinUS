@@ -21,7 +21,7 @@ import net.sf.json.JSONObject;
 import project.DTO.ProjectroomDTO;
 
 @Controller
-@RequestMapping("/aus/LSH/Team")
+@RequestMapping("/aus")
 public class SearchTeamController {
 	
 	private SearchService service;
@@ -55,12 +55,12 @@ public class SearchTeamController {
 	
 	public List<ProjectroomDTO> getCart(HttpServletRequest req) {
 		System.out.println("[-] 카트목록");
-		String id = req.getSession().getAttribute("userId").toString();
+		String id = req.getSession().getAttribute("id").toString();
 		List<ProjectroomDTO> list = service.getCart(id);
 		return list;
 	}
 
-	@RequestMapping(value="/sort",method=RequestMethod.POST)
+	@RequestMapping(value="/TeamSort",method=RequestMethod.POST)
 	public void sort(SearchTeamDTO dto,int pageNum,HttpServletResponse resp) throws Exception{
 		System.out.println("[3](∩ 'ω')⊃━♡°.*・｡♡° sort실행 :: "+ dto);
 		resp.setContentType("text/html;charset=utf-8");
@@ -89,7 +89,7 @@ public class SearchTeamController {
 		out.print(jso);
 	}
 
-	@RequestMapping(value="/profile",method=RequestMethod.POST)
+	@RequestMapping(value="/ProjectProfile",method=RequestMethod.POST)
 	public void profile(String pj_num,HttpServletResponse resp) throws Exception{
 		System.out.println("[4] 프로필 "+ pj_num);
 		resp.setContentType("text/html;charset=utf-8");

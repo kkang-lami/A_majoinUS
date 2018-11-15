@@ -20,7 +20,6 @@ public class JoinServiceImpl implements JoinService {
 	@Override
 	public void register(MemberDTO dto)  {
 		dao.register(dto);
-		System.out.println("aaaa");
 	}
 	
 	//카테고리

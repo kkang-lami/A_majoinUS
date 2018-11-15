@@ -47,7 +47,7 @@
 	}
 */	
 function level1(){
-	var url=getContext()+"/aus/LSH/first_List";
+	var url=getContext()+"/aus/first_List_LSH";
 
 	$.ajax({
 		type:"post",
@@ -79,14 +79,14 @@ function level1(){
 }
 
 function init_level2(what) {
-	var url=getContext()+"/aus/LSH/second_List";
+	var url=getContext()+"/aus/second_List_LSH";
 	var params ="hint="+$("#"+what+" option:eq(0)").val();
 	var id = what+"2"; 
 	real_level2(url,params,id);
 }
 
 function level2(element) {
-	var url=getContext()+"/aus/LSH/second_List";
+	var url=getContext()+"/aus/second_List_LSH";
 	var params = "hint=" + $(element).val();
 	var id = $(element).attr("id") + "2";
 

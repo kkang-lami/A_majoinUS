@@ -54,8 +54,8 @@
 			<!-- 은주 코딩 -->
 			
 			<div id="btn-group12">
-<button class="btn btn-primary" style="width: 300px; margin-bottom:10px;">팀원 검색</button>
-<button class="btn btn-success" style="width: 300px; margin-bottom:10px;">프로젝트 검색</button>
+<input type="button" class="btn btn-primary" style="width: 300px; margin-bottom:10px;" value="팀원 검색" onclick = "location.href='SearchUserForm'">
+<input type="button" class="btn btn-success" style="width: 300px; margin-bottom:10px;" value="프로젝트 검색" onclick = "location.href='SearchTeamForm'">
 </div>
 
 <div class="out">

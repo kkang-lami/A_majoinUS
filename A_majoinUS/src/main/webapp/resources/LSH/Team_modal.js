@@ -9,7 +9,7 @@ $('body').on('click','.unfollow_btn', function() {
 });
 
 function follow(status){
-	var url=getContext()+"/aus/LSH/follow";
+	var url=getContext()+"/aus/follow";
 	var id = $('.profile-username small').text().slice(1,-1);
 	var params = "id="+id+"&login_id="+getSessionId()+"&status="+status;
 	console.log(params);

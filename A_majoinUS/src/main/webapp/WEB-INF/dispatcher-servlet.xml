@@ -96,8 +96,7 @@
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 <bean id="download" class="controller.KMJ.DownloadView" />
-<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 <bean id="echoHandler" class="controller.KMJ.EchoHandler"/>
 

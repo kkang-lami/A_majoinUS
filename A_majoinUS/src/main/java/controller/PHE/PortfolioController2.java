@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import controller.KMJ.PortList;
 import controller.KMJ.PortimgDTO;
 import dao.PHE;
+import project.DTO.FileboardDTO;
 import project.DTO.Port_detailDTO;
 import project.DTO.PortfolioDTO;
 
@@ -84,6 +85,13 @@ public class PortfolioController2{
 		mav.addObject("portfolioContent_detail", portfolioContent_detail);
 
 		return mav;
+	}
+	
+	@RequestMapping(value="/download", method=RequestMethod.GET)
+	public ModelAndView download(@RequestParam("file_path")String file_path) throws Exception{
+		String path = "D://item//portfolio//"+file_path;
+		File downloadFile = new File(path);
+		return new ModelAndView("download","downloadFile",downloadFile);
 	}
 	
 }

@@ -74,42 +74,8 @@
       </div>
       <!-- /.row -->
       <!-- END TYPOGRAPHY -->
-      
-
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<table  width=600  height=300>
-<tr><td>포트폴리오 제목 </td> <td> ${portfolioContent.subject} <br> </td></tr>
-<tr><td>구현 기능 </td> <td> ${portfolioContent.tech_info} <br></td></tr>
-<tr><td> 기간</td> 
-<td>
-	<fmt:parseDate value="${portfolioContent.start_d}" var="start" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-	<fmt:formatDate value="${start}" pattern="yy/MM/dd"/> 
-	~ 
-	<fmt:parseDate value="${portfolioContent.end_d}" var="end" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-	<fmt:formatDate value="${end}" pattern="yy/MM/dd"/>
-<br></td></tr>
-<c:forEach items="${portfolioContent_detail}" var="portfolioContent_detail">
-<tr>
-	<td>주요 코드 및 화면 캡처 </td>
-	<td>${portfolioContent_detail.pd_img}</td>
-</tr>
-<tr>
-	<td>description</td>
-	<td>${portfolioContent_detail.pd_content}</td>
-</tr>
-</c:forEach>
-<tr>
-	<td>공개여부 </td>
-	<td>${portfolioContent.p_private} </td>
-</tr>
-<tr>
-	<td>첨부파일  </td>
-	<td>${portfolioContent.file_path} </td>
-</tr>
-
  <tiles:insertDefinition name="left" />
    <tiles:insertDefinition name="footer" />
-</table> 
 
 
 </body>

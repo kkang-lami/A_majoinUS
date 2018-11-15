@@ -22,14 +22,14 @@ import project.DTO.Port_detailDTO;
 import project.DTO.PortfolioDTO;
 
 @Controller
-@RequestMapping("/aus/ProejctRoom/portfolio")
+@RequestMapping("/aus")
 public class PortfolioController {
 
 	
 	@Autowired
 	private KMJ mj_dao;
 
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/ProejctRoom/portfolio",method=RequestMethod.GET)
 	public String start(HttpSession session,@RequestParam("pj_num") int pj_num,Model m) {
 		String id = (String) session.getAttribute("id");
 		if(id == null) {
@@ -52,7 +52,7 @@ public class PortfolioController {
 		return "KMJ/PortfolioWriteForm";
 	}
 	
-	@RequestMapping(value="/complet",method=RequestMethod.POST)
+	@RequestMapping(value="/ProejctRoom/portfolio/complet",method=RequestMethod.POST)
 	public String portfolio(HttpSession session,@ModelAttribute("myportfolio") PortfolioDTO portfolio,@RequestParam("attached_file") MultipartFile file,@ModelAttribute PortList portList) {
 		String id = (String) session.getAttribute("id");
 		
@@ -123,10 +123,10 @@ public class PortfolioController {
 		
 		
 		//프로젝트룸 메인 리턴
-		return "";
+		return "redirect:/aus/ProejctRoom/Main?pj_Num="+portfolio.getPj_num();
 	}
 	
-	@RequestMapping(value="/edit",method=RequestMethod.GET)
+	@RequestMapping(value="/portfolio/edit",method=RequestMethod.GET)
 	public String editPortfolio(HttpSession session, Model m, @RequestParam("port_num")int port_num) {
 		
 		String id = (String)session.getAttribute("id");
@@ -149,7 +149,7 @@ public class PortfolioController {
 		return "KMJ/Edit_Portfolio";
 		
 	}
-	@RequestMapping(value="/edit_complet",method=RequestMethod.POST)
+	@RequestMapping(value="/portfolio/edit_complet",method=RequestMethod.POST)
 	public String edit_portfolio(HttpSession session,@ModelAttribute("edit_pf") PortfolioDTO portfolio,@RequestParam("attached_file") MultipartFile file,@ModelAttribute PortList new_pf_list,@ModelAttribute OldPortdetailList old_pf_list) {
 		String id = (String) session.getAttribute("id");
 		
@@ -249,9 +249,7 @@ public class PortfolioController {
 			int i = mj_dao.portfolioDetailInsert(map);
 			System.out.println("port_detail insert 완료 갯수 : " + i);
 		}
-	
-		//프로젝트룸 메인 리턴
-		return "";
+		return "redirect:/aus/portfolioList";
 	}
 	
 	

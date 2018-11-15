@@ -272,4 +272,17 @@ public class KMJ extends SqlSessionDaoSupport{
 		
 		return check;
 	}
+	
+	public int getpjm_num(int pj_num,String id) {
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("pj_num", pj_num);
+		
+		int pjm_num = getSqlSession().selectOne("KMJ_AUS.getpjm_num",map);
+		
+		return pjm_num;
+	}
+	
+	
 }

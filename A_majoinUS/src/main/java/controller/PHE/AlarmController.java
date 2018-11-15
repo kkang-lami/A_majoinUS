@@ -217,5 +217,41 @@ public class AlarmController {
 		//Pj_mem 에는 내가 들어가는거니까 내 아이디와 pj_num 을 가지고 인서트
 		//System.out.println("==========proposal End==========");
 	}
+	
+	@RequestMapping(value = "/removeFromAlarm_apply", method=RequestMethod.POST)
+	@ResponseBody
+	public void removeFromAlarm_apply(HttpServletRequest request, HttpServletResponse response,int pj_num, String sender) throws IOException {
+		JSONObject jso = new JSONObject();
+		PrintWriter out;
+		dao.removeFromAlarm_apply(sender, pj_num);
+		jso.put("remove", "removeApply");
+		response.setContentType("text/html;charset=utf-8");
+		
+		out = response.getWriter();
+		System.out.println(jso.toString());
+		out.print(jso.toString());
+	}
+	
+	@RequestMapping(value = "/removeFromAlarm_invitation", method=RequestMethod.POST)
+	@ResponseBody
+	public void removeFromAlarm_invite(HttpServletRequest request, HttpServletResponse response, int pj_num) throws IOException {
+		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		session = request.getSession(true);
+		String receiver =(String)session.getAttribute("id");
+		
+		JSONObject jso = new JSONObject();
+		PrintWriter out;
+		dao.removeFromAlarm_invitation(receiver, pj_num);
+		jso.put("remove", "removeIvite");
+		response.setContentType("text/html;charset=utf-8");
+		
+		out = response.getWriter();
+		System.out.println(jso.toString());
+		out.print(jso.toString());
+	}
+
+	
+	
 
 }

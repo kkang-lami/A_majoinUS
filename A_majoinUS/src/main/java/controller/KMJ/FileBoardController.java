@@ -56,7 +56,7 @@ public class FileBoardController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String upload(HttpSession session,@RequestParam("file") MultipartFile file, @RequestParam("pj_num") int pj_num) {
-		
+		System.out.println("나 호출됨요");
 		int pjm_num = (int)session.getAttribute("pjm_num");
 		
 		String path = "D://item//";
@@ -97,7 +97,7 @@ public class FileBoardController {
 		fdto.setPjm_num(pjm_num);
 		mj_dao.fileupload(fdto);
 		
-		return "redirect:/aus/pr_fileboard?pj_num="+pj_num;
+		return "redirect:/aus/ProejctRoom/pr_fileboard?pj_num="+pj_num;
 	}
 	
 	@RequestMapping(value="/download", method=RequestMethod.GET)
@@ -110,7 +110,7 @@ public class FileBoardController {
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public String filedelete(@RequestParam("fb_num")int fb_num,@RequestParam("pj_num")int pj_num) {
 		mj_dao.filedelete(fb_num);
-		return "redirect:/aus/pr_fileboard?pj_num="+pj_num;
+		return "redirect:/aus/ProejctRoom/pr_fileboard?pj_num="+pj_num;
 	}
 	
 	

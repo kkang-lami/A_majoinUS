@@ -17,8 +17,7 @@
 
 <!-- 회원가입 -->
 <insert id="register" parameterType ="controller.JHR.MemberDTO">
-	insert into member (id,password,name,birth,phone,profile,u_img)
-		values(#{id},#{password},#{name},SYSDATE,#{phone},#{profile},#{u_img})
+	insert into member (id,password,name,birth,phone,profile,u_img)	values(#{id},#{password},#{name},#{birth},#{phone},#{profile},#{u_img})
 </insert>
 <!-- 카테고리 sql -->
 <select id="select1" parameterType="String" resultType="String">

@@ -26,7 +26,7 @@ $(function(){
 		$("#check").click();
 	});
 	
- 	$("#check").click(function(){
+ 	/* $("#check").click(function(){
 	        var form = $('form')[0];
 	        var formData = new FormData(form);
 	            $.ajax({
@@ -40,7 +40,7 @@ $(function(){
 	               }
 
 	           });
-	        });
+	        }); */
 })
 </script>
 </head>

@@ -48,9 +48,7 @@ public class JoinController {
 	// 회원 가입 완료
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(MemberDTO dto, @RequestParam("file") MultipartFile file) throws Exception {
-
-		System.out.println(file.getOriginalFilename());
-
+		if(!file.isEmpty()) {
 		String path = "D://item//profile//";
 		String f_name = file.getOriginalFilename();
 		f_name = f_name.substring(0, f_name.indexOf("."));
@@ -62,7 +60,11 @@ public class JoinController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		dto.setU_img(new_name);
+		}else {
+			dto.setU_img("");
+		}
 		joinService.register(dto);
 
 		return "JHR/registMember";

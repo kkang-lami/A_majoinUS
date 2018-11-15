@@ -40,8 +40,7 @@ public class InquiryController {
 	public String show_list_2(ModelMap model,
 			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) {
 		
-		System.out.println("sssss");
-		int pageSize = 5;
+		int pageSize = 10;
 		int currentPage = pageNum;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
@@ -93,30 +92,35 @@ public class InquiryController {
 			return "main";
 		}
 		System.out.println("sssss");
-		int pageSize = 5;  
+		int pageSize = 10;  
 		int currentPage = pageNum;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 		int number = 0;
 		int count = 0;
 		  
-		List<InquiryDTO> inquiryList = null;
+		List<InquiryDTO> inquiry_List = null;
 		
         if(search==null) {
         	count = inquiryDAO.show_count_id(id);   
         	  
         	if(count > 0) {  
-    			inquiryList = inquiryDAO.show_list_id(startRow, endRow, id);
+        		PageDTO dto = new PageDTO();    
+    			dto.setStartRow(startRow);  
+    			dto.setEndRow(endRow);  
+    			System.out.println(endRow+startRow);  
+    			
+    			inquiry_List = inquiryDAO.show_list1_id(startRow ,endRow, id);
         	}
         	
         } else { // 서치가 있을때  
 
-        	count = inquiryDAO.show_search_count_2(search, string);
+        	count = inquiryDAO.show_search_count_id(search, string,id);
         	if(count > 0) {
         		
-        		inquiryList = inquiryDAO.show_search_list_2(search, string, startRow, endRow);
+        		inquiry_List = inquiryDAO.show_search_list_id(search, string, startRow, endRow,id);
         		model.addAttribute("search1",1);
-        		model.addAttribute("string",string);
+        		model.addAttribute("string",string);     
         		model.addAttribute("search",search);
         	}
         }
@@ -127,7 +131,7 @@ public class InquiryController {
 		model.addAttribute("count",count);
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("currentPage",currentPage);
-		model.addAttribute("inquiryList",inquiryList);
+		model.addAttribute("inquiry_List",inquiry_List);
 		
 		return "CEB/inquiry/in_Form_user"; 
 	}

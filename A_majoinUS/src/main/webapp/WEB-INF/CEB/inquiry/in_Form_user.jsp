@@ -112,8 +112,8 @@ transition:.7s;
 	<div align="right" class="search">
 		<form >  
 		    <select name="string" class="accordion">
-		          <option value="subject">제목</option>  
-		          <option value="content">내용</option>
+		          <option value="i_subject">제목</option>  
+		          <option value="i_content">내용</option>    
 		    </select>
 		         <input type="text" size="15" maxlength="50" name="search"/>&nbsp;
 		         <input type="submit" value="검색" class="btn btn-success btn-sm"/>
@@ -158,13 +158,13 @@ transition:.7s;
                  <th></th>
                   <th>NO </th>
                   <th>SUBJECT</th>  
-                  <th>WRITE_DATE</th>
+                  <th>WRITE_DATE</th>  
                   <th>STATUS</th>
                    <th></th>
                 </tr>  
-                <c:forEach var="inquiry" items="${inquiryList}">  
-            <%-- <c:out value="${no}" /> --%>
-					<tr>
+                <c:forEach var="inquiry" items="${inquiry_List}">  
+            <%-- <c:out value="${no}" /> --%>  
+					<tr>  
 					<td></td>
 					<td width="250">				
 						${no}  
@@ -212,18 +212,18 @@ transition:.7s;
 		   <c:set var="endPage" value="${startPage + pageBlock-1}"/>
 		   <!-- endPage:10 -->
 		   <c:if test="${endPage > pageCount}">
-		        <c:set var="endPage" value="${pageCount}"/>
-		        <!-- endPage:10 -->
-		   </c:if>
+		   <c:set var="endPage" value="${pageCount}"/>
+		    <!-- endPage:10 -->
+		   </c:if>  
 		         
 		 <c:if test="${startPage > 10}">
-		       <c:if test="${search1 != 1 }">
+		       <c:if test="${search1 != 1 }">  
 		   	   		<a href="inquiry_user?pageNum=${startPage - 10 }">[이전]</a>
-		   	   </c:if>
+		   	   </c:if>  
 		   	   <c:if test="${search1 == 1 }">
 		   	   		<a href="inquiry_user?pageNum=${startPage - 10 }&search=${search}&string=${string}">[이전]</a>
 		   	   </c:if>	
-		   </c:if>
+		   </c:if>  
 		
 		   <c:forEach var="i" begin="${startPage}" end="${endPage}">
 		   	   <c:if test="${search1 != 1 }">
@@ -243,17 +243,17 @@ transition:.7s;
 		   	   </c:if>  
 		   </c:if>
 		</c:if>	
-	</div>
+	</div>  
 	        
-	    
 	  
-	 	<div class="box-footer">         
+	  
+	 	<div class="box-footer">  
 					<td>
 					<p>
 						<div class="btn-group"  style=" left: 52%; margin-left: -200px;" >
 							<input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/in_writeForm'">
 							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='inquiry_user'">
-						
+						  
 						</div>
 						</p>  
 					</td>          
@@ -265,3 +265,11 @@ transition:.7s;
 <tiles:insertDefinition name="left" />
 <tiles:insertDefinition name="footer" />
 </html>
+
+
+
+
+
+
+
+data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modal-default"

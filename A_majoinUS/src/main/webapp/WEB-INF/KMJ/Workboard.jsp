@@ -183,7 +183,7 @@ function workdetail(worknum){
 			}
 			       
 			$("#wd").append("<tr><td colspan=3><hr/></td></tr>");
-			$("#wd").append("<tr><td colspan=3>${sessionScope.id} : <input type='text' id='comment' name='comment' placeholder='댓글을 입력해주세요' size=100 onkeypress='if(event.keyCode==13) {javascript:writecomment("+args.detail.pw_num+");}'> <input type='button' id='enter' name='enter' value='입력' onclick='javascript:writecomment("+args.detail.pw_num+");'></td></tr>");
+			$("#wd").append("<tr><td colspan=3>${sessionScope.name} : <input type='text' id='comment' name='comment' placeholder='댓글을 입력해주세요' size=100 onkeypress='if(event.keyCode==13) {javascript:writecomment("+args.detail.pw_num+");}'> <input type='button' id='enter' name='enter' value='입력' onclick='javascript:writecomment("+args.detail.pw_num+");'></td></tr>");
 			$("#wd").append("<tr><td colspan=3><hr/></td></tr>");
 			
 			$("#wd").after("<div class='commentlist' id='commentlist'></div>");			
@@ -208,7 +208,7 @@ function workdetail(worknum){
 }
                    
 function statecomplet(pw_num,pj_num){
-	location.href="aus/workboard/completstate?pw_num="+pw_num+"&pj_num="+pj_num;
+	location.href="workboard/completstate?pw_num="+pw_num+"&pj_num="+pj_num;
 }     
          
 function workedit(){
@@ -251,7 +251,7 @@ function canceledit(){
           
 function deletework(pw_num,pj_num){
 	
-	location.href="aus/workboard/deletework?pw_num="+pw_num+"&pj_num="+pj_num;	
+	location.href="workboard/deletework?pw_num="+pw_num+"&pj_num="+pj_num;	
 	
 }
       

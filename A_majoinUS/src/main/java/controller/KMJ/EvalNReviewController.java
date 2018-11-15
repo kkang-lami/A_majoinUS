@@ -97,7 +97,7 @@ public class EvalNReviewController {
 		mj_dao.presentPoint(point);
 		
 		//프로젝트 룸 메인
-		return "";
+		return "redirect:/aus/ProejctRoom/Main?pj_Num="+admin.getPj_num();
 	}
 	
 	

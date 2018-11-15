@@ -92,6 +92,47 @@ function fn_signUp(){
 </script>
 <style type="text/css">    
 
+
+select {  
+    width: 100px;  
+    height: 30px;    
+    padding-left: 10px;
+    font-size: 18px;  
+    color: black;    
+    border: 1px solid #338033;
+    border-radius: 3px;
+    -webkit-appearance: none;   
+   -moz-appearance: none;     
+   appearance: none;  
+   background: url('select-arrow.png') no-repeat 95% 50%; 
+   font: 300 18px/1.5 'Roboto', sans-serif;      
+}  
+
+select::-ms-expand {
+   display: none;         
+   border: 1px dashed #D0CBCB;  
+   cursor: pointer;
+}
+
+select option:checked, 
+select option:hover {    
+    background: #2E2E2E;     
+    color: #fff;  
+    cursor: pointer;
+}
+
+select option:checked,
+select option:hover { 
+    box-shadow: 0 0 15px 100px #ff00ff inset;  
+    color: #fff;
+    cursor: pointer;
+}
+
+
+
+
+/* ///////////////////////////////////// */
+
 .bmd-form-group {
   position: relative;
   padding-top: 27px;
@@ -232,7 +273,7 @@ function fn_signUp(){
         <div class="row justify-content-center mb-12">  
               
           <div class="col-md-10 justify-content-center probootstrap-animate">
-            <form action="#" method="post" class="probootstrap-form probootstrap-form-box mb60">
+            <form action="register" method="post" class="probootstrap-form probootstrap-form-box mb60" enctype="multipart/form-data">
               <div class="row mb-3">
                 <div class="col-md-6">
                 <!-- 아이디 부분 -->
@@ -255,23 +296,23 @@ function fn_signUp(){
               </div>
 
               <div class="form-group">
-                <label for="email" class="sr-only sr-only-focusable">Password</label>
-                <input type="email" class="form-control" name="password" placeholder="password">
+                <label for="password" class="sr-only sr-only-focusable">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="password">
               </div>
               
               <div class="form-group">
-                <label for="email" class="sr-only sr-only-focusable">name</label>
-                <input type="email" class="form-control"  name="name" placeholder="name">
+                <label for="name" class="sr-only sr-only-focusable">name</label>
+                <input type="text" class="form-control"  name="name" placeholder="name">
               </div>
               
               <div class="form-group">
-                <label for="email" class="sr-only sr-only-focusable">Phone</label>
-                <input type="email" class="form-control" name="phone" placeholder="010-1234-1234">
+                <label for="phone" class="sr-only sr-only-focusable">Phone</label>
+                <input type="text" class="form-control" name="phone" placeholder="010-1234-1234">
               </div>
               
               <div class="form-group">
-                <label for="email" class="sr-only sr-only-focusable">birth</label>
-                <input type="email" class="form-control" name="birth"  placeholder="19950330">
+                <label for="birth" class="sr-only sr-only-focusable">birth</label>
+                <input type="text" class="form-control" name="birth"  placeholder="19950330">
               </div>
               
               <div class="form-group">
@@ -284,14 +325,14 @@ function fn_signUp(){
                 <label for="message" class="sr-only sr-only-focusable">liked_area</label>  
                 <select id="local1" class="show-level2"></select>
                 <select id="local12" ></select>
-                <button type="button" value="local" class="add_btn">추가</button>
+                <button type="button" value="local" class="btn btn-primary">추가</button>
               </div>
               
               <div class="form-group">
                 <label for="message" class="sr-only sr-only-focusable">관심분야</label>  
                 <select id="job1" class="show-level2"></select>
                 <select id="job12" ></select>
-                <button type="button" value="job" class="add_btn">추가</button>
+                <button type="button" value="job" class="btn btn-primary">추가</button>
               </div>
               
               <div class="form-group">
@@ -473,6 +514,7 @@ function fn_signUp(){
          </div>
           </div>  
         </div>  
+        </section>
       </div>
       
       
@@ -504,7 +546,7 @@ function fn_signUp(){
 $('#mail').on('click',function(){
 	var id = document.getElementById('email').value;
         
-	var url = "<%=request.getContextPath()%>/aus/JHR/sendMail";
+	var url = "<%=request.getContextPath()%>/aus/sendMail";
 	var param = "id="+id;
 	 $.ajax({
 		type:"post",

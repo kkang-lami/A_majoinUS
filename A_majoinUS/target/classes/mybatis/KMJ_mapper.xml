@@ -209,4 +209,9 @@
 		select count(*) from portfolio where id=#{id} and pj_num=#{pj_num}
 	</select>
 	
+	<select id="getpjm_num" parameterType="Map" resultType="Integer">
+		select pjm_num from pj_mem where pj_num=#{pj_num} and id=#{id}
+	</select>
+	
+	
 </mapper>

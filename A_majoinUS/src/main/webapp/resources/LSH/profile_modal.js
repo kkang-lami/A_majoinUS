@@ -25,7 +25,7 @@
 	}
 */	
 function profile(userid){
-	var url= getContext()+"/aus/LSH/profile";
+	var url= getContext()+"/aus/UserProfile";
 	var login_id = getSessionId();
 	$.ajax({
 		type:"post",
@@ -132,7 +132,7 @@ $('body').on('click','.unfollow_btn', function() {
 });
 
 function follow(status){
-	var url=getContext()+"/aus/LSH/follow";
+	var url=getContext()+"/aus/follow";
 	var id = $('.profile-username small').text().slice(1,-1);
 	var params = "id="+id+"&login_id="+getSessionId()+"&status="+status;
 	console.log(params);
@@ -194,7 +194,7 @@ $("body").on('click','.popover-submit', function() {
 });
 
 function issue(text){
-	var url= getContext()+"/aus/LSH/issue";
+	var url= getContext()+"/aus/issue";
 	var id = $('.profile-username small').text().slice(1,-1);
 	var params = "id="+id+"&login_id="+getSessionId()+"&is_content="+text;
 

@@ -405,6 +405,11 @@ a {
 <html>
 <head>
 <title>Insert title here</title>
+<style>
+#hr_style{
+	border-top: 1px solid #d2d6de !important;
+}
+</style>
 </head>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
@@ -591,6 +596,10 @@ a {
 					<li><a href="#">MyPage</a></li>
 					<li class="active">Project 관리</li>
 				</ol>
+				<hr id="hr_style">  
+				<div style="text-align: right;">
+           			<button class="btn btn-danger" onclick="location.href='createProjectForm'" ><i class="fa fa-plus-square"></i>프로젝트 생성하기</button>
+           		</div>
 			</section>
 			<!-- content 시작! -->
 			<section class="content">

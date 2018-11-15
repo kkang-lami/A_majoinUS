@@ -112,8 +112,8 @@ transition:.7s;
 	<div align="right" class="search">
 		<form >  
 		    <select name="string" class="accordion">
-		          <option value="subject">제목</option>  
-		          <option value="content">내용</option>
+		          <option value="i_subject">제목</option>      
+		          <option value="i_content">내용</option>
 		    </select>
 		         <input type="text" size="15" maxlength="50" name="search"/>&nbsp;
 		         <input type="submit" value="검색" class="btn btn-success btn-sm"/>
@@ -131,7 +131,7 @@ transition:.7s;
 <p style="text-align:center;">INPUIRY(ALL_CONTENTS : ${count })&nbsp;&nbsp;&nbsp;&nbsp;Current Unanswered Inquiry(미답변 갯수 : ${count1 })</p>        </div>
   
 <p style=" left: 56%; margin-left: -200px;">         
-            
+              
                
             <div class="box-body">  
             <c:set var="no" value="1" /> 
@@ -165,12 +165,12 @@ transition:.7s;
                 <c:forEach var="inquiry" items="${inquiryList}">  
             <%-- <c:out value="${no}" /> --%>
 					<tr>
-					<td></td>
+					<td></td>  
 					<td width="250">				
-						${inquiry.i_num}
+						${no}
 					</td> 
                     <td width="340">				
-						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
+						<a href="in_content?num=${inquiry.i_num }&pageNum=${currentPage}" data-toggle="modal" data-target="#modal-default">${inquiry.i_subject}</a>
 					</td>   
 
 					<td align="center" width="340">
@@ -251,7 +251,7 @@ transition:.7s;
 					<td>
 					<p>
 						<div class="btn-group"  style=" left: 52%; margin-left: -200px;" >
-							<%-- <input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='<%=request.getContextPath() %>/aus/in_writeForm'"> --%>
+							<!-- <input type="button" value="글 쓰기" class="btn btn-success" onclick="document.location.href='/AMAJOINUS/aus/in_writeForm'"> -->
 							<input type="button" value="글 목록" class="btn btn-success" onclick="document.location.href='inquiry'">
 						
 						</div>

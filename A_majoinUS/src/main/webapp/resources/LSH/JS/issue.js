@@ -22,28 +22,8 @@ $("body").on('click','.popover-cancel', function() {
 	$("[data-toggle=popover]").popover('hide');
 });
 
-$("body").on('click','.popover-submit', function() {
-	console.log("[신고 전송]");
-	
-	
-	var text = $('.popover-textarea').val();
-	
-	
-	if(text.trim().length < 10){
-		alert("사유는 10글자 이상 입력해주세요");
-	}else{
-		issue(text);
-	    $("[data-toggle=popover]").popover('hide');
-	}
-	
-	
-});
-
-function issue(text){
-	var url= getContext()+"/aus/LSH/issue";
-	var id = $('.profile-username small').text().slice(1,-1);
-	var params = "id="+id+"&login_id="+getSessionId()+"&is_content="+text+"&pj_num="+pjnum;
-
+function issue(params){
+	var url= getContext()+"/aus/issue";
   	$.ajax({
 		type:"post",
 		url:url,

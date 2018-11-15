@@ -22,8 +22,7 @@
 	<div class="content-wrapper">
 
 		<!-- 콘텐츠 헤더 -->
-		<section class="content-header"><h1>멤버 찾기<small>${command}${pdto.rowCount}</small></h1>
-		
+		<section class="content-header"><h1>멤버 찾기<%-- <small>${command}${pdto.rowCount}</small> --%></h1>
 		</section>
 
 		<!-- 콘텐츠 -->
@@ -36,11 +35,6 @@
 				<!-- 셀럭터 헤더 -->
 				<div class="box-header with-border">
 					<h3 class="box-title">팀원 상세검색</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-					</div>
 				</div>
 					
 				<!-- 폼시작 -->
@@ -369,7 +363,7 @@
 	}
 	
 	function sort(paramStr) {
-		var url="<%=cp%>/aus/sort";
+		var url="<%=cp%>/aus/UserSort";
 		var params = $("#SearchForm").serialize()+"&"+paramStr;
 
  			$.ajax({
@@ -520,6 +514,25 @@
 	}
 	</script>
 
+	<!-- 멤버신고 -->
+	<script>
+	$("body").on('click','.popover-submit', function() {
+		console.log("[신고 전송]");
+		
+		var content = $('.popover-textarea').val();
+		
+		if(content.trim().length < 10){
+			alert("사유는 10글자 이상 입력해주세요");
+		}else{
+			var params = "id="+$('.profile-username small').text().slice(1,-1)+"&login_id="+getSessionId()+"&is_content="+content
+			issue(params);
+		    $("[data-toggle=popover]").popover('hide');
+		}
+	});
+
+	
+	</script>
+	
 
 
 </body>

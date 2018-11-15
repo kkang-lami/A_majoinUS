@@ -317,7 +317,7 @@
 	}
 	
 	function sort(paramStr) {
-		var url="<%=cp%>/aus/Team/sort";
+		var url="<%=cp%>/aus/TeamSort";
 		var params = $("#SearchForm").serialize()+"&"+paramStr;
 
 		console.log(params);
@@ -465,7 +465,7 @@
 	});
 	
 	function star(pj_num,status){
-		var url=getContext()+"/aus/Team/favorite";
+		var url=getContext()+"/aus/favorite";
 		var params = "pj_num="+pj_num+"&login_id="+getSessionId()+"&status="+status;
 		$.ajax({
 			type:"post",
@@ -501,17 +501,19 @@
  		if($('#cart_table td:first').attr('class') === "none"){
  			$('#cart_table tr:eq(1)').remove();
 		}
+ 		var length = $('#cart_table tr').length;
+ 		
  		$('#cart_table').append(html);
+ 		$('#cart_len').text('('+length+')');
 	}
 	
 	function del_cart(pj_num){
 		$('#cart_table tr[id="'+pj_num+'"]').remove();
-		
-		console.log($('#cart_table').children().is("#star_btn"));
-		
-		if(!$('#cart_table').children().is("td")){
-			$('#cart_table').append('<tr><td colspan="7" class="none">스크랩을 삭제했습니다</td></tr>');
+		var length = Number($('#cart_table tr').length)-1;
+ 		if(length === 0){
+			$('#cart_table').append('<tr><td colspan="7" class="none">스크랩한 프로젝트가 없습니다</td></tr>');
 		}
+		$('#cart_len').text('('+length+')');
 	}
 	</script>
 		
@@ -532,7 +534,7 @@
 	
 	function joinUs(){
 		var url="<%=cp%>/aus/insert_Message";
-		var params = "receiver="+global.receiver+"&sender=${sessionScope.id}"+"&pj_num="+global.pj_num+"&a_type=신청";
+		var params = "receiver="+global.receiver+"&sender=${sessionScope.id}"+"&pj_num="+global.pj_num+"&a_type=참가";
   		$.ajax({
 			type:"post",
 			url:url,
@@ -546,6 +548,22 @@
 		});
 	}
 	</script>
+	
+	<script>
+	$("body").on('click','.popover-submit', function() {
+		console.log("[신고 전송]");
+		
+		var content = $('.popover-textarea').val();
+		
+		if(content.trim().length < 10){
+			alert("사유는 10글자 이상 입력해주세요");
+		}else{
+			var params = "id="+global.receiver+"&login_id="+getSessionId()+"&is_content="+content+"&pj_num="+global.pj_num
+			issue(params);
+		    $("[data-toggle=popover]").popover('hide');
+		}
+	});
+	</script>
 
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -553,7 +571,7 @@
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
-	
+
 </body>
 	<style>
 		.sort_area {

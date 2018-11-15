@@ -69,9 +69,9 @@
 									
 									<td align="left">
 									<a class="btn btn-app" href="javascript:add_schedule()">
-                 <i class="fa fa-edit" onclick="add_schedule()"></i> Add Schedule
-              	</a>
-              	<a class="btn btn-app" href="javascript:location.href='<c:url value='./ProjectSchedule' />'">
+                					 <i class="fa fa-edit" onclick="add_schedule()"></i> Add Schedule
+              	</a><!-- 여기부터... -->
+              	<a class="btn btn-app" href="ProjectSchedule?pj_num=${pj_num}">
                 <i class="fa fa-repeat"></i> Today
               </a>
 									</td>
@@ -83,7 +83,7 @@
 								<c:if test="${month > 0}">
 								
 								<div class="btn-group">
-                    <a href="<c:url value='./ProjectSchedule' />?year=${year }&amp;month=${month-1}" target="_self" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></a>
+                    <a href="ProjectSchedule?pj_num=${pj_num}&year=${year }&amp;month=${month-1}" target="_self" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></a>
                     
                   </div>
 								
@@ -95,7 +95,7 @@
 										</c:if> &nbsp;&nbsp; ${year }년 ${month+1 }월 &nbsp;&nbsp;
 										<c:if test="${month < 11 }">
 										
-										<a href="<c:url value='./ProjectSchedule' />?year=${year }&amp;month=${month+1}" target="_self" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></a>
+										<a href="ProjectSchedule?pj_num=${pj_num}&year=${year }&amp;month=${month+1}" target="_self" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></a>
 										
 									</c:if>
 								 </td>
@@ -106,9 +106,9 @@
 									
 									
 									<!--  -->
-									<a class="btn btn-app"  href="<c:url value='./ProjectSchedule' />?year=${year-1 }&amp;month=${month}" target="_self"> <i class="fa fa-hand-o-left"></i><b>Prev Year</b> <!-- 이전해 -->
+									<a class="btn btn-app"  href="ProjectSchedule?pj_num=${pj_num}&year=${year-1 }&amp;month=${month}" target="_self"> <i class="fa fa-hand-o-left"></i><b>Prev Year</b> <!-- 이전해 -->
 									</a>
-									<a class="btn btn-app"  href="<c:url value='./ProjectSchedule' />?year=${year+1 }&amp;month=${month}" target="_self"> <!-- 다음해 --> <i class="fa fa-hand-o-right"></i><b>Next Year</b>
+									<a class="btn btn-app"  href="ProjectSchedule?pj_num=${pj_num}&year=${year+1 }&amp;month=${month}" target="_self"> <!-- 다음해 --> <i class="fa fa-hand-o-right"></i><b>Next Year</b>
 									</a></td>
 									</td>
 									<!--  -->

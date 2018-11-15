@@ -20,7 +20,7 @@ import project.DTO.AlarmDTO;
 import project.DTO.IssueDTO;
 
 @Controller
-@RequestMapping("/aus/LSH")
+@RequestMapping("/aus")
 public class SearchController {
 	
 	private SearchService service;
@@ -52,7 +52,7 @@ public class SearchController {
 		return "LSH/SearchUser";
 	}
 	
-	@RequestMapping(value="/first_List",method=RequestMethod.POST)
+	@RequestMapping(value="/first_List_LSH",method=RequestMethod.POST)
 	public void first_List(HttpServletResponse resp) throws Exception{
 		System.out.println("[1] first_List실행");
 		resp.setContentType("text/html;charset=utf-8");
@@ -68,7 +68,7 @@ public class SearchController {
 		out.print(jso);
 	}
 	
-	@RequestMapping(value="/second_List",method=RequestMethod.POST)
+	@RequestMapping(value="/second_List_LSH",method=RequestMethod.POST)
 	public void second_List(HttpServletResponse resp,@RequestParam(defaultValue="0")int pageNum,String hint) throws Exception{
 		System.out.println("[2] second_List실행");
 		resp.setContentType("text/html;charset=utf-8");
@@ -81,7 +81,7 @@ public class SearchController {
 		out.print(jso);
 	}
 
-	@RequestMapping(value="/sort",method=RequestMethod.POST)
+	@RequestMapping(value="/UserSort",method=RequestMethod.POST)
 	public void sort(SearchDTO dto,@RequestParam(defaultValue="0")int pageNum,HttpServletResponse resp) throws Exception{
 		System.out.print("[3](∩ 'ω')⊃━♡°.*・｡♡° sort실행 ::"+pageNum);
 		resp.setContentType("text/html;charset=utf-8");
@@ -115,7 +115,7 @@ public class SearchController {
 		System.out.println("결과는? 두구두구:: "+result);
 	}
 	
-	@RequestMapping(value="/profile",method=RequestMethod.POST)
+	@RequestMapping(value="/UserProfile",method=RequestMethod.POST)
 	public void profile(String id,String login_id,HttpServletResponse resp) throws Exception{
 		System.out.println("[6] 멤버프로필 "+ id +"~"+ login_id);
 		resp.setContentType("text/html;charset=utf-8");
@@ -150,7 +150,7 @@ public class SearchController {
 	
 	@RequestMapping(value="/issue",method=RequestMethod.POST)
 	public void issue(String id,String login_id,@RequestParam(defaultValue="0")int pj_num,String is_content,HttpServletResponse resp) throws Exception{
-		System.out.println("[8] 멤버신고 "+ id +"~"+ login_id+" ~ "+is_content);
+		System.out.println("[8] 멤버신고 "+ id +"~"+ login_id+" ~ "+is_content+"!!!!! "+pj_num);
 		resp.setContentType("text/html;charset=utf-8");
 		
 		int result = service.issue(new IssueDTO(login_id,id,pj_num,is_content));

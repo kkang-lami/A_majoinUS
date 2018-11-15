@@ -37,8 +37,9 @@ public class ProjectroomController {
 	/********************************* 프로젝트룸 *************************************/
 	// create
 	@RequestMapping(value = "/createProjectForm")
-	public void createProjectForm() {
+	public String createProjectForm() {
 		System.out.println("create controller");
+		return "PHE/createProjectForm";
 	}
 
 	@RequestMapping(value = "/createProjectForm", method = RequestMethod.POST)
@@ -115,9 +116,13 @@ public class ProjectroomController {
 	// 프로젝트 수정
 	@RequestMapping("/modifyProject")
 	public ModelAndView modifyProject(HttpServletRequest request, HttpSession session, @RequestParam int pj_num) {
+		System.out.println("pj_num : " + pj_num);
 		ProjectroomDTO dto1 = dao.read(pj_num);
+		System.out.println("dto1 끝");
 		Pj_jobDTO dto2 = dao.read2(pj_num);
+		System.out.println("dto2 끝");
 		Pj_locationDTO dto3 = dao.read3(pj_num);
+		System.out.println("dto3 끝");
 		
 		Map<String,String> date = dao.Project_Date(pj_num);
 		System.out.println("con date: " + date);
@@ -140,7 +145,7 @@ public class ProjectroomController {
 		System.out.println("modifyProjectCon");
 		session= request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("userId");
+		String sessionId =(String)session.getAttribute("id");
 		
 		dao.projectModify(command1);
 		dao.projectModify_job(command2);

@@ -8,7 +8,7 @@
 	
 
 	function projectRoom(pj_num){
-		var url=getContext()+"/aus/LSH/Team/profile";
+		var url=getContext()+"/aus/ProjectProfile";
 		$.ajax({
 			type:"post",
 			url:url,

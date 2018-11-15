@@ -217,7 +217,7 @@ public class CEB extends SqlSessionDaoSupport{
 		}
 		
 		
-		public List<InquiryDTO> show_list_id(int startRow, int endRow, String id) {
+		public List<InquiryDTO> show_list1_id(int startRow, int endRow, String id) {
 		    
 			PageDTO s = new PageDTO();
 			MemberDTO s1 = new MemberDTO(); 
@@ -233,7 +233,7 @@ public class CEB extends SqlSessionDaoSupport{
 				dto.put("startRow", startRow);    
 				dto.put("id", id);
 				
-				List<InquiryDTO> list = getSqlSession().selectList("CEB_AUS.show_list_id",dto);
+				List<InquiryDTO> list = getSqlSession().selectList("CEB_AUS.show_list1_id",dto);
 				
 				return list;
 				
@@ -251,6 +251,25 @@ public class CEB extends SqlSessionDaoSupport{
 			return count;
 		}
 		
+		public int show_search_count_id(String search, String string, String id) {
+
+			PageDTO s = new PageDTO();
+			MemberDTO s1 = new MemberDTO();
+			
+			s.setSearch(search);  
+			s.setString(string);
+			s1.setId(id);
+			
+			 Map<String,Object> dto = new HashMap<String,Object>();
+				
+				dto.put("search", search);    
+				dto.put("string", string);    
+				dto.put("id", id);
+			
+			int count = getSqlSession().selectOne("CEB_AUS.get_search_count_id",dto);
+			return count;
+		}
+		
 		public List<InquiryDTO> show_search_list_2(String search, String string, int startRow, int endRow) {
 
 			PageDTO s = new PageDTO();
@@ -260,6 +279,29 @@ public class CEB extends SqlSessionDaoSupport{
 			s.setStartRow(startRow);
 			
 			List<InquiryDTO> dto1 = getSqlSession().selectList("CEB_AUS.get_search_list_2",s);
+			return dto1;
+		}
+		
+		public List<InquiryDTO> show_search_list_id(String search, String string, int startRow, int endRow, String id) {
+
+			PageDTO s = new PageDTO();
+			MemberDTO s1 = new MemberDTO();
+			
+			s.setSearch(search);  
+			s.setString(string);
+			s.setEndRow(endRow);
+			s.setStartRow(startRow);
+			s1.setId(id);
+			
+			 Map<String,Object> dto = new HashMap<String,Object>();
+				
+				dto.put("search", search);    
+				dto.put("string", string);  
+				dto.put("endRow", endRow);
+				dto.put("startRow", startRow);    
+				dto.put("id", id);
+			
+			List<InquiryDTO> dto1 = getSqlSession().selectList("CEB_AUS.get_search_list_id",dto);
 			return dto1;
 		}
 		

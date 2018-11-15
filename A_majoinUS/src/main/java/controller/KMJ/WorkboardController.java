@@ -65,7 +65,7 @@ public class WorkboardController {
 		int pjm_num = (int)session.getAttribute("pjm_num");
 		pdto.setPjm_num(pjm_num);
 		mj_dao.workboardwrite(pdto);
-		return "redirect:/aus/workboard?pj_num="+pdto.getPj_num();
+		return "redirect:/aus/ProejctRoom/workboard?pj_num="+pdto.getPj_num();
 	}
 
 	@RequestMapping(value="/memberwork", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
@@ -118,20 +118,20 @@ public class WorkboardController {
 		
 		mj_dao.completstate(pw_num);
 		
-		return "redirect:/aus/workboard?pj_num="+pj_num;
+		return "redirect:/aus/ProejctRoom/workboard?pj_num="+pj_num;
 	}
 	
 	
 	@RequestMapping(value="/editwork",method=RequestMethod.POST)
 	public String editWork(@ModelAttribute("editwork")Project_workboardDTO pwdto) {
 		mj_dao.editwork(pwdto);
-		return "redirect:/aus/workboard?pj_num="+pwdto.getPj_num();
+		return "redirect:/aus/ProejctRoom/workboard?pj_num="+pwdto.getPj_num();
 	}
 	
 	@RequestMapping(value="/deletework",method=RequestMethod.GET)
 	public String deleteWork(@RequestParam("pw_num")int pw_num, @RequestParam("pj_num")int pj_num) {
 		mj_dao.deletework(pw_num);
-		return "redirect:/aus/workboard?pj_num="+pj_num;
+		return "redirect:/aus/ProejctRoom/workboard?pj_num="+pj_num;
 	}
 	
 	
