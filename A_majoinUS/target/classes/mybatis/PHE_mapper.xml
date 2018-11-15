@@ -11,15 +11,27 @@
 	</insert>
 
 	<!-- 프로젝트 관심분야 -->
-	<insert id="createProjectJob" parameterType="project.DTO.Pj_jobDTO">
-		insert into PJ_Job values
-		(PJ_JOB_SEQ.nextval, PROJECTROOM_SEQ.currval, #{pj_cate})
+	
+	
+	<insert id="createProjectJob" parameterType="list">
+		<foreach collection="list" item="pj_cate"  separator=";" open="DECLARE BEGIN" close="; END;">
+			insert into PJ_Job values (PJ_JOB_SEQ.nextval, PROJECTROOM_SEQ.currval, #{pj_cate})
+		</foreach>
 	</insert>
+	<insert id="createProjectJob2" parameterType="map">
+		insert into PJ_Job values
+		(PJ_JOB_SEQ.nextval, #{pj_num}, #{pj_cate})
+	</insert> 
 
 	<!-- 프로젝트 모집지역 -->
-	<insert id="createProjectLocation" parameterType="project.DTO.Pj_locationDTO">
+	<insert id="createProjectLocation" parameterType="list">
+		<foreach collection="list" item="pj_loc"  separator=";" open="DECLARE BEGIN" close="; END;">
+			insert into PJ_LOCATION values (PJ_LOCATION_SEQ.nextval, PROJECTROOM_SEQ.currval, #{pj_loc})
+		</foreach>
+	</insert>
+	<insert id="createProjectLocation2" parameterType="project.DTO.Pj_locationDTO">
 		insert into PJ_LOCATION values
-		(PJ_LOCATION_SEQ.nextval, PROJECTROOM_SEQ.currval, #{pj_loc})
+		(PJ_LOCATION_SEQ.nextval, #{pj_num}, #{pj_loc})
 	</insert>
 	
 	<!-- 프로젝트 생성시 PJ_MEM 에도 추가 -->
@@ -94,15 +106,26 @@
 	</update>
 
 	<!-- 프로젝트 수정_job -->
-	<update id="projectModify_job" parameterType="project.DTO.Pj_jobDTO">
+	<!-- <update id="projectModify_job" parameterType="project.DTO.Pj_jobDTO">
 		update PJ_JOB set pj_cate=#{pj_cate} where
 		pj_num=#{pj_num}
+	</update> -->
+	
+	 <update id="projectModify_job" parameterType="map">
+		<foreach collection="dto_list" item="item"  separator=";" open="DECLARE BEGIN" close="; END;">
+			update PJ_JOB set pj_cate=#{item.pj_cate} where pjj_num=#{item.pjj_num}		
+		</foreach>
 	</update>
-
+	
 	<!-- 프로젝트 수정_location -->
-	<update id="projectModify_location" parameterType="project.DTO.Pj_locationDTO">
+	<!-- <update id="projectModify_location" parameterType="project.DTO.Pj_locationDTO">
 		update PJ_LOCATION set pj_loc=#{pj_loc} where
 		pj_num=#{pj_num}
+	</update> -->
+	<update id="projectModify_location" parameterType="map">
+		<foreach collection="dto_list" item="item"  separator=";" open="DECLARE BEGIN" close="; END;">
+			update PJ_LOCATION set pj_loc=#{item.pj_loc} where pjl_num=#{item.pjl_num}
+		</foreach>
 	</update>
 	
 	

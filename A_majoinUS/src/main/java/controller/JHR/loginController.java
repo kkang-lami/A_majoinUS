@@ -42,18 +42,15 @@ public class loginController {
 	@RequestMapping("/loginCheck")
 	public ModelAndView loginCheck(@ModelAttribute MemberDTO dto, HttpSession session) {
 		
-		boolean result = service.loginCheck(dto,session);
+		MemberDTO result = service.loginCheck(dto);
+		System.out.println(result);
 		ModelAndView mav = new ModelAndView();
-		if(result == true) {
-			
-			MemberDTO user = service.checkMember(dto);
-			session.setAttribute("id", user.getId());
-			session.setAttribute("name", user.getName());
-			mav.setViewName("redirect:/aus/MyPageMain");				
-		//	mav.addObject("msg","success");					//로그인시 바로 이동할거라 없어도됨
-			
+		if(result != null) {
+			session.setAttribute("id", result.getId());
+			session.setAttribute("name", result.getName());
+			mav.setViewName("redirect:/aus/MyPageMain");
 		}else {
-			mav.setViewName("JHR/loginMain");
+			mav.setViewName("redirect:/aus/main");
 			mav.addObject("msg","failure");
 		}
 		return mav;
@@ -87,38 +84,33 @@ public class loginController {
 	
 	//회원 정보 페이지
 	@RequestMapping(value="/mypage")
-	public String mypage(HttpServletRequest req,Model model, MemberDTO dto, @RequestParam("file_my")MultipartFile file){
-		System.out.println(file.getOriginalFilename());
-    	
-    	String path="D://item//profile//";
-    	String f_name=file.getOriginalFilename();
-    	f_name = f_name.substring(0, f_name.indexOf("."));
-    	long now = System.currentTimeMillis();
-    	String new_name=now+"_"+f_name;
-    	File new_file = new File(path,new_name);
-    	try {
-    		file.transferTo(new_file);
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
-    	dto.setU_img(new_name);
+	public String mypage(HttpServletRequest req,Model model, MemberDTO dto){
 		String id = req.getSession().getAttribute("id").toString();
 		
 		System.out.println("로그인아이디:: "+id);
 		
 		MemberDTO dto1 = service.mypage(id);
 		model.addAttribute("dto", dto1);
+		
+		
+		System.out.println(dto1);
+		
 		return "JHR/mypage";
 	}
 	//회원 정보 업데이트
 	@RequestMapping(value="/memberUpdate")
     public String memberUpdate(MemberDTO dto){
+		
+		System.out.println("a수정"+dto);
+		
+		
+		
         String alert= "<script>alert('";
         alert += service.memberUpdate(dto) ?  "수정이 완료되었습니다." : "수정 실패!";
         alert += "'); location.href='mypage?id="+dto.getId()+"';</script>";
         return alert;
 	}
-	//카테고리
+	/*//카테고리
     @RequestMapping(value="/my_first_List",method=RequestMethod.POST)
 	public void my_first_List(HttpServletResponse resp) throws Exception{
 		System.out.println("[1]my_ first_List실행");
@@ -147,7 +139,7 @@ public class loginController {
 		
 		PrintWriter out = resp.getWriter();
 		out.print(jso);
-	}
+	}*/
 	//탈퇴 페이지
 		@RequestMapping("/secession")
 		public String secession(){

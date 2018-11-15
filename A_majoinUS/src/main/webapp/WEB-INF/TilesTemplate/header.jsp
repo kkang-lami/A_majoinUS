@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <header class="main-header">
     
  <!-- Logo -->
-<a href="index.jsp" class="logo">
+<a href="<%=request.getContextPath() %>/aus/main" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>US</span>    
       <!-- logo for regular state and mobile devices -->

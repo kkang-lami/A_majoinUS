@@ -18,16 +18,18 @@ public class loginServiceImpl implements loginService{
 	
 	//회원 로그인 확인
 	@Override
-	public boolean loginCheck(MemberDTO dto, HttpSession session) {
+	public MemberDTO loginCheck(MemberDTO dto/*, HttpSession session*/) {
 		boolean result = dao.loginCheck(dto);
-
-		/*if(result) {//true 일 경우 세션에 등록		//세션이 안먹는다
-			MemberDTO member=checkMember(dto);
+		MemberDTO member; 
+		if(result) {//true 일 경우 세션에 등록		//세션이 안먹는다
+			member=checkMember(dto);
 			//세션 변수 등록
-			session.setAttribute("id", member.getId());
-			session.setAttribute("name", member.getName());
-		}*/
-		return result;
+		//	session.setAttribute("id", member.getId());
+		//	session.setAttribute("name", member.getName());
+		}else {
+			return null;
+		}
+		return member;
 	}
 	//회원 로그인 정보
 	@Override
@@ -44,9 +46,15 @@ public class loginServiceImpl implements loginService{
 	}
 	@Override
 	public MemberDTO mypage(String id) {
-		return dao.mypage(id);
+		MemberDTO dto = dao.mypage(id);
+		List<String> st = dao.my_location(dto.getId());
+		List<String> st2 = dao.my_job(dto.getId());
+		dto.setLocal(st.toArray(new String[st.size()]));
+		dto.setJob(st2.toArray(new String[st2.size()]));
+
+		return dto;
 	}
-	//카테고리
+	/*//카테고리
 	public List<String> getLevel1(String col){
 		List<String> list = null;
 		
@@ -67,7 +75,7 @@ public class loginServiceImpl implements loginService{
 			System.out.println("[에러] Level2서비스실패 ::"+e.toString());
 		}
 		return list;
-	}
+	}*/
 	@Override
 	public boolean memberUpdate(MemberDTO dto) {
 		return dao.memberUpdate(dto);

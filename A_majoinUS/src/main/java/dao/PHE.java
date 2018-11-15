@@ -26,16 +26,34 @@ public class PHE extends SqlSessionDaoSupport {
 		return x;
 	}
 
-	public int createProjectJob(Pj_jobDTO jobDTO) {
+	public int createProjectJob(List<String> pj_cate) {
 
-		int y = getSqlSession().insert("PHE_AUS.createProjectJob", jobDTO);
+		int y = getSqlSession().insert("PHE_AUS.createProjectJob", pj_cate);
 		return y;
 	}
 
-	public int createProjectLocation(Pj_locationDTO locDTO) {
+	public int createProjectJob2(String pj_cate, int pj_num) {
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-		int z = getSqlSession().insert("PHE_AUS.createProjectLocation", locDTO);
+		parameters.put("pj_cate", pj_cate);
+		parameters.put("pj_num", pj_num);
+		int y = getSqlSession().insert("PHE_AUS.createProjectJob2", parameters);
+		return y;
+	}
+	
+	public int createProjectLocation(List<String> pj_loc) {
+
+		int z = getSqlSession().insert("PHE_AUS.createProjectLocation", pj_loc);
 		return z;
+	}
+	
+	public int createProjectLocation2(String pj_loc, int pj_num) {
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
+
+		parameters.put("pj_loc", pj_loc);
+		parameters.put("pj_num", pj_num);
+		int y = getSqlSession().insert("PHE_AUS.createProjectLocation2", parameters);
+		return y;
 	}
 
 	// list
@@ -62,12 +80,12 @@ public class PHE extends SqlSessionDaoSupport {
 		return getSqlSession().selectOne("PHE_AUS.projectContent", pj_num);
 	}
 
-	public Pj_jobDTO read2(int pj_num) {
-		return getSqlSession().selectOne("PHE_AUS.projectContent_job", pj_num);
+	public List<Pj_jobDTO> read2(int pj_num) {
+		return getSqlSession().selectList("PHE_AUS.projectContent_job", pj_num);
 	}
 
-	public Pj_locationDTO read3(int pj_num) {
-		return getSqlSession().selectOne("PHE_AUS.projectContent_location", pj_num);
+	public List<Pj_locationDTO> read3(int pj_num) {
+		return getSqlSession().selectList("PHE_AUS.projectContent_location", pj_num);
 	}
 
 	// delete
@@ -94,15 +112,15 @@ public class PHE extends SqlSessionDaoSupport {
 		return x;
 	}
 
-	public int projectModify_job(Pj_jobDTO dto) {
-		int x = getSqlSession().update("PHE_AUS.projectModify_job", dto);
+	public int projectModify_job(Map<String,Object> map) {
+		int x = getSqlSession().update("PHE_AUS.projectModify_job", map);
 		System.out.println("projectModify_job");
 
 		return x;
 	}
 
-	public int projectModify_location(Pj_locationDTO dto) {
-		int x = getSqlSession().update("PHE_AUS.projectModify_location", dto);
+	public int projectModify_location(Map<String,Object> map) {
+		int x = getSqlSession().update("PHE_AUS.projectModify_location", map);
 		System.out.println("projectModify_location");
 
 		return x;

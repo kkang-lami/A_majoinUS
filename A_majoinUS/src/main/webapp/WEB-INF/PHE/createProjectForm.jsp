@@ -90,7 +90,7 @@
 			document.form.start_d.focus();
 			return false;
 		}
-		if (!document.form.pj_cate.value) {
+		/* if (!document.form.pj_cate.value) {
 			alert("관심 분야를 입력해 주세요!");
 			document.form.pj_cate.focus();
 			return false;
@@ -99,7 +99,7 @@
 			alert("선호 지역을 입력해 주세요!");
 			document.form.pj_loc.focus();
 			return false;
-		}
+		} */
 		if (document.form.start_d.value >= document.form.end_d.value) {
 			alert("시작일이 종료일보다 앞설 수 없습니다");
 			document.form.start_d.focus();
@@ -136,7 +136,7 @@
 				<br>
 				<br>
 				<br>
-					<center>
+				<%-- 	<center> --%>
 
 					<table width="1000">
 						<tr>
@@ -175,17 +175,9 @@
 								무기한<br>
 							</td>
 
-							</td>
+							<!-- </td> -->
 						</tr>
-
-						<tr>
-							<td><br>관심분야 :</td>
-							<td><br><input type="text" name="pj_cate" size="10"></td>
-						</tr>
-						<tr>
-							<td><br>선호지역 :</td>
-							<td><br><input type="text" name="pj_loc" size="10"></td>
-					</table></center>
+						</table>
 
 					<!-- 관심직종 -->
 					<div class="form-group">
@@ -253,7 +245,7 @@
 		               
 		function show_search_tag() {
 
-			var html1 = "<div id='job_list' class='inline'>",
+			var html1 = "<div id='job_list' name='job_list' class='inline'>",
 				html2 = "";
 
 			<c:forEach var="item" items="${command.job}">

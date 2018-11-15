@@ -11,7 +11,7 @@
 <head>
 <title>정보 수정</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
+<script type="text/javascript">
 $(document).ready(function(){
 	$("#btnUpdate").click(function(){
 		alert("수정하시겠습니까?");
@@ -26,11 +26,18 @@ $(document).ready(function(){
 		$(this).removeClass('focused');
 	});
 });
+/* /* $(document).ready(function(){
+	var textareaVal = $("textarea[name="Profile"]").text();
+	console.log(textareaVal);
+	  $("textarea[name=Profile]").text("값을 변경합니다.");
 
+ */ 
+ $('input:textbox').val();
+ $('input:textbox').val("new text message");
 </script>
 </head>
 <body>
-<form name="form1" method="post" action="./memberUpdate" id="member" class="editable">
+<form name="form1" method="post" action="memberUpdate" id="member" class="editable">
 <h1> 정보 수정</h1>
 <input type="button" value="회원 탈퇴" onclick="location.href='secession'" >
 <fieldset>
@@ -54,7 +61,8 @@ $(document).ready(function(){
 
 <div>
 <label>프로필 사진</label>
-<input type="file" name="file_my" accept="image/*" value="${dto.u_img}"/>
+<img src="<%=request.getContextPath()%>/aus/userImg/${dto.u_img}">
+<input type="file" accept="image/*"/>
 </div>
 
 <div>
@@ -78,59 +86,61 @@ $(document).ready(function(){
 
 <div>
 <label>자기 소개</label>
-<textarea cols="100" rows="8" name="profile"></textarea>
+<textarea cols="100" rows="8" name="profile">${dto.profile}</textarea>
 </div>
+
 <input type="submit" onclick="go_submit()" value="수정" >
 <input type="button" class="btn btn-danger" onclick="history.go(-1)" value="뒤로가기">
 </fieldset>
 </form>
 
-<script src="<%=request.getContextPath()%>/resources/LSH/category.js"></script>
+<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
 <script>
 
 var global = {
-		    i : 0
-		};
-	
-	$(document).ready(initPage);
-	
-	function initPage() {
-		level1();
-		show();								// 파일불러올때 사용! -- 기존에 있는 카테고리 입력값 버튼생성
-	}
-	
-	function getContext(){
-		var context = "<%=cp%>";
-		return context;
-	}  
+	    i : 0
+	};
 
-	function show() {
+$(document).ready(initPage);
 
-		var html1 = "<div id='job_list'>",
-			html2 = "";
+function initPage() {
+	level1();
+	show_search_tag();							// 파일불러올때 사용! -- 기존에 있는 카테고리 입력값 버튼생성
+}
 
-		<c:forEach var="item" items="${command.job}">
-			html1 += "<div id="+global.i+">${item} ";
-			html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
+function getContext(){
+	var context = "<%=cp%>";
+	return context;
+}
 
-			html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
-			global.i++;
-		</c:forEach>
+function show() {
 
-			html1 += "</div><br><div id='local_list'>";
+	var html1 = "<div id='job_list'>",
+		html2 = "";
 
-		<c:forEach var="item" items="${command.local}" >
-			html1 += "<div id="+global.i+">${item} ";
-			html1 += "<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
-			html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
-			global.i++;
-		</c:forEach>
+	<c:forEach var="item" items="${command.job}">
+		html1 += "<div id="+global.i+">${item} ";
+		html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
 
-		html1 += "</div>";
+		html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
+		global.i++;
+	</c:forEach>
 
-		$('#result').append(html1);
-		$('#hidden').append(html2);
-	}
+		html1 += "</div><br><div id='local_list'>";
+
+	<c:forEach var="item" items="${command.local}" >
+		html1 += "<div id="+global.i+">${item} ";
+		html1 += "<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+		html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
+		global.i++;
+	</c:forEach>
+
+	html1 += "</div>";
+
+	$('#result').append(html1);
+	$('#hidden').append(html2);
+}
+
 	</script>	
 	
 </body>

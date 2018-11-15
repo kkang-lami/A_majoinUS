@@ -44,7 +44,7 @@ public class ProjectroomController {
 
 	@RequestMapping(value = "/createProjectForm", method = RequestMethod.POST)
 	public String submittedProjectForm(ProjectroomDTO command1, Pj_jobDTO command2,
-			Pj_locationDTO command3, HttpServletRequest request,String end_d) {
+			Pj_locationDTO command3, HttpServletRequest request,String end_d, @RequestParam("job")List<String> job, @RequestParam("local")List<String> local) {
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -62,9 +62,12 @@ public class ProjectroomController {
 		//System.out.println("controller command1"+command1);
 		
 		dao.createProject(command1);
-		dao.createProjectJob(command2);
-		dao.createProjectLocation(command3);
-		dao.insertToPjMem(sessionId);		
+		dao.createProjectJob(job);
+		dao.createProjectLocation(local);
+		dao.insertToPjMem(sessionId);	
+	
+		
+
 		
 		String end = "2099-12-31";
 		if(end.equals(end_d)) {
@@ -116,13 +119,9 @@ public class ProjectroomController {
 	// 프로젝트 수정
 	@RequestMapping("/modifyProject")
 	public ModelAndView modifyProject(HttpServletRequest request, HttpSession session, @RequestParam int pj_num) {
-		System.out.println("pj_num : " + pj_num);
 		ProjectroomDTO dto1 = dao.read(pj_num);
-		System.out.println("dto1 끝");
-		Pj_jobDTO dto2 = dao.read2(pj_num);
-		System.out.println("dto2 끝");
-		Pj_locationDTO dto3 = dao.read3(pj_num);
-		System.out.println("dto3 끝");
+		List<Pj_jobDTO> dto2 = dao.read2(pj_num);
+		List<Pj_locationDTO> dto3 = dao.read3(pj_num);
 		
 		Map<String,String> date = dao.Project_Date(pj_num);
 		System.out.println("con date: " + date);
@@ -138,18 +137,84 @@ public class ProjectroomController {
 	}
 
 	@RequestMapping(value = "/modifyProject", method = RequestMethod.POST)
-	public ModelAndView modifyProjectPro(ProjectroomDTO command1, Pj_jobDTO command2, Pj_locationDTO command3,
-			@RequestParam("pj_num") int pj_num, HttpSession session,HttpServletRequest request, String end_d) {
-
+	public String modifyProjectPro(ProjectroomDTO command1, @RequestParam("job")List<String> job, @RequestParam("local")List<String> local,
+			@RequestParam("pj_num") int pj_num ,HttpSession session,HttpServletRequest request, String end_d) {
 
 		System.out.println("modifyProjectCon");
 		session= request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("id");
+		String sessionId =(String)session.getAttribute("userId");
 		
 		dao.projectModify(command1);
-		dao.projectModify_job(command2);
-		dao.projectModify_location(command3);
+		
+		System.out.println("job.size()" + job.size());
+		System.out.println("job" + job);
+
+
+
+		// 삭제
+				
+		dao.deleteProject_job(pj_num);
+		dao.deleteProject_location(pj_num);
+		
+		//insert
+		for(int i=0; i<job.size();i++) {
+			dao.createProjectJob2(job.get(i), pj_num);
+		}
+		
+		for(int i=0; i<local.size();i++) {
+			dao.createProjectLocation2(local.get(i), pj_num);
+		}
+		
+		
+		System.out.println("ㅊㅋㅊㅋ");
+		
+				//dao.createProjectJob(job);
+		//dao.createProjectLocation(local);
+		
+		/*System.out.println("command1 : " + command1);
+		System.out.println("pjl_num : " + pjl_num);
+		System.out.println("pjj_num : " + pjj_num);
+		System.out.println("job.size() : " + job.size());
+		System.out.println("local.size()+1 : " + local.size()+1);
+		System.out.println("job.size()+1 : " + (job.size()+1));
+		System.out.println("job: " + job);
+		System.out.println("job: " + job);
+		
+		System.out.println("///////////////////////////////////");		
+		
+		 
+		List<Pj_jobDTO> dto_list = new ArrayList<Pj_jobDTO>();
+		List<Pj_locationDTO> dto_list2 = new ArrayList<Pj_locationDTO>();
+		
+		for(int i=0; i<job.size();i++) {
+			System.out.println("i = " + i + "~~~~" + pjj_num.get(i)+ job.get(i));
+			Pj_jobDTO dto = new Pj_jobDTO(pjj_num.get(i), job.get(i));
+			
+			System.out.println("dto : " + dto);
+			dto_list.add(dto);
+			//System.out.println("job : " + job);
+		}
+		
+		System.out.println("///////////////////////////////////");	
+		
+		for(int i=0; i<local.size();i++) {
+			Pj_locationDTO dto2 = new Pj_locationDTO(pjl_num.get(i), local.get(i));
+			dto_list2.add(dto2);
+			//System.out.println("job : " + job);
+
+		}
+		
+		System.out.println("dto_list : " + dto_list);
+		System.out.println("dto_list2 : " + dto_list2);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+         map.put("dto_list",dto_list);
+         dao.projectModify_job(map);
+         
+         map.replace("dto_list",dto_list2);
+		 dao.projectModify_location(map);
+		
 		String end = "2099-12-31";
 		
 		if(end.equals(end_d)) {
@@ -159,11 +224,10 @@ public class ProjectroomController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pj_num", command1.getPj_num());
 		mav.addObject("pj_num", command2.getPj_num());
-		mav.addObject("pj_num", command3.getPj_num());
+		mav.addObject("pj_num", command3.getPj_num());*/
 
-		
-		mav.setViewName("redirect:/aus/projectList");
-		return mav;
+		//mav.setViewName("redirect:/aus/PHE/projectList");
+		return "redirect:/aus/projectList";
 	}
 
 	// 글삭제

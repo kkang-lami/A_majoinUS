@@ -1,13 +1,15 @@
 package controller.JHR;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import dao.JHR;
-import controller.JHR.MemberDTO;
 
 @Service
 public class JoinServiceImpl implements JoinService {
@@ -19,10 +21,42 @@ public class JoinServiceImpl implements JoinService {
 	//회원가입
 	@Override
 	public void register(MemberDTO dto)  {
+		System.out.println("[팝]");
+
+		String id = dto.getId();
+		String[] list = dto.getLocal();
+		String[] list2 = dto.getJob();
+		List<Map<String,Object>> job_list = new ArrayList<Map<String,Object>>();		
+		List<Map<String,Object>> local_list = new ArrayList<Map<String,Object>>();		
+		
+		if(list2 != null) {
+			for(String st : list2) {
+				Map<String,Object> temp = new HashMap<String,Object>();
+				temp.put("id", id);
+				temp.put("f_job", st);
+				job_list.add(temp);
+			}
+			dao.insert_job(job_list);
+		}
+		System.out.println("잡"+job_list);
+		
+		if(list != null) {
+			for(String st : list) {
+				Map<String,Object> temp = new HashMap<String,Object>();
+				temp.put("id", id);
+				temp.put("f_local", st);
+				local_list.add(temp);
+			}
+			dao.insert_local(local_list);
+		}
+		System.out.println("로컬"+local_list);
+		
 		dao.register(dto);
+		
+		
 	}
 	
-	//카테고리
+	/*//카테고리
 	public List<String> getLevel1(String col){
 		List<String> list = null;
 		
@@ -43,7 +77,7 @@ public class JoinServiceImpl implements JoinService {
 			System.out.println("[에러] Level2서비스실패 ::"+e.toString());
 		}
 		return list;
-	}
+	}*/
 	
 	//아이디 찾기
 	@Override

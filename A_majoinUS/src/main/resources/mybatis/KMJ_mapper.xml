@@ -214,4 +214,8 @@
 	</select>
 	
 	
+	<select id="idconfirm" parameterType="String" resultType="Integer">
+		select count(*) from member where id=#{id}
+	</select>
+	
 </mapper>

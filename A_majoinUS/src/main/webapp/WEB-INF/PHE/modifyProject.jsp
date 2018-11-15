@@ -155,7 +155,8 @@
 					for(i=1; i<=20; i++){
 				%>
 				
-				<c:if test="${command1.mem_limit}==<%=i %>"> 
+				<c:set value="<%=i%>" var = "memLimit"/>
+				 <c:if test="${command1.mem_limit == memLimit}"> 
 					<option value="${command1.mem_limit}"  selected>${command1.mem_limit}명 </option>
 					<%i++; %>
 				</c:if>
@@ -195,17 +196,41 @@
 			
 	</tr>		
 				
-	<tr>
+<%-- 	<tr>
 		<td> <br>관심분야 : </td>
 		<td> <br><input type="text" name="pj_cate" size="10" value="${command2.pj_cate}"></td>
 	</tr>
 	<tr>
 		<td> <br>선호지역 : </td>
-		<td> <br><input type="text" name="pj_loc" size="10" value="${command3.pj_loc}"> </td>
+		<td> <br><input type="text" name="pj_loc" size="10" value="${command3.pj_loc}"> </td> --%>
 	</table>
+	<!-- 관심직종 -->
+		<div class="form-group">
+			<label for="job1" class="col-sm-2 control-label">관심분야</label>
+			<div class="col-sm-10">
+				<select id="job1" class="show-level2"></select> <select
+					id="job12"></select>
+				<button type="button" value="job" class="add_btn">추가</button>
+			</div>
+		</div>
+		
+		<!-- 선호지역 -->
+		<div class="form-group">
+			<label for="local1" class="col-sm-2 control-label">선호직역</label>
+			<div class="col-sm-10">
+				<select id="local1" class="show-level2"></select> <select
+					id="local12"></select>
+				<button type="button" value="local" class="add_btn">추가</button>
+			</div>
+		</div>
+		
+		<div title="넘겨질 job과 local" id="hidden" ></div>
+		<hr>
+		검색조건
+		<div id="result" ></div>
 	
 	<br><br><br>
-	<center><input type="submit" value="입력"></center><br><br><br>
+	<input type="submit" value="입력" class="btn btn-primary"><br><br><br>
 	<%-- 	<c:if test="{sessionScope.id == userId}" /> --%>
 	<input type="hidden" name="id" value="${sessionScope.id}"/>
 </form>
@@ -217,5 +242,59 @@
 
    <tiles:insertDefinition name="left" />
    <tiles:insertDefinition name="footer" />
+   	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
+	<script>
+		$(document).ready(initPage);
+		
+		function initPage() {
+			level1();
+			show_search_tag();
+		}
+		
+		function getPageNum(){
+			var pageNum = $('.pagination .active').attr('id');
+			return (pageNum === undefined)? 1 : pageNum;
+		}
+		
+		function getContext(){
+			var context = "<%=cp%>";
+			return context;
+		}
+
+		function getSessionId(){
+			var sessionid = '${sessionScope.userId}';
+			return sessionid;
+		}
+		
+		var global = {
+			    i : 0
+		};
+		               
+		function show_search_tag() {
+
+			var html1 = "<div id='job_list' name='job_list' class='inline'>",
+				html2 = "";
+
+			<c:forEach var="item" items="${command2}">
+				html1 += "<div  id="+global.i+"  style='display: inline-block;'>${item.pj_cate}<button id="+global.i+" class='del_btn'>x</button></div>";
+				html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item.pj_cate}'> <input type='hidden' name='pjj_num' value='${item.pjj_num}'>"
+				global.i++;
+			</c:forEach>
+
+				html1 += "</div><br><div id='local_list' class='inline'>";
+
+			<c:forEach var="item" items="${command3}" >
+				html1 += "<div id="+global.i+">${item.pj_loc}<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+				html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item.pj_loc}'> <input type='hidden' name='pjl_num' value='${item.pjl_num}'>"
+				global.i++;
+			</c:forEach>
+
+				html1 += "</div>";
+
+				$('#result').append(html1);
+				$('#hidden').append(html2);
+		}
+	</script>
+   
 </body>
 </html>

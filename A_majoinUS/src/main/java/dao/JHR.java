@@ -11,6 +11,8 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import controller.JHR.MemberDTO;
+import project.DTO.F_jobDTO;
+import project.DTO.F_locationDTO;
 
 @Repository //현재 클래스를 스프링에서 관리하는 dao bean으로 등록
 public class JHR extends SqlSessionDaoSupport{
@@ -39,9 +41,20 @@ public class JHR extends SqlSessionDaoSupport{
 		return getSqlSession().update("JHR_AUS.memberUpdate", dto) > 0 ? true : false;
 
 	}
+	
 	public MemberDTO mypage(String id) {
 		return getSqlSession().selectOne("JHR_AUS.mypage",id);
 	}
+	public List<String> my_location(String id) {
+		List<String> st = getSqlSession().selectList("JHR_AUS.my_location",id);
+		return st;
+	}
+	public List<String> my_job(String id) {
+		List<String> st = getSqlSession().selectList("JHR_AUS.my_job",id);
+		return st;
+	}
+	
+	
 	// 회원 정보 수정 및 삭제를 위한 비밀번호 체크
     public boolean checkPw(String id, String password) {
         boolean result = false;
@@ -75,17 +88,17 @@ public class JHR extends SqlSessionDaoSupport{
 	//회원 가입
 	public void register(MemberDTO dto) {
 	 getSqlSession().insert("JHR_AUS.register",dto);
-		
-	}
-	public List<String> getCategory1(String mapper,String col){
-		List<String> cate1 = getSqlSession().selectList(mapper,col);
-		return cate1;
 	}
 	
-	public List<String> getCategory2(String mapper,String col){
-		List<String> cate2 = getSqlSession().selectList(mapper,col);
-		return cate2;
+	public void insert_job(List<Map<String,Object>> dto) {
+		getSqlSession().insert("JHR_AUS.insert_job",dto);
 	}
+	
+	public void insert_local(List<Map<String,Object>> dto) {
+		getSqlSession().insert("JHR_AUS.insert_local",dto);
+	}
+
+	
 }
 	/*//회원 가입
 	@Transactional //트랜잭션 설정 롤백을 위해 사용

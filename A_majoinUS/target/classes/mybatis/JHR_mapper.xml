@@ -12,13 +12,28 @@
 	select name from member where Id = #{id} and Password = #{password}
 </select>
 <select id="checkMember" resultType="controller.JHR.MemberDTO">
-	select id,name from member where id = #{id} and password=#{password}
+	select name as name from member where id = #{id} and password=#{password}
 </select>
 
 <!-- 회원가입 -->
 <insert id="register" parameterType ="controller.JHR.MemberDTO">
-	insert into member (id,password,name,birth,phone,profile,u_img)	values(#{id},#{password},#{name},#{birth},#{phone},#{profile},#{u_img})
+	insert into member (id,password,name,birth,phone,profile,u_img) values(#{id},#{password},#{name},#{birth},#{phone},#{profile},#{u_img})
 </insert>
+
+<insert id="insert_local" parameterType="list">
+	<foreach collection="list" separator=";" item="item" open="DECLARE BEGIN" close="; END;">
+		INSERT INTO F_LOCATION VALUES(F_LOCATION_SEQ.NEXTVAL,#{item.id},#{item.f_local})
+	</foreach>
+</insert>
+
+<insert id="insert_job" parameterType="list">
+	<foreach collection="list" separator=";" item="item" open="DECLARE BEGIN" close="; END;">
+		INSERT INTO F_JOB VALUES(F_JOB_SEQ.NEXTVAL,#{item.id},#{item.f_job})
+	</foreach>
+</insert>
+
+
+
 <!-- 카테고리 sql -->
 <select id="select1" parameterType="String" resultType="String">
 	select distinct C_1_NAME from CATE_NAME natural join CATEGORY_1 natural join CATEGORY_2 where C_NAME=#{c_name} order by C_1_NAME asc
@@ -28,14 +43,26 @@
 </select>
 
 <!-- 정보 수정 -->
-<select id="memberUpdate">
- update member set password = #{password}, birth = #{birth}, profile =#{profile},
-   u_img = #{u_img}, phone = #{phone}  where id = #{id}
+<update id="memberUpdate" parameterType ="controller.JHR.MemberDTO" > 
+	update member set password = #{password}, birth = #{birth}
+	<if test="u_img != null">
+			, u_img = #{u_img}
+	</if>
+	, profile =#{profile}, phone = #{phone}  where id = #{id}
+</update>
+
+<select id="mypage" parameterType="String" resultType="controller.JHR.MemberDTO">
+	select id, password, name, phone, birth, profile, u_img from member where id = #{id}
 </select>
-<select id="mypage" resultType="controller.JHR.MemberDTO">
-select id, password, name, phone, birth, profile,
-u_img from member where id = #{id}
+
+<select id="my_location" parameterType="String" resultType="String">
+	select f_loc from F_LOCATION where id = #{id}
 </select>
+
+<select id="my_job" parameterType="String" resultType="String">
+	select f_cate from F_JOB where id = #{id}
+</select>
+
 <!-- 비밀번호 체크 -->
 <select id="checkPw" resultType="int">
  select count(*) from member where id = #{id} and password = #{password}

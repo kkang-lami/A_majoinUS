@@ -285,4 +285,9 @@ public class KMJ extends SqlSessionDaoSupport{
 	}
 	
 	
+	public int idconfirm(String id) {
+		int count = getSqlSession().selectOne("KMJ_AUS.idconfirm",id);
+		return count;
+	}
+	
 }

@@ -52,24 +52,41 @@
 		fn_signUp();
 	});
 });
-function fn_signUp(){  
-	if ($("#agree_checkbox").prop("checked") == false)
+/* function fn_signUp(){  
+	if ($("#agree-checkbox").prop("checked") == false)
 		{
 		alert("약관에 동의해 주시기 바랍니다");
+		return false;
 		}
-	else if($("idchake").val().length < 1)
+	else if($("#idchake").val().length < 1)
 		{
-		alert("인증키를 입력해주세요")
+		alert("인증키를 입력해주세요");
+		return false;
 		}
-	else if($("name").val().length < 1)
+	else if($("#name").val().length < 1)
 		{
-		alert("이름을 입력해주세요.")
+		alert("이름을 입력해주세요.");
+		return false;
 		}
-	else if($("phone").val().length < 1)
+	else if($("#phone").val().length < 1)
 		{
-		alert("핸드폰 번호를 입력해 주세요.")
+		alert("핸드폰 번호를 입력해 주세요.");
+		return false;
 		}
-}
+	else if($("#name").val().length < 1)
+	{
+	alert("이름을 입력해주세요.");
+	return false;
+	}
+	else if($("#birth").val().length < 1)
+	{
+	alert("생년월일을 입력해주세요.");
+	return false;
+	}
+	return true;
+	
+	
+} */
 
 	 
 	 <%-- function sendMail(){
@@ -273,7 +290,7 @@ select option:hover {
         <div class="row justify-content-center mb-12">  
               
           <div class="col-md-10 justify-content-center probootstrap-animate">
-            <form action="register" method="post" class="probootstrap-form probootstrap-form-box mb60" enctype="multipart/form-data">
+            <form action="register" method="post" class="probootstrap-form probootstrap-form-box mb60" enctype="multipart/form-data" onsubmit="return fn_signUp();">
               <div class="row mb-3">
                 <div class="col-md-6">
                 <!-- 아이디 부분 -->
@@ -285,7 +302,7 @@ select option:hover {
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="lname" class="sr-only sr-only-focusable">인증키 </label>
-                    <input type="text" class="form-control" id="lname" name="lname" placeholder="인증은 필수입니다">
+                    <input type="text" class="form-control" id="idchake" name="lname" placeholder="인증은 필수입니다">
                   </div>
                 </div>  
                 <div class="col-md-2">
@@ -297,22 +314,22 @@ select option:hover {
 
               <div class="form-group">
                 <label for="password" class="sr-only sr-only-focusable">Password</label>
-                <input type="password" class="form-control" name="password" placeholder="password">
+                <input type="password" class="form-control" id="password" name="password" placeholder="password">
               </div>
               
               <div class="form-group">
                 <label for="name" class="sr-only sr-only-focusable">name</label>
-                <input type="text" class="form-control"  name="name" placeholder="name">
+                <input type="text" class="form-control" id="name" name="name" placeholder="name">
               </div>
               
               <div class="form-group">
                 <label for="phone" class="sr-only sr-only-focusable">Phone</label>
-                <input type="text" class="form-control" name="phone" placeholder="010-1234-1234">
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="010-1234-1234">
               </div>
               
               <div class="form-group">
                 <label for="birth" class="sr-only sr-only-focusable">birth</label>
-                <input type="text" class="form-control" name="birth"  placeholder="19950330">
+                <input type="text" class="form-control" id="birth" name="birth"  placeholder="19950330">
               </div>
               
               <div class="form-group">
@@ -350,7 +367,7 @@ select option:hover {
               
               <div class="form-group">
                 <label for="agree" class="sr-only sr-only-focusable">약관동의</label>
-                <textarea rows="20" class="form-control" id="message" class="signUp-agree-textarea" name="message" readonly="readonly" >
+                <textarea rows="20" class="form-control" id="agree" class="signUp-agree-textarea" name="message" readonly="readonly" >
 제 1 장 총 칙
 
  
@@ -503,7 +520,7 @@ select option:hover {
 (시행일) 이 약관은 2018년 09월부터 시행합니다.
 </textarea>
 <hr />    
-<input type="checkbox" id="argree-checkbox">약관에 동의
+<input type="checkbox" id="agree-checkbox">약관에 동의
               </div>
               
               <div class="form-group">
@@ -516,47 +533,72 @@ select option:hover {
         </div>  
         </section>
       </div>
-      
-      
-      
       </div>
       </div>
-      
-      
-      
     </section>
     <!-- END section -->
-   
-   
-  
-   
-   
-   
-    
-
-
-
-
-
-  
 
 <script src="<%=request.getContextPath()%>/resources/LSH/category.js"></script>
 <script>
-            
+var emailcode;      
 $('#mail').on('click',function(){
 	var id = document.getElementById('email').value;
-        
+      
 	var url = "<%=request.getContextPath()%>/aus/sendMail";
 	var param = "id="+id;
 	 $.ajax({
 		type:"post",
 		url:url,
 		data:param,
+		dataType:"json",
 		success:function(args){
-			alert('이메일 인증 번호를 보냈습니다.');	
+			alert(args.string);	
+			emailcode = args.emailcode;
 		}
 	});
 });
+
+function fn_signUp(){  
+	if($("#idchake").val().length < 1){	
+		alert("인증키를 입력해주세요");
+		return false;
+	}
+	else if($("#password").val().length < 1){
+		alert("패스워드를 입력해주세요.");
+		return false;
+	}
+	else if($("#name").val().length < 1){
+		alert("이름을 입력해주세요.");
+		return false;
+	}
+	else if($("#phone").val().length < 1){
+		alert("핸드폰 번호를 입력해 주세요.");
+		return false;
+	}
+	else if($("#name").val().length < 1){	
+		alert("이름을 입력해주세요.");
+		return false;
+	}
+	else if($("#birth").val().length < 1){
+		alert("생년월일을 입력해주세요.");
+		return false;
+	}
+	else if ($("#agree-checkbox").prop("checked") == false){
+		alert("약관에 동의해 주시기 바랍니다");	
+		return false;
+	}
+	else{
+		if($("#idchake").val() != emailcode){
+			alert("인증키가 올바르지 않습니다.");
+			return false;
+		}
+		if($("#idchake").val() == emailcode){
+			alert("가입을 환영합니다");
+			return true;
+		}
+	}
+}
+
 
 	var global = {
 		    i : 0

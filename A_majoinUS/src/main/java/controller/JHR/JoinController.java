@@ -1,6 +1,7 @@
 package controller.JHR;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import dao.KMJ;
 import net.sf.json.JSONObject;
 
 @Controller // 해당 클래스가 controller임을 나타내기 위한 어노테이션
@@ -30,7 +32,9 @@ public class JoinController {
 	private JoinServiceImpl joinService;
 	@Autowired
 	private MailServiceImpl mailService;
-
+	@Autowired
+	private KMJ mj_dao;
+	
 	public void setJoinService(JoinServiceImpl joinService) {
 		this.joinService = joinService;
 	}
@@ -65,12 +69,13 @@ public class JoinController {
 		}else {
 			dto.setU_img("");
 		}
+		System.out.println(dto);
 		joinService.register(dto);
 
 		return "JHR/registMember";
 	}
 
-	// 카테고리
+	/*// 카테고리
 	@RequestMapping(value = "/first_List", method = RequestMethod.POST)
 	public void first_List(HttpServletResponse resp) throws Exception {
 		System.out.println("[1] first_List실행");
@@ -99,12 +104,24 @@ public class JoinController {
 
 		PrintWriter out = resp.getWriter();
 		out.print(jso);
-	}
+	}*/
 
 	// 회원 가입 이메일 보내기
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
 	@ResponseBody
-	private void sendMail(HttpSession session, @RequestParam("id") String id) {
+	private void sendMail(HttpServletResponse resp, HttpSession session, @RequestParam("id") String id) throws Exception {
+		resp.setContentType("text/html;charset=utf-8");
+		JSONObject jso = new JSONObject();
+		PrintWriter out =null;
+		//실례합니다
+		int count = mj_dao.idconfirm(id);
+		if(count >0) {
+			jso.put("string",  "다른사람이 사용중인 이메일입니다.");
+
+			out = resp.getWriter();
+			out.print(jso);
+		}else {
+		
 		int randomCode = new Random().nextInt(1000) + 1000;
 		String joinCode = String.valueOf(randomCode);
 		session.setAttribute("joinCode", joinCode);
@@ -114,8 +131,11 @@ public class JoinController {
 		sb.append("회원가입 승인번호는 ").append(joinCode).append("입니다");
 
 		mailService.send(subject, sb.toString(), "gpflswkd89@gmail.com", id);
-
-		System.out.println("메일	보냇음");
+		jso.put("string",  "입력하신 이메일로 인증번호를 보냈습니다. 메일을 확인해주세요");
+		jso.put("emailcode",  randomCode);
+		out = resp.getWriter();
+		out.print(jso);
+		}
 	}
 
 	// 찾기
@@ -150,6 +170,9 @@ public class JoinController {
 		getdto.setName(name);
 		MemberDTO dto = joinService.findPw(getdto);
 		if (dto != null) {
+			if (!dto.getName().equals(name)) {
+				
+			}
 			int ran = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
 			String password = String.valueOf(ran);
 			joinService.memberUpdate(dto.getId(), "password", password); // 해당 유저의 DB정보 변경

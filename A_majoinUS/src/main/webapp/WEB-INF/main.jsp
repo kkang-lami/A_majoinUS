@@ -71,12 +71,12 @@
            
               <div class="form-group">
                 <label for="email" class="sr-only sr-only-focusable">Id</label>
-                <input type="email" class="form-control" id="Id" name="Id" placeholder="Id">
+                <input type="email" class="form-control" id="Id" name="id" placeholder="Id">
               </div>
               
               <div class="form-group">
                 <label for="message" class="sr-only sr-only-focusable">Password</label>
-                <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
+                <input type="password" class="form-control" id="Password" name="password" placeholder="Password">
               </div>
              
              <h3></h3>
