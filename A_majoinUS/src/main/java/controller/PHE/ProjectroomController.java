@@ -38,13 +38,12 @@ public class ProjectroomController {
 	// create
 	@RequestMapping(value = "/createProjectForm")
 	public String createProjectForm() {
-		System.out.println("create controller");
 		return "PHE/createProjectForm";
 	}
 
 	@RequestMapping(value = "/createProjectForm", method = RequestMethod.POST)
 	public String submittedProjectForm(ProjectroomDTO command1, Pj_jobDTO command2,
-			Pj_locationDTO command3, HttpServletRequest request,String end_d, @RequestParam("job")List<String> job, @RequestParam("local")List<String> local) {
+			Pj_locationDTO command3, HttpServletRequest request,String end_d, @RequestParam(value="job",defaultValue="")List<String> job, @RequestParam(value="local",defaultValue="")List<String> local) {
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -62,19 +61,21 @@ public class ProjectroomController {
 		//System.out.println("controller command1"+command1);
 		
 		dao.createProject(command1);
+		System.out.println("aaaa");
+		System.out.println(job.size()+" / "+local.size());
+		
+		if(job.size()!=1) {
 		dao.createProjectJob(job);
+		}
+		if(local.size()!=1) {
 		dao.createProjectLocation(local);
+		}
 		dao.insertToPjMem(sessionId);	
 	
-		
-
-		
 		String end = "2099-12-31";
 		if(end.equals(end_d)) {
 			dao.useTicket(sessionId);
 		}
-
-		
 		
 		return "redirect:/aus/projectList";
 	}
@@ -137,7 +138,7 @@ public class ProjectroomController {
 	}
 
 	@RequestMapping(value = "/modifyProject", method = RequestMethod.POST)
-	public String modifyProjectPro(ProjectroomDTO command1, @RequestParam("job")List<String> job, @RequestParam("local")List<String> local,
+	public String modifyProjectPro(ProjectroomDTO command1, @RequestParam(value="job",defaultValue="")List<String> job, @RequestParam(value="local",defaultValue="")List<String> local,
 			@RequestParam("pj_num") int pj_num ,HttpSession session,HttpServletRequest request, String end_d) {
 
 		System.out.println("modifyProjectCon");
@@ -146,7 +147,7 @@ public class ProjectroomController {
 		String sessionId =(String)session.getAttribute("id");
 		
 		dao.projectModify(command1);
-		
+	
 		System.out.println("job.size()" + job.size());
 		System.out.println("job" + job);
 
@@ -163,6 +164,13 @@ public class ProjectroomController {
 		for(int i=0; i<local.size();i++) {
 			dao.createProjectLocation2(local.get(i), pj_num);
 		}
+		
+		//ticket
+		String end = "2099-12-31";
+		if(end.equals(end_d)) {
+			dao.useTicket(sessionId);
+		}
+		
 		
 		
 		System.out.println("ㅊㅋㅊㅋ");

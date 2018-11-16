@@ -82,10 +82,10 @@ public class loginController {
 			MemberDTO dto1 = service.mypage(id);
 			model.addAttribute("dto", dto1);
 			mav.setViewName("JHR/mypage");
-			mav.addObject("msg","success");
-		}else {
-			mav.setViewName("redirect:/aus/Pw");
+/*			mav.addObject("msg","success");
+*/		}else {
 			mav.addObject("message","비밀번호 불일치");
+			mav.setViewName("redirect:/aus/Pw");
 		}
 		return mav;
 	}

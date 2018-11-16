@@ -53,7 +53,7 @@ $(document).ready(function(){
 <input name="name" class="field" value="${dto.name}"readonly="readonly" />
 <br />
 <label> 생년 월 일:</label>
-<input name="birth" class="field "value="${dto.birth}" />
+<input type="date" name="birth" class="field "value="${dto.birth}" />
 <br />
 <label> 핸드폰 번호:</label>
 <input name="phone" class="field" value="${dto.phone}" />

@@ -109,20 +109,20 @@ transition:.7s;
               <div class="mailbox-controls">
               </div>  
               <div class="table-responsive mailbox-messages">
-                 <form:form commandName="dto" method="post" name="writeform" >  
+                 <form:form commandName="dto" method="post" name="writeform" onsubmit="return writeSave();" >  
               <table class="table table-hover table-striped">
                   <tbody>
               <tr>    
 		    <td>
 		    	제 목&nbsp;&nbsp;&nbsp;<input type="text"
-		    	 name="subject" value="${notice.subject}" width="100" placeholder="제목을 입력해주세요">
+		    	 name="subject" value="${notice.subject}" width="100" placeholder="제목을 입력해주세요" required="required">
 		    </td>
               </tr>
               <tr></tr>
               
               <tr><td>
               
-                    <textarea id="content" name="content" rows="10" cols="80">
+                    <textarea id="content" name="content" rows="10" cols="80" required="required">
                                            ${notice.content}
                     </textarea>
                     </td></tr>

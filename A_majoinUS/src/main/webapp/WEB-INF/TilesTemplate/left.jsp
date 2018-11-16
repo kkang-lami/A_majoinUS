@@ -100,7 +100,7 @@ body {
         <li class="header">Management</li>
         <li><a href="<%=request.getContextPath() %>/aus/ProjectManage"><i class="fa fa-fw fa-object-ungroup"></i> <span>Managing Projects</span></a></li>
         <li><a href="<%=request.getContextPath() %>/aus/CategoryManage"><i class="fa fa-fw fa-home"></i> <span>Managing Search-Category</span></a></li>
-        <li><a href="<%=request.getContextPath() %>/aus/PaymentList"><i class="fa fa-fw fa-credit-card"></i> <span>Payment list</span></a></li>
+        <li><a href="<%=request.getContextPath() %>/aus/PaymentAjax"><i class="fa fa-fw fa-credit-card"></i> <span>Payment list</span></a></li>
         <li><a href="<%=request.getContextPath() %>/aus/review_admin"><i class="fa fa-fw fa-clipboard"></i> <span>Evaluation</span></a></li>
         <li><a href="<%=request.getContextPath() %>/aus/StaticManage"><i class="fa fa-fw fa-bar-chart"></i> <span>AUS Static</span></a></li>
            

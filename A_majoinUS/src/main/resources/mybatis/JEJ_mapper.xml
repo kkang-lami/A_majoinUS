@@ -51,7 +51,7 @@
 </select>
 
 <select id="static_inquiry_ok" resultType="int">
-	select count(*) from inquiry where i_state='답변완료'
+   select count(*) from inquiry where i_state='답변'
 </select>
 
 <select id="static_visit" resultType="project.DTO.Visit_statDTO">

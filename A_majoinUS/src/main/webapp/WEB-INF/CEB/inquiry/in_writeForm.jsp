@@ -73,7 +73,7 @@ transition:.7s;
 
 	}   
    
-
+/* 
 $(function () {
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
@@ -81,11 +81,11 @@ $(function () {
     //bootstrap WYSIHTML5 - text editor
     $('.textarea').wysihtml5()  
   })
-
+ */
 
 
 </script>
-<script src="<%=request.getContextPath() %>/resources/bower_components/ckeditor/ckeditor.js"></script>
+<%-- <script src="<%=request.getContextPath() %>/resources/bower_components/ckeditor/ckeditor.js"></script> --%>
 </head>
 <tiles:insertDefinition name="header" />
 <body>
@@ -119,7 +119,7 @@ $(function () {
               <div class="mailbox-controls">
               </div>
               <div class="table-responsive mailbox-messages">
-               	<form:form commandName="inqury" method="post" name="writeform" >
+               	<form:form commandName="inqury" method="post" name="writeform">
 	<table class="table table-hover table-striped">
 	 
 		<tr>
@@ -129,17 +129,17 @@ $(function () {
 		</tr>
 		<tr>
 			<td>제목      
-				<input type="text"  maxlength="100" name="i_subject" size="100" ><form:errors path="subject" />			
+				<input type="text"  maxlength="100" name="i_subject" size="100" required="required"><form:errors path="subject" />			
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<textarea name="i_content" rows="10" cols="80" ></textarea><form:errors path="content" />
+				<textarea name="i_content" rows="10" cols="80" required="required"></textarea><form:errors path="content" />
 			</td>
 		</tr>
 		<tr>  
 			<td align="center">
-				<input type="submit" value="글쓰기">
+				<input type="submit" value="글쓰기" onclick="return writeSave();">
 				<!-- <input type="reset" value="재작성"> -->
 				<input type="button" value="글목록" onclick="window.location='inquiry_user'">
 			</td>

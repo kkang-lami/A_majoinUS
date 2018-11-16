@@ -58,7 +58,7 @@ public class FileBoardController {
 	public String upload(HttpSession session,@RequestParam("file") MultipartFile file, @RequestParam("pj_num") int pj_num) {
 		System.out.println("나 호출됨요");
 		int pjm_num = (int)session.getAttribute("pjm_num");
-		
+		String id = (String)session.getAttribute("id");
 		String path = "D://item//";
 		String f_name = file.getOriginalFilename();
 		long now = System.currentTimeMillis();
@@ -90,7 +90,7 @@ public class FileBoardController {
 		
 		FileboardDTO fdto = new FileboardDTO();
 		fdto.setPj_num(pj_num);
-		fdto.setId("test.amajo@gmail.com");
+		fdto.setId(id);
 		fdto.setFilename(file.getOriginalFilename());
 		fdto.setFile_path(new_file.getPath());
 		fdto.setFile_size(f_size);

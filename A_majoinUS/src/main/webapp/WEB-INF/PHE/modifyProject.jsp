@@ -21,7 +21,6 @@
 	    var v = document.getElementById("end_d");
 		var endD=v.value;
 		
-		alert("endD : " +endD);
 		//alert($("input:checkbox[id='unlimit']").is(":checked"));
 
 		if ($("input:checkbox[id='unlimit']").is(":checked")== true) {

@@ -64,7 +64,7 @@
 		  
 	 
 		  <c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">
-	  <input type="button" value="글수정" class="btn btn-warning pull-left" class="btn btn-primary"  onclick="document.location.href='in_update?num=${inquiry.i_num}'" >
+	  <input type="button" value="답변하기" class="btn btn-warning pull-left" class="btn btn-primary"  onclick="document.location.href='in_update?num=${inquiry.i_num}'" >
 	   </c:if>
 	   &nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" class="btn btn-success" id="submit" value="확인" onclick="history.go(0)">

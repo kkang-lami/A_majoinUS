@@ -60,8 +60,8 @@
 
 <div class="out">
 <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
+        <div class="col-xs-12">              
+          <div class="box box-success">
             <div class="box-header">
               <h3 class="box-title" style="text-align: left !important;">최근 알림</h3>
 
@@ -113,9 +113,9 @@
       </div>
 
 <div class="out">
-<div class="row">
-        <div class="col-xs-12">
-          <div class="box">
+<div class="row">    
+        <div class="col-xs-12">    
+          <div class="box box-info">
             <div class="box-header">
               <h3 class="box-title" style="text-align: left !important;">진행 중인 프로젝트</h3>
 

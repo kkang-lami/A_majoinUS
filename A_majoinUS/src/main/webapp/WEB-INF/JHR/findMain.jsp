@@ -209,10 +209,17 @@ $('#sendmail').on('click',function(){
 	var param = "id="+id+"&name="+name;
 	 $.ajax({
 		type:"post",
-		url:url,
+		url:url,    
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		data:param,
+		dataType:"text",
 		success:function(args){
-			alert('이메일로 임시 비밀번호를 보냈습니다.');	
+			if(args === 'success'){
+				alert('이메일로 임시 비밀번호를 전송하였습니다.');
+			}else{
+				alert('일치하는 정보가 없습니다.');
+			}
+			
 		}
 	});
 });

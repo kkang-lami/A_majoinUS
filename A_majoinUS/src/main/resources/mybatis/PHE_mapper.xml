@@ -36,7 +36,7 @@
 	
 	<!-- 프로젝트 생성시 PJ_MEM 에도 추가 -->
 	<insert parameterType="String" id="insertToPjMem"> 
-		INSERT INTO PJ_MEM values (PJ_MEM_SEQ.nextval, PROJECTROOM_SEQ.currval, #{ID}) 
+		INSERT INTO PJ_MEM values (PJ_MEM_SEQ.nextval, PROJECTROOM_SEQ.currval, #{id}) 
 	</insert>
 	
 
@@ -154,7 +154,7 @@
 	 <!-- ++++++++++++++++++++++++++++++ 포트폴리오 +++++++++++++++++++++++++++++++ -->	  
 	  <!-- portfolio List -->
 	  <select id="portfolioList"  parameterType="String" resultType="project.DTO.PortfolioDTO">
-				select * from PORTFOLIO where ID=#{ID} order by end_d desc
+				select * from PORTFOLIO where ID=#{id} order by end_d desc
 	  </select>
 	  
 	  <!-- 포트폴리오 상세보기  -->

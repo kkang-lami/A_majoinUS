@@ -66,53 +66,44 @@
 		}
 
 	}
-</script>
 
-<script type="text/javascript">
 	function writeFormCheck() {
+		var start_d = new Date(document.form.start_d.value);
+		var end_d = new Date(document.form.end_d.value);
 		var today = new Date();
-		alert("프로젝트의 기간은 수정할 수 없습니다.")
-
+      	
 		if (!document.form.pj_name.value) {
 			alert("제목을 입력해 주세요!");
 			document.form.pj_name.focus();
 			return false;
 		}
 
-		if (!document.form.mem_limit.value) {
+		else if (!document.form.mem_limit.value) {
 			alert("프로젝트 멤버 수를 선택해 주세요!");
 			document.form.mem_limit.focus();
 			return false;
 		}
-
-		if (!document.form.start_d.value || !document.form.end_d.value) {
+		else if (!document.form.start_d.value || !document.form.end_d.value) {
 			alert("프로젝트 기간을 입력해 주세요!");
 			document.form.start_d.focus();
 			return false;
 		}
-		/* if (!document.form.pj_cate.value) {
-			alert("관심 분야를 입력해 주세요!");
-			document.form.pj_cate.focus();
-			return false;
-		}
-		if (!document.form.pj_loc.value) {
-			alert("선호 지역을 입력해 주세요!");
-			document.form.pj_loc.focus();
-			return false;
-		} */
-		if (document.form.start_d.value >= document.form.end_d.value) {
-			alert("시작일이 종료일보다 앞설 수 없습니다");
-			document.form.start_d.focus();
-			return false;
-		}
-		if (document.form.start_d.value < today) {
+		else if (start_d<today) {
 			alert("프로젝트의 시작일이 오늘보다 이전일 수 없습니다. 오늘 이후의 날짜를 선택해주세요");
 			document.form.start_d.focus();
 			return false;
 		}
-
-		return true;
+		else if (start_d>end_d) {
+			alert("시작일이 종료일보다 앞설 수 없습니다");
+			document.form.start_d.focus();
+			return false;
+		}
+		else{
+			alert("프로젝트의 기간은 수정할 수 없습니다.")
+			return true;
+		}
 	}
+	    
 </script>
 
 </head>
@@ -131,8 +122,8 @@
 				<section class="content">
 					<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="box box-info">
-				<form name="form" method="post" onSubmit="return writeFormCheck()">
+					<div class="box box-info">     
+				<form name="form" method="post" onsubmit="return writeFormCheck();">
 				<br>
 				<br>
 				<br>
@@ -204,7 +195,7 @@
 					검색조건
 					<div id="result" ></div>
 
-					<center><br><br><input type="submit" value="입력" class="btn btn-primary" width="50px"/><br><br></center>
+					<div align=center><input type="submit" value="입력" class="btn btn-primary" width="50px"/></div>
 					<%-- 	<c:if test="{sessionScope.id == id}" /> --%>
 					<input type="hidden" name="id" value="${sessionScope.id}" />
 				</form>

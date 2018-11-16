@@ -30,7 +30,7 @@
 <tr>
     <td colspan="2">
     <input type="submit" value="확인" /></td>
-    <div style="color:red;">${message}</div>
+    <td><div style="color:red;">${message}</div></td>
 </tr>
 </table>
 </form>

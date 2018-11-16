@@ -163,25 +163,27 @@ public class JoinController {
 	// 비밀번호 찾기
 	@RequestMapping(value = "/findMail", method = RequestMethod.POST)
 	@ResponseBody
-	public void find_pw_Mail(HttpSession session, @RequestParam("id") String id, @RequestParam("name") String name) {
-
+	public String find_pw_Mail(HttpServletResponse resp, HttpSession session, @RequestParam("id") String id, @RequestParam("name") String name) {
+		resp.setContentType("text/html;charset=utf-8");
 		MemberDTO getdto = new MemberDTO();
 		getdto.setId(id);
 		getdto.setName(name);
 		MemberDTO dto = joinService.findPw(getdto);
 		if (dto != null) {
 			if (!dto.getName().equals(name)) {
-				
+				return "no matched";
 			}
 			int ran = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
 			String password = String.valueOf(ran);
 			joinService.memberUpdate(dto.getId(), "password", password); // 해당 유저의 DB정보 변경
 
 			String subject = "임시 비밀번호 발급 안내 입니다.";
-			StringBuilder sb = new StringBuilder();
-			sb.append("귀하의 임시 비밀번호는 " + password + " 입니다.");
-			mailService.send(subject, sb.toString(), "gpflswkd89@gmail.com", id);
+			String content = "귀하의 임시 비밀번호는 " + password + " 입니다.";
+			mailService.send(subject, content, "gpflswkd89@gmail.com", id);
+			return "success";
 		} else {
+			return "no matched";
+			
 		}
 	}
 }

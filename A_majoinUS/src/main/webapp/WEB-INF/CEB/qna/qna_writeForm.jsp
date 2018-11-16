@@ -65,18 +65,18 @@ transition:.7s;
 
 	}   
 
-	$(function () {
+	/* $(function () {
 	    // Replace the <textarea id="editor1"> with a CKEditor
 	    // instance, using default configuration.
 	    CKEDITOR.replace('q_content')
 	    //bootstrap WYSIHTML5 - text editor
 	    $('.textarea').wysihtml5()  
 	  })
-
+ */
 	
   
 </script>
-<script src="<%=request.getContextPath() %>/resources/bower_components/ckeditor/ckeditor.js"></script>
+<%-- <script src="<%=request.getContextPath() %>/resources/bower_components/ckeditor/ckeditor.js"></script> --%>
 </head>
 <tiles:insertDefinition name="header" />
 <body>
@@ -114,21 +114,21 @@ transition:.7s;
                   <tbody>
               <tr>    
 		    <td >
-		    	제 목&nbsp;&nbsp;&nbsp;<input type="text" name="q_subject"  width="100" placeholder="제목을 입력해주세요">
+		    	제 목&nbsp;&nbsp;&nbsp;<input type="text" name="q_subject"  width="100" placeholder="제목을 입력해주세요" required="required">
 		    </td>
               </tr>
               <tr></tr>
               
               <tr><td>
               
-                    <textarea id="q_content" name="q_content" rows="10" cols="80">
+                    <textarea id="q_content" name="q_content" rows="10" cols="80" required="required">
                                            
                     </textarea>
                     </td></tr>
                     
                     <tr>     
 		   <td align="center">
-				<input type="submit" value="글쓰기" > 
+				<input type="submit" value="글쓰기" onclick="return writeSave();"> 
 <!-- 				<input type="reset" value="재작성"> -->
 	     		<input type="button" value="글목록" onclick="document.location.href='qna'">
 		   </td>  
