@@ -273,21 +273,19 @@
 
 			var html1 = "<div id='job_list' name='job_list' class='inline'>",
 				html2 = "";
-
+			
 			<c:forEach var="item" items="${command2}">
 				html1 += "<div  id="+global.i+"  style='display: inline-block;'>${item.pj_cate}<button id="+global.i+" class='del_btn'>x</button></div>";
 				html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item.pj_cate}'> <input type='hidden' name='pjj_num' value='${item.pjj_num}'>"
 				global.i++;
 			</c:forEach>
-
 				html1 += "</div><br><div id='local_list' class='inline'>";
-
-			<c:forEach var="item" items="${command3}" >
-				html1 += "<div id="+global.i+">${item.pj_loc}<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
-				html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item.pj_loc}'> <input type='hidden' name='pjl_num' value='${item.pjl_num}'>"
-				global.i++;
-			</c:forEach>
-
+			
+				<c:forEach var="item" items="${command3}" >
+					html1 += "<div id="+global.i+">${item.pj_loc}<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+					html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item.pj_loc}'> <input type='hidden' name='pjl_num' value='${item.pjl_num}'>"
+					global.i++;
+				</c:forEach>
 				html1 += "</div>";
 
 				$('#result').append(html1);

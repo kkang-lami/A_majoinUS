@@ -37,7 +37,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<form name="form1" method="post" action="memberUpdate" id="member" class="editable">
+<form name="form1" method="post" action="memberUpdate" id="member" class="editable" enctype="multipart/form-data">
 <h1> 정보 수정</h1>
 <input type="button" value="회원 탈퇴" onclick="location.href='secession'" >
 <fieldset>
@@ -62,7 +62,7 @@ $(document).ready(function(){
 <div>
 <label>프로필 사진</label>
 <img src="<%=request.getContextPath()%>/aus/userImg/${dto.u_img}">
-<input type="file" accept="image/*"/>
+<input type="file" name="file" accept="image/*"/>
 </div>
 
 <div>

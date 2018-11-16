@@ -74,7 +74,7 @@
 											<tr>	
 												<td rowspan=2>
 													<div id="img_size">								              
-														<img class="img-circle" src="<%=request.getContextPath()%>/aus/userImg/${memberlist.u_img}" style="width:80px; height:80px;">
+														<img class="img-circle" src="<%=request.getContextPath()%>/aus/userImg/${memberlist.u_img}" style="width:80px; height:80px;" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';">
 													</div>
 												</td>        
 												<td align=center>              
@@ -83,7 +83,7 @@
 													<input type="hidden" id="target_id_${memberlist.name}" name="reviewList[<c:out value="${no}" />].target_id" value="${memberlist.id}">
 												</td>
 												<td rowspan=2>      
-													<textarea rows="4" cols="100" id="${memberlist.name }_review_content" name="reviewList[<c:out value="${no}" />].review_content" style="resize: none;" placeholder="각 팀원들에 대한 평가란입니다. 당사자와 다른 사람들이 열람할 수 있으니 신중히 작성해주세요."></textarea>
+													<textarea rows="4" cols="100" id="${memberlist.name }_review_content" name="reviewList[<c:out value="${no}" />].review_content" style="resize: none;" placeholder="각 팀원들에 대한 평가란입니다. 당사자와 다른 사람들이 열람할 수 있으니 신중히 작성해주세요." required="required"></textarea>
 												</td>
 											</tr>
 											<tr>

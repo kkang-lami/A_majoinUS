@@ -60,7 +60,9 @@ public class MypageController {
 			System.out.println(m);
 		}
 		model.addAttribute("ongoing_list",ongoing_list);
+		model.addAttribute("projectApplyAlarm_size", projectApplyAlarm.size());
 		model.addAttribute("projectApplyAlarm", projectApplyAlarm);
+		model.addAttribute("projectProposalAlarm_size", projectProposalAlarm.size());
 		model.addAttribute("projectProposalAlarm", projectProposalAlarm);
 		model.addAttribute("todo", list);
 		return "LSH/Mypage";

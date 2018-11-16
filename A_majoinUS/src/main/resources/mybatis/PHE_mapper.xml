@@ -5,9 +5,10 @@
 <mapper namespace="PHE_AUS">
 	<!-- 프로젝트 생성 -->
 	<insert id="createProject" parameterType="project.DTO.ProjectroomDTO">
-		insert into PROJECTROOM values
-		(PROJECTROOM_SEQ.nextval,#{pj_name},#{id},#{start_d},#{end_d},sysdate,
-		#{mem_limit},#{pj_info},0)
+		insert into PROJECTROOM values (PROJECTROOM_SEQ.nextval,#{pj_name},#{id},#{start_d},#{end_d},sysdate, #{mem_limit},#{pj_info},0)
+		 <selectKey keyProperty="pj_num" resultType="Integer" order="AFTER">
+       		select projectroom_SEQ.currval from dual
+    	</selectKey>
 	</insert>
 
 	<!-- 프로젝트 관심분야 -->
@@ -35,8 +36,8 @@
 	</insert>
 	
 	<!-- 프로젝트 생성시 PJ_MEM 에도 추가 -->
-	<insert parameterType="String" id="insertToPjMem"> 
-		INSERT INTO PJ_MEM values (PJ_MEM_SEQ.nextval, PROJECTROOM_SEQ.currval, #{id}) 
+	<insert parameterType="Map" id="insertToPjMem"> 
+		INSERT INTO PJ_MEM values (PJ_MEM_SEQ.nextval, #{pj_num}, #{id}) 
 	</insert>
 	
 

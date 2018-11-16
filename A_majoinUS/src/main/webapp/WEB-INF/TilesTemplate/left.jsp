@@ -94,8 +94,7 @@ body {
           </ul>
         </li>      
         
-        <%--   <c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">
-         --%>
+       <c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">
         
         <li class="header">Management</li>
         <li><a href="<%=request.getContextPath() %>/aus/ProjectManage"><i class="fa fa-fw fa-object-ungroup"></i> <span>Managing Projects</span></a></li>
@@ -126,12 +125,11 @@ body {
             <li><a href="<%=request.getContextPath() %>/aus/MemberManage"><i class="fa fa-fw fa-group"></i> Managing User</a></li>
             <li><a href="<%=request.getContextPath() %>/aus/issue_admin"><i class="fa fa-fw fa-ban"></i> Report management</a></li>
 
-             <%--  </c:if> --%>
-             
           </ul>
         </li>
+    	</c:if>
       </ul>
-      
+	    
  
       
       <!-- /.sidebar-menu -->

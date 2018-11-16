@@ -14,14 +14,17 @@
 <script src="jquery-2.1.4.js" type="text/javascript"></script>
 <script language="JavaScript">
 
-function categoryPro(formName) {
-	var check = confirm("변경 내역을 저장하시겠습니까?");
-	if(check) {
+function categoryPro() {
+	//var check = confirm("변경 내역을 저장하시겠습니까?");
+	if(confirm("변경 내역을 저장하시겠습니까?")) {
 		//window.location.href = "./updatepro?cate_num="+formName.cate_num.value;
 		alert("변경되었습니다.");
 		opener.parent.location.reload();
+		return true;
 		//self.close();
 		//opener.parent.location.reload();
+	}else{
+		return false;
 	}
 }
 </script>
@@ -36,7 +39,7 @@ function categoryPro(formName) {
 <div class="container">
   <h3>카테고리 수정하기</h3>
   
-  <form name="no" action="./updatepro"> <!--  action="updatepro" --> 
+  <form name="no" action="./updatepro" onsubmit="return categoryPro();"> <!--  action="updatepro" --> 
   <c:forEach items="${category}" var="category" >
   	<%-- <h4>${category.c_name}</h4>  --%>
 
@@ -46,19 +49,19 @@ function categoryPro(formName) {
     <div class="form-group">
       <label for="category_1">1차:</label>
       <input type="hidden" name="c_1_past" value="${category.c_1_name}" />
-      <input type="text" class="form-control" id="category_1" name="c_1_name" value="${category.c_1_name}">
+      <input type="text" class="form-control" id="category_1" name="c_1_name" value="${category.c_1_name}" required="required">
       
     </div>
     <div class="form-group">
       <label for="category_2">2차:</label>
       <input type="hidden" name="c_2_past" value="${category.c_2_name}" />
-      <input type="text" class="form-control" id="category_2" name="c_2_name" value="${category.c_2_name}">
+      <input type="text" class="form-control" id="category_2" name="c_2_name" value="${category.c_2_name}" required="required">
     </div>
     	<input type="hidden" name="cate_num" value="${cate_num}" />
     	<input type="hidden" name="cate_1_num" value="${category.cate_1_num}" />
     	<input type="hidden" name="c_2_num" value="${category.c_2_num}" />
     <div class="jenny">
-    <button type="submit" class="btn btn-default" onclick="categoryPro(this.form)">수정하기</button>
+    <button type="submit" class="btn btn-default">수정하기</button>
     </div>
 	</c:forEach>
   </form>

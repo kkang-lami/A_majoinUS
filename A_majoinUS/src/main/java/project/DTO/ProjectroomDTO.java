@@ -65,6 +65,12 @@ public class ProjectroomDTO {
 	public void setPj_view(int pj_view) {
 		this.pj_view = pj_view;
 	}
+	@Override
+	public String toString() {
+		return "ProjectroomDTO [pj_num=" + pj_num + ", pj_name=" + pj_name + ", id=" + id + ", start_d=" + start_d
+				+ ", end_d=" + end_d + ", regdate=" + regdate + ", mem_limit=" + mem_limit + ", pj_info=" + pj_info
+				+ ", pj_view=" + pj_view + "]";
+	}
 	
 }
 

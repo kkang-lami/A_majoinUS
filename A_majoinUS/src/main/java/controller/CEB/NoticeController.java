@@ -1,5 +1,6 @@
 package controller.CEB;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class NoticeController {
 		int count = 0;
 		
 		List<NoticeDTO> noticeList = null;
+		List<NoticeDTO> notice = new ArrayList<NoticeDTO>();
 		
         if(search==null) { // 서치가 없을떄
         	count = noticeDAO.show_count(); // 전체 글 수
@@ -54,6 +56,12 @@ public class NoticeController {
     			dto.setEndRow(endRow);
     			dto.setStartRow(startRow);
     			noticeList = noticeDAO.show_list1(dto);
+    			
+    			for(int i = 0; i<noticeList.size() ; i++) {
+    				NoticeDTO Ndto = noticeList.get(i);
+    				Ndto.setNotice_date(Ndto.getNotice_date().substring(0, Ndto.getNotice_date().indexOf(" ")));
+    				notice.add(Ndto);
+    			}
         	}
         	
         } else { // 서치가 있을때
@@ -62,6 +70,12 @@ public class NoticeController {
         	if(count > 0) {
         		
         		noticeList = noticeDAO.show_search_list(search, string, startRow, endRow);
+        		for(int i = 0; i<noticeList.size() ; i++) {
+    				NoticeDTO Ndto = noticeList.get(i);
+    				Ndto.setNotice_date(Ndto.getNotice_date().substring(0, Ndto.getNotice_date().indexOf(" ")));
+    				notice.add(Ndto);
+    			}
+        		
         		model.addAttribute("search1",1);
         		model.addAttribute("string",string);
         		model.addAttribute("search",search);
@@ -74,7 +88,7 @@ public class NoticeController {
 		model.addAttribute("count",count);
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("currentPage",currentPage);
-		model.addAttribute("noticeList",noticeList);
+		model.addAttribute("noticeList",notice);
 		
 		return "CEB/notice/Form"; 
 	}
@@ -105,6 +119,7 @@ public class NoticeController {
 	@RequestMapping(value="/content") 
 	public String show_content(ModelMap model,int num) {
 		NoticeDTO dto = noticeDAO.show_listOne(num);
+		dto.setNotice_date(dto.getNotice_date().substring(0, dto.getNotice_date().indexOf(" ")));
 		model.addAttribute("notice",dto);
 		return "CEB/notice/content"; 
 	}

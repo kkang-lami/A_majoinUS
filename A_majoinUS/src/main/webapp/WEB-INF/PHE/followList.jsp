@@ -55,7 +55,7 @@
                   <ul class="users-list clearfix">
                   <c:forEach items="${followList}" var="followList">                  
                     <li>
-                    	<img src="<%=request.getContextPath() %>/aus/userImg/${followList.u_img}" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.jpg';" />
+                    	<img src="<%=request.getContextPath() %>/aus/userImg/${followList.u_img}" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:128px; height:128px; overflow:hidden;" />
 						<a id="${followList.friend_id}" class="user_btn users-list-name" href="#" data-toggle='modal' data-target='#modal_user'>${followList.name}</a>
                       	<span class="users-list-date">${followList.friend_id}</span>
                       	<button id="${followList.friend_id}" class="btn btn-danger plus_btn" data-toggle="modal" data-target="#modal-join">프로젝트 초대</button>
@@ -114,7 +114,7 @@
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />         
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
 	
@@ -169,7 +169,7 @@
 	});
 	
 	function get_myPro(){
-		var url="<%=cp%>/aus/LSH/show";
+		var url="<%=cp%>/aus/show";
 		
  		$.ajax({
 			type:"post",
@@ -203,7 +203,7 @@
 	function joinUs(){
 		
 		var pj_num = $("#my_project").val();
-		var url="<%=cp%>/aus/LSH/insert_Message";
+		var url="<%=cp%>/aus/insert_Message";
 		var params = "receiver="+global.receiver+"&sender=${sessionScope.id}"+"&pj_num="+pj_num+"&a_type=초대";
 		console.log(params);
 		

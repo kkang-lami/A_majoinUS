@@ -229,9 +229,9 @@ function workedit(){
 	
 	
 	$("#editform").before(i.name+"의 업무 수정 ");
-	$("#editform").append("<tr><td><input type=text id=w_subject name=w_subject value='"+i.w_subject+"' size=100></td></tr>");
-	$("#editform").append("<tr><td><textarea id=w_content name=w_content rows=20 cols=100>"+i.w_content+"</textarea></td></tr>");
-	$("#editform").append("<tr><td><input type=date id=w_date name=w_date value='"+i.w_date+"'></td></tr>");
+	$("#editform").append("<tr><td><input type=text id=w_subject name=w_subject value='"+i.w_subject+"' size=100 required='required'></td></tr>");
+	$("#editform").append("<tr><td><textarea id=w_content name=w_content rows=20 cols=100 required='required'>"+i.w_content+"</textarea></td></tr>");
+	$("#editform").append("<tr><td><input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></td></tr>");
 	$("#editform").append("<tr><td><input type=hidden id=pj_num name=pj_num value='"+i.pj_num+"'><input type=hidden id=pw_num name=pw_num value='"+i.pw_num+"'><input type=submit value='수정 완료'></td></tr>");
 	$("#editform").append("<tr><td><input type=button id=cancel name=cancel value='취소' onclick='javascript:canceledit();'></td></tr>");
 	
@@ -259,21 +259,26 @@ function writecomment(pw_num){
 	
 	var comment = document.getElementById('comment');
 	
-	var url = "<%=cp %>/aus/ProejctRoom/workboard/writecomment";   
-	var params="pw_num="+pw_num+"&comment="+comment.value+"&count="+commentNum;
+	if(comment.value!=''){
+		var url = "<%=cp %>/aus/ProejctRoom/workboard/writecomment";   
+		var params="pw_num="+pw_num+"&comment="+comment.value+"&count="+commentNum;
+		
+		$.ajax({
+			type:"post",
+			url:url,
+			data:params,
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			dataType:"json",
+			success:function(args){
+				$("#commentdetail").append("<tr><td>"+args.newWC.name+"</td><td> : </td><td>"+args.newWC.wc_content+"</td><td>"+args.newWC.pw_date + "</td><td><input type='button' id='delcomment' name='delcomment' value='삭제' class='"+args.newWC.wc_num+"' onclick='javascript:deletecomment(this)'></td></tr>");
+				commentNum++;
+				comment.value="";
+			}
+		});  
+	}else{
+		alert('내용을 입력해주세요');
+	}
 	
-	$.ajax({
-		type:"post",
-		url:url,
-		data:params,
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		dataType:"json",
-		success:function(args){
-			$("#commentdetail").append("<tr><td>"+args.newWC.name+"</td><td> : </td><td>"+args.newWC.wc_content+"</td><td>"+args.newWC.pw_date + "</td><td><input type='button' id='delcomment' name='delcomment' value='삭제' class='"+args.newWC.wc_num+"' onclick='javascript:deletecomment(this)'></td></tr>");
-			commentNum++;
-			comment.value="";
-		}
-	});  
 }
 
 function deletecomment(obj){
@@ -372,7 +377,7 @@ function deletecomment(obj){
 									<tr>
 										<td>
 										업무 담당자 : 
-										<select name=id>
+										<select name=id required="required">
 												<option value="">이름</option>
 												<c:forEach var="ml" items="${pmdto}">
 													<option value="${ml.id }">${ml.name }</option>
@@ -382,14 +387,14 @@ function deletecomment(obj){
 									</tr>
 									<tr>
 										<td>
-											<input type=text id=w_subject name=w_subject placeholder='제목을 입력하세요' size=100>
+											<input type=text id=w_subject name=w_subject placeholder='제목을 입력하세요' size=100 required="required">
 										</td>
 									</tr>
 									<tr>
-										<td><textarea id=w_content name=w_content rows=20 cols=100 placeholder='내용을 입력하세요'></textarea></td>
+										<td><textarea id=w_content name=w_content rows=20 cols=100 placeholder='내용을 입력하세요' required="required"></textarea></td>
 									</tr>
 									<tr>
-										<td><input type=date id=w_date name=w_date></td>
+										<td><input type=date id=w_date name=w_date required="required"></td>
 									</tr>
 										<input type=hidden id=pj_num name=pj_num value="${pj_num }">
 									<tr>

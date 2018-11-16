@@ -37,7 +37,7 @@ public class ProejctRoomController {
 		String id= (String) session.getAttribute("id");
 		List<Map<String,Object>> list = service.getProgress(pageNum);
 		for(Map<String,Object> m : list) {
-			System.out.println(m);
+			System.out.println(m.get("U_IMG"));
 		}
 		
 		//실례하겟습니다 - 팀장백

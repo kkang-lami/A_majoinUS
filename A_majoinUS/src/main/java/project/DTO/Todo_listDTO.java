@@ -1,14 +1,14 @@
 package project.DTO;
 
 public class Todo_listDTO {
-	private int todo_num;
+	private String todo_num;
 	private String id;
 	private String todo;
 	
-	public int getTodo_num() {
+	public String getTodo_num() {
 		return todo_num;
 	}
-	public void setTodo_num(int todo_num) {
+	public void setTodo_num(String todo_num) {
 		this.todo_num = todo_num;
 	}
 	public String getId() {

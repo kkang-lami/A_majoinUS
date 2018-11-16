@@ -83,6 +83,7 @@
           <th>보낸이</th>
           <th>수신일</th>                  
         </tr>
+        <c:if test="${projectApplyAlarm_size > 0 }">
         <c:forEach items="${projectApplyAlarm}" var="alarm">
         <tr>                                  
           <td>"${alarm.pj_name}" 프로젝트 <span class="label label-primary">${alarm.a_type}신청</span></td>
@@ -91,6 +92,13 @@
 	<c:set var="reg" value="${fn:substring(alarm.a_date,0,10)}" />${reg}</td>                  
         </tr>
         </c:forEach>
+        </c:if>
+        <c:if test="${projectApplyAlarm_size == 0 }">
+        <tr>
+        	<td colspan=3> 참가 알림 내역이 존재하지 않습니다.</td>
+        </tr>
+        </c:if>
+        <c:if test="${projectProposalAlarm_size >0 }">
          <c:forEach items="${projectProposalAlarm}" var="projectProposalAlarm">
         <tr>
         <td>${projectProposalAlarm.name} 프로젝트  <span class="label label-success">${projectProposalAlarm.a_type}신청</span>
@@ -104,6 +112,13 @@
 		</td>
         </tr>
         </c:forEach>
+        </c:if>
+        <c:if test="${projectProposalAlarm_size == 0 }">
+        	 <tr>
+        	<td colspan=3> 초대 알림 내역이 존재하지 않습니다.</td>
+        </tr>
+        </c:if>
+        
       </table>
     </div>
     <!-- /.box-body -->
@@ -308,6 +323,7 @@ function makeList(target, data) {
 //디비등록
 function insertTodo(todo_num,todo){
 	var url="<%=cp%>/aus/insertTodo";
+	alert(todo_num);
 	var params = "id=${sessionScope.id}&todo_num="+todo_num+"&todo="+todo;
 	console.log("[params] "+params);
 	

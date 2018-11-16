@@ -65,36 +65,37 @@ public class EvalNReviewController {
 		if(id == null) {
 			return "KMJ/error";
 		}
-		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
 		
-		for(int i = 0; i<review_List.getReviewList().size();i++) {
-			MJreviewDTO reviewList = new MJreviewDTO();
-			ReviewDTO review = new ReviewDTO();
-			reviewList = review_List.getReviewList().get(i);
-			
-			review.setReview_num(Integer.parseInt(reviewList.getReview_num()));
-			review.setId(reviewList.getId());
-			review.setPj_num(Integer.parseInt(reviewList.getPj_num()));
-			review.setReview_content(reviewList.getReview_content());
-			review.setScore(Double.parseDouble(reviewList.getScore()));
-			review.setTarget_id(reviewList.getTarget_id());
-			
-			list.add(review);
-		}
-		
-		Map<String,List<ReviewDTO>> map = new HashMap<String,List<ReviewDTO>>();
-		map.put("list", list);
-		
-		mj_dao.MemberReview(map);
-		
-		if(admin.getRa_content() != null) {
+		if(!admin.getRa_content().equals("")) {
 			admin.setId(id);
 			mj_dao.Review2Admin(admin);
 		}
 		
-		PointDTO point = new PointDTO();
-		point.setId(id);
-		mj_dao.presentPoint(point);
+		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
+		if(review_List.getReviewList() != null) {
+			for(int i = 0; i<review_List.getReviewList().size();i++) {
+				MJreviewDTO reviewList = new MJreviewDTO();
+				ReviewDTO review = new ReviewDTO();
+				reviewList = review_List.getReviewList().get(i);
+				
+				review.setReview_num(Integer.parseInt(reviewList.getReview_num()));
+				review.setId(reviewList.getId());
+				review.setPj_num(Integer.parseInt(reviewList.getPj_num()));
+				review.setReview_content(reviewList.getReview_content());
+				review.setScore(Double.parseDouble(reviewList.getScore()));
+				review.setTarget_id(reviewList.getTarget_id());
+				
+				list.add(review);
+			}
+			Map<String,List<ReviewDTO>> map = new HashMap<String,List<ReviewDTO>>();
+			map.put("list", list);
+			
+			mj_dao.MemberReview(map);
+			
+			PointDTO point = new PointDTO();
+			point.setId(id);
+			mj_dao.presentPoint(point);
+		}
 		
 		//프로젝트 룸 메인
 		return "redirect:/aus/ProejctRoom/Main?pj_Num="+admin.getPj_num();

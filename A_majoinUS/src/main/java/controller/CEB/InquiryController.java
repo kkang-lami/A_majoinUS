@@ -1,5 +1,6 @@
 package controller.CEB;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -100,7 +101,7 @@ public class InquiryController {
 		int count = 0;
 		  
 		List<InquiryDTO> inquiry_List = null;
-		
+		List<InquiryDTO> inquiry = new ArrayList<InquiryDTO>();
         if(search==null) {
         	count = inquiryDAO.show_count_id(id);   
         	  
@@ -111,6 +112,12 @@ public class InquiryController {
     			System.out.println(endRow+startRow);  
     			
     			inquiry_List = inquiryDAO.show_list1_id(startRow ,endRow, id);
+    			
+    			for(int i =0;i<inquiry_List.size(); i++) {
+    				InquiryDTO Idto = inquiry_List.get(i);
+    				Idto.setI_date(Idto.getI_date().substring(0, Idto.getI_date().indexOf(" ")));
+    				inquiry.add(Idto);
+    			}
         	}
         	
         } else { // 서치가 있을때  

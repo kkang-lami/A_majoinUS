@@ -53,7 +53,7 @@ public class JoinController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(MemberDTO dto, @RequestParam("file") MultipartFile file) throws Exception {
 		if(!file.isEmpty()) {
-		String path = "D://item//profile//";
+		String path = "c://item//profile//";
 		String f_name = file.getOriginalFilename();
 		f_name = f_name.substring(0, f_name.indexOf("."));
 		long now = System.currentTimeMillis();

@@ -1,5 +1,7 @@
 package controller.JHR;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -34,6 +37,7 @@ public class loginController {
 		if (result != null) {
 			session.setAttribute("id", result.getId());
 			session.setAttribute("name", result.getName());
+			session.setAttribute("userphoto", result.getU_img());
 			mav.setViewName("redirect:/aus/MyPageMain");
 		} else {
 			mav.setViewName("redirect:/aus/main");
@@ -92,7 +96,24 @@ public class loginController {
 
 	// 회원 정보 업데이트
 	@RequestMapping(value = "/memberUpdate")
-    public String memberUpdate(@ModelAttribute MemberDTO dto,Model model){
+    public String memberUpdate(@ModelAttribute MemberDTO dto,@RequestParam("file") MultipartFile file,Model model){
+		if(!file.isEmpty()) {
+			String path = "c://item//profile//";
+			String f_name = file.getOriginalFilename();
+			f_name = f_name.substring(0, f_name.indexOf("."));
+			long now = System.currentTimeMillis();
+			String new_name = now + "_" + f_name;
+			File new_file = new File(path, new_name);
+			try {
+				file.transferTo(new_file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			dto.setU_img(new_name);
+			}else {
+				dto.setU_img("");
+			}
 		service.memberUpdate(dto);
 		return "redirect:/aus/MyPageMain";
 	}

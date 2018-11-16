@@ -12,7 +12,7 @@
 	select name from member where Id = #{id} and Password = #{password}
 </select>
 <select id="checkMember" resultType="controller.JHR.MemberDTO">
-	select id,name from member where id = #{id} and password=#{password}
+	select id,name,u_img from member where id = #{id} and password=#{password}
 </select>
 
 <!-- 회원가입 -->

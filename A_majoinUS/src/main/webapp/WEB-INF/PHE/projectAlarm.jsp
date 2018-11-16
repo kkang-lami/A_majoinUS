@@ -27,7 +27,6 @@ function refuse2(obj){
        data: params,
        dataType: "json",
        success:function(args){
-         console.log("결과" + args.remove);
          if(args.remove === "removeApply"){
             alert("멤버 신청을 거절했습니다.");
             var detail = $(obj).parents('li');
@@ -56,7 +55,6 @@ function refuse2(obj){
         data: params,
         dataType: "json",
         success:function(args){
-           console.log("결과" + args.remove);
          if(args.remove === "removeIvite"){
             alert("멤버 신청을 거절했습니다.");
             var detail = $(obj).parents('li');
@@ -109,9 +107,6 @@ function surak(obj){
  function surak2(obj){
        var pj_num = $(obj).attr('id');
        var sender = $(obj).attr('name');
-       
-       alert(pj_num);
-       alert(sender);
        
        var url="<%=cp%>/aus/acceptMember";
        var params = "pj_num="+pj_num+"&sender="+sender;

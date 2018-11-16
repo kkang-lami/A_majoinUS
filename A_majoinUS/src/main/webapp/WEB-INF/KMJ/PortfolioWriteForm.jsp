@@ -283,7 +283,6 @@ $('#photoplus').on('click',function(){
 });
                
 $('#img_path').on("change",'.tag_add',function(){
-	alert('aaaa');
     readURL(this);
 });
 
@@ -310,7 +309,7 @@ $('#add_file').on('click',function(){
 });
         
 $("#attached_file").on('change',function(){
-	var path = $('#attached_file').val();
+	var path = $('#attached_file').get(0).files[0].name;
 	var text = document.getElementById('file_path');
 	text.value=path;
 });

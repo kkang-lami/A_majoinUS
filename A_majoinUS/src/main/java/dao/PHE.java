@@ -21,9 +21,8 @@ import project.DTO.ReviewDTO;
 public class PHE extends SqlSessionDaoSupport {
 
 	// create
-	public int createProject(ProjectroomDTO prDTO) {
-		int x = getSqlSession().insert("PHE_AUS.createProject", prDTO);
-		return x;
+	public void createProject(ProjectroomDTO prDTO) {
+		getSqlSession().insert("PHE_AUS.createProject", prDTO);
 	}
 
 	public int createProjectJob(List<String> pj_cate) {
@@ -246,9 +245,11 @@ public class PHE extends SqlSessionDaoSupport {
 	}
 
 	// 프로젝트 생성 pj_mem 삽입
-	public int insertToPjMem(String id) {
-		System.out.println("dao : " + id);
-		return getSqlSession().insert("PHE_AUS.insertToPjMem", id);
+	public int insertToPjMem(String id,int pj_num) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		map.put("pj_num", pj_num);
+		return getSqlSession().insert("PHE_AUS.insertToPjMem", map);
 	}
 
 	// 멤버 총원 카운트

@@ -104,17 +104,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<%=request.getContextPath() %>/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">EunBi Cho</span>
+              <img src="<%=request.getContextPath() %>/aus/userImg/${sessionScope.userphoto}" class="user-image" alt="User Image" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';">
+              <span class="hidden-xs">${sessionScope.name }</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<%=request.getContextPath() %>/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<%=request.getContextPath() %>/aus/userImg/${sessionScope.userphoto}" class="img-circle" alt="User Image" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  Welcome! ${sessionScope.name }
+                  <!-- <small>Member since Nov. 2012</small> -->
                 </p>
               </li>
               

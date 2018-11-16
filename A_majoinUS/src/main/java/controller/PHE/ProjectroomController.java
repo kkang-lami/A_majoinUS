@@ -43,7 +43,7 @@ public class ProjectroomController {
 
 	@RequestMapping(value = "/createProjectForm", method = RequestMethod.POST)
 	public String submittedProjectForm(ProjectroomDTO command1, Pj_jobDTO command2,
-			Pj_locationDTO command3, HttpServletRequest request,String end_d, @RequestParam(value="job",defaultValue="")List<String> job, @RequestParam(value="local",defaultValue="")List<String> local) {
+			Pj_locationDTO command3, HttpServletRequest request,String end_d, @RequestParam(value="job",defaultValue="null")List<String> job, @RequestParam(value="local",defaultValue="null")List<String> local) {
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -61,16 +61,15 @@ public class ProjectroomController {
 		//System.out.println("controller command1"+command1);
 		
 		dao.createProject(command1);
-		System.out.println("aaaa");
-		System.out.println(job.size()+" / "+local.size());
+		System.out.println(command1);
 		
-		if(job.size()!=1) {
-		dao.createProjectJob(job);
+		if(!job.get(0).equals("null")) {
+			dao.createProjectJob(job);
 		}
-		if(local.size()!=1) {
-		dao.createProjectLocation(local);
+		if(!local.get(0).equals("null")) {
+			dao.createProjectLocation(local);
 		}
-		dao.insertToPjMem(sessionId);	
+		dao.insertToPjMem(sessionId,command1.getPj_num());	
 	
 		String end = "2099-12-31";
 		if(end.equals(end_d)) {
@@ -138,7 +137,7 @@ public class ProjectroomController {
 	}
 
 	@RequestMapping(value = "/modifyProject", method = RequestMethod.POST)
-	public String modifyProjectPro(ProjectroomDTO command1, @RequestParam(value="job",defaultValue="")List<String> job, @RequestParam(value="local",defaultValue="")List<String> local,
+	public String modifyProjectPro(ProjectroomDTO command1, @RequestParam(value="job",defaultValue="null")List<String> job, @RequestParam(value="local",defaultValue="null")List<String> local,
 			@RequestParam("pj_num") int pj_num ,HttpSession session,HttpServletRequest request, String end_d) {
 
 		System.out.println("modifyProjectCon");
@@ -157,14 +156,18 @@ public class ProjectroomController {
 		dao.deleteProject_location(pj_num);
 		
 		//insert
+		if(!job.get(0).equals("null")) {
+
 		for(int i=0; i<job.size();i++) {
 			dao.createProjectJob2(job.get(i), pj_num);
 		}
-		
+		}
+		if(!local.get(0).equals("null")) {
+
 		for(int i=0; i<local.size();i++) {
 			dao.createProjectLocation2(local.get(i), pj_num);
 		}
-		
+		}
 		//ticket
 		String end = "2099-12-31";
 		if(end.equals(end_d)) {
