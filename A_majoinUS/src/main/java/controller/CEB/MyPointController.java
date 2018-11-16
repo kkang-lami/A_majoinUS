@@ -145,14 +145,15 @@ public class MyPointController {
 	   public String insert_impuid(ModelMap model,
 			   @RequestParam(value="pay_no") int pay_no,
 			   @RequestParam(value="imp_uid") String imp_uid, 
-			   @RequestParam(value="pay_price") int pay_price) {
-
+			   @RequestParam(value="pay_price") int pay_price,HttpSession session) {
+		
+		String id = (String)session.getAttribute("id");
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("pay_no", pay_no);
 		map.put("imp_uid", imp_uid);
 		map.put("pay_price", pay_price);
-		map.put("id", "amajoinus@gmail.com");/*세션으로 넣어라*/
+		map.put("id", id);/*세션으로 넣어라*/
 		
 		System.out.println(map);
 		

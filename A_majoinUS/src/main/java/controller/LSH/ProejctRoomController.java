@@ -51,18 +51,22 @@ public class ProejctRoomController {
 	}
 	
 	@RequestMapping(value="/transfer")
-	public String transfer(@RequestParam(value="id") String id,@RequestParam(value="pj_Num")String pj_Num) {
+	public String transfer(@RequestParam(value="id") String id,@RequestParam(value="pj_Num")int pj_Num) {
 		System.out.println(id+"[팀장변경]"+pj_Num);
+		
+		int x = service.updateLeader(id, pj_Num);
+		System.out.println("결과는? ::"+x);
 		
 		return "redirect:Main?pj_Num="+pj_Num;
 	}
 	
 	@RequestMapping(value="/kick")
-	public String kick(@RequestParam(value="id") String id,@RequestParam(value="pj_Num")String pj_Num) {
-		System.out.println(id+"[강퇴]"+pj_Num);
+	public String kick(@RequestParam(value="pjm_num") int pjm_num,@RequestParam(value="pj_Num") int pj_Num) {
+		System.out.println(pjm_num+"[강퇴]"+pj_Num);
+		int x = service.kick(pjm_num);
 		
-
+		System.out.println("결과는? ::"+x);
+		
 		return "redirect:Main?pj_Num="+pj_Num;
 	}
-	
 }

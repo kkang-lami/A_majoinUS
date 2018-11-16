@@ -29,16 +29,14 @@
 
 	<!-- ////////////////////////////////////////// 프로젝트룸 메인 ///////////////////////////////////////// -->
 	<select id="getProgress" parameterType="int" resultType="map" >
-		select * from
-		( 
-			select c.id mem_id,a.pj_num, pj_name,start_d, end_d , a.id leader, u_img, name,blacklist, state
-				From projectroom a
-				LEFT OUTER join PJ_MEM c on (a.pj_num = c.pj_num)
-				Inner join member d on (c.id = d.id)
-				LEFT OUTER join project_workboard b on (c.id = b.id)
-			Where a.pj_num = #{pj_num}
-		)
-		pivot (count(*) for state in('진행중' as ongoing,'완료' as complete,'지연' as delay))
+		select * from(
+         select a.id mem_id, a.pj_num, a.pjm_num,d.id leader, pj_name, start_d, end_d,name, u_img, blacklist, state 
+         from pj_mem a
+         inner join projectroom d on(a.pj_num = d.pj_num)
+         inner join member b on(a.id = b.id)
+         left outer join project_workboard c on(a.pjm_num = c.pjm_num)
+         where a.pj_num = #{pj_num}
+) pivot (count(state) for state in('진행중' as ongoing,'완료' as complete,'지연' as delay))
 	</select>
 
 	<update id="update_leader" parameterType="Map">
@@ -46,7 +44,7 @@
 	</update>
 	
 	<delete id="kick" parameterType="int">
-      delete pj_mem where pjm_num = #{pjm_num};
+      delete pj_mem where pjm_num = #{pjm_num}
    	</delete>
 
 	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->

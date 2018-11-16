@@ -191,24 +191,25 @@
 
 		    <!-- 체크 모달 -->
 			<div class="modal fade check_modal" id="modal-check">
-		     <div class="modal-dialog modal-sm">
-		    	<div class="modal-content">
-		        	<div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                <span aria-hidden="true">&times;</span></button>
-		                <h4 class="modal-title"></h4>
-		    		</div>
-		              
-		        	<div class="modal-body text-center">
-		           	</div>
-		              
-		           	<div class="modal-footer">
-						<a href="#" class="send_btn btn btn-danger pull-left">OK</a>
-						<a href="#" class=" btn btn-default" data-dismiss="modal">CANCLE</a>
-		      		</div>
-	            </div>
-		     </div>
-	        </div>
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title"></h4>
+			</div>
+
+			<div class="modal-body text-center"></div>
+
+			<div class="modal-footer">
+				<a href="#" class="send_btn btn btn-danger pull-left" id="${list[0].PJ_NUM}">OK</a> <a
+					href="#" class=" btn btn-default" data-dismiss="modal">CANCLE</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 		    <!-- 모달 경고  -->
 			<div class="modal fade check_modal" id="modal-warn">
@@ -273,37 +274,37 @@
 
 <!-- 플젝초대 모달 -->
 <script>
-	$('.l_check_btn').on('click',function(){
-	    
-	    var str = $('#modal-leader option:selected').text();
-	    var pjm_num = $('#modal-leader option:selected').val();
-	    console.log(str);
-	    console.log(pjm_num);
-	    
-	    if(str === ""){
-	       $('#modal-warn').modal('show');
-	    }else{
-	       var arr = str.split('(');
-	       var id = arr[0];
-	       var name = arr[1].split(')')[0];
-	 
-	       if($(this).attr('id') === "transfer"){
-	          
-	       $('#modal-check .modal-title').html('팀장 위임');
-	       $('#modal-check .modal-body').html('<p>\''+name+'\' 님을 팀장으로 위임 하시겠습니까?</p>');
-	       $('#modal-check .send_btn').attr('href',"<%=cp%>/aus/LSH/ProejctRoom/transfer?pj_Num=${list[0].PJ_NUM}&id="+id);
-	       $('#modal-check').modal('show');
-	          
-	       }else{
-	          
-	       $('#modal-check .modal-title').html('멤버 추방');
-	       $('#modal-check .modal-body').html('<p class="text-red">\''+name+'\' 님이 작성한 글은 <br/>복구할 수 없습니다</p><p>멤버를 추방 하시겠습니까?</p>');
-	       $('#modal-check .send_btn').attr('href',"<%=cp%>/aus/LSH/ProejctRoom/kick?pj_Num=${list[0].PJ_NUM}&pjm_num="+pjm_num);
-	       $('#modal-check').modal('show');
-	          
-	       }
-	    }
-	});
+$('.l_check_btn').on('click',function(){
+    var pj_num = $('#modal-check .send_btn').attr('id');
+    var str = $('#modal-leader option:selected').text();
+    var pjm_num = $('#modal-leader option:selected').val();
+    
+    if(str === ""){
+    	$('#modal-warn').modal('show');
+    }else if($('#modal-leader option:selected').attr('class') === "ban"){
+    	$('#modal-ban').modal('show');
+    }else{
+       var arr = str.split('(');
+       var id = arr[0];
+       var name = arr[1].split(')')[0];
+ 
+       if($(this).attr('id') === "transfer"){
+          
+       $('#modal-check .modal-title').html('팀장 위임');
+       $('#modal-check .modal-body').html('<p>\''+name+'\' 님을 팀장으로 위임 하시겠습니까?</p>');
+       $('#modal-check .send_btn').attr('href',getContext()+"/aus/ProejctRoom/transfer?pj_Num="+pj_num+"&id="+id);
+       $('#modal-check').modal('show');
+          
+       }else{
+          
+       $('#modal-check .modal-title').html('멤버 추방');
+       $('#modal-check .modal-body').html('<p class="text-red">\''+name+'\' 님이 작성한 글은 <br/>복구할 수 없습니다</p><p>멤버를 추방 하시겠습니까?</p>');
+       $('#modal-check .send_btn').attr('href',getContext()+"/aus/ProejctRoom/kick?pj_Num="+pj_num+"&pjm_num="+pjm_num);
+       $('#modal-check').modal('show');
+          
+       }
+    }
+});
 </script>
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- ///////////////////////////////////////right side bar//////////////////////////////////////// -->

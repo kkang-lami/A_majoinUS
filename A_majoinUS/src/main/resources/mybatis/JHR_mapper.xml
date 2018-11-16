@@ -12,7 +12,7 @@
 	select name from member where Id = #{id} and Password = #{password}
 </select>
 <select id="checkMember" resultType="controller.JHR.MemberDTO">
-	select name as name from member where id = #{id} and password=#{password}
+	select id,name from member where id = #{id} and password=#{password}
 </select>
 
 <!-- 회원가입 -->
@@ -68,7 +68,7 @@
  select count(*) from member where id = #{id} and password = #{password}
 </select>
 <!-- 탈퇴시 회원 삭제 처리 -->
-<delete id="deleteSecession">
+<delete id="deleteSecession" parameterType="String">
 delete from member where id = #{id}
 </delete>
 

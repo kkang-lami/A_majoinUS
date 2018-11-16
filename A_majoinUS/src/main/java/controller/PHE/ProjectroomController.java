@@ -143,14 +143,12 @@ public class ProjectroomController {
 		System.out.println("modifyProjectCon");
 		session= request.getSession();
 		session = request.getSession(true);
-		String sessionId =(String)session.getAttribute("userId");
+		String sessionId =(String)session.getAttribute("id");
 		
 		dao.projectModify(command1);
 		
 		System.out.println("job.size()" + job.size());
 		System.out.println("job" + job);
-
-
 
 		// 삭제
 				
@@ -168,65 +166,7 @@ public class ProjectroomController {
 		
 		
 		System.out.println("ㅊㅋㅊㅋ");
-		
-				//dao.createProjectJob(job);
-		//dao.createProjectLocation(local);
-		
-		/*System.out.println("command1 : " + command1);
-		System.out.println("pjl_num : " + pjl_num);
-		System.out.println("pjj_num : " + pjj_num);
-		System.out.println("job.size() : " + job.size());
-		System.out.println("local.size()+1 : " + local.size()+1);
-		System.out.println("job.size()+1 : " + (job.size()+1));
-		System.out.println("job: " + job);
-		System.out.println("job: " + job);
-		
-		System.out.println("///////////////////////////////////");		
-		
-		 
-		List<Pj_jobDTO> dto_list = new ArrayList<Pj_jobDTO>();
-		List<Pj_locationDTO> dto_list2 = new ArrayList<Pj_locationDTO>();
-		
-		for(int i=0; i<job.size();i++) {
-			System.out.println("i = " + i + "~~~~" + pjj_num.get(i)+ job.get(i));
-			Pj_jobDTO dto = new Pj_jobDTO(pjj_num.get(i), job.get(i));
-			
-			System.out.println("dto : " + dto);
-			dto_list.add(dto);
-			//System.out.println("job : " + job);
-		}
-		
-		System.out.println("///////////////////////////////////");	
-		
-		for(int i=0; i<local.size();i++) {
-			Pj_locationDTO dto2 = new Pj_locationDTO(pjl_num.get(i), local.get(i));
-			dto_list2.add(dto2);
-			//System.out.println("job : " + job);
 
-		}
-		
-		System.out.println("dto_list : " + dto_list);
-		System.out.println("dto_list2 : " + dto_list2);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-         map.put("dto_list",dto_list);
-         dao.projectModify_job(map);
-         
-         map.replace("dto_list",dto_list2);
-		 dao.projectModify_location(map);
-		
-		String end = "2099-12-31";
-		
-		if(end.equals(end_d)) {
-			dao.useTicket(sessionId);
-		}
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("pj_num", command1.getPj_num());
-		mav.addObject("pj_num", command2.getPj_num());
-		mav.addObject("pj_num", command3.getPj_num());*/
-
-		//mav.setViewName("redirect:/aus/PHE/projectList");
 		return "redirect:/aus/projectList";
 	}
 

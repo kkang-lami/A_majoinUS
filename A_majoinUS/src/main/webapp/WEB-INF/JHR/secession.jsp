@@ -19,7 +19,7 @@
             $("#btnDelete").click(function(){
                 // 확인 대화상자 
                 if(confirm("삭제하시겠습니까?")){
-                    document.deleteform.action = "secessionpro";
+                  //  document.deleteform.action = "secessionpro";
                     document.deleteform.submit();
                 }
             });
@@ -31,7 +31,7 @@
     <b><font size="6" color="gray">회원탈퇴</font></b>
     <br><br><br>
  <!-- 탈퇴처리-->
-    <form name="deleteform" method="post">
+    <form name="deleteform" method="post" action="secessionpro">
         <table>
             <tr>
                 <td bgcolor="skyblue">비밀번호</td>
@@ -39,7 +39,7 @@
             </tr>
         </table>
         <br> 
-        <input type="button" value="취소" onclick="location = 'index'">
+        <input type="button" value="취소" onclick="location.href='mypage'">
         <input type="button" value="탈퇴" id="btnDelete"/> 
     </form>
 </body>
