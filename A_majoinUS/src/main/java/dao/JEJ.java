@@ -95,10 +95,10 @@ public class JEJ extends SqlSessionDaoSupport{
 		return visit;
 	}
 	
-	public List<Point_statDTO> pay_stat() {
-		List<Point_statDTO> pay = getSqlSession().selectList("JEJ_AUS.static_pay");
-		return pay;
-	}
+	public List<PaymentDTO> pay_stat() {
+	      List<PaymentDTO> pay = getSqlSession().selectList("JEJ_AUS.static_pay");
+	      return pay;
+	   }
 	
 	public List<Integer> count_project() {
 		List<Integer> count = getSqlSession().selectList("JEJ_AUS.count_project");

@@ -59,7 +59,7 @@
 </select>
 
 <select id="static_pay" resultType="project.DTO.Point_statDTO">
-	select SUBSTR(pay_date,4,8) as pay_date, pay_price from point_stat order by pay_date desc
+	select SUBSTR(reg_date,4,8) as reg_date, pay_price from payment order by reg_date desc
 </select>
 
 <select id="static_project" resultType="int">

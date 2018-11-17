@@ -69,7 +69,7 @@ $(document).ready(function(){
 <label> 선호 지역:</label>
 <select id="local1" class="show-level2"></select>
 <select id="local12" ></select>
-<button type="button" value="file_" class="add_btn">추가</button>
+<button type="button" value="local" class="add_btn">추가</button>
 </div>
 <div>
 <label> 관심 분야:</label>
@@ -79,8 +79,8 @@ $(document).ready(function(){
 </div>
 
 <div title="넘겨질 job과 local" id="hidden"></div>
+
 검색조건
-<input name="job" value="${dto.job}" />
 <div id="result" >
 </div>
 
@@ -96,16 +96,16 @@ $(document).ready(function(){
 
 <script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
 <script>
-
-var global = {
-	    i : 0
-	};
-
 $(document).ready(initPage);
 
 function initPage() {
 	level1();
-	show_search_tag();							// 파일불러올때 사용! -- 기존에 있는 카테고리 입력값 버튼생성
+	show_search_tag();
+}
+
+function getPageNum(){
+	var pageNum = $('.pagination .active').attr('id');
+	return (pageNum === undefined)? 1 : pageNum;
 }
 
 function getContext(){
@@ -113,24 +113,33 @@ function getContext(){
 	return context;
 }
 
-function show() {
+function getSessionId(){
+	var sessionid = '${sessionScope.userId}';
+	return sessionid;
+}
 
-	var html1 = "<div id='job_list'>",
+var global = {
+	    i : 0
+};
+
+function show_search_tag() {
+
+	var html1 = "<div id='job_list'class='inline'>",
 		html2 = "";
 
-	<c:forEach var="item" items="${command.job}">
-		html1 += "<div id="+global.i+">${item} ";
+	<c:forEach var="item" items="${dto.job}">
+		html1 += "<div id="+global.i+" style='display: inline-block;'>${item} ";
 		html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
 
 		html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
 		global.i++;
 	</c:forEach>
 
-		html1 += "</div><br><div id='local_list'>";
+		html1 += "</div><br><div id='local_list' class='inline'>";
 
-	<c:forEach var="item" items="${command.local}" >
+	<c:forEach var="item" items="${dto.local}" >
 		html1 += "<div id="+global.i+">${item} ";
-		html1 += "<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+		html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
 		html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
 		global.i++;
 	</c:forEach>
@@ -142,6 +151,5 @@ function show() {
 }
 
 	</script>	
-	
 </body>
 </html>

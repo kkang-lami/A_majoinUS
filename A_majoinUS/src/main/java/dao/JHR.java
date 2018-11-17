@@ -54,6 +54,15 @@ public class JHR extends SqlSessionDaoSupport{
 		return st;
 	}
 	
+	public void delete_job(String id) {
+	    getSqlSession().delete("JHR_AUS.delete_job", id);
+	   
+	}
+	public void delete_location(String id) {
+	    getSqlSession().delete("JHR_AUS.delete_location", id);
+      
+	}
+	
 	
 	// 회원 정보 수정 및 삭제를 위한 비밀번호 체크
     public boolean checkPw(String id, String password) {

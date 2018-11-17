@@ -105,27 +105,27 @@
 	function inquiryStatic() {
 
 		var inquiry = '${inquiry}';
-		var match = '${inquiry_match}';
+	      var match = '${inquiry_match}';
 
-		var data = google.visualization.arrayToDataTable([
-				[ '답변 상태', 'Amount given' ], [ '답변완료', Number(inquiry) ],
-				[ '미답변', Number(match) ] ]);
+	      var data = google.visualization.arrayToDataTable([
+	            [ '답변 상태', 'Amount given' ], [ '답변완료', Number(match) ],
+	            [ '미답변', Number(inquiry) ] ]);
 
-		var options = {
-			title : '1:1문의 답변율',
-			pieHole : 0.4,
-			pieSliceTextStyle : {
-				color : 'black',
-			},
-			//legend: 'none'
-			width : 500,
-			height : 400
-		};
+	      var options = {
+	         title : '1:1문의 답변율',
+	         pieHole : 0.4,
+	         pieSliceTextStyle : {
+	            color : 'black',
+	         },
+	         //legend: 'none'
+	         width : 500,
+	         height : 400
+	      };
 
-		var chart = new google.visualization.PieChart(document
-				.getElementById('inquiry_chart'));
-		chart.draw(data, options);
-	}
+	      var chart = new google.visualization.PieChart(document
+	            .getElementById('inquiry_chart'));
+	      chart.draw(data, options);
+	   }
 
 	//매칭
 	function matchStatic() {

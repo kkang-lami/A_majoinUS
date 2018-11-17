@@ -1,6 +1,9 @@
 package controller.JHR;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.JHR;
-import controller.JHR.MemberDTO;
 
 @Service
 public class loginServiceImpl implements loginService{
@@ -78,6 +80,43 @@ public class loginServiceImpl implements loginService{
 	}*/
 	@Override
 	public boolean memberUpdate(MemberDTO dto) {
+		
+		String id = dto.getId();
+		dao.delete_job(id);
+		dao.delete_location(id);
+		
+		String[] list = dto.getLocal();
+		
+		String[] list2 = dto.getJob();
+		
+		List<Map<String,Object>> job_list = new ArrayList<Map<String,Object>>();	
+
+		
+		List<Map<String,Object>> local_list = new ArrayList<Map<String,Object>>();	
+		
+	
+		for(String st : list) {
+			Map<String,Object> temp = new HashMap<String,Object>();
+			temp.put("id", id);
+			temp.put("f_local", st);
+			local_list.add(temp);
+		}
+		dao.insert_local(local_list);
+	
+		System.out.println("로컬"+local_list);
+		
+		
+		for(String st : list2) {
+			Map<String,Object> temp = new HashMap<String,Object>();
+			temp.put("id", id);
+			temp.put("f_job", st);
+			job_list.add(temp);
+		}
+		dao.insert_job(job_list);
+		
+		
+		System.out.println("잡"+job_list);
+		
 		return dao.memberUpdate(dto);
 	}
 	

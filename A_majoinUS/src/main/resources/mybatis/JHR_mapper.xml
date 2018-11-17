@@ -83,6 +83,12 @@ delete from member where id = #{id}
 	update member set password=#{password} where id=#{id}
 </update>
 
+ <delete id="delete_job" parameterType="String">
+    delete from F_JOB where id=#{id}
+ </delete>
 
+ <delete id="delete_location" parameterType="String">
+    delete from F_LOCATION where id=#{id}
+ </delete>
 </mapper>
  

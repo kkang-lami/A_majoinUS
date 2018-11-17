@@ -3,9 +3,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	String cp = request.getContextPath();
-	request.setCharacterEncoding("UTF-8");
-	request.setCharacterEncoding("euc-kr");
+   String cp = request.getContextPath();
+   request.setCharacterEncoding("UTF-8");
+   request.setCharacterEncoding("euc-kr");
 %>
 <html>
 
@@ -44,77 +44,32 @@
 
 
   
-<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
- $(document).ready(function() {
-	$("#signUpBtn").unbind("click").click(function(e) {
-		e.preventDefault();
-		fn_signUp();
-	});
+$(document).ready(function(){
+   $("#btnUpdate").click(function(){
+      alert("수정하시겠습니까?");
+      
+   });
 });
-/* function fn_signUp(){  
-	if ($("#agree-checkbox").prop("checked") == false)
-		{
-		alert("약관에 동의해 주시기 바랍니다");
-		return false;
-		}
-	else if($("#idchake").val().length < 1)
-		{
-		alert("인증키를 입력해주세요");
-		return false;
-		}
-	else if($("#name").val().length < 1)
-		{
-		alert("이름을 입력해주세요.");
-		return false;
-		}
-	else if($("#phone").val().length < 1)
-		{
-		alert("핸드폰 번호를 입력해 주세요.");
-		return false;
-		}
-	else if($("#name").val().length < 1)
-	{
-	alert("이름을 입력해주세요.");
-	return false;
-	}
-	else if($("#birth").val().length < 1)
-	{
-	alert("생년월일을 입력해주세요.");
-	return false;
-	}
-	return true;
-	
-	
-} */
 
-	 
-	 <%-- function sendMail(){
-			String id = document.getElementById('id').value;
-			var url = "<%=request.getContextPath()%>/aus/JHR/sendMail";
-			var param = "id="+id;
-			$.ajax({
-				type:"post",
-				url:url,
-				data:param,
-				success:function(args){
-									
-				}
-			});
-			
-			
-			
-		} --%>
-		
-</script>
+$(document).ready(function(){   
+   $('.editable .field').focus(function() {
+      $(this).addClass('focused');
+   }).blur(function(){
+      $(this).removeClass('focused');
+   });
+});
+
+</script>    
 <style type="text/css">    
 
 
 select {  
-    width: 100px;  
+    width: 150px;    
     height: 30px;    
-    padding-left: 10px;
-    font-size: 18px;  
+    padding-left: 10px;  
+    font-size: 15px;    
     color: black;    
     border: 1px solid #338033;
     border-radius: 3px;
@@ -145,91 +100,71 @@ select option:hover {
     cursor: pointer;
 }
 
-
-
-
-/* ///////////////////////////////////// */
-
-.bmd-form-group {
-  position: relative;
-  padding-top: 27px;
-}
-
-.bmd-form-group:not(.has-success):not(.has-danger) [class^='bmd-label'].bmd-label-floating,
-.bmd-form-group:not(.has-success):not(.has-danger) [class*=' bmd-label'].bmd-label-floating {
-  color: #AAAAAA;
-}
-
-.bmd-form-group [class^='bmd-label'],
-.bmd-form-group [class*=' bmd-label'] {
-  position: absolute;
-  pointer-events: none;
-  transition: 0.3s ease all;
-}
-
-.bmd-form-group [class^='bmd-label'].bmd-label-floating,
-.bmd-form-group [class*=' bmd-label'].bmd-label-floating {
-  will-change: left, top, contents;
-  margin: 0;
-  line-height: 1.4;
-  font-weight: 400;
-}
-
-.bmd-form-group.is-filled .bmd-label-placeholder {
-  display: none;
-}
-
-.bmd-form-group .bmd-label-floating,
-.bmd-form-group .bmd-label-placeholder {
-  top: 2.3125rem;
-}
-
-.bmd-form-group .is-focused .bmd-label-floating,
-.bmd-form-group .is-filled .bmd-label-floating {
-  top: 1rem;
-  left: 0;
-  font-size: 0.6875rem;
-}
-
-.bmd-form-group.bmd-form-group-sm .bmd-label-floating,
-.bmd-form-group.bmd-form-group-sm .bmd-label-placeholder {
-  top: 1.875rem;
-}
-
-.bmd-form-group.bmd-form-group-sm .is-focused .bmd-label-floating,
-.bmd-form-group.bmd-form-group-sm .is-filled .bmd-label-floating {
-  top: 0.75rem;
-  left: 0;
-  font-size: 0.6875rem;
-}
-
-.bmd-form-group.bmd-form-group-lg .bmd-label-floating,
-.bmd-form-group.bmd-form-group-lg .bmd-label-placeholder {
-  top: 2.4375rem;
-}
+button{
+/* position : absolute; */
+top:50%;
+left:50%;    
+transform: translate(-50%,-50%);
   
-.bmd-form-group.bmd-form-group-lg .is-focused .bmd-label-floating,
-.bmd-form-group.bmd-form-group-lg .is-filled .bmd-label-floating {
-  top: 1rem;
-  left: 0;
-  font-size: 0.6875rem;
 }
 
+button{
 
-.bmd-label-floating,
-.bmd-label-placeholder {
-  top: 2.3125rem;
+background:none;
+color: black;  
+width: 50px;            
+height:30px;
+border: 1px solid #338033;
+font-size: 18px;
+border-radius: 4px;
+transition:.6s;
+overflow: hidden;
+
 }
 
-.is-focused .bmd-label-floating,
-.is-filled .bmd-label-floating {
-  top: 1rem;
-  left: 0;
-  font-size: 0.6875rem;
+button:before {
+content: '';
+display: block;
+position: absolute;
+background: rgba(255,255,255,.5);'\
+left: 0;
+top: 0;  
+opacity: .5s;
+filter:blur(30px);
+transform:translateX(-130px) skweX(-15deg);
+}
+button:after {
+content: '';
+display: block;
+position: absolute;
+background: rgba(255,255,255,.5);'\
+left: 30px;
+top: 0;  
+opacity: 0;
+filter:blur(30px);
+transform:translateX(-130px) scaleX(-15deg);
+
 }
 
-</style>
+button:hover {
+   background: #338033;
+   cursor: pointer;
+   
+}
+button:hover:before {
+   transform:translateX(300px) skewX(-15deg);
+   opacity: .6s;
+   transition: .7s;
+}
 
+button:hover:after {
+   transform:translateX(300px) skewX(-15deg);
+   opacity: 1;
+   transition: .7s;
+}  
+
+</style>  
+  
 </head>
 
 <body>
@@ -341,29 +276,32 @@ select option:hover {
               <div class="form-group">
                 <label for="message" class="sr-only sr-only-focusable">liked_area</label>  
                 <select id="local1" class="show-level2"></select>
-                <select id="local12" ></select>
-                <button type="button" value="local" class="btn btn-primary">추가</button>
-              </div>
-              
+                <select id="local12" ></select> 
+              </div>  
+              <div class="button_moum1" style=" left: 52%; margin-left: 50px;">     
+                <button type="button" value="local" class="add_btn" >area추가</button>
+                </div>                                                               
+                                             
+                        
               <div class="form-group">
                 <label for="message" class="sr-only sr-only-focusable">관심분야</label>  
                 <select id="job1" class="show-level2"></select>
-                <select id="job12" ></select>
-                <button type="button" value="job" class="btn btn-primary">추가</button>
-              </div>
+                <select id="job12" ></select>  
+              </div>          
+              <div class="button_moum1" style=" left: 52%; margin-left: 50px;">     
+                <button type="button" value="job" class="add_btn" >분야 추가</button>
+                </div> 
+                      
+              <div title="넘겨질 job과 local" id="hidden"></div>
+                           < 검색조건  >    
+               <div id="result"></div> 
               
               <div class="form-group">
                 <label for="photo" class="sr-only sr-only-focusable">profile_photo</label>
                 <input type="file" name="file" accept="image/*">  
               </div> 
               
-              <div class="form-group">
-              <div title="넘겨질 job과 local" id="hidden"></div>
-                          <!--   검색조건 -->  
-               <div id="result"></div> 
-                    </div>
-                  
-                  
+              
               
               <div class="form-group">
                 <label for="agree" class="sr-only sr-only-focusable">약관동의</label>
@@ -538,7 +476,7 @@ select option:hover {
     </section>
     <!-- END section -->
 
-<script src="<%=request.getContextPath()%>/resources/LSH/category.js"></script>
+<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
 <script>
 var emailcode;      
 $('#mail').on('click',function(){
@@ -599,55 +537,60 @@ function fn_signUp(){
 	}
 }
 
+$(document).ready(initPage);
 
-	var global = {
-		    i : 0
-		};
-	
-	$(document).ready(initPage);
-	
-	function initPage() {
-		level1();
-		show();								// 파일불러올때 사용! -- 기존에 있는 카테고리 입력값 버튼생성
-	}
-	
-	function getContext(){
-		var context = "<%=cp%>";
-		return context;
-	}
+function initPage() {
+	level1();
+	show_search_tag();
+}
 
-	function show() {
+function getPageNum(){
+	var pageNum = $('.pagination .active').attr('id');
+	return (pageNum === undefined)? 1 : pageNum;
+}
 
-		var html1 = "<div id='job_list'>",
-			html2 = "";
+function getContext(){
+	var context = "<%=cp%>";
+	return context;
+}
 
-		<c:forEach var="item" items="${command.job}">
-			html1 += "<div id="+global.i+">${item} ";
-			html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
+function getSessionId(){
+	var sessionid = '${sessionScope.id}';
+	return sessionid;
+}
 
-			html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
-			global.i++;
-		</c:forEach>
+var global = {
+	    i : 0
+};
 
-			html1 += "</div><br><div id='local_list'>";
+function show_search_tag() {
 
-		<c:forEach var="item" items="${command.local}" >
-			html1 += "<div id="+global.i+">${item} ";
-			html1 += "<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
-			html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
-			global.i++;
-		</c:forEach>
+	var html1 = "<div id='job_list'class='inline'>",
+		html2 = "";
 
-		html1 += "</div>";
+	<c:forEach var="item" items="${dto.job}">
+		html1 += "<div id="+global.i+" style='display: inline-block;'>${item} ";
+		html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
 
-		$('#result').append(html1);
-		$('#hidden').append(html2);
-	}
+		html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
+		global.i++;
+	</c:forEach>
 
-	
-	
-	
-	
+		html1 += "</div><br><div id='local_list' class='inline'>";
+
+	<c:forEach var="item" items="${dto.local}" >
+		html1 += "<div id="+global.i+">${item} ";
+		html1 += "<button id="+global.i+" class='del_btn'>x</button></div>";
+		html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
+		global.i++;
+	</c:forEach>
+
+	html1 += "</div>";
+
+	$('#result').append(html1);
+	$('#hidden').append(html2);
+}
+
 	</script>
 
 </body>
