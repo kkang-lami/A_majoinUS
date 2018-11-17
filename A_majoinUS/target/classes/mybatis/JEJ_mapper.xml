@@ -85,9 +85,15 @@
 
 <!-- 카테고리 관리 -->
 <select id="select_cate" resultType="project.DTO.Category_2DTO">
-	<![CDATA[select cate_name.cate_num, cate_name.c_name, category_1.cate_1_num, category_1.c_1_name, category_2.c_2_num, category_2.c_2_name 
-	from cate_name, category_1, category_2 
-		where category_1.cate_num = cate_name.CATE_NUM and category_2.cate_1_num = category_1.CATE_1_NUM]]>
+	 <![CDATA[select cate_name.cate_num, cate_name.c_name, category_1.cate_1_num, category_1.c_1_name, category_2.c_2_num, category_2.c_2_name 
+   from cate_name, category_1, category_2 
+      where category_1.cate_num = cate_name.CATE_NUM and category_2.cate_1_num = category_1.CATE_1_NUM and c_name='직군']]>
+</select>
+
+<select id="select_cate_1" resultType="project.DTO.Category_2DTO">
+   <![CDATA[select cate_name.cate_num, cate_name.c_name, category_1.cate_1_num, category_1.c_1_name, category_2.c_2_num, category_2.c_2_name 
+   from cate_name, category_1, category_2 
+      where category_1.cate_num = cate_name.CATE_NUM and category_2.cate_1_num = category_1.CATE_1_NUM and c_name='지역']]>
 </select>
 
 <delete id="delete_cate" parameterType="project.DTO.Category_2DTO"><!-- 파라미터 타입을 카테고리로.. -->
@@ -167,8 +173,8 @@
 </select>
 
 <select id="admin_projectroom" parameterType="project.DTO.PageDTO" resultType="project.DTO.ProjectroomDTO">
-	<![CDATA[select pj_name, id, start_d, end_d, regdate, r 
-	from (select pj_name, id, start_d, end_d, regdate, rownum r 
+	<![CDATA[select pj_num,pj_name, id, start_d, end_d, regdate, r 
+	from (select pj_num,pj_name, id, start_d, end_d, regdate, rownum r 
 	from (select*from projectroom) order by r) 
 		where r>=#{startRow} and r<=#{endRow}]]>
 </select>

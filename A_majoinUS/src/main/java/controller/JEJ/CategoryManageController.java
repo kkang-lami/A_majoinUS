@@ -22,10 +22,16 @@ public class CategoryManageController {
 	
 	@RequestMapping(value = "/aus/CategoryManage")
 	public String category_manage(Model model) throws Exception {
-		List<Category_2DTO> categoryList = service.getCategoryList();
-		model.addAttribute("categoryList",categoryList);
-		
-		return "JEJ/CategoryManage";
+		 List<Category_2DTO> categoryList = service.getCategoryList();
+	      model.addAttribute("categoryList",categoryList);
+	      model.addAttribute("cateSize",categoryList.size());
+	      
+	      List<Category_2DTO> categoryList1 = service.getCategoryList2();
+	      model.addAttribute("categoryList1",categoryList1);
+	      model.addAttribute("cateSize1",categoryList1.size());
+	      
+	      return "JEJ/CategoryManage";
+
 	}
 	
 	//카테고리 수정

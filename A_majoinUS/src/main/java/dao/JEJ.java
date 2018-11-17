@@ -139,6 +139,12 @@ public class JEJ extends SqlSessionDaoSupport{
 		return category_list;
 	}
 	
+	 public List<Category_2DTO> getCategoryList2() {
+	      List<Category_2DTO> category_list = getSqlSession().selectList("JEJ_AUS.select_cate_1");
+	      return category_list;
+	   }
+
+	
 	public void deleteCate(int c_2_num) {
 		getSqlSession().delete("JEJ_AUS.delete_cate",c_2_num);				
 	}

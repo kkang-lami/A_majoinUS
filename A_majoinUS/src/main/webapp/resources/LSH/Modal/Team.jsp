@@ -42,7 +42,7 @@
 		
 			<div class="modal-footer">
 				<div class="col-md-8 "><a id="join_btn" data-toggle="modal" href="#modal-join"><b>프로젝트 신청</b></a></div>
-				<div class="col-md-4"><a href="#" id="Teamissue_btn" data-toggle="popover" title="신고사유"><b>신고</b></a></div>
+				<div class="col-md-4"><a href="#"  id="Teamissue_btn" data-toggle="popover" title="신고사유"><b>신고</b></a></div>
 		   	</div>
     	</div>
     </div>

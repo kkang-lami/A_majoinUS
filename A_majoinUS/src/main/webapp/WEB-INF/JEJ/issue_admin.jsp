@@ -48,7 +48,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                <table class="table no-margin" id="result_table_user">
                   <thead>
                   <tr>
 	<th>문제회원</th>
@@ -59,10 +59,10 @@
                   </thead>
                   <tbody>
      <c:forEach items="${memberIssue}" var="member" >
-<tr>
+<tr>     
 	<td><input type="hidden" value="${member.pj_num}">
-	<a class="user_btn" data-toggle="modal" data-target="#modal_user">${member.id}</a></td>
-	<td>${member.issue_id}</td>
+	<a href="#" id="${member.id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${member.id}</a></td>
+	<td><a href="#" id="${member.issue_id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${member.issue_id}</a></td>
 	<td>${member.is_content}</td>
 	<td><c:set var="day_m" value="${fn:substring(member.is_date,0,10)}" />
 	${day_m}</td>
@@ -151,7 +151,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                <table class="table no-margin" id="result_table_project">
                   <thead>
                   <tr>
 	<th>문제 프로젝트</th>
@@ -166,11 +166,11 @@
 
 
 <c:forEach items="${projectIssue}" var="project" >
-<tr>
-	<td><a href="#" alt="회원상세페이지 넣자">${project.pj_name}</a></td>
+<tr id="${project.pj_num}">
+	<td><a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${project.pj_name}</a></td>
 		
-	<td>${project.issue_id}</td>
-	<td>${project.id}</td>
+	<td><a href="#" id="${project.issue_id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${project.issue_id}</a></td>
+	<td><a href="#" id="${project.id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${project.id}</a></td>
 	<td>${project.is_content}</td>
 	<td><c:set var="day" value="${fn:substring(project.is_date,0,10)}" />
 	${day}</td>
@@ -246,36 +246,48 @@
 </section>
 		</div>
 	</div>
-
+	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
+    <c:import url="${cp}/resources/LSH/Modal/User.jsp"/>   	
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
 	
-<script src="<%=request.getContextPath()%>/resources/JEJ/profile_modal.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/resources/JEJ/profile_modal.js"></script> --%>
+<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
+<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
+<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
 <script>  
 
-  $('body').on('click','.user_btn', function() {
+ /*  $('body').on('click','.user_btn', function() {
 	console.log("[유저 프로필]");
 	remove_data();
   	profile($(this).text());		// 유저 아이디 입력;
- 	});
+ 	}); */
 	
+ 	 $('#result_table_user').on('click','.user_btn', function() {
+ 		profile($(this).attr('id'));
+ 		remove_data();
+ 	});
+ 	
+  $('#result_table_project').on('click','.user_btn', function() {
+		profile($(this).attr('id'));
+		remove_data();
+	});
+  
+  
 	function getContext(){
 		var context = "<%=cp%>";
 		return context;
 	}
 
 	function getSessionId(){
-		var sessionid = '${sessionScope.userId}';
+		var sessionid = '${sessionScope.id}';
 		return sessionid;
 	}
+	var global = {
+		    i : 0,
+		    receiver: ""
+		};
 	
-	//
-	$(document).ready(initPage);
-
-	function initPage() {
-		$("#getUserModal").load(getContext()+"/resources/JEJ/modal_profile.jsp");
-	}
-</script>
 </script>	
 </body>
 </html>

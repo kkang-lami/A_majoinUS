@@ -14,9 +14,9 @@
 	<!-- 프로젝트 관심분야 -->
 	
 	
-	<insert id="createProjectJob" parameterType="list">
-		<foreach collection="list" item="pj_cate"  separator=";" open="DECLARE BEGIN" close="; END;">
-			insert into PJ_Job values (PJ_JOB_SEQ.nextval, PROJECTROOM_SEQ.currval, #{pj_cate})
+	<insert id="createProjectJob" parameterType="Map">
+		<foreach collection="list" item="item"  separator=";" open="DECLARE BEGIN" close="; END;">
+			insert into PJ_Job values (PJ_JOB_SEQ.nextval, ${item.pj_num}, #{item.category})
 		</foreach>
 	</insert>
 	<insert id="createProjectJob2" parameterType="map">
@@ -25,9 +25,9 @@
 	</insert> 
 
 	<!-- 프로젝트 모집지역 -->
-	<insert id="createProjectLocation" parameterType="list">
-		<foreach collection="list" item="pj_loc"  separator=";" open="DECLARE BEGIN" close="; END;">
-			insert into PJ_LOCATION values (PJ_LOCATION_SEQ.nextval, PROJECTROOM_SEQ.currval, #{pj_loc})
+	<insert id="createProjectLocation" parameterType="Map">
+		<foreach collection="list" item="item"  separator=";" open="DECLARE BEGIN" close="; END;">
+			insert into PJ_LOCATION values (PJ_LOCATION_SEQ.nextval, ${item.pj_num}, #{item.category})
 		</foreach>
 	</insert>
 	<insert id="createProjectLocation2" parameterType="project.DTO.Pj_locationDTO">

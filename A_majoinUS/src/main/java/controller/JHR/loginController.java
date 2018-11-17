@@ -80,7 +80,7 @@ public class loginController {
 	public ModelAndView mypage(HttpServletRequest req,Model model,@ModelAttribute MemberDTO dto){
 		
 		String id = req.getSession().getAttribute("id").toString();
-		boolean result = service.checkPw(dto.getId(),dto.getPassword());
+		boolean result = service.checkPw(id,dto.getPassword());
 		ModelAndView mav = new ModelAndView();
 		if(result == true) {
 			MemberDTO dto1 = service.mypage(id);
@@ -97,6 +97,7 @@ public class loginController {
 	// 회원 정보 업데이트
 	@RequestMapping(value = "/memberUpdate")
     public String memberUpdate(@ModelAttribute MemberDTO dto,@RequestParam("file") MultipartFile file,Model model){
+		System.out.println(dto);
 		if(!file.isEmpty()) {
 			String path = "c://item//profile//";
 			String f_name = file.getOriginalFilename();

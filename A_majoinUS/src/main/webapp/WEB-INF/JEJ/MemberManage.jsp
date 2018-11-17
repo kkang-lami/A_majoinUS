@@ -137,7 +137,7 @@ function authorityBack(formName) {
 					<!-- /.box-header -->
 					<div class="box-body">
 						<div class="table-responsive">
-							<table class="table no-margin">
+							<table class="table no-margin" id="result_table">
 								<tr>					
 									<th align="center">아이디</th>
 									<th align="center">이름</th>
@@ -147,7 +147,7 @@ function authorityBack(formName) {
 								</tr>
 
 							<c:forEach var="member" items="${memberList}">
-							<tr>
+							<tr id="${member.id}">
 								<td>
 								<a class="user_btn" data-toggle="modal" data-target="#modal_user">${member.id}</a>
 								</td>
@@ -246,7 +246,7 @@ function authorityBack(formName) {
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                <table class="table no-margin" id="result_table2">
                   <thead>
                   <tr>
 	<th>아이디</th>
@@ -261,7 +261,7 @@ function authorityBack(formName) {
 
 
 <c:forEach items="${blackList}" var="black" >
-<tr>
+<tr id="${black.id}">
 	<td>
 	<a class="user_btn" data-toggle="modal" data-target="#modal_user">${black.id}</a></td>	
 	<td>${black.name}</td>
@@ -294,19 +294,25 @@ function authorityBack(formName) {
 	</section>
 		</div>
 	</div>
-
+    <c:import url="${cp}/resources/LSH/Modal/User.jsp"/> 
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />	
 	
-<script src="<%=request.getContextPath()%>/resources/JEJ/profile_modal.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/resources/JEJ/profile_modal.js"></script> --%>
+<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
 <script>  
 
-  $('body').on('click','.user_btn', function() {
-	console.log("[유저 프로필]");
-	remove_data();
-  	profile($(this).text());		// 유저 아이디 입력;
- 	});
+  $('#result_table').on('click','.user_btn', function() {
+		console.log("8.멤버프로필");
+		profile($(this).parents("tr").attr('id'));
+		remove_data();
+	});
+  $('#result_table2').on('click','.user_btn', function() {
+		console.log("블랙리스트 프로필");
+		profile($(this).parents("tr").attr('id'));
+		remove_data();
+	});
 	
 	function getContext(){
 		var context = "<%=cp%>";
@@ -317,13 +323,10 @@ function authorityBack(formName) {
 		var sessionid = '${sessionScope.userId}';
 		return sessionid;
 	}
-	
-	//
-	$(document).ready(initPage);
-
-	function initPage() {    
-	   $("#getUserModal").load(getContext()+"/resources/JEJ/modal_profile.jsp");
-	}
+	var global = {
+		    i : 0,
+		    receiver: ""
+		};
 </script>
 </body>
 </html>

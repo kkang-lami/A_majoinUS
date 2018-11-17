@@ -21,7 +21,7 @@
 				<!-- Profile Image -->
 				<div class="box box-body box-primary">
 
-					<img class="profile-user-img img-responsive img-circle" src="" alt="회원 사진">
+					<img class="profile-user-img img-responsive img-circle" src="" alt="회원 사진" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:80px; height:80px; overflow:hidden;">
 					<h3 class="profile-username text-center">
 						이름<small>(아이디)</small>
 					</h3>

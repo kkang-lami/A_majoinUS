@@ -1,11 +1,13 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import controller.PHE.PHE_CategoryDTO;
 import controller.PHE.ProjectAlarmListDTO;
 import controller.PHE.ProjectListDTO;
 import controller.PHE.ReviewByMeDTO;
@@ -25,9 +27,17 @@ public class PHE extends SqlSessionDaoSupport {
 		getSqlSession().insert("PHE_AUS.createProject", prDTO);
 	}
 
-	public int createProjectJob(List<String> pj_cate) {
-
-		int y = getSqlSession().insert("PHE_AUS.createProjectJob", pj_cate);
+	public int createProjectJob(List<String> pj_cate,int pj_num) {
+		List<PHE_CategoryDTO> category = new ArrayList<PHE_CategoryDTO>();
+		for(String pc : pj_cate) {
+			PHE_CategoryDTO dto = new PHE_CategoryDTO();
+			dto.setPj_num(pj_num);
+			dto.setCategory(pc);
+		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("map", category);
+		
+		int y = getSqlSession().insert("PHE_AUS.createProjectJob", map);
 		return y;
 	}
 
@@ -40,9 +50,17 @@ public class PHE extends SqlSessionDaoSupport {
 		return y;
 	}
 	
-	public int createProjectLocation(List<String> pj_loc) {
-
-		int z = getSqlSession().insert("PHE_AUS.createProjectLocation", pj_loc);
+	public int createProjectLocation(List<String> pj_loc,int pj_num) {
+		List<PHE_CategoryDTO> category = new ArrayList<PHE_CategoryDTO>();
+		for(String pc : pj_loc) {
+			PHE_CategoryDTO dto = new PHE_CategoryDTO();
+			dto.setPj_num(pj_num);
+			dto.setCategory(pc);
+		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("map", category);
+		
+		int z = getSqlSession().insert("PHE_AUS.createProjectLocation", map);
 		return z;
 	}
 	

@@ -56,7 +56,7 @@
 	
 						<!-- 선호지역 -->
 						<div class="form-group">
-							<label for="local1" class="col-sm-2 control-label">선호직역</label>
+							<label for="local1" class="col-sm-2 control-label">선호지역</label>
 							<div class="col-sm-10">
 								<select id="local1" class="show-level2"></select> <select id="local12"></select>
 								<button type="button" value="local" class="add_btn">추가</button>

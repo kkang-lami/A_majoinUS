@@ -49,10 +49,9 @@ function profile(userid){
 		}
 	});
 }
-
-function load_head(data,login_id){
-	
-	$('.profile-user-img').attr('src',data.u_img);
+     
+function load_head(data,login_id){    
+	$('.profile-user-img').attr('src',getContext()+"/aus/userImg/"+data.u_img);
 	$('.profile-username').html(data.name+"<small>("+data.id+")</small>");
 	$('.profile-star').html(data.eval+"점");
 	

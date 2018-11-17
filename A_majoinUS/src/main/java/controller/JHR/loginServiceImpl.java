@@ -84,18 +84,42 @@ public class loginServiceImpl implements loginService{
 		String id = dto.getId();
 		dao.delete_job(id);
 		dao.delete_location(id);
+		if(dto.getLocal() != null) {
+			String[] list = dto.getLocal();
+			List<Map<String,Object>> local_list = new ArrayList<Map<String,Object>>();	
+			
+			for(String st : list) {
+				Map<String,Object> temp = new HashMap<String,Object>();
+				temp.put("id", id);
+				temp.put("f_local", st);
+				local_list.add(temp);
+			}
+			dao.insert_local(local_list);
 		
-		String[] list = dto.getLocal();
-		
-		String[] list2 = dto.getJob();
-		
-		List<Map<String,Object>> job_list = new ArrayList<Map<String,Object>>();	
+			System.out.println("로컬"+local_list);
+		}
+		if(dto.getJob() != null) {
+			String[] list2 = dto.getJob();
+			List<Map<String,Object>> job_list = new ArrayList<Map<String,Object>>();	
+			
+			for(String st : list2) {
+				Map<String,Object> temp = new HashMap<String,Object>();
+				temp.put("id", id);
+				temp.put("f_job", st);
+				job_list.add(temp);
+			}
+			dao.insert_job(job_list);
+			
+			
+			System.out.println("잡"+job_list);
+		}
+		//List<Map<String,Object>> job_list = new ArrayList<Map<String,Object>>();	
 
 		
-		List<Map<String,Object>> local_list = new ArrayList<Map<String,Object>>();	
+		//List<Map<String,Object>> local_list = new ArrayList<Map<String,Object>>();	
 		
 	
-		for(String st : list) {
+		/*for(String st : list) {
 			Map<String,Object> temp = new HashMap<String,Object>();
 			temp.put("id", id);
 			temp.put("f_local", st);
@@ -103,10 +127,10 @@ public class loginServiceImpl implements loginService{
 		}
 		dao.insert_local(local_list);
 	
-		System.out.println("로컬"+local_list);
+		System.out.println("로컬"+local_list);*/
 		
 		
-		for(String st : list2) {
+		/*for(String st : list2) {
 			Map<String,Object> temp = new HashMap<String,Object>();
 			temp.put("id", id);
 			temp.put("f_job", st);
@@ -115,7 +139,7 @@ public class loginServiceImpl implements loginService{
 		dao.insert_job(job_list);
 		
 		
-		System.out.println("잡"+job_list);
+		System.out.println("잡"+job_list);*/
 		
 		return dao.memberUpdate(dto);
 	}

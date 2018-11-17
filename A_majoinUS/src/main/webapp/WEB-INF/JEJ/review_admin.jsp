@@ -44,7 +44,7 @@
 					<!-- /.box-header -->
 					<div class="box-body">
 						<div class="table-responsive">
-							<table class="table no-margin">
+							<table class="table no-margin" id="result_table">
 								<thead>
 									<tr>
 										<th>회원 ID</th>
@@ -56,7 +56,7 @@
 								<tbody>
 									<c:forEach items="${reviewList}" var="review">
 										<tr id="${review.pj_num}">
-											<td>${review.id}</td>
+											<td><a href="#" id="${review.id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${review.id}</a></td>
 											<td><a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${review.pj_name}</a></td>
 											<td>${review.ra_content}</td>
 											<td><c:set var="end_d1"
@@ -133,22 +133,24 @@
 					<!--  -->
 					<!-- 이고 하나 추가 >> --></div>
 				</div>
-				<!-- /.box -->
+				<!-- /.box -->    
 	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
-       	
+    <c:import url="${cp}/resources/LSH/Modal/User.jsp"/>   	
 			</section>
 		</div>
 	</div>
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
+	<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
 <script>
+
 		var global = {
 			    i : 0,
 			    origin_d : "",
 			    receiver : "",
 			    pj_num: 0
-		};
+		};    
 		
 		function getContext(){
 			var context = "<%=cp%>";
@@ -159,7 +161,12 @@
 			var sessionid = '${sessionScope.id}';
 			return sessionid;
 		}         
-		
+        		    
+		$('#result_table').on('click','.user_btn', function() {
+			console.log("8.멤버프로필");
+			profile($(this).attr('id'));
+			remove_data();
+		});
     	</script>
 	   <script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 	

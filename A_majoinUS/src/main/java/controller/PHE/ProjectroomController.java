@@ -64,10 +64,10 @@ public class ProjectroomController {
 		System.out.println(command1);
 		
 		if(!job.get(0).equals("null")) {
-			dao.createProjectJob(job);
+			dao.createProjectJob(job,command1.getPj_num());
 		}
 		if(!local.get(0).equals("null")) {
-			dao.createProjectLocation(local);
+			dao.createProjectLocation(local,command1.getPj_num());
 		}
 		dao.insertToPjMem(sessionId,command1.getPj_num());	
 	
