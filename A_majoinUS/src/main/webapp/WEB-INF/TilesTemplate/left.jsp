@@ -17,6 +17,7 @@ body {
     <section class="sidebar">
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
+        <c:if test="${sessionScope.id ne 'amajoinus@gmail.com'}">
         <li class="header">MY PAGE</li>    
         <li class="active">
           <a href="<%=request.getContextPath()%>/aus/MyPageMain">
@@ -93,7 +94,7 @@ body {
             <li><a href="<%=request.getContextPath() %>/aus/inquiry_user"><i class="fa fa-fw fa-comments-o"></i>Talk to us</a></li>
           </ul>
         </li>      
-        
+        </c:if>
        <c:if test="${sessionScope.id eq 'amajoinus@gmail.com'}">
         
         <li class="header">Management</li>

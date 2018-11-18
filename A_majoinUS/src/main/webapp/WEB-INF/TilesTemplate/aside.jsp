@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -60,7 +61,8 @@
               </div>
             </a>
           </li>
-          
+              
+           <c:if test="${sessionScope.Dday eq 'TRUE'}">
            <li>
             <a href="portfolio?pj_num=${pj_num }">
             <i class="menu-icon fa fa-fw fa-pencil-square bg-green"></i>
@@ -70,7 +72,7 @@
               </div>
             </a>
           </li>
-          
+           
            <li>
             <a href="EnR?pj_num=${pj_num }">
             <i class="menu-icon fa fa-fw fa-thumbs-o-up bg-red"></i>
@@ -80,6 +82,7 @@
               </div>
             </a>
           </li>
+		</c:if>          
         
         </ul>
         <!-- /.control-sidebar-menu -->

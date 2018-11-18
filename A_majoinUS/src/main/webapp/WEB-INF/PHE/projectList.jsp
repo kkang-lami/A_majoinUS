@@ -669,7 +669,7 @@ a {
       <th style="text-align: center;">프로젝트 이름&nbsp;&nbsp;<span class="label label-warning">대기중</span></th>
       <th style="text-align: center;">프로젝트 시작</th>
       <th style="text-align: center;">프로젝트 완료예정</th>
-      <th colspan="2" style="text-align: center;">프로젝트 관리</th>
+      <!-- <th colspan="2" style="text-align: center;">프로젝트 관리</th> -->
       
       
       

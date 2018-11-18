@@ -34,11 +34,15 @@ public class ReviewController {
 		session = request.getSession(true);
 		String sessionId = (String) session.getAttribute("id");
 
+		List<String> pjName = dao.getPjName2(sessionId);
 		List<ReviewDTO> reviewListForMe = dao.getReviewListForMe(sessionId);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("PHE/reviewListForMe");
 		mav.addObject("reviewListForMe", reviewListForMe);
+		mav.addObject("pjName", pjName);
 
+		
+		
 		return mav;
 	}
   
@@ -50,10 +54,12 @@ public class ReviewController {
 			session = request.getSession(true);
 			String sessionId = (String) session.getAttribute("id");
 
+			List<String> pjName = dao.getPjName(sessionId);
 			List<ReviewByMeDTO> reviewListByMe = dao.getReviewListByMe(sessionId);
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("PHE/reviewListByMe");
 			mav.addObject("reviewListByMe", reviewListByMe);
+			mav.addObject("pjName", pjName);
 
 			return mav;
 		}

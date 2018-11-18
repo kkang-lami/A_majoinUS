@@ -66,7 +66,7 @@
 					    <ul class="users-list clearfix">
 						<c:forEach var="item" items="${list}" begin="0" end="3" step="1">
 						<li>
-							<img src="<%=request.getContextPath() %>/resources/dist/img/user1-128x128.jpg" alt="User Image">
+							<img src="<%=request.getContextPath() %>/aus/userImg/${item.U_IMG}" alt="User Image"  onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:128px; height:128px; overflow:hidden;">
 							<c:if test="${item.BLACKLIST eq 'NO'}">
 							<a id="${item.MEM_ID}" class="user_btn users-list-name" href="#" data-toggle='modal' data-target='#modal_user'>${item.NAME}</a>
 							</c:if>
@@ -83,7 +83,7 @@
 					    <ul class="users-list clearfix">
 						<c:forEach var="item" items="${list}" begin="4" step="1">
 						<li>
-							<img src="<%=request.getContextPath() %>/resources/dist/img/user1-128x128.jpg" alt="User Image">
+							<img src="<%=request.getContextPath() %>/aus/userImg/${item.U_IMG}" alt="User Image"  onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:128px; height:128px; overflow:hidden;">
 							<c:if test="${item.BLACKLIST eq 'NO'}">
 							<a id="${item.MEM_ID}" class="user_btn users-list-name" href="#" data-toggle='modal' data-target='#modal_user'>${item.NAME}</a>
 							</c:if>

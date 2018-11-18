@@ -315,5 +315,18 @@ public class PHE extends SqlSessionDaoSupport {
 		int x = getSqlSession().update("PHE_AUS.useTicket", parameters);
 		return x;
 	}
+	
+	/* ****************************************************************************** */
+	public List<String> getPjName(String id){
+		List<String> pjName = getSqlSession().selectList("PHE_AUS.projectName", id);
+		return pjName;
+	}
+	public List<String> getPjName2(String id){
+		List<String> pjName = getSqlSession().selectList("PHE_AUS.projectName2", id);
+		return pjName;
+	}
 
+	
+	
+	
 }

@@ -248,6 +248,12 @@
 	  	</update>
 	  
 
+	  <select id="projectName" parameterType="String" resultType="controller.PHE.ReviewByMeDTO">
+		select distinct pj_name from review, projectroom where projectroom.pj_num = review.pj_num and review.id=#{id}
+	</select>
+	<select id="projectName2" parameterType="String" resultType="controller.PHE.ReviewByMeDTO">
+		select distinct pj_name from review, projectroom where projectroom.pj_num = review.pj_num and review.target_id=#{id}
+	</select>
 	  
 	  
 </mapper>
