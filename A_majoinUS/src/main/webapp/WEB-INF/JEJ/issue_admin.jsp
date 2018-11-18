@@ -63,8 +63,8 @@
      <c:forEach items="${memberIssue}" var="member" >
 <tr>     
 	<td><input type="hidden" value="${member.pj_num}">
-	<a href="#" id="${member.id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${member.id}</a></td>
-	<td><a href="#" id="${member.issue_id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${member.issue_id}</a></td>
+	<a href="#" id="${member.issue_id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${member.issue_id}</a></td>
+	<td><a href="#" id="${member.id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${member.id}</a></td>
 	<td>${member.is_content}</td>
 	<td><c:set var="day_m" value="${fn:substring(member.is_date,0,10)}" />
 	${day_m}</td>

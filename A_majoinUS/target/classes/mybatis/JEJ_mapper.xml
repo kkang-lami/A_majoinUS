@@ -217,11 +217,11 @@
 </select>
 
 <select id="admin_issue_page_room" parameterType="project.DTO.PageDTO" resultType="project.DTO.IssueDTO">
-	<![CDATA[select pj_name,id,issue_id,pj_num,is_content,is_date, r 
-	from (select pj_name, id,issue_id,pj_num,is_content,is_date, rownum r 
-	from (select projectroom.pj_name, projectroom.id, issue_id, issue.pj_num,is_content,is_date 
-	from issue, projectroom where issue.pj_num is not null and projectroom.pj_num = issue.pj_num) order by r)
-		where r>=#{startRow} and r<=#{endRow}]]>
+   <![CDATA[select pj_name,id,issue_id,pj_num,is_content,is_date, r 
+   from (select pj_name, id,issue_id,pj_num,is_content,is_date, rownum r 
+   from (select projectroom.pj_name, issue.id, issue_id, issue.pj_num,is_content,is_date 
+   from issue, projectroom where issue.pj_num is not null and projectroom.pj_num = issue.pj_num) order by r)
+      where r>=#{startRow} and r<=#{endRow}]]>
 </select>
 
 <select id="admin_issue_project" resultType="project.DTO.IssueDTO">

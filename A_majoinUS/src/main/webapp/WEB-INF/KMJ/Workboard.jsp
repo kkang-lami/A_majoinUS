@@ -176,7 +176,7 @@ function workdetail(worknum){
 			}
 			$("#wd").append("<tr><td colspan=3>"+args.detail.w_subject+"</td></tr>");      
 			$("#wd").append("<tr><td colspan=3>"+args.detail.w_content+"</td></tr>");
-			if((${sessionScope.id eq master})){
+			if((${sessionScope.id eq master} && ${sessionScope.Dday eq 'FALSE'})){
 				$("#wd").append("<tr><td colspan=3><input type='button' value='수정' id='edit' name='edit' onclick='javascript:workedit();' ><input type='button' id='delete' name='delete' value='삭제' onclick='javascript:deletework("+args.detail.pw_num+","+args.detail.pj_num+")'></td></tr>");
 			}else{
 				$("#wd").append("<tr><td colspan=3></td></tr>");
@@ -332,7 +332,10 @@ function deletecomment(obj){
 				<div class="work">
 				
 					<div class="col-md-3">              
-						<br><input type="button" id=viewchange value="업무추가" style="float:right;" ><!-- onclick="javascript:view();"> -->
+						<br>
+						<c:if test="${sessionScope.Dday eq 'FALSE'}"> 
+						<input type="button" id=viewchange value="업무추가" style="float:right;" ><!-- onclick="javascript:view();"> -->
+						</c:if>
 						<hr/>                
 						<c:forEach var="mem" items="${mwc}">
 							<div id="member">

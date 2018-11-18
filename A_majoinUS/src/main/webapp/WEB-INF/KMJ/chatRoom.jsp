@@ -52,9 +52,11 @@
 </c:forEach>
 ------------------------------------${today}------------------------------------
 </textarea><hr />                  
-					      <div class="input-group">                                 
+					      <div class="input-group">       
+					       <c:if test="${sessionScope.Dday eq 'FALSE'}">                          
 					<input type="text" id="message" size=165 placeholder="Type message..."/>
 					<input type="button" id="sendBtn" value=" 보내기 "  class="btn btn-success"/>
+					</c:if>
 					</div>  
 					</div>        
 					  
