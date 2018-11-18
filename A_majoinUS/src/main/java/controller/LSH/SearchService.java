@@ -283,4 +283,21 @@ public class SearchService {
 		}
 		return list;		
 	}
+	
+	List<ResultDTO> recommend_User(Map<String,Object> map){
+		List<ResultDTO> list = new ArrayList<ResultDTO>();
+		try {
+			list = dao.recommend_User("LSH_AUS.recommend_User",map);
+			int len = list.size();
+			if(len<3) {
+				for(int i = 0; i < 3-len; i+=1) {
+					list.add(new ResultDTO());
+				}
+			}
+			
+		}catch (Exception e) {
+			System.out.println("[에러] 멤버추천 서비스 실패 ::"+e.toString());
+		}
+		return list;		
+	}
 }

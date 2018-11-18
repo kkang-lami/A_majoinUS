@@ -93,6 +93,54 @@
 				</form>
 			</div>
 
+			<!-- 추천 멤버 -->
+			<c:if test="${fn:length(recomend) > 0}">
+		    	<div class="box box-solid">
+		            <div class="box-header with-border"><h4 class="box-title">추천 프로젝트</h4></div>
+		        
+		            <div class="box-body">
+			        	<div class="row">
+			                <c:forEach var="item" items="${recomend}">
+			                <c:choose>
+								<c:when test="${item.id eq null}">
+				        		<div class="col-md-4">
+						          <div class="box box-widget widget-user-2">
+						            <div class="widget-user-header bg-gray disabled color-palette text-center text-light-blue">
+						              	<h3><b><i class="fa fa-fw fa-smile-o"></i></b></h3>
+						              	<h4><b>해당하는 멤버가 없습니다</b></h4>
+						              	<h5><b>관심직군과 선호지역을 추가해주세요!</b></h5>
+						            </div>
+						          </div>
+						        </div>
+							    </c:when>
+		
+							    <c:otherwise>
+				        		<div class="col-md-4">
+						          <div class="box box-widget widget-user-2">
+						            <div class="widget-user-header bg-green recomend_btn" id="${item.id}" data-toggle="modal" data-target="#modal_user">
+										<table id="recomend_table" class="table text-center">
+											<tr >
+												<td><img src="${item.u_img}" alt="프사"></td>
+												<td>
+													<ul>
+														<li>${item.name}(${item.id})</li>
+														<li>관심직종:${item.f_cate}</li>
+														<li>선호지역:${item.f_loc}</li>
+														<li>평점:${item.eval}</li>
+													</ul>
+												</td>
+											</tr>
+										</table>
+						            </div>
+						          </div>
+						        </div>
+							    </c:otherwise>
+							</c:choose>
+							</c:forEach>
+						</div>
+	            	</div>
+				</div>
+			</c:if>
 
 			<!-- 검색결과 -->
 			<c:if test="${pdto.rowCount > -1}">
@@ -381,10 +429,15 @@
 	
 	<!-- 유저 모달  -->
 	<script>
-	$('#result_table').on('click','.user_btn', function() {
+	$('body').on('click','.user_btn', function() {
 		console.log("8.[유저 프로필]"+$(this).parents("tr").attr('id'));
 		remove_data();
 		profile($(this).parents("tr").attr('id'));
+	});
+	$('body').on('click','.recomend_btn', function() {
+		console.log("8.[추천유저 프로필]"+$(this).attr('id'));
+		remove_data();
+		profile($(this).attr('id'));
 	});
 	</script>
 	

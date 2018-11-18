@@ -25,6 +25,11 @@ public class LSH extends SqlSessionDaoSupport{
 		return list;		
 	}
 
+	public List<ResultDTO> recommend_User(String mapper,Map<String,Object> map){
+		List<ResultDTO> list = getSqlSession().selectList(mapper,map);
+		return list;		
+	}
+
 	public ResultDTO getMy_fav(String mapper,String id){
 		ResultDTO x = getSqlSession().selectOne(mapper,id);
 		return x;

@@ -55,6 +55,7 @@ public class ProjectRoomService {
 				d_day = "&infin;";
 			}else {
 				end_d = temp[0]+"-"+temp[1]+"-"+temp[2].split(" ")[0];
+				
 				d_day = d_day(Integer.parseInt(temp[0]),Integer.parseInt(temp[1])-1,Integer.parseInt(temp[2].split(" ")[0]));
 			}
 

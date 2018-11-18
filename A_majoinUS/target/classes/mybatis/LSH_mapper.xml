@@ -365,5 +365,48 @@
 		        and end_d > trunc(sysdate)
 		)where rank <4 ]]>		
 	</select>
+	
+	<select id="recommend_User" parameterType="map" resultType="controller.LSH.ResultDTO">
+		select *
+		from(
+		    select  
+		            a.id,a.name,a.u_img,eval
+		            ,NVL(loc, 0) loc, NVL(job, 0) job, row_number() over (order by NVL(loc, 0)+NVL(job, 0) desc, eval desc) rank
+		            , f_loc, f_cate
+		    from
+		        member  a
+		        left outer join
+		        (select
+		            id
+		            ,LISTAGG(f_loc,', ') WITHIN GROUP (ORDER BY f_loc) f_loc
+		            ,sum(case when f_loc in(
+		            <if test="local != null">
+		  				<foreach item="item" collection="local" separator="," >
+		        			#{item}
+		  				</foreach>
+		  			</if>
+		            ) then 1 else 0 end) loc
+		            from f_location
+		            group by id
+		        ) b on (a.id = b.id)
+		        left outer join 
+		        (select
+		            id
+		            ,LISTAGG(f_cate,',') WITHIN GROUP (ORDER BY f_cate) f_cate
+		            ,sum(case when f_cate in(
+		            <if test="job != null">
+		  				<foreach item="item" collection="job" separator=",">
+		        			#{item}
+		  				</foreach>
+		  			</if>
+		            ) then 1 else 0 end) job
+		            from f_job
+		            group by id
+		        ) c on (a.id = c.id)
+		    where <![CDATA[
+		        blacklist = 'NO'
+		        and a.id != #{id} 
+		)where rank <4 ]]>
+	</select>
 
 </mapper>

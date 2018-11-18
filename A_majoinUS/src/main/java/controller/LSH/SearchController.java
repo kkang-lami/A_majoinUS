@@ -1,10 +1,12 @@
 package controller.LSH;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +33,36 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value="/SearchUserForm",method=RequestMethod.GET)
-	public String form(@ModelAttribute("command") SearchDTO dto,Model model) {
+	public String form(@ModelAttribute("command") SearchDTO dto,HttpServletRequest req,Model model) {
 		System.out.println("[프로젝트룸]▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
+		
+		String id = req.getSession().getAttribute("id").toString();
+		
 		dto.setSort("joindate");
 		dto.setSort_way("DESC");
 		
-		model.addAttribute("rowCount", -1);
+		model.addAttribute("recomend",getRecomendUser(id));
 		return "LSH/SearchUser";
 	}
 	
+	public List<ResultDTO> getRecomendUser(String id){
+		List<ResultDTO> Recomend_User = new ArrayList<ResultDTO>();
+		if(!id.equals("amajoinus@gmail.com")) {
+			Map<String,Object> map = service.getMy_fav(id);
+			Recomend_User = service.recommend_User(map);			
+		}
+		for(ResultDTO m : Recomend_User) {System.out.println(m);}
+		return Recomend_User;
+	} 
+	
+	
 	@RequestMapping(value="/SearchUserForm",method=RequestMethod.POST)
-	public String post(@ModelAttribute("command") SearchDTO dto,Model model) {
+	public String post(@ModelAttribute("command") SearchDTO dto,HttpServletRequest req,Model model) {
 		System.out.println("[멤버] 포스트실행"+dto);
 
-		PagingDTO pdto = DB(dto,1);
+		PagingDTO pdto = DB(dto,0);
 		model.addAttribute("pdto",pdto);
+		model.addAttribute("recomend",getRecomendUser(req.getSession().getAttribute("id").toString()));
 		return "LSH/SearchUser";
 	}
 	
@@ -164,6 +181,9 @@ public class SearchController {
 	}
 	
 	public PagingDTO DB(SearchDTO dto,int pageNum) {
+		if(pageNum == 0) {
+			pageNum = 1;
+		}
 
 		int pageSize = 2;
 		int pageBlock = 3;
