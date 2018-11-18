@@ -33,13 +33,13 @@ public class ProjectroomDTO {
 		return start_d;
 	}
 	public void setStart_d(String start_d) {
-		this.start_d = start_d;
+		this.start_d = start_d.split(" ")[0];
 	}
 	public String getEnd_d() {
 		return end_d;
 	}
 	public void setEnd_d(String end_d) {
-		this.end_d = end_d;
+		this.end_d = end_d.split(" ")[0];
 	}
 	public String getRegdate() {
 		return regdate;

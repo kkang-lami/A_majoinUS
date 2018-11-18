@@ -48,7 +48,7 @@ public class JEJ extends SqlSessionDaoSupport{
 	}
 
 	
-	public void insert_holiday(String holiday_name, String holiday_start, String holiday_end, int pj_num) {
+	public HolidayDTO insert_holiday(String holiday_name, String holiday_start, String holiday_end, int pj_num) {
 		HolidayDTO holiday = new HolidayDTO();
 		holiday.setPj_num(pj_num);
 		holiday.setH_name(holiday_name);
@@ -56,6 +56,7 @@ public class JEJ extends SqlSessionDaoSupport{
 		holiday.setH_end(holiday_end);
 		
 		getSqlSession().insert("JEJ_AUS.holiday_add",holiday);
+		return holiday;
 	}
 	
 	public void insert_schedule(ScheduleDTO dto) {		

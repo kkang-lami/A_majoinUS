@@ -1,9 +1,17 @@
 	$('body').on('click','.Team_btn', function() {
-		console.log("11.[프로젝트룸] "+getSessionId());
+		console.log("11-1.[프로젝트룸] "+getSessionId());
 		global.pj_num = 0;
 		global.receiver = "";
 		remove_Teamdata();
 		projectRoom($(this).parents("tr").attr('id'));
+	});
+	
+	$('body').on('click','.recomend_btn, .review_btn', function() {
+		console.log("11-2.[추천&리뷰 프로젝트룸] "+getSessionId());
+		global.pj_num = 0; 
+		global.receiver = "";
+		remove_Teamdata();
+		projectRoom($(this).attr('id'));
 	});
 	
 

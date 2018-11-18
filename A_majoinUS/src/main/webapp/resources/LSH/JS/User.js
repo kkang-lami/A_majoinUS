@@ -1,29 +1,3 @@
-/*<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
- * 
- * <a href="#" id="${item.id}" class="user_btn" data-toggle='modal' data-target='#modal_user'></a>
- * 
- * <%
-	String cp = request.getContextPath();
-	request.setCharacterEncoding("UTF-8");
-	%>
- * 
- * 
- * $('body').on('click','.user_btn', function() {
-	console.log("[유저 프로필]");
-	remove_data();
-	profile($(this).attr('id'));		// 유저 아이디 입력;
-	});
-	
-	function getContext(){
-		var context = "<%=cp%>";
-		return context;
-	}
-
-	function getSessionId(){
-		var sessionid = '${sessionScope.userId}';
-		return sessionid;
-	}
-*/	
 function profile(userid){
 	var url= getContext()+"/aus/UserProfile";
 	var login_id = getSessionId();
@@ -35,6 +9,9 @@ function profile(userid){
 			},
 		dataType:"json",
 		success:function(args){
+			
+			global.pj_num = 0;
+			global.receiver = userid;
 			
 			load_head(args.x.profile,login_id);
 			if(args.x.port.length>0){
@@ -49,9 +26,10 @@ function profile(userid){
 		}
 	});
 }
-     
-function load_head(data,login_id){    
-	$('.profile-user-img').attr('src',getContext()+"/aus/userImg/"+data.u_img);
+
+function load_head(data,login_id){
+	
+	$('.profile-user-img').attr('src',data.u_img);
 	$('.profile-username').html(data.name+"<small>("+data.id+")</small>");
 	$('.profile-star').html(data.eval+"점");
 	
@@ -108,7 +86,8 @@ function load_review(data){
 }
 
 function remove_data(){
-	
+	global.pj_num = 0;
+	global.receiver = "";
 	$('.profile-job').html('관심있는 직군이 없습니다');
 	$('.profile-local').html('선호하는 지역이 없습니다');
 	$('#follow_btn').attr('class','btn btn-primary btn-block');
@@ -134,7 +113,6 @@ function follow(status){
 	var url=getContext()+"/aus/follow";
 	var id = $('.profile-username small').text().slice(1,-1);
 	var params = "id="+id+"&login_id="+getSessionId()+"&status="+status;
-	console.log(params);
 
 		$.ajax({
 		type:"post",

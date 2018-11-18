@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- 멤버상세 모달 -->
 <div class="modal fade" id="modal_user">
 	<div class="modal-dialog list-inline">
@@ -21,7 +19,7 @@
 				<!-- Profile Image -->
 				<div class="box box-body box-primary">
 
-					<img class="profile-user-img img-responsive img-circle" src="" alt="회원 사진" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:80px; height:80px; overflow:hidden;">
+					<img class="profile-user-img img-responsive img-circle" src="" alt="회원 사진">
 					<h3 class="profile-username text-center">
 						이름<small>(아이디)</small>
 					</h3>
@@ -36,11 +34,9 @@
 							<p class="profile-local text-muted">선호하는 지역이 없습니다</p></li>
 					</ul>
 
-					<div class="col-md-8 ">
-						<a href="#" id="follow_btn"><b>Follow</b></a>
-					</div>
-					<div class="col-md-4">
-						<a href="#" id="issue_btn" data-toggle="popover" title="신고사유"><b>신고</b></a>
+					<div class="profile_btn">
+						<div class="col-md-8 "><a href="#" id="follow_btn"><b>Follow</b></a></div>
+						<div class="col-md-4"><a href="#" id="issue_btn" data-toggle="popover" title="신고사유"><b>신고</b></a></div>
 					</div>
 				</div>
 

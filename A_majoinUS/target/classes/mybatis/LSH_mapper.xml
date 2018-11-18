@@ -30,13 +30,13 @@
 	<!-- ////////////////////////////////////////// 프로젝트룸 메인 ///////////////////////////////////////// -->
 	<select id="getProgress" parameterType="int" resultType="map" >
 		select * from(
-         select a.id mem_id, a.pj_num, a.pjm_num,d.id leader, pj_name, start_d, end_d,name, u_img, blacklist, state 
-         from pj_mem a
-         inner join projectroom d on(a.pj_num = d.pj_num)
-         inner join member b on(a.id = b.id)
-         left outer join project_workboard c on(a.pjm_num = c.pjm_num)
-         where a.pj_num = #{pj_num}
-) pivot (count(state) for state in('진행중' as ongoing,'완료' as complete,'지연' as delay))
+					select a.id mem_id, a.pj_num, a.pjm_num,d.id leader, pj_name, start_d, end_d,name, u_img, blacklist, state 
+					from pj_mem a
+					inner join projectroom d on(a.pj_num = d.pj_num)
+					inner join member b on(a.id = b.id)
+					left outer join project_workboard c on(a.pjm_num = c.pjm_num)
+					where a.pj_num = #{pj_num}
+		) pivot (count(state) for state in('진행중' as ongoing,'완료' as complete,'지연' as delay))
 	</select>
 
 	<update id="update_leader" parameterType="Map">
@@ -313,6 +313,57 @@
 			    ) base
 			) total
 			WHERE  total.RNUM = 1
+	</select>
+	
+	<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<select id="getMy_fav" parameterType="String" resultType="controller.LSH.ResultDTO">
+		select f_loc,f_cate from member a
+			left outer join (select id, LISTAGG(f_loc,', ') WITHIN GROUP (ORDER BY f_loc) f_loc from f_location  group by id) b on (a.id = b.id)
+			left outer join (select id, LISTAGG(f_cate,', ') WITHIN GROUP (ORDER BY f_cate) f_cate from f_job  group by id) c on (a.id = c.id)
+			where a.id = #{id}
+	</select>
+	
+	<select id="recommend_Team" parameterType="map" resultType="controller.LSH.ResultTeamDTO">
+		select * 
+		from(
+			select  
+	            a.pj_num,pj_name,start_d,end_d
+	            ,NVL(loc, 0) loc, NVL(job, 0) job, row_number() over (order by NVL(loc, 0)+NVL(job, 0) desc, regdate desc) rank
+	    		, pj_loc, pj_cate
+			from
+		        projectroom a
+		        left outer join
+		        (select
+		            pj_num
+		            ,LISTAGG(pj_loc,', ') WITHIN GROUP (ORDER BY pj_loc) pj_loc
+		            ,sum(case when pj_loc in (
+		            <if test="local != null">
+		  				<foreach item="item" collection="local" separator="," >
+		        			#{item}
+		  				</foreach>
+		  			</if>
+		            ) then 1 else 0 end) loc
+		            from pj_location
+		            group by pj_num
+		        ) b on (a.pj_num = b.pj_num)
+		        left outer join 
+		        (select
+		            pj_num
+		            ,LISTAGG(pj_cate,',') WITHIN GROUP (ORDER BY pj_cate) pj_cate
+		            ,sum(case when pj_cate in(
+		            <if test="job != null">
+		  				<foreach item="item" collection="job" separator=",">
+		        			#{item}
+		  				</foreach>
+		  			</if>
+		  			) then 1 else 0 end) job
+		            from pj_job
+		            group by pj_num
+		        ) c on (a.pj_num = c.pj_num)
+		    where 
+		        <![CDATA[ EXISTS (SELECT m.id from member m where a.id = m.id and blacklist = 'NO' and a.id != #{id}) 
+		        and end_d > trunc(sysdate)
+		)where rank <4 ]]>		
 	</select>
 
 </mapper>

@@ -32,22 +32,19 @@ public class SearchController {
 	
 	@RequestMapping(value="/SearchUserForm",method=RequestMethod.GET)
 	public String form(@ModelAttribute("command") SearchDTO dto,Model model) {
-		System.out.println("▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
+		System.out.println("[프로젝트룸]▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
 		dto.setSort("joindate");
 		dto.setSort_way("DESC");
-		model.addAttribute("rowCount", -1);
 		
-		System.out.println("[-] 겟실행"+dto);
+		model.addAttribute("rowCount", -1);
 		return "LSH/SearchUser";
 	}
 	
 	@RequestMapping(value="/SearchUserForm",method=RequestMethod.POST)
 	public String post(@ModelAttribute("command") SearchDTO dto,Model model) {
-		System.out.println("▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
-		System.out.println("[0] 포스트실행"+dto);
+		System.out.println("[멤버] 포스트실행"+dto);
 
 		PagingDTO pdto = DB(dto,1);
-		
 		model.addAttribute("pdto",pdto);
 		return "LSH/SearchUser";
 	}
@@ -83,11 +80,10 @@ public class SearchController {
 
 	@RequestMapping(value="/UserSort",method=RequestMethod.POST)
 	public void sort(SearchDTO dto,@RequestParam(defaultValue="0")int pageNum,HttpServletResponse resp) throws Exception{
-		System.out.print("[3](∩ 'ω')⊃━♡°.*・｡♡° sort실행 ::"+pageNum);
+		System.out.print("[멤버](∩ 'ω')⊃━♡°.*・｡♡° sort실행 ::"+pageNum);
 		resp.setContentType("text/html;charset=utf-8");
 		
 		PagingDTO pdto = DB(dto,pageNum);
-		
 		JSONObject jso = new JSONObject();
 		jso.put("pdto", pdto);
 		PrintWriter out = resp.getWriter();
@@ -96,11 +92,10 @@ public class SearchController {
 	
 	@RequestMapping(value="/show",method=RequestMethod.POST)
 	public void plus_member(String id,HttpServletResponse resp) throws Exception{
-		System.out.println("[4] 내 프로젝트 목록 "+ id);
+		System.out.println("[멤버] 내 프로젝트 목록 "+ id);
 		resp.setContentType("text/html;charset=utf-8");
 		
 		List<HashMap<String,Object>> list = service.getMyProject(id);
-		
 		JSONObject jso = new JSONObject();
 		jso.put("mine", list);
 		PrintWriter out = resp.getWriter();
@@ -109,7 +104,7 @@ public class SearchController {
 
 	@RequestMapping(value="/insert_Message",method=RequestMethod.POST)
 	public void insert_Message(AlarmDTO alarm,HttpServletResponse resp) throws Exception{
-		System.out.println("[5] 메세지전송 "+ alarm);
+		System.out.println("[통합] 메세지전송 ::"+ alarm.getA_type());
 		resp.setContentType("text/html;charset=utf-8");
 		int result = service.insert_Message(alarm);
 		System.out.println("결과는? 두구두구:: "+result);
@@ -117,23 +112,19 @@ public class SearchController {
 	
 	@RequestMapping(value="/UserProfile",method=RequestMethod.POST)
 	public void profile(String id,String login_id,HttpServletResponse resp) throws Exception{
-		System.out.println("[6] 멤버프로필 "+ id +"~"+ login_id);
+		System.out.println("[멤버] 상세보기 "+ id +"~"+ login_id);
 		resp.setContentType("text/html;charset=utf-8");
 		
-		Map<String,Object> m = new HashMap<String,Object>();
-		m.put("what", id);
-		m.put("colum", "mem_view");
-		m.put("table", "member");
-		m.put("where", "id");
-		int result = service.update_view(m);
-		System.out.println("[-]조회수"+result);
-
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("id", id);
 		param.put("login_id", login_id);
 		Map<String,Object> x = service.get_profile(param);
 		System.out.println("[-]멤버정보 "+x);
-		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★\n"+x.get("profile")+"\n★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		
+		if(!login_id.equals("amajoinus@gmail.com")) {
+			updateView(id);
+		}
+		
 		JSONObject jso = new JSONObject();
 		jso.put("x", x);
 		PrintWriter out = resp.getWriter();
@@ -142,7 +133,7 @@ public class SearchController {
 
 	@RequestMapping(value="/follow",method=RequestMethod.POST)
 	public void follow(String id,String login_id,String status,HttpServletResponse resp) throws Exception{
-		System.out.println("[7] 친구등록 "+ id +"~"+ login_id+"~"+status);
+		System.out.println("[멤버] 친구 등록&삭제 "+ id +"~"+ login_id+"~"+status);
 		resp.setContentType("text/html;charset=utf-8");
 		int result = service.follow(login_id, id, status);
 		System.out.println("결과는? 두구두구:: "+result);
@@ -150,7 +141,7 @@ public class SearchController {
 	
 	@RequestMapping(value="/issue",method=RequestMethod.POST)
 	public void issue(String id,String login_id,@RequestParam(defaultValue="0")int pj_num,String is_content,HttpServletResponse resp) throws Exception{
-		System.out.println("[8] 멤버신고 "+ id +"~"+ login_id+" ~ "+is_content+"!!!!! "+pj_num);
+		System.out.println("[통합] 신고 "+ id +"~"+ login_id+" ~ "+is_content+"!!!!! "+pj_num);
 		resp.setContentType("text/html;charset=utf-8");
 		
 		int result = service.issue(new IssueDTO(login_id,id,pj_num,is_content));
@@ -160,6 +151,16 @@ public class SearchController {
 		jso.put("x", result);
 		PrintWriter out = resp.getWriter();
 		out.print(jso);
+	}
+	
+	public void updateView(String id) {
+		Map<String,Object> m = new HashMap<String,Object>();
+		m.put("what", id);
+		m.put("colum", "mem_view");
+		m.put("table", "member");
+		m.put("where", "id");
+		int result = service.update_view(m);
+		System.out.println("[-]조회수"+result);
 	}
 	
 	public PagingDTO DB(SearchDTO dto,int pageNum) {

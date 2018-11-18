@@ -239,5 +239,48 @@ public class SearchService {
 		byte[] data = Files.readAllBytes(path);  // 절대경로에있는 파일을 byte로 읽어온다
 		return data;
 	}
+	
+	public Map<String,Object> getMy_fav(String id){
+		Map<String,Object> map= new HashMap<String,Object>();
+		List<String> list = new ArrayList<String>();
+		String[] arr = {};
+		try {
+			ResultDTO dto = dao.getMy_fav("LSH_AUS.getMy_fav",id);
+			
+			arr = dto.getF_cate().split(", ");
+			for(int i=0 ; i<arr.length; i+=1) {
+				list.add(arr[i]);
+			}
+			map.put("job", list);
 
+			list = new ArrayList<String>();
+			
+			arr = dto.getF_loc().split(", ");
+			for(int i=0 ; i<arr.length; i+=1) {
+				list.add(arr[i]);
+			}
+			map.put("local", list);
+			map.put("id", id);
+		}catch (Exception e) {
+			System.out.println("[에러] getMy_fav 서비스 실패 ::"+e.toString());
+		}
+		return map;
+	}
+	
+	List<ResultTeamDTO> recommend_Team(Map<String,Object> map){
+		List<ResultTeamDTO> list = new ArrayList<ResultTeamDTO>();
+		try {
+			list = dao.recommend_Team("LSH_AUS.recommend_Team",map);
+			int len = list.size();
+			if(len<3) {
+				for(int i = 0; i < 3-len; i+=1) {
+					list.add(new ResultTeamDTO());
+				}
+			}
+			
+		}catch (Exception e) {
+			System.out.println("[에러] 팀추천 서비스 실패 ::"+e.toString());
+		}
+		return list;		
+	}
 }

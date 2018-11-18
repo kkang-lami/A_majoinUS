@@ -9,5 +9,6 @@
 	<definition name="header" template="/WEB-INF/TilesTemplate/header.jsp" />
 	<definition name="left"   template="/WEB-INF/TilesTemplate/left.jsp" />
 	<definition name="footer" template="/WEB-INF/TilesTemplate/footer.jsp" />
+	<definition name="aside" template="/WEB-INF/TilesTemplate/aside.jsp" />
 
 </tiles-definitions>

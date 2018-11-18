@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!-- 장바구니 모달 -->
 <div class="modal fade" id="modal_cart">
 	          <div class="modal-dialog modal-lg">
 	            <div class="modal-content">

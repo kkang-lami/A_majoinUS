@@ -38,6 +38,9 @@
 
 <insert id="holiday_add" parameterType="project.DTO.HolidayDTO">
 	insert into holiday values(holiday_seq.nextval,#{h_name},#{h_start},#{h_end},#{pj_num})
+	 <selectKey keyProperty="h_num" resultType="Integer" order="AFTER">
+       		select holiday_seq.currval from dual
+    </selectKey>
 </insert>
 
 

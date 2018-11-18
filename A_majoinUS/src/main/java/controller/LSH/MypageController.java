@@ -49,16 +49,14 @@ public class MypageController {
 		
 		//진행중인 프로젝트
 		List<ProjectListDTO> ongoing_list = dao.ongoing_getListData(receiver);
-		//
+
+		
 		
 		System.out.println("[투두리스트 실행]");
-		
 		String id = request.getSession().getAttribute("id").toString();
 		
 		List<Todo_listDTO> list = service.getTodo(id);
-		for(Todo_listDTO m : list) {
-			System.out.println(m);
-		}
+
 		model.addAttribute("ongoing_list",ongoing_list);
 		model.addAttribute("projectApplyAlarm_size", projectApplyAlarm.size());
 		model.addAttribute("projectApplyAlarm", projectApplyAlarm);

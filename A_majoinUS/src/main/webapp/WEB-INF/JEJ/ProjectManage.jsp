@@ -192,20 +192,17 @@
 		}         
 		
     	</script> --%>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
     <script>
+    
 		$(document).ready(initPage);
 		
 		function initPage() {
-			level1();
-			show_search_tag();
-			show_sort();
-			$('.pagination #${pdto.pageNum}').addClass("active");
+			$('#modal_Team .modal-footer').remove();
 		}
-		
-		function getPageNum(){
-			var pageNum = $('.pagination .active').attr('id');
-			return (pageNum === undefined)? 1 : pageNum;
-		}
+
 		
 		function getContext(){
 			var context = "<%=cp%>";
@@ -227,7 +224,6 @@
     	
     	
 	
-<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 	
 </body>
 </html>

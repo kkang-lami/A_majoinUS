@@ -14,28 +14,6 @@
 	request.setCharacterEncoding("UTF-8");
 	%>
 
-<script>
-
-function blacklistMember(formName) {
-	var check = confirm("블랙리스트에 추가하시겠습니까?");
-	if(check) {
-		window.location.href = "./blacklistMember?id="+formName.id.value;
-		alert("완료되었습니다.");
-	}
-}
-
-function authorityBack(formName) {
-	var check = confirm("블랙리스트에서 권한을 복귀합니다.");
-	if(check){
-       	// url="./authorityBack";
-       	 //?t_id="+formName.teacher_id.value;
-       	 window.location.href = "./authorityBack?id="+formName.id.value;
-       	 alert("복귀되었습니다.");
-       	// window.open(url, "post");       
-	}	
-}
-
-</script>
 <style>
 #select_box_12 {
 	height : 22px;
@@ -285,12 +263,6 @@ function authorityBack(formName) {
             <!-- /.box-footer -->
           </div>	
 	
-	<!--  -->
-	<div id="result_table" ></div>
-	
-	<div id="getUserModal"></div>
-	<!--  -->
-	
 	</section>
 		</div>
 	</div>
@@ -299,34 +271,59 @@ function authorityBack(formName) {
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />	
 	
-<%-- <script src="<%=request.getContextPath()%>/resources/JEJ/profile_modal.js"></script> --%>
-<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
 <script>  
 
-  $('#result_table').on('click','.user_btn', function() {
-		console.log("8.멤버프로필");
-		profile($(this).parents("tr").attr('id'));
-		remove_data();
-	});
-  $('#result_table2').on('click','.user_btn', function() {
-		console.log("블랙리스트 프로필");
-		profile($(this).parents("tr").attr('id'));
-		remove_data();
-	});
+	$(document).ready(initPage);
 	
+	function initPage() {
+		$('.profile_btn').remove(); 
+	}
+
 	function getContext(){
 		var context = "<%=cp%>";
 		return context;
 	}
 
 	function getSessionId(){
-		var sessionid = '${sessionScope.userId}';
+		var sessionid = '${sessionScope.id}';
 		return sessionid;
 	}
 	var global = {
 		    i : 0,
-		    receiver: ""
+		    receiver: "",
+		    pj_num: 0
 		};
+	
+	$('#result_table').on('click','.user_btn', function() {
+		console.log("8.[유저 프로필]"+$(this).parents("tr").attr('id'));
+		remove_data();
+		profile($(this).parents("tr").attr('id'));
+	});
+</script>
+<script>
+
+function blacklistMember(formName) {
+	var check = confirm("블랙리스트에 추가하시겠습니까?");
+	if(check) {
+		window.location.href = "./blacklistMember?id="+formName.id.value;
+		alert("완료되었습니다.");
+	}
+}
+
+function authorityBack(formName) {
+	var check = confirm("블랙리스트에서 권한을 복귀합니다.");
+	if(check){
+       	// url="./authorityBack";
+       	 //?t_id="+formName.teacher_id.value;
+       	 window.location.href = "./authorityBack?id="+formName.id.value;
+       	 alert("복귀되었습니다.");
+       	// window.open(url, "post");       
+	}	
+}
+
 </script>
 </body>
 </html>

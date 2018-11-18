@@ -174,7 +174,7 @@
 			
 			
 			<!-- 성희 코딩 -->
-			<div class="box box-danger" style="position: relative; left: 0px; top: 0px;">
+			<div class="box box-danger todo_box">
 			
 	            <div class="box-header ui-sortable-handle" style="cursor: move;">
 	              <i class="ion ion-clipboard"></i>
@@ -211,6 +211,23 @@
 </div>
 
 </body>
+<style>
+	.todo_box{
+		position: relative; left: 0px; top: 0px;
+	}
+	.done{
+		color: #999; text-decoration: line-through;
+	}
+	.scrollBlind{
+	    height:20%; overflow-y:scroll;
+	}
+	.todo-list>li{
+	    background: #ffffff; margin-right: 8px; margin-bottom: 3px;
+	}
+	.todo_box .btn-warning {
+		margin-right: 5px;
+	}
+</style>
 <script>
 window.onload = () => {      
     //이벤트를 적용할 엘리먼트 선택
@@ -323,7 +340,6 @@ function makeList(target, data) {
 //디비등록
 function insertTodo(todo_num,todo){
 	var url="<%=cp%>/aus/insertTodo";
-	alert(todo_num);
 	var params = "id=${sessionScope.id}&todo_num="+todo_num+"&todo="+todo;
 	console.log("[params] "+params);
 	
@@ -403,15 +419,4 @@ $('body').on('click','.checkbox-inline',function(){
     }
 });
 </script>
-<style>
-	.done{
-		color: #999;
-		text-decoration: line-through;
-	}
-	.scrollBlind{
-    height:20%;
-    overflow-y:scroll;
-	} 
-
-</style>
 </html>

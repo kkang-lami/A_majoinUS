@@ -23,7 +23,7 @@ public class MypageService {
 		try {
 			list = dao.getTodo("LSH_AUS.getTodo",id);
 		}catch (Exception e) {
-			System.out.println("[에러] Level1서비스실패 ::"+e.toString());
+			System.out.println("[에러] getTodo 서비스실패 ::"+e.toString());
 		}
 		return list;
 	}

@@ -65,7 +65,7 @@
 					    <ul class="users-list clearfix">
 						<c:forEach var="item" items="${list}" begin="0" end="3" step="1">
 						<li>
-							<img src="<%=request.getContextPath() %>/aus/userImg/${item.U_IMG}" alt="User Image" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width: 128px; height:128px; overflow:hidden;">
+							<img src="<%=request.getContextPath() %>/resources/dist/img/user1-128x128.jpg" alt="User Image">
 							<c:if test="${item.BLACKLIST eq 'NO'}">
 							<a id="${item.MEM_ID}" class="user_btn users-list-name" href="#" data-toggle='modal' data-target='#modal_user'>${item.NAME}</a>
 							</c:if>
@@ -82,7 +82,7 @@
 					    <ul class="users-list clearfix">
 						<c:forEach var="item" items="${list}" begin="4" step="1">
 						<li>
-							<img src="<%=request.getContextPath() %>/aus/userImg/${item.u_img}" alt="User Image" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';">
+							<img src="<%=request.getContextPath() %>/resources/dist/img/user1-128x128.jpg" alt="User Image">
 							<c:if test="${item.BLACKLIST eq 'NO'}">
 							<a id="${item.MEM_ID}" class="user_btn users-list-name" href="#" data-toggle='modal' data-target='#modal_user'>${item.NAME}</a>
 							</c:if>
@@ -148,9 +148,7 @@
 	         </div>
 			</div>
 	
-			<!-- 프로필 모달 -->
-			<div id="getUserModal"></div>
-			
+	
 			<!-- 멤버 관리 모달 -->
 			<div class="modal fade" id="modal-leader">
 			 <div class="modal-dialog list-inline">
@@ -168,9 +166,14 @@
 							<div class="box-header with-border"><strong>멤버 목록</strong><small>(${fn:length(list)-1})</small></div>
 
 							<div class="box-body">
-								<select multiple="" class="form-control" style="height: 164px;">
+								<select multiple class="form-control" style="height: 164px;">
 								<c:forEach var="item" items="${list}" begin="1">
-					           	<option>${item.MEM_ID}(${item.NAME})</option>
+					           	<c:if test="${item.BLACKLIST eq 'NO'}">
+					           	<option value="${item.PJM_NUM}">${item.MEM_ID}(${item.NAME})</option>
+								</c:if>
+								<c:if test="${item.BLACKLIST ne 'NO'}">
+								<option value="${item.PJM_NUM}" class="ban">${item.MEM_ID}(${item.NAME})</option>
+								</c:if>
 								</c:forEach>
 								</select>
 								
@@ -189,129 +192,71 @@
 	         </div>
 		    </div>
 
+		</section>
+
 		    <!-- 체크 모달 -->
-			<div class="modal fade check_modal" id="modal-check">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title"></h4>
-			</div>
-
-			<div class="modal-body text-center"></div>
-
-			<div class="modal-footer">
-				<a href="#" class="send_btn btn btn-danger pull-left" id="${list[0].PJ_NUM}">OK</a> <a
-					href="#" class=" btn btn-default" data-dismiss="modal">CANCLE</a>
-			</div>
-		</div>
-	</div>
-</div>
+			<c:import url="${cp}/resources/LSH/Modal/RoomCheck.jsp"/>
 
 		    <!-- 모달 경고  -->
-			<div class="modal fade check_modal" id="modal-warn">
-		     <div class="modal-dialog modal-sm">
-		    	<div class="modal-content">
-		            
-		        	<div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                <span aria-hidden="true">&times;</span></button>
-		                <h4 class="modal-title"></h4>
-		    		</div>
-		              
-		        	<div class="modal-body text-center">
-						<p>멤버를 선택하세요</p>
-						<hr>
-						<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-		           	</div>
-	            </div>
-		     </div>
-	        </div>
-		    
-		</section>
+			<c:import url="${cp}/resources/LSH/Modal/RoomWarn.jsp"/>
+
+			<!-- 프로필 모달 -->
+			<c:import url="${cp}/resources/LSH/Modal/User.jsp"/>
 	</div>		
 	<!-- /content-wrapper -->
+	<tiles:insertDefinition name="aside" />
+	<tiles:insertDefinition name="footer" />
+	
 </div>
-<!-- /wrapper -->
 
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
-<script>
-
-	$(document).ready(initPage);
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Transfer_Kick.js"></script>
 	
-	function initPage() {
-		$("#getUserModal").load(getContext()+"/resources/LSH/modal_profile.html");
-		$('.user_btn:first').prepend('<small class="badge bg-red">Leader</small>');
-		$('.ban').attr('data-toggle','');
-	}
- 
-	function getContext(){
-		var context = "<%=cp%>";
-		return context;
-	}
-
-	function getSessionId(){
-		var sessionid = '${sessionScope.id}';
-		return sessionid;
-	}
-	
-	$('body').on('click','.user_btn', function() {
-		remove_data();
-		if($(this).attr('class').indexOf('ban') > -1){
-			alert("차단된 회원입니다");
-		}else{
-			profile($(this).attr('id'));		// 유저 아이디 입력;
+	<!-- 기본 이벤트 -->
+	<script>
+		$(document).ready(initPage);
+		
+		function initPage() {
+			$('.user_btn:first').prepend('<small class="badge bg-red">Leader</small>');
+			$('.users-list .ban').attr('data-toggle','');
 		}
-	});
-
-</script>
-
-
-<!-- 플젝초대 모달 -->
-<script>
-$('.l_check_btn').on('click',function(){
-    var pj_num = $('#modal-check .send_btn').attr('id');
-    var str = $('#modal-leader option:selected').text();
-    var pjm_num = $('#modal-leader option:selected').val();
-    
-    if(str === ""){
-    	$('#modal-warn').modal('show');
-    }else if($('#modal-leader option:selected').attr('class') === "ban"){
-    	$('#modal-ban').modal('show');
-    }else{
-       var arr = str.split('(');
-       var id = arr[0];
-       var name = arr[1].split(')')[0];
- 
-       if($(this).attr('id') === "transfer"){
-          
-       $('#modal-check .modal-title').html('팀장 위임');
-       $('#modal-check .modal-body').html('<p>\''+name+'\' 님을 팀장으로 위임 하시겠습니까?</p>');
-       $('#modal-check .send_btn').attr('href',getContext()+"/aus/ProejctRoom/transfer?pj_Num="+pj_num+"&id="+id);
-       $('#modal-check').modal('show');
-          
-       }else{
-          
-       $('#modal-check .modal-title').html('멤버 추방');
-       $('#modal-check .modal-body').html('<p class="text-red">\''+name+'\' 님이 작성한 글은 <br/>복구할 수 없습니다</p><p>멤버를 추방 하시겠습니까?</p>');
-       $('#modal-check .send_btn').attr('href',getContext()+"/aus/ProejctRoom/kick?pj_Num="+pj_num+"&pjm_num="+pjm_num);
-       $('#modal-check').modal('show');
-          
-       }
-    }
-});
-</script>
+	 
+		function getContext(){
+			var context = "<%=cp%>";
+			return context;
+		}
+	
+		function getSessionId(){
+			var sessionid = '${sessionScope.id}';
+			return sessionid;
+		}
+		
+		var global = {
+			    i : 0,
+			    receiver: "",
+			    pj_num: 0
+			};
+		
+		$('body').on('click','.user_btn', function() {
+			remove_data();
+			if($(this).attr('class').indexOf('ban') > -1){
+				alert("차단된 회원입니다");
+			}else{
+				profile($(this).attr('id'));		
+			}
+		});
+	</script>
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- ///////////////////////////////////////right side bar//////////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 
  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+ 
+ 
+<%--   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
       <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><!-- <i class="fa fa-home"></i> --></a></li>
@@ -422,7 +367,7 @@ $('.l_check_btn').on('click',function(){
       <!-- /.tab-pane -->
     </div>
   </aside>
-<div class="control-sidebar-bg"></div>
+<div class="control-sidebar-bg"></div> --%>
 
 
 </body>
@@ -445,9 +390,6 @@ $('.l_check_btn').on('click',function(){
 		background: "#f37d7d";
 		
 	}
-	
-/* 	.red{
-		background-color: #dd4b39;
-	} */
+
 </style>
 </html>

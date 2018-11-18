@@ -20,6 +20,18 @@ import project.DTO.Todo_listDTO;
 @Repository
 public class LSH extends SqlSessionDaoSupport{
 
+	public List<ResultTeamDTO> recommend_Team(String mapper,Map<String,Object> map){
+		List<ResultTeamDTO> list = getSqlSession().selectList(mapper,map);
+		return list;		
+	}
+
+	public ResultDTO getMy_fav(String mapper,String id){
+		ResultDTO x = getSqlSession().selectOne(mapper,id);
+		return x;
+	}
+	
+	//////////////////////////////////////////////////////////////////////////
+
 	public List<Todo_listDTO> getTodo(String mapper,String id){
 		List<Todo_listDTO> list = getSqlSession().selectList(mapper,id);
 		return list;

@@ -2,6 +2,7 @@ package controller.LSH;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ import project.DTO.ProjectroomDTO;
 public class SearchTeamController {
 	
 	private SearchService service;
+	private List<ResultTeamDTO> Recomend_Team = new ArrayList<ResultTeamDTO>();
 	
 	@Autowired	
 	public void setSearchService(SearchService service) {
@@ -33,36 +36,42 @@ public class SearchTeamController {
 	
 	@RequestMapping(value="/SearchTeamForm",method=RequestMethod.GET)
 	public String form(@ModelAttribute("command") SearchTeamDTO dto,HttpServletRequest req,Model model) {
+		System.out.println("[프로젝트룸] ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
+
+		String id = req.getSession().getAttribute("id").toString();
+		getRecomendTeam(id);
 		
 		dto.setSort("regdate");
 		dto.setSort_way("DESC");
 		
 		model.addAttribute("cart",getCart(req));
-		System.out.println("[-] 겟실행"+dto);
+		model.addAttribute("recomend",Recomend_Team);
 		return "LSH/SearchTeam"; 
 	}
 	
+	public void getRecomendTeam(String id){
+		if(!id.equals("amajoinus@gmail.com")) {
+			Map<String,Object> map = service.getMy_fav(id);
+			Recomend_Team = service.recommend_Team(map);			
+		}
+/*		for(ResultTeamDTO m : Recomend_Team) {System.out.println(m);}
+*/		
+	} 
+	
 	@RequestMapping(value="/SearchTeamForm",method=RequestMethod.POST)
 	public String post(@ModelAttribute("command") SearchTeamDTO dto,HttpServletRequest req,Model model) {
-		System.out.print("[0] 포스트실행"+dto);
+		System.out.println("[프로젝트룸] 포스트실행"+dto);
 
 		PagingDTO pdto = DB(dto,0);
-		
 		model.addAttribute("pdto",pdto);
 		model.addAttribute("cart",getCart(req));
+		model.addAttribute("recomend",Recomend_Team);
 		return "LSH/SearchTeam";
 	}
 	
-	public List<ProjectroomDTO> getCart(HttpServletRequest req) {
-		System.out.println("[-] 카트목록");
-		String id = req.getSession().getAttribute("id").toString();
-		List<ProjectroomDTO> list = service.getCart(id);
-		return list;
-	}
-
 	@RequestMapping(value="/TeamSort",method=RequestMethod.POST)
 	public void sort(SearchTeamDTO dto,int pageNum,HttpServletResponse resp) throws Exception{
-		System.out.println("[3](∩ 'ω')⊃━♡°.*・｡♡° sort실행 :: "+ dto);
+		System.out.println("[프로젝트룸](∩ 'ω')⊃━♡°.*・｡♡° 정렬 :: "+ dto);
 		resp.setContentType("text/html;charset=utf-8");
 		Date today = new Date();
 		String str = "";
@@ -90,20 +99,15 @@ public class SearchTeamController {
 	}
 
 	@RequestMapping(value="/ProjectProfile",method=RequestMethod.POST)
-	public void profile(String pj_num,HttpServletResponse resp) throws Exception{
-		System.out.println("[4] 프로필 "+ pj_num);
+	public void profile(String pj_num,HttpServletResponse resp,HttpServletRequest req) throws Exception{
+		System.out.println("[프로젝트룸] 상세보기 "+ pj_num);
 		resp.setContentType("text/html;charset=utf-8");
-		
-		Map<String,Object> m = new HashMap<String,Object>();
-		m.put("what", pj_num);
-		m.put("colum", "pj_view");
-		m.put("table", "projectroom");
-		m.put("where", "pj_num");
-		int result = service.update_view(m);
-		System.out.println("[-]조회수"+result);
 		
 		Map<String, Object> x = service.get_ProjectRoom(pj_num);
 		
+		if(!req.getSession().getAttribute("id").toString().equals("amajoinus@gmail.com")) {
+			updateView(pj_num);
+		}
 		JSONObject jso = new JSONObject();
 		jso.put("x", x);
 		PrintWriter out = resp.getWriter();
@@ -112,10 +116,26 @@ public class SearchTeamController {
 	
 	@RequestMapping(value="/favorite",method=RequestMethod.POST)
 	public void favorite(int pj_num,String login_id,String status,HttpServletResponse resp) throws Exception{
-		System.out.println("[7] 즐겨찾기 "+ pj_num +"~"+ login_id+"~"+status);
+		System.out.println("[프로젝트룸] 스크랩 추가&삭제 "+ pj_num +"~"+ login_id+"~"+status);
 		resp.setContentType("text/html;charset=utf-8");
+		
 		int result = service.favorite(pj_num,login_id,status);
 		System.out.println("결과는? 두구두구:: "+result);
+	}
+	
+	public void updateView(String pj_num) {
+		Map<String,Object> m = new HashMap<String,Object>();
+		m.put("what", pj_num);
+		m.put("colum", "pj_view");
+		m.put("table", "projectroom");
+		m.put("where", "pj_num");
+		int result = service.update_view(m);
+		System.out.println("[-]조회수"+result);
+	}
+	
+	public List<ProjectroomDTO> getCart(HttpServletRequest req) {
+		List<ProjectroomDTO> list = service.getCart(req.getSession().getAttribute("id").toString());
+		return list;
 	}
 	
 	public PagingDTO DB(SearchTeamDTO dto,int pageNum) {
@@ -144,14 +164,12 @@ public class SearchTeamController {
 		int startRow = (pageNum - 1) * pageSize + 1;
 		int endRow = pageNum * pageSize;
 		
-		System.out.print("::현재페이지"+pageNum+"::전체"+rowCount+"~첫글 번호"+startRow+"~끝글번호"+endRow);
+/*		System.out.print("::현재페이지"+pageNum+"::전체"+rowCount+"~첫글 번호"+startRow+"~끝글번호"+endRow);
 		System.out.println("::페이지수 "+pageCount+" ::시작페이지 "+startPage+" ::끝페이지 "+endPage);
-		
+*/		
 		dto.setStartRow(startRow);
 		dto.setEndRow(endRow);
 		List<ResultTeamDTO> list = service.getResultTeam(dto);
-		
-		System.out.println("[경고]"+list);
 		
 		for(ResultTeamDTO mm : list) {
 			if(mm.getFavs() != null) {
@@ -165,7 +183,6 @@ public class SearchTeamController {
 		}
 		
 		PagingDTO pdto = new PagingDTO(pageNum,rowCount,pageCount,startPage,endPage,list,pageBlock);
-		
 		
 		return pdto;
 	}

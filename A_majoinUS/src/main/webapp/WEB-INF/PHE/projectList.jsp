@@ -739,11 +739,7 @@ a {
 <!--  -->
 </section>
 	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
-	
-	<!-- 프로젝트 참가 모달 -->
-	<c:import url="${cp}/resources/LSH/Modal/join.jsp"/>
-
-       
+	<c:import url="${cp}/resources/LSH/Modal/Wanna_Project.jsp"/>
 		</div>
 	</div>
 </div>
@@ -770,8 +766,11 @@ a {
 			return sessionid;
 		}         
 		
+
     	</script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>			
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Wanna_Project.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>	
 </body>
 </html>

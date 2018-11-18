@@ -12,6 +12,7 @@
 <title>멤버 찾기</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/LSH/CSS/freshslider.min.css">
 </head>
 <body>
 <div class="wrapper">
@@ -22,22 +23,17 @@
 	<div class="content-wrapper">
 
 		<!-- 콘텐츠 헤더 -->
-		<section class="content-header"><h1>멤버 찾기<%-- <small>${command}${pdto.rowCount}</small> --%></h1>
-		</section>
+		<section class="content-header"><h1>멤버 찾기</h1></section>
 
 		<!-- 콘텐츠 -->
 		<section class="content">
 			
-			<!-- 셀럭터 -->
-			<div class="col-md-12">
+			<!-- 검색창 -->
 			<div class="box box-success">
 
-				<!-- 셀럭터 헤더 -->
-				<div class="box-header with-border">
-					<h3 class="box-title">팀원 상세검색</h3>
-				</div>
+				<div class="box-header with-border"><h3 class="box-title">팀원 상세검색</h3></div>
 					
-				<!-- 폼시작 -->
+				<!-- 검색창 폼시작 -->
 				<form id="SearchForm" method="post" class="form-horizontal">
 
 					<!-- 셀렉터 바디 -->
@@ -47,18 +43,16 @@
 						<div class="form-group">
 							<label for="job1" class="col-sm-2 control-label">관심분야</label>
 							<div class="col-sm-10">
-								<select id="job1" class="show-level2"></select> <select
-									id="job12"></select>
+								<select id="job1" class="show-level2"></select> <select id="job12"></select>
 								<button type="button" value="job" class="add_btn">추가</button>
 							</div>
 						</div>
 
 						<!-- 선호지역 -->
 						<div class="form-group">
-							<label for="local1" class="col-sm-2 control-label">선호지역</label>
+							<label for="local1" class="col-sm-2 control-label">선호직역</label>
 							<div class="col-sm-10">
-								<select id="local1" class="show-level2"></select> <select
-									id="local12"></select>
+								<select id="local1" class="show-level2"></select> <select id="local12"></select>
 								<button type="button" value="local" class="add_btn">추가</button>
 							</div>
 						</div>
@@ -66,9 +60,9 @@
 						<!-- 평점 -->
 						<div class="form-group">
 							<label for="eval" class="col-sm-2 control-label">평점</label>
-							<div class="col-sm-10">
-								<input id="eval" name="eval" type="range" min="0.0" max="5.0" step="0.5" value="${command.eval}"> 
-								<span id="choose">${command.eval}</span>점 이상
+							<div class="col-sm-4">
+								<div id="unranged-value"></div>
+								<input id="eval" name="eval" type="hidden" value="${command.eval}">
 							</div>
 						</div>
 
@@ -76,8 +70,7 @@
 						<div class="form-group">
 							<label for="keyword" class="col-sm-2 control-label">포함단어</label>
 							<div class="col-sm-10">
-								<input type="text" id="keyword" name="keyword"
-									value="${command.keyword}" placeholder="검색어를 입력해주세요.">
+								<input type="text" id="keyword" name="keyword" value="${command.keyword}" placeholder="검색어를 입력해주세요.">
 							</div>
 						</div>
 
@@ -89,9 +82,7 @@
 						<hr>
 						검색조건
 						<div id="result"></div>
-						
 					</div>
-
 
 					<!-- 셀렉터 푸터 -->
 					<div class="box-footer">
@@ -99,17 +90,14 @@
 						<input type='button' class="btn btn-default pull-right clear_btn" value="초기화">
 					</div>
 				</form>
-			
 			</div>
-			</div>
-			<!-- /셀렉터 -->
+
 
 			<!-- 검색결과 -->
 			<c:if test="${pdto.rowCount > -1}">
-			<div class="col-xs-12">
 			<div class="box">
 			
-				<!-- 글갯수, 정렬버튼 -->
+				<!-- 검색결과 헤더 (정렬순서) -->
 				<div class="box-header">
 				
 					<!-- 전체:몇개 -->
@@ -157,69 +145,36 @@
 					</table>
 				</div>
 				
-						
 				<!-- 페이징 -->
-				<div class="box-footer">
+				<div class="box-footer text-center">
 					<c:if test="${pdto.rowCount > 0}">
-					<div class="col-sm-5">멘트 추가예정..</div>
-					<div class="col-sm-7">
 						<ul class="pagination">
-							
 							   <c:if test="${pdto.startPage > pdto.pageBlock}">
 							   		<li id="${pdto.startPage - pdto.pageBlock}"class="page_btn"><a href="#">이전</a></li>
 							   </c:if>
-							   
+	   
 							   <c:forEach var="i" begin="${pdto.startPage}" end="${pdto.endPage}">
 							   		<li id="${i}" class="page_btn"><a href="#">${i}</a></li>
 							   </c:forEach>
-							
 							   <c:if test="${pdto.endPage < pdto.pageCount}">
 							   		<li id="${pdto.startPage+pdto.pageBlock}" class="page_btn"><a href="#">다음</a></li>
 							   </c:if>
 						</ul>
-					</div>
 					</c:if>
 				</div>
 						
 			</div>
-			</div>
 			</c:if>
-			<!-- /검색결과 -->
 
-			<!-- 모달창 -->
-			
-				<!-- 멤버초대 모달 -->
-				<div class="modal fade" id="modal-join">
-			    <div class="modal-dialog modal-sm">
-			    	<div class="modal-content">
-			            
-			        	<div class="modal-header">
-			                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			                <h4 class="modal-title">멤버 초대창</h4>
-			    		</div>
-			              
-			        	<div class="modal-body text-center">
-							<select id="my_project"></select>
-			                <p>프로젝트에 초대하시겠습니까?</p>
-			           	</div>
-			              
-			           	<div class="modal-footer">
-							<button type="button" class="send_btn btn btn-success pull-left" data-dismiss="modal">OK</button>
-			                <button type="button" class="btn btn-default" data-dismiss="modal">CANCLE</button>
-			      		</div>
-			            
-		            </div>
-			    </div>
-		        </div>
-	        
-	        	<!-- 프로필 모달 -->
-				<div id="getModal"></div>
-	        	
-	        <!-- /모달창 -->
 
 		</section>
-		
-		<!-- /content-->
+
+		<!-- 멤버초대 모달 -->
+		<c:import url="${cp}/resources/LSH/Modal/Wanna_User.jsp"/>
+       
+       	<!-- 프로필 모달 -->
+		<c:import url="${cp}/resources/LSH/Modal/User.jsp"/>
+        	
 	</div>
 	<!-- /content-wrapper -->
 
@@ -230,16 +185,18 @@
 
 	<!-- script -->
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-	<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
-
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Wanna_User.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/freshslider.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
+ 
 	<!-- 기본 이벤트 -->
 	<script>
 	$(document).ready(initPage);
 	
 	function initPage() {
-		$("#getModal").load(getContext()+"/resources/LSH/modal_profile.html");
 		level1();
 		show_search_tag();
 		show_sort();	
@@ -257,15 +214,16 @@
 	}
 	var global = {
 		    i : 0,
-		    receiver: ""
+		    receiver: "",
+		    pj_num: 0
 		};
 	</script>
 	
 	<!-- 검색창 이벤트 -->
 	<script>
-	$("#eval").on('change', function() {
-		var val = $(this).val();
-		$("#choose").html(val);
+	
+	$("#unranged-value").on('click', function() {
+		$("#eval").val($(".fscaret").text());
 	});
 	
 	$('.clear_btn').on('click', function() {
@@ -300,7 +258,7 @@
 	
 	function clear() {
 		$("#eval").val('0.0');
-		$("#choose").html('0.0');
+		$("#unranged-value").freshslider({ step: 0.1,value:0.0 });
 		$("#keyword").val('');
 		$("#job_list").empty();
 		$("#local_list").empty();
@@ -310,6 +268,17 @@
 
 	<!-- 정렬이벤트 -->
 	<script>
+	$('.sort-btn').on('click', function() {
+		console.log("6.정렬변경");
+		sort_change(this);
+		sort("pageNum="+getPageNum());
+	});
+
+	$('.pagination').on('click','.page_btn', function() {
+		console.log("7.페이징");
+		sort("pageNum="+$(this).attr("id"));
+	});
+	
 	function show_sort(){											/* 지정된 정렬기준을 가져와 화면에 표시 */
 		var what_sort = $('#sort').val()+'_sort';
 		var sort_way = $('#sort_way').val();
@@ -411,130 +380,23 @@
 
 	</script>
 	
-	<!-- 자동 이벤트  -->
+	<!-- 유저 모달  -->
 	<script>
-	
-	$('.sort-btn').on('click', function() {
-		console.log("6.정렬변경");
-		sort_change(this);
-		sort("pageNum="+getPageNum());
-	});
-
-	$('.pagination').on('click','.page_btn', function() {
-		console.log("7.페이징");
-		sort("pageNum="+$(this).attr("id"));
-	});
-	
 	$('#result_table').on('click','.user_btn', function() {
-		console.log("8.멤버프로필");
-		profile($(this).parents("tr").attr('id'));
+		console.log("8.[유저 프로필]"+$(this).parents("tr").attr('id'));
 		remove_data();
-	});
-	
-	$('#result_table').on('click','.plus_btn', function() {
-		console.log("9.멤버초대");
-		global.receiver = $(this).parents("tr").attr('id');
-		
-		console.log(global.receiver+"~"+"${sessionScope.id}");
-		
-		if(global.receiver === "${sessionScope.id}"){
-			$(this).attr('data-target',"");
-			global.receiver = "";
-			alert("본인은 초대할 수 없습니다");
-		}else{
-			get_myPro();	
-		}
-	});
-
-	$('.send_btn').on('click', function() {
-		console.log("10.초대전송");
-		if($('#my_project').attr('disabled') !== 'disabled'){
-			joinUs();	
-		}
-	});
-	
-	$('body').on('click','#issue_btn', function() {
-		console.log("13.멤버신고-- 아직 아무이벤트 안넣음");
+		profile($(this).parents("tr").attr('id'));
 	});
 	</script>
 	
-	<!-- 멤버초대 모달 -->
+	<!-- 레인지 -->
 	<script>
-	
-	function get_myPro(){
-		var url="<%=cp%>/aus/show";
-		
- 		$.ajax({
-			type:"post",
-			url:url,
-			data : { "id": '${sessionScope.id}'},
-			dataType:"json",
-			success:function(args){
-				show_myPro(args.mine);
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		});
-	}
-	
-	function show_myPro(list){
-		var html = "",
-			i = 0,
-			len = list.length;
-		if(len === 0){
-				$('#my_project').attr('disabled', 'disabled');
-				html += "<option>개설한 프로젝트가 없습니다</option>"
-		}else{
-			for(;i<len;i+=1){
-				html += "<option value='"+list[i]['PJ_NUM']+"'>"+list[i]['PJ_NAME']+"</option>";
-			}
-		}
-		$("#my_project").html(html);
-	}
-	
-	function joinUs(){
-		
-		var pj_num = $("#my_project").val();
-		var url="<%=cp%>/aus/insert_Message";
-		var params = "receiver="+global.receiver+"&sender=${sessionScope.id}"+"&pj_num="+pj_num+"&a_type=초대";
-		console.log(params);
-		
- 		$.ajax({
-			type:"post",
-			url:url,
-			data : params,
-			success:function(args){
-				console.log("[*]메서지전송성공");
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		});
-	}
-	</script>
-
-	<!-- 멤버신고 -->
-	<script>
-	$("body").on('click','.popover-submit', function() {
-		console.log("[신고 전송]");
-		
-		var content = $('.popover-textarea').val();
-		
-		if(content.trim().length < 10){
-			alert("사유는 10글자 이상 입력해주세요");
-		}else{
-			var params = "id="+$('.profile-username small').text().slice(1,-1)+"&login_id="+getSessionId()+"&is_content="+content
-			issue(params);
-		    $("[data-toggle=popover]").popover('hide');
-		}
-	});
-
-	
+	    $("#unranged-value").freshslider({
+	        step: 0.1,
+	        value:'${command.eval}'
+	    });
 	</script>
 	
-
-
 </body>
 	<style>
 		.sort_area {

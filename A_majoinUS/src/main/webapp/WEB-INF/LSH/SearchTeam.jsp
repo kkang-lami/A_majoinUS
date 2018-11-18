@@ -12,9 +12,9 @@
 <head>
 <title>프로젝트 찾기</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-
 <div class="wrapper">
 	<tiles:insertDefinition name="header" />
 	<tiles:insertDefinition name="left" />
@@ -25,21 +25,20 @@
 		<!-- 콘텐츠 헤더 -->
 		<section class="content-header">
 			<h1>프로젝트 찾기</h1>
+			<div style="text-align: right;">
 			<a href="#modal_cart" class="btn btn-danger btn-sm" data-toggle='modal' ><i class="fa fa-fw fa-shopping-cart"></i> 프로젝트 스크랩</a>
+           	</div>
 		</section>
 
 		<!-- 콘텐츠 -->
 		<section class="content">
 					
-			<!-- 셀럭터 -->
+			<!-- 검색창 -->
 			<div class="box box-primary">
 
-				<!-- 셀럭터 헤더 -->
-				<div class="box-header with-border">
-					<h3 class="box-title">프로젝트 상세검색</h3>
-				</div>
+				<div class="box-header with-border"><h3 class="box-title">프로젝트 상세검색</h3></div>
 							
-				<!-- 폼시작 -->
+				<!-- 검색창 폼시작 -->
 				<form id="SearchForm" method="post" class="form-horizontal">
 
 					<!-- 셀렉터 바디 -->
@@ -56,7 +55,7 @@
 	
 						<!-- 선호지역 -->
 						<div class="form-group">
-							<label for="local1" class="col-sm-2 control-label">선호지역</label>
+							<label for="local1" class="col-sm-2 control-label">선호직역</label>
 							<div class="col-sm-10">
 								<select id="local1" class="show-level2"></select> <select id="local12"></select>
 								<button type="button" value="local" class="add_btn">추가</button>
@@ -103,10 +102,50 @@
 				</form>
 
 			</div>
-			<!-- /셀렉터 -->	
+			 
+			<!-- 추천 프로젝트 -->
+	    	<div class="box box-solid">
+	            <div class="box-header with-border"><h4 class="box-title">추천 프로젝트</h4></div>
+	        
+	            <div class="box-body">
+	        	<div class="row">
+	                <c:forEach var="item" items="${recomend}">
+	                <c:choose>
+						<c:when test="${fn:length(recomend) == 0 || item.pj_num < 1}">
+		        		<div class="col-md-4">
+				          <div class="box box-widget widget-user-2">
+				            <div class="widget-user-header bg-gray disabled color-palette text-center text-light-blue">
+				              	<h3><b><i class="fa fa-fw fa-smile-o"></i></b></h3>
+				              	<h4><b>해당하는 프로젝트가 없습니다</b></h4>
+				              	<h5><b>관심직군과 선호지역을 추가해주세요!</b></h5>
+				            </div>
+				          </div>
+				        </div>
+					    </c:when>
+
+					    <c:otherwise>
+		        		<div class="col-md-4">
+				          <div class="box box-widget widget-user-2">
+				            <div class="widget-user-header bg-light-blue recomend_btn" id="${item.pj_num}" data-toggle="modal" data-target="#modal_Team">
+				              	<h4>${item.pj_name}</h4>
+				              	<h6>프로젝트 기간: ${item.start_d}~${item.end_d}</h6>
+				              	<h6>관심직군: ${item.pj_cate}</h6>
+				              	<h6>선호지역: ${item.pj_loc}</h6>
+				            </div>
+				          </div>
+				        </div>
+					    </c:otherwise>
+					    
+					</c:choose>
+					</c:forEach>
+				</div>
+	            </div>
+	            
+			</div>
 			
 			<!-- 검색결과 -->
 			<c:if test="${pdto.rowCount > -1}">
+			
 			<div class="box">
 			
 				<!-- 검색결과 헤더 (정렬순서)-->
@@ -119,8 +158,8 @@
 						<a href="#" id="pj_view_sort" class="sort-btn">인기순<i class="fa-fw fas fa-sort"></i></a> 
 			        </div>
 				</div>
-								
-				<!-- 검색결과 content -->
+
+				<!-- 검색결과 목록 -->
 				<div class="box-body">
 
 					<table id="result_table" class="table table-hover text-center">
@@ -160,10 +199,8 @@
 				</div>
 								
 				<!-- 페이징 -->
-				<div class="box-footer">
+				<div class="box-footer text-center">
 					<c:if test="${pdto.rowCount > 0}">
-					<div class="col-sm-5">멘트 추가예정..</div>
-					<div class="col-sm-7">
 						<ul class="pagination">
 
 							   <c:if test="${pdto.startPage > pdto.pageBlock}">
@@ -178,18 +215,16 @@
 							   		<li id="${pdto.startPage+pdto.pageBlock}" class="page_btn"><a href="#">다음</a></li>
 							   </c:if>
 						</ul>
-					</div>
 					</c:if>
 				</div>
 					
 			</div>
 			</c:if>
-			<!-- /검색결과 -->
 			
 		</section>
 		
-		<!-- 멤버초대 모달 -->
-		<c:import url="${cp}/resources/LSH/Modal/join.jsp"/>
+		<!-- 프로젝트 초대 모달 -->
+		<c:import url="${cp}/resources/LSH/Modal/Wanna_Project.jsp"/>
 	        
        	<!-- 프로젝트룸 모달 -->
        	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
@@ -205,7 +240,14 @@
 	
 	<tiles:insertDefinition name="footer" />
 </div>
-
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Cart.js"></script>
+	
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Wanna_Project.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
+	   
 	<!-- 기본 이벤트  -->
 	<script>
 		$(document).ready(initPage);
@@ -299,6 +341,44 @@
 	<!-- 정렬이벤트 -->
 	<script>
 	
+	$('.sort-btn').on('click', function() {
+		console.log("7.정렬변경");
+		sort_change(this);
+ 		sort("pageNum="+getPageNum());
+	});
+
+	$('.pagination').on('click','.page_btn', function() {
+		console.log("8.페이징");
+		sort("pageNum="+$(this).attr("id"));
+	});
+	
+	$('#checkbox').on('click', function() {
+		var params = "pageNum="+getPageNum();
+		
+		if($("#checkbox").is(":checked")){
+			console.log("9.체크 박스");
+			$('#checking').val('y');
+			sort(params);
+		}else{
+        	console.log("10.언체크 박스");
+        	$('#checking').val('');
+        	sort(params);
+        }
+	});
+	
+	// 클릭시 정렬버튼효과 추가.//  - 정렬버튼 on 클래스 추가. 기본정렬 아이콘제거. 기존 방향과 다른 방향 아이콘 지정.  
+	function show_sort(){											
+		var what_sort = $('#sort').val()+'_sort';
+		var sort_way = $('#sort_way').val();
+				
+		$('#'+what_sort).addClass("on");						
+		$('#'+what_sort+' i').removeClass("fa-sort");			
+		
+		(sort_way === 'DESC')? $('#'+what_sort+' i').addClass("fa-caret-down") : $('#'+what_sort+' i').addClass("fa-caret-up");
+		
+		console.log('[-]정렬 '+ $('.on').attr('id')+'-'+ $('#sort_way').val());
+	}
+	
 	// 클릭시 버튼효과제거. 정렬값 수정 //  - 기존 위아래 정렬 제거. 기본정렬 추가. 클릭한 정렬값으로 정렬변경. 기존 방향과 다른 방향값 지정.  
 	function sort_change(element){
 		$('.on i').removeClass("fa-caret-down fa-caret-up");
@@ -339,19 +419,6 @@
 			});
 	}
 	
-	// 클릭시 정렬버튼효과 추가.//  - 정렬버튼 on 클래스 추가. 기본정렬 아이콘제거. 기존 방향과 다른 방향 아이콘 지정.  
-	function show_sort(){											
-		var what_sort = $('#sort').val()+'_sort';
-		var sort_way = $('#sort_way').val();
-				
-		$('#'+what_sort).addClass("on");						
-		$('#'+what_sort+' i').removeClass("fa-sort");			
-		
-		(sort_way === 'DESC')? $('#'+what_sort+' i').addClass("fa-caret-down") : $('#'+what_sort+' i').addClass("fa-caret-up");
-		
-		console.log('[-]정렬 '+ $('.on').attr('id')+'-'+ $('#sort_way').val());
-	}
-
 	// 기존 tr 검색결과 제거. 검색결과 append
 	function show_mem_list(list){
 		
@@ -412,166 +479,15 @@
 	
 	</script>
 	
-	<!-- 자동 이벤트  -->
+	<!-- 유저 프로필  -->
 	<script>
-
-	$('.sort-btn').on('click', function() {
-		console.log("7.정렬변경");
-		sort_change(this);
- 		sort("pageNum="+getPageNum());
-	});
-
-	$('.pagination').on('click','.page_btn', function() {
-		console.log("8.페이징");
-		sort("pageNum="+$(this).attr("id"));
-	});
-	
-	$('#checkbox').on('click', function() {
-		var params = "pageNum="+getPageNum();
-		
-		if($("#checkbox").is(":checked")){
-			console.log("9.체크 박스");
-			$('#checking').val('y');
-			sort(params);
-		}else{
-        	console.log("10.언체크 박스");
-        	$('#checking').val('');
-        	sort(params);
-        }
-	});
-	
 	$('body').on('click','.user_btn', function() {
 		console.log("12.[유저 프로필]");
 		remove_data();
 		profile($(this).attr('id'));
 	});
-	
 	</script>
 	
-	<!-- 즐겨찾기 모달 -->
-	<script>
-	$("body").on('click','.unstar', function() {
-		console.log("13.즐겨찾기 추가");
-		var pj_num = $(this).parents("tr").attr('id');
-		add_cart(pj_num);
-		star(pj_num,"add");
-	});
-	
-	$("body").on('click','.star', function() {
-		console.log("14.즐겨찾기 제거");
-		var pj_num = $(this).parents("tr").attr('id');
-		del_cart(pj_num);
-		star(pj_num,"del");
-	});
-	
-	function star(pj_num,status){
-		var url=getContext()+"/aus/favorite";
-		var params = "pj_num="+pj_num+"&login_id="+getSessionId()+"&status="+status;
-		$.ajax({
-			type:"post",
-			url:url,
-			data: params,
-			success:function(args){
-				console.log("[*]즐겨찾기도착");
-				if(status === "add"){
-					$('#'+pj_num+' #star_btn').attr('class','star');
-					$('#'+pj_num+' #star_btn').html('<i class="fa fa-fw fa-star text-yellow"></i>');
-				}else{
-					$('#'+pj_num+' #star_btn').attr('class','unstar');
-					$('#'+pj_num+' #star_btn').html('<i class="fa fa-fw fa-star-o text-yellow"></i>');
-				}
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		}); 
-		
-	}
-	
-	function add_cart(pj_num){
-		var html = "";
-		var pj_name = $('#result_table tr[id="'+pj_num+'"] li:eq(0)').text();
-		var date = $('#result_table tr[id="'+pj_num+'"] td:eq(3)').text();
-
-		html += "<tr id='"+pj_num+"'>";
-		html += "<td><a href='#' id='star_btn' class='star'><i class='fa fa-fw fa-star text-yellow'></i></a></td>";
-		html += "<td><a href='#' class='Team_btn' data-toggle='modal' data-target='#modal_Team'>"+pj_name+"</a></td>";
-		html += "<td>"+date+"</td></tr>";
-		
- 		if($('#cart_table td:first').attr('class') === "none"){
- 			$('#cart_table tr:eq(1)').remove();
-		}
- 		var length = $('#cart_table tr').length;
- 		
- 		$('#cart_table').append(html);
- 		$('#cart_len').text('('+length+')');
-	}
-	
-	function del_cart(pj_num){
-		$('#cart_table tr[id="'+pj_num+'"]').remove();
-		var length = Number($('#cart_table tr').length)-1;
- 		if(length === 0){
-			$('#cart_table').append('<tr><td colspan="7" class="none">스크랩한 프로젝트가 없습니다</td></tr>');
-		}
-		$('#cart_len').text('('+length+')');
-	}
-	</script>
-		
-	<!-- 플젝초대 모달 -->
-	<script>
-	$(document).on('show.bs.modal', '.modal', function (event) {
-	    var zIndex = 1040 + (10 * $('.modal:visible').length);
-	    $(this).css('z-index', zIndex);
-	    setTimeout(function() {
-	        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
-	    }, 0);
-	});
-	
-	$('.send_btn').on('click', function() {
-		console.log("10.신청전송");
-		joinUs();	
-	});
-	
-	function joinUs(){
-		var url="<%=cp%>/aus/insert_Message";
-		var params = "receiver="+global.receiver+"&sender=${sessionScope.id}"+"&pj_num="+global.pj_num+"&a_type=참가";
-  		$.ajax({
-			type:"post",
-			url:url,
-			data : params,
-			success:function(args){
-				console.log("[*]메서지전송성공");
-			},
-			error:function(e){
-				alert(e.responseText);
-			}
-		});
-	}
-	</script>
-	
-	<script>
-	$("body").on('click','.popover-submit', function() {
-		console.log("[신고 전송]");
-		
-		var content = $('.popover-textarea').val();
-		
-		if(content.trim().length < 10){
-			alert("사유는 10글자 이상 입력해주세요");
-		}else{
-			var params = "id="+global.receiver+"&login_id="+getSessionId()+"&is_content="+content+"&pj_num="+global.pj_num
-			issue(params);
-		    $("[data-toggle=popover]").popover('hide');
-		}
-	});
-	</script>
-
-	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
-
 </body>
 	<style>
 		.sort_area {

@@ -134,17 +134,27 @@
 					<!-- 이고 하나 추가 >> --></div>
 				</div>
 				<!-- /.box -->    
-	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
-    <c:import url="${cp}/resources/LSH/Modal/User.jsp"/>   	
+				<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
+			    <c:import url="${cp}/resources/LSH/Modal/User.jsp"/>   	
 			</section>
 		</div>
 	</div>
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
-	<script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
 <script>
-
+		$(document).ready(initPage);
+		
+		function initPage() {
+			$('#modal_Team .modal-footer').remove();
+			$('.profile_btn').remove(); 
+		}
+		
 		var global = {
 			    i : 0,
 			    origin_d : "",
@@ -160,15 +170,14 @@
 		function getSessionId(){    
 			var sessionid = '${sessionScope.id}';
 			return sessionid;
-		}         
+		}
         		    
 		$('#result_table').on('click','.user_btn', function() {
 			console.log("8.멤버프로필");
-			profile($(this).attr('id'));
 			remove_data();
+			profile($(this).attr('id'));
 		});
     	</script>
-	   <script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 	
 </body>
 </html>

@@ -241,20 +241,19 @@
             </div>
           </div>
 
-<!-- 모달 -->
-<div id="getUserModal"></div>
 </section>
 		</div>
 	</div>
+	
 	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
     <c:import url="${cp}/resources/LSH/Modal/User.jsp"/>   	
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
 	
-<%-- <script src="<%=request.getContextPath()%>/resources/JEJ/profile_modal.js"></script> --%>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
 <script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
-<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
 <script>  
 
  /*  $('body').on('click','.user_btn', function() {
@@ -263,17 +262,13 @@
   	profile($(this).text());		// 유저 아이디 입력;
  	}); */
 	
- 	 $('#result_table_user').on('click','.user_btn', function() {
- 		profile($(this).attr('id'));
- 		remove_data();
- 	});
- 	
-  $('#result_table_project').on('click','.user_btn', function() {
-		profile($(this).attr('id'));
-		remove_data();
-	});
-  
-  
+  $(document).ready(initPage);
+	
+	function initPage() {
+		$('#modal_Team .modal-footer').remove();
+		$('.profile_btn').remove(); 
+	}
+
 	function getContext(){
 		var context = "<%=cp%>";
 		return context;
@@ -283,10 +278,19 @@
 		var sessionid = '${sessionScope.id}';
 		return sessionid;
 	}
+	
 	var global = {
 		    i : 0,
-		    receiver: ""
-		};
+		    origin_d : "",
+		    receiver : "",
+		    pj_num: 0
+	};
+	
+	$('body').on('click','.user_btn', function() {
+	 		profile($(this).attr('id'));
+	 		remove_data();
+	});
+	 	
 	
 </script>	
 </body>

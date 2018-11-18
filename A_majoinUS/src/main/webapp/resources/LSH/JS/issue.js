@@ -22,6 +22,20 @@ $("body").on('click','.popover-cancel', function() {
 	$("[data-toggle=popover]").popover('hide');
 });
 
+$("body").on('click','.popover-submit', function() {
+	console.log("[신고 전송]");
+	
+	var content = $('.popover-textarea').val();
+	
+	if(content.trim().length < 10){
+		alert("사유는 10글자 이상 입력해주세요");
+	}else{
+		var params = "id="+global.receiver+"&login_id="+getSessionId()+"&is_content="+content+"&pj_num="+global.pj_num;
+		issue(params);
+	    $("[data-toggle=popover]").popover('hide');
+	}
+});
+
 function issue(params){
 	var url= getContext()+"/aus/issue";
   	$.ajax({

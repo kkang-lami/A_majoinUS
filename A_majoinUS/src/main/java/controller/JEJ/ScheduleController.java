@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dao.JEJ;
+import project.DTO.HolidayDTO;
 import project.DTO.ScheduleDTO;
 
 @Controller
@@ -112,20 +113,20 @@ public class ScheduleController {
 
       int b = (int) (a[1].getTime() - a[0].getTime()) / (1000 * 3600 * 24);
 
-      int x = service.get_h_num()+1;
+      //int x = service.get_h_num()+1;
 
-      service.insert_holiday(holiday_name, holiday_start, holiday_end, pj_num);
+      HolidayDTO holiday = service.insert_holiday(holiday_name, holiday_start, holiday_end, pj_num);
       System.out.println("asdfasdf");
       for (int i = 0; i <= b; i++) {
          Long nal = a[0].getTime() + i * 1000 * 3600 * 24;
+         
          DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
          Date date = new Date(nal);
          String date2 = df.format(date);
          ScheduleDTO dto = new ScheduleDTO();
          dto.setPj_num(pj_num);
-         dto.setH_num(x);
+         dto.setH_num(holiday.getH_num());
          dto.setS_date(date2);
-         System.out.println("x:"+x);
          System.out.println(date2);
          service.insert_schedule(dto);
       }

@@ -3,8 +3,8 @@ package controller.LSH;
 public class ResultTeamDTO {
 
 	private int pj_num;
-	private String pj_loc;
-	private String pj_cate;
+	private String pj_loc ="선호지역이 없습니다";
+	private String pj_cate ="관심직군이 없습니다";
 	private String pj_name;
 	private String name;
 	private String id;

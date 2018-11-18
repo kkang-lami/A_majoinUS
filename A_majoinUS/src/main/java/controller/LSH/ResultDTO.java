@@ -5,8 +5,8 @@ public class ResultDTO {
 	private String id;
 	private String name;
 	private String u_img;
-	private String f_loc;
-	private String f_cate;
+	private String f_loc ="선호지역이 없습니다";
+	private String f_cate ="관심직군이 없습니다";;
 	private double eval;
 	private String joindate;
 	private int mem_view;

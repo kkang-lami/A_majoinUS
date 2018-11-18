@@ -6,7 +6,7 @@
 <script src="<%=request.getContextPath() %>/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath() %>/resources/dist/js/adminlte.min.js"></script>
 
-      
+           
                    
 <!--
 This is a starter template page. Use this page to start your new project from
