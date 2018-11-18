@@ -64,11 +64,11 @@ function load_port(data){
 		i = 0;
 	for(;i<data.length;i+=1){
 			html += "<tr><td>"
-		
-		if(data[i].p_private === "비공개"){
+				
+		if(data[i].p_private === "on"){
 			html += "<i class='fa fa-fw fa-lock'></i>"+data[i].subject;					
 		}else{
-			html += "<a href='#'>"+data[i].subject+"</a>";					
+			html += "<a href='"+getContext()+"/aus/portfolioContent?port_num="+data[i].port_num+"'>"+data[i].subject+"</a>";					
 		}
 			html += "</td><td>"+data[i].start_d+"-"+data[i].end_d+"</td></tr>";					
 	}

@@ -27,7 +27,6 @@ import project.DTO.ProjectroomDTO;
 public class SearchTeamController {
 	
 	private SearchService service;
-	private List<ResultTeamDTO> Recomend_Team = new ArrayList<ResultTeamDTO>();
 	
 	@Autowired	
 	public void setSearchService(SearchService service) {
@@ -39,38 +38,38 @@ public class SearchTeamController {
 		System.out.println("[프로젝트룸] ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
 
 		String id = req.getSession().getAttribute("id").toString();
-		getRecomendTeam(id);
 		
 		dto.setSort("regdate");
 		dto.setSort_way("DESC");
 		
 		model.addAttribute("cart",getCart(req));
-		model.addAttribute("recomend",Recomend_Team);
+		model.addAttribute("recomend",getRecomendTeam(id));
 		return "LSH/SearchTeam"; 
 	}
 	
-	public void getRecomendTeam(String id){
+	public List<ResultTeamDTO> getRecomendTeam(String id){
+		List<ResultTeamDTO> Recomend_Team = new ArrayList<ResultTeamDTO>();
 		if(!id.equals("amajoinus@gmail.com")) {
 			Map<String,Object> map = service.getMy_fav(id);
 			Recomend_Team = service.recommend_Team(map);			
 		}
-/*		for(ResultTeamDTO m : Recomend_Team) {System.out.println(m);}
-*/		
+/*		for(ResultTeamDTO m : Recomend_Team) {System.out.println(m);}*/		
+		return Recomend_Team;
 	} 
 	
 	@RequestMapping(value="/SearchTeamForm",method=RequestMethod.POST)
 	public String post(@ModelAttribute("command") SearchTeamDTO dto,HttpServletRequest req,Model model) {
 		System.out.println("[프로젝트룸] 포스트실행"+dto);
-
 		PagingDTO pdto = DB(dto,0);
 		model.addAttribute("pdto",pdto);
 		model.addAttribute("cart",getCart(req));
-		model.addAttribute("recomend",Recomend_Team);
+		model.addAttribute("recomend",getRecomendTeam(req.getSession().getAttribute("id").toString()));
 		return "LSH/SearchTeam";
 	}
 	
 	@RequestMapping(value="/TeamSort",method=RequestMethod.POST)
 	public void sort(SearchTeamDTO dto,int pageNum,HttpServletResponse resp) throws Exception{
+
 		System.out.println("[프로젝트룸](∩ 'ω')⊃━♡°.*・｡♡° 정렬 :: "+ dto);
 		resp.setContentType("text/html;charset=utf-8");
 		Date today = new Date();
@@ -100,6 +99,7 @@ public class SearchTeamController {
 
 	@RequestMapping(value="/ProjectProfile",method=RequestMethod.POST)
 	public void profile(String pj_num,HttpServletResponse resp,HttpServletRequest req) throws Exception{
+
 		System.out.println("[프로젝트룸] 상세보기 "+ pj_num);
 		resp.setContentType("text/html;charset=utf-8");
 		
@@ -116,6 +116,7 @@ public class SearchTeamController {
 	
 	@RequestMapping(value="/favorite",method=RequestMethod.POST)
 	public void favorite(int pj_num,String login_id,String status,HttpServletResponse resp) throws Exception{
+
 		System.out.println("[프로젝트룸] 스크랩 추가&삭제 "+ pj_num +"~"+ login_id+"~"+status);
 		resp.setContentType("text/html;charset=utf-8");
 		
@@ -124,6 +125,7 @@ public class SearchTeamController {
 	}
 	
 	public void updateView(String pj_num) {
+
 		Map<String,Object> m = new HashMap<String,Object>();
 		m.put("what", pj_num);
 		m.put("colum", "pj_view");

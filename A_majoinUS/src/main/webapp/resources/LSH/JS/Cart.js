@@ -20,13 +20,14 @@
 			url:url,
 			data: params,
 			success:function(args){
-				console.log("[*]즐겨찾기도착");
+				console.log("[*]"+status+"즐겨찾기도착");
+				
 				if(status === "add"){
-					$('#'+pj_num+' #star_btn').attr('class','star');
-					$('#'+pj_num+' #star_btn').html('<i class="fa fa-fw fa-star text-yellow"></i>');
+					$('#result_table #'+pj_num+' #star_btn').attr('class','star');
+					$('#result_table #'+pj_num+' #star_btn').html('<i class="fa fa-fw fa-star text-yellow"></i>');
 				}else{
-					$('#'+pj_num+' #star_btn').attr('class','unstar');
-					$('#'+pj_num+' #star_btn').html('<i class="fa fa-fw fa-star-o text-yellow"></i>');
+					$('#result_table #'+pj_num+' #star_btn').attr('class','unstar');
+					$('#result_table #'+pj_num+' #star_btn').html('<i class="fa fa-fw fa-star-o text-yellow"></i>');
 				}
 			},
 			error:function(e){
@@ -53,6 +54,7 @@
  		
  		$('#cart_table').append(html);
  		$('#cart_len').text('('+length+')');
+ 		
 	}
 	
 	function del_cart(pj_num){

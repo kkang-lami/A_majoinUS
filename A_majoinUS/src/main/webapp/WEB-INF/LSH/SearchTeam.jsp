@@ -21,7 +21,6 @@
 
 	<!-- 전체영역 -->
 	<div class="content-wrapper">
-
 		<!-- 콘텐츠 헤더 -->
 		<section class="content-header">
 			<h1>프로젝트 찾기</h1>
@@ -104,44 +103,45 @@
 			</div>
 			 
 			<!-- 추천 프로젝트 -->
-	    	<div class="box box-solid">
-	            <div class="box-header with-border"><h4 class="box-title">추천 프로젝트</h4></div>
-	        
-	            <div class="box-body">
-	        	<div class="row">
-	                <c:forEach var="item" items="${recomend}">
-	                <c:choose>
-						<c:when test="${fn:length(recomend) == 0 || item.pj_num < 1}">
-		        		<div class="col-md-4">
-				          <div class="box box-widget widget-user-2">
-				            <div class="widget-user-header bg-gray disabled color-palette text-center text-light-blue">
-				              	<h3><b><i class="fa fa-fw fa-smile-o"></i></b></h3>
-				              	<h4><b>해당하는 프로젝트가 없습니다</b></h4>
-				              	<h5><b>관심직군과 선호지역을 추가해주세요!</b></h5>
-				            </div>
-				          </div>
-				        </div>
-					    </c:when>
-
-					    <c:otherwise>
-		        		<div class="col-md-4">
-				          <div class="box box-widget widget-user-2">
-				            <div class="widget-user-header bg-light-blue recomend_btn" id="${item.pj_num}" data-toggle="modal" data-target="#modal_Team">
-				              	<h4>${item.pj_name}</h4>
-				              	<h6>프로젝트 기간: ${item.start_d}~${item.end_d}</h6>
-				              	<h6>관심직군: ${item.pj_cate}</h6>
-				              	<h6>선호지역: ${item.pj_loc}</h6>
-				            </div>
-				          </div>
-				        </div>
-					    </c:otherwise>
-					    
-					</c:choose>
-					</c:forEach>
+			<c:if test="${fn:length(recomend) > 0}">
+		    	<div class="box box-solid">
+		            <div class="box-header with-border"><h4 class="box-title">추천 프로젝트</h4></div>
+		        
+		            <div class="box-body">
+			        	<div class="row">
+			                <c:forEach var="item" items="${recomend}">
+			                <c:choose>
+								<c:when test="${item.pj_num < 1}">
+				        		<div class="col-md-4">
+						          <div class="box box-widget widget-user-2">
+						            <div class="widget-user-header bg-gray disabled color-palette text-center text-light-blue">
+						              	<h3><b><i class="fa fa-fw fa-smile-o"></i></b></h3>
+						              	<h4><b>해당하는 프로젝트가 없습니다</b></h4>
+						              	<h5><b>관심직군과 선호지역을 추가해주세요!</b></h5>
+						            </div>
+						          </div>
+						        </div>
+							    </c:when>
+		
+							    <c:otherwise>
+				        		<div class="col-md-4">
+						          <div class="box box-widget widget-user-2">
+						            <div class="widget-user-header bg-light-blue recomend_btn" id="${item.pj_num}" data-toggle="modal" data-target="#modal_Team">
+						              	<h4>${item.pj_name}</h4>
+						              	<h6>프로젝트 기간: ${item.start_d}~${item.end_d}</h6>
+						              	<h6>관심직군: ${item.pj_cate}</h6>
+						              	<h6>선호지역: ${item.pj_loc}</h6>
+						            </div>
+						          </div>
+						        </div>
+							    </c:otherwise>
+							    
+							</c:choose>
+							</c:forEach>
+						</div>
+	            	</div>
 				</div>
-	            </div>
-	            
-			</div>
+			</c:if>
 			
 			<!-- 검색결과 -->
 			<c:if test="${pdto.rowCount > -1}">

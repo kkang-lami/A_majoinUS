@@ -17,6 +17,7 @@
    height : 22px;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
    <tiles:insertDefinition name="header" />
@@ -192,8 +193,6 @@
 		}         
 		
     	</script> --%>
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
     <script>
     

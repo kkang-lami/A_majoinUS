@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/LSH/CSS/freshslider.min.css">
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -184,8 +185,6 @@
 </div>
 
 	<!-- script -->
-	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Wanna_User.js"></script>

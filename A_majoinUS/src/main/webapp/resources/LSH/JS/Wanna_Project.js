@@ -1,5 +1,5 @@
 	$('body').on('show.bs.modal', '.modal', function (event) {
-		console.log("어우시벌탱");
+		console.log("[모달 순서 정렬]");
 	    var zIndex = 1040 + (10 * $('.modal:visible').length);
 	    $(this).css('z-index', zIndex);
 	    setTimeout(function() {

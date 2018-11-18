@@ -10,6 +10,12 @@
 			get_myPro();	
 		}
 	});
+	
+	$('body').on('click','.plus_btnF', function() {
+		console.log("9.멤버초대F");
+		global.receiver = $(this).attr('id');
+		get_myPro();	
+	});
 
 	$('.send_btn').on('click', function() {
 		console.log("10.초대전송");

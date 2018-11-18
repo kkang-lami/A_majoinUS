@@ -10,7 +10,7 @@
    String cp = request.getContextPath();
    request.setCharacterEncoding("UTF-8");
 %>
-
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
    <tiles:insertDefinition name="header" />
@@ -41,8 +41,9 @@
               <div class="timeline-item">  
                 <span class="time"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<c:set var="dd" value="${fn:substring(projectApplyAlarm.a_date,0,10)}" />${dd}</span>
 
-                <h3 class="timeline-header"><a href="#">${projectApplyAlarm.name}</a> sent you an MSG</h3>
-
+                <h3 class="timeline-header"><a href="#" id="${projectApplyAlarm.sender}" class="user_btn" data-toggle='modal' data-target='#modal_user'>${projectApplyAlarm.name}</a> sent you an MSG</h3>
+				
+					
                 <div class="timeline-body">
                    ${projectApplyAlarm.name}(${projectApplyAlarm.sender})님께서 회원님의 &lt;  
                    <a href="#" class="review_btn" data-toggle="modal"  id="${projectApplyAlarm.pj_num}"  data-target="#modal_Team"> ${projectApplyAlarm.pj_name} </a> &gt;프로젝트에  
@@ -118,12 +119,15 @@
             </div>
 
          </section>
-
-		<!-- 프로젝트 초대 모달 -->
+        
+        <!-- 프로젝트 초대 모달 -->
 		<c:import url="${cp}/resources/LSH/Modal/Wanna_Project.jsp"/>
-		
+
 		<!-- 프로젝트룸 모달 -->
         <c:import url="${cp}/resources/LSH/Modal/Team.jsp" />
+        
+        <!-- 프로필 모달 -->
+		<c:import url="${cp}/resources/LSH/Modal/User.jsp"/>
 
       </div>
    </div>
@@ -131,11 +135,11 @@
    <tiles:insertDefinition name="left" />
    <tiles:insertDefinition name="footer" />
 
-   	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Wanna_Project.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>
+	
 
 <script>
    var global = {
@@ -155,6 +159,11 @@
       return sessionid;
    }
    
+	$('body').on('click','.user_btn', function() {
+		console.log("12.[유저 프로필]");
+		remove_data();
+		profile($(this).attr('id'));
+	});
 </script>
    
 <script>
