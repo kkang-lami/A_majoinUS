@@ -39,7 +39,10 @@ public class InquiryController {
 		
 	@RequestMapping("/inquiry") 
 	public String show_list_2(ModelMap model,
-			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) {
+			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string,HttpSession session) {
+		
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
 		
 		int pageSize = 10;
 		int currentPage = pageNum;

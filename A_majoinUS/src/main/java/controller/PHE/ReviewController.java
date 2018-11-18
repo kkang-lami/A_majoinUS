@@ -32,6 +32,9 @@ public class ReviewController {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
+		
 		String sessionId = (String) session.getAttribute("id");
 
 		List<String> pjName = dao.getPjName2(sessionId);
@@ -52,6 +55,9 @@ public class ReviewController {
 			request.setCharacterEncoding("utf-8");
 			HttpSession session = request.getSession();
 			session = request.getSession(true);
+			session.removeAttribute("Dday");
+			session.removeAttribute("pjm_num");
+			
 			String sessionId = (String) session.getAttribute("id");
 
 			List<String> pjName = dao.getPjName(sessionId);

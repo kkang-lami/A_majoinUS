@@ -37,37 +37,15 @@
 
 				<!-- css테스트 -->
 
-				<div class="box box-info">
+				<div class="box">
 					<div class="box-header with-border">
-						<h3 class="box-title">Review</h3>
+						<h3 class="box-title">Review to Admin</h3>
 
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
 						<div class="table-responsive">
-							<table class="table no-margin" id="result_table">
-								<thead>
-									<tr>
-										<th>회원 ID</th>
-										<th>프로젝트명</th>
-										<th>평가내용</th>
-										<th>날짜</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${reviewList}" var="review">
-										<tr id="${review.pj_num}">
-											<td><a href="#" id="${review.id}" class="user_btn" data-toggle="modal" data-target="#modal_user">${review.id}</a></td>
-											<td><a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${review.pj_name}</a></td>
-											<td>${review.ra_content}</td>
-											<td><c:set var="end_d1"
-													value="${fn:substring(review.end_d,0,10)}" /> ${end_d1}</td>
-										</tr>
-									</c:forEach>
-						<!-- <tr style="text-align: center;"><th colspan="4">1 2 3 4</th></tr> -->
-
-								</tbody>
-							</table>
+							
 						</div>
 						<!-- /.table-responsive -->
 					</div>
@@ -81,15 +59,70 @@
 					<!-- </div> -->
 					<!-- /.box-footer -->
 					<!--  -->
-					
-					<div align="center">
+					 <c:forEach items="${name}" var="pjName">
+      <div class="box box-info">
+                  <div class="box-header with-border">
+                     <h3 class="box-title">
+                     <%-- &nbsp;&nbsp;<a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${pjName.pj_name}</a>< --%>
+                     <i class="fa fa-fw fa-star"></i>&nbsp;&nbsp;${pjName.pj_name}    </h3>  
+  
+                     <div class="box-tools pull-right">   
+                </div>
+                              <!-- /.box-tools -->
+                </div>
+                
+
+                  <div class="box-body no-padding">
+                     <div class="row">
+                        <div class="col-md-12 col-sm-8">
+                           <div class="pad" style="margin:15px;" id="result_table">
+                              <!-- Map will be created here -->
+                              <c:forEach items="${reviewList}" var="reviewList">
+
+                   <c:if test="${reviewList.pj_num eq pjName.pj_num == true}">
+                         <font style="size:small;">
+                        <%--  <tr id="${review.pj_num}">
+                         <a href="#" id="${reviewList.id}" class="user_btn" data-toggle="modal" data-target="#modal_user"></a>
+                         </tr> --%>
+                         <a href="#" id="${reviewList.id}" class="user_btn" data-toggle="modal" data-target="#modal_user">
+                         ${reviewList.id}
+                         </a>  
+                         </font>
+                         <span style="float: right;" class="time"><i class="fa fa-clock-o"></i><c:set var="end_d1" value="${fn:substring(reviewList.end_d,0,10)}" /> ${end_d1}</span>
+                             
+                         <br />
+                         <label name="score">  
+                                    
+                                    </label>
+                         <br> ${reviewList.ra_content} <br>
+                         <hr/>
+                         
+                         
+                         
+                         
+                         </c:if>
+                              </c:forEach>
+
+                           </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-3 col-sm-4"></div>
+                        <!-- /.col -->
+                     </div>
+                     <!-- /.row -->
+                  </div>
+                  <!-- /.box-body -->
+               </div>
+
+            </c:forEach>
+					<%-- <div align="center">
 					<c:if test="${count > 0}">
 						<c:set var="pageCount"
 							value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
 						<!-- pageCount:11 -->
 						<c:set var="pageBlock" value="${10}" />
 						<!-- pageBlock:10 -->
-						<%-- <fmt:parseNumber var="result" value="${currentPage / 10}" integerOnly="true" /> --%>
+						<fmt:parseNumber var="result" value="${currentPage / 10}" integerOnly="true" />
 						<!-- result:0 -->
 						<c:set var="startPage" value="${result * 10 + 1}" />
 						<!-- startPage:1 -->
@@ -129,7 +162,7 @@
 							</c:if>
 						</c:if>
 					</c:if>
-				</div>
+				</div> --%>
 					
 					<!--  -->
 					<!-- 이고 하나 추가 >> --></div>

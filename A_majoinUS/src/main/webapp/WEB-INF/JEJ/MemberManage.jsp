@@ -302,6 +302,11 @@
 		remove_data();
 		profile($(this).parents("tr").attr('id'));
 	});
+	$('#result_table2').on('click','.user_btn', function() {
+		console.log("8.[유저 프로필]"+$(this).parents("tr").attr('id'));
+		remove_data();
+		profile($(this).parents("tr").attr('id'));
+	});
 </script>
 <script>
 

@@ -52,8 +52,8 @@ public class PortfolioController {
 		return "KMJ/PortfolioWriteForm";
 	}
 	
-	@RequestMapping(value="/ProejctRoom/portfolio/complet",method=RequestMethod.POST)
-	public String portfolio(HttpSession session,@ModelAttribute("myportfolio") PortfolioDTO portfolio,@RequestParam("attached_file") MultipartFile file,@ModelAttribute PortList portList) {
+	@RequestMapping(value="/ProejctRoom/portfolio/complet",method=RequestMethod.POST)  
+	public String portfolio(HttpSession session,@ModelAttribute("myportfolio") PortfolioDTO portfolio,@RequestParam("attached_file") MultipartFile file,@ModelAttribute() PortList portList) {
 		String id = (String) session.getAttribute("id");
 		
 		if(file.getOriginalFilename() != "") {
@@ -84,42 +84,43 @@ public class PortfolioController {
 		mj_dao.portfolioInsert(portfolio);
 		int seq = mj_dao.pf_detail_seq();
 		
-		
 		List<Port_detailDTO> list = new ArrayList<Port_detailDTO>();
-		for(int i =0; i<portList.getPortList().size() ; i++) {
-			PortimgDTO pdto = new PortimgDTO();
-			Port_detailDTO insert = new Port_detailDTO();
-			
-			pdto = portList.getPortList().get(i);
-			
-			if(pdto.getPd_content()==null) {
-				pdto.setPd_content("");
+		if(portList.getPortList()!=null) {
+			for(int i =0; i<portList.getPortList().size() ; i++) {
+				PortimgDTO pdto = new PortimgDTO();
+				Port_detailDTO insert = new Port_detailDTO();
+				
+				pdto = portList.getPortList().get(i);
+				
+				if(pdto.getPd_content()==null) {
+					pdto.setPd_content("");
+				}
+				
+				String path2 = "c://item//portfolio//detail//";
+				String f_name2 = pdto.getPd_img().getOriginalFilename();
+				f_name2 = f_name2.substring(0, f_name2.indexOf("."));
+				long now2 = System.currentTimeMillis();
+				String new_name2 = now2 + "_" + f_name2;
+				File new_file2 = new File(path2, new_name2);
+				try {
+					pdto.getPd_img().transferTo(new_file2);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				insert.setPd_num(seq+i);
+				insert.setPort_num(portfolio.getPort_num());
+				insert.setPd_img(new_name2);
+				insert.setPd_content(pdto.getPd_content());
+				
+				list.add(insert);
 			}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
 			
-			String path2 = "c://item//portfolio//detail//";
-			String f_name2 = pdto.getPd_img().getOriginalFilename();
-			f_name2 = f_name2.substring(0, f_name2.indexOf("."));
-			long now2 = System.currentTimeMillis();
-			String new_name2 = now2 + "_" + f_name2;
-			File new_file2 = new File(path2, new_name2);
-			try {
-				pdto.getPd_img().transferTo(new_file2);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			insert.setPd_num(seq+i);
-			insert.setPort_num(portfolio.getPort_num());
-			insert.setPd_img(new_name2);
-			insert.setPd_content(pdto.getPd_content());
+			int i = mj_dao.portfolioDetailInsert(map);
+			System.out.println("port_detail insert 완료 갯수 : " + i);
 			
-			list.add(insert);
 		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		
-		int i = mj_dao.portfolioDetailInsert(map);
-		System.out.println("port_detail insert 완료 갯수 : " + i);
 		
 		
 		//프로젝트룸 메인 리턴
@@ -183,28 +184,29 @@ public class PortfolioController {
 		List<Port_detailDTO> detail = mj_dao.pofolDetail(portfolio.getPort_num());
 		List<Port_detailDTO> delete = new ArrayList<Port_detailDTO>();
 		List<Port_detailDTO> update = new ArrayList<Port_detailDTO>();
-		
-		for(int i =0;i<old_pf_list.getOldlist().size();i++) {
-			Port_detailDTO edit_dto = old_pf_list.getOldlist().get(i);
-			Port_detailDTO old_dto = detail.get(i);
-			
-			if(edit_dto.getPd_num() != old_dto.getPd_num()) {
-				delete.add(old_dto);
-			}	
-			if(edit_dto.getPd_num() == old_dto.getPd_num()) {
-				update.add(edit_dto);
+		if(old_pf_list.getOldlist()!=null) {
+			for(int i =0;i<old_pf_list.getOldlist().size();i++) {
+				Port_detailDTO edit_dto = old_pf_list.getOldlist().get(i);
+				Port_detailDTO old_dto = detail.get(i);
+				
+				if(edit_dto.getPd_num() != old_dto.getPd_num()) {
+					delete.add(old_dto);
+				}	
+				if(edit_dto.getPd_num() == old_dto.getPd_num()) {
+					update.add(edit_dto);
+				}
+			}
+			if(delete.size()>0) {
+				Map<String,Object> del = new HashMap<String,Object>();
+				del.put("list", delete);
+				mj_dao.pf_detail_delete(del);
+			}
+			if(update.size()>0) {
+			Map<String,Object> update_map = new HashMap<String,Object>();
+			update_map.put("list", update);
+			mj_dao.pf_detail_update(update_map);
 			}
 		}
-		if(delete.size()>0) {
-			Map<String,Object> del = new HashMap<String,Object>();
-			del.put("list", delete);
-			mj_dao.pf_detail_delete(del);
-		}
-		
-		Map<String,Object> update_map = new HashMap<String,Object>();
-		update_map.put("list", update);
-		mj_dao.pf_detail_update(update_map);
-		
 		
 		
 		

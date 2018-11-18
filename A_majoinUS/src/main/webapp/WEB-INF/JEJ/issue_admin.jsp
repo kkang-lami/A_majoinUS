@@ -3,14 +3,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	String cp = request.getContextPath();
+	request.setCharacterEncoding("UTF-8");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>신고 관리</title>
-  <%
-	String cp = request.getContextPath();
-	request.setCharacterEncoding("UTF-8");
-	%>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	
 </head>
 <body>
 <tiles:insertDefinition name="header" />
@@ -250,8 +252,7 @@
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />
 	
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 <script src="<%=request.getContextPath()%>/resources/LSH/profile_modal.js"></script>
 <script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
 <script>  

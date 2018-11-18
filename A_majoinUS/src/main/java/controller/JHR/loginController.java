@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,22 +29,23 @@ public class loginController {
 	 * }
 	 */
 	// 로그인 확인
-	@RequestMapping("/loginCheck")
-	public ModelAndView loginCheck(@ModelAttribute MemberDTO dto, HttpSession session) {
+	@RequestMapping(value="/loginCheck",method=RequestMethod.POST)
+	public String loginCheck(@ModelAttribute MemberDTO dto, HttpSession session,Model m) {
 
 		MemberDTO result = service.loginCheck(dto);
 		System.out.println("result : " + result);
-		ModelAndView mav = new ModelAndView();
+		//ModelAndView mav = new ModelAndView();
 		if (result != null) {
 			session.setAttribute("id", result.getId());
 			session.setAttribute("name", result.getName());
 			session.setAttribute("userphoto", result.getU_img());
-			mav.setViewName("redirect:/aus/MyPageMain");
+			return "redirect:/aus/MyPageMain";
 		} else {
-			mav.setViewName("redirect:/aus/main");
-			mav.addObject("msg", "failure");
+			m.addAttribute("msg","아이디 또는 비밀번호가 맞지 않습니다.");
+			return "main";  
+//			mav.addObject("msg", "failure");
 		}
-		return mav;
+//		return mav;
 	}
 
 	// 로그인 성공시 바로 이동
@@ -167,7 +169,7 @@ public class loginController {
 			session.invalidate(); // 탈퇴시 로그아웃 처리
 			return "redirect:/aus/main";
 		} else { // 비밀번호가 일치하지 않는다면
-			return "JHR/secession";
+			return "JHR/secessionpro";
 
 		}
 	}

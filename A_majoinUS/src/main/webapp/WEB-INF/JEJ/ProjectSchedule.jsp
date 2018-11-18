@@ -220,13 +220,14 @@
 	</div>
 
 	<tiles:insertDefinition name="left" />
+	<tiles:insertDefinition name="aside"/>
 	<tiles:insertDefinition name="footer" />
 	    
 	<!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- ///////////////////////////////////////right side bar//////////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 
- <!-- Control Sidebar -->
+<%--  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -339,7 +340,7 @@
     </div>
   </aside>
 <div class="control-sidebar-bg"></div>
-
+ --%>
 	    
 	    
 	<script>    

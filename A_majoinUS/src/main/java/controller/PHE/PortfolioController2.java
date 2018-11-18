@@ -43,7 +43,7 @@ public class PortfolioController2{
 	}
 	
 	/********************************* 포트폴리오 *************************************/
-	@RequestMapping(method=RequestMethod.GET)
+	/*@RequestMapping(method=RequestMethod.GET)
 	public String start(HttpSession session,@RequestParam("pj_num") int pj_num,Model m) {
 		String id = (String) session.getAttribute("id");
 		if(id == null) {
@@ -55,13 +55,16 @@ public class PortfolioController2{
 		m.addAttribute("date",date);
 		return "PHE/portfolioModify";
 	}
-	
+	*/
 	//포트폴리오 리스트
 	@RequestMapping(value = "/portfolioList")
 	public ModelAndView PortfolioList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
+		
 		String sessionId =(String)session.getAttribute("id");
 
 		List<PortfolioDTO> portfolioList = dao.getPortfolioList(sessionId);

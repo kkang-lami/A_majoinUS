@@ -79,7 +79,7 @@
                 <input type="password" class="form-control" id="Password" name="password" placeholder="Password">
               </div>
              
-             <h3></h3>
+             <h6 style="color:red;" align="center">${msg}</h6>
              <div class="col-md-12 text-center">
               <div class="form-group">
                 <input type="submit" class="btn btn-primary" id="login_submit" name="submit" value="Login">

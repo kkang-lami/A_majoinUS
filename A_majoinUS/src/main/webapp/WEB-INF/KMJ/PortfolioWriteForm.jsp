@@ -145,6 +145,7 @@ img:hover{
 	</div>         
       
 	<tiles:insertDefinition name="left" />
+	<tiles:insertDefinition name="aside" />
 	<tiles:insertDefinition name="footer" />
 	
 	
@@ -153,7 +154,7 @@ img:hover{
 <!-- ///////////////////////////////////////right side bar//////////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 
- <!-- Control Sidebar -->
+<%--  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -266,7 +267,7 @@ img:hover{
     </div>
   </aside>
 <div class="control-sidebar-bg"></div>
-	
+ --%>	
 	
 	
 	

@@ -6,7 +6,6 @@
 	String cp = request.getContextPath(); //컨텍스트 루트 설정(프로젝트명이 변경되어도 사용할 수 있게끔 한것)
 	request.setCharacterEncoding("UTF-8");
 %>
-<!DOCTYPE html>
 <html>
 <head>
 <title>AMAJONINUS</title>
@@ -16,38 +15,65 @@
 <body>
 
 <tiles:insertDefinition name="header" />
-	
-	<div class="wrapper">
-		<div class="content-wrapper">
-			<section class="content-header">
-				<!-- 들어갈 내용 -->
-				<div id="chatlist">
-					<h4> 채팅방 </h4>
-					<hr/>				
-					<br><br>        
-					<div align=center>                   
-						<textarea id="data" name="data" rows="20" cols="200" style="resize: none;" readonly>
+
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Project-chat room      
+        <small>...</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">Editors</li>
+      </ol>
+    </section>    
+    <br>       
+  
+<section class="content">
+	<div class="col-md-12">  
+<div class="box box-success">
+            <div class="box-header">
+              <i class="fa fa-comments-o"></i>
+
+              <h3 class="box-title">Chat</h3>
+
+              <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+              </div>  
+            </div>     
+            <div class="box-body chat" id="chat-box">        
+					<div align=center>                     
+						<textarea id="data" name="data" rows="20" cols="180" style="resize: none;" readonly>
 ------------------------------------지난 대화 내용------------------------------------
 <c:forEach var="content" items="${chatdata}">${content.name } : ${content.chat_content } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${content.chat_date}
 </c:forEach>
 ------------------------------------${today}------------------------------------
-</textarea><br>      
-					                                   
-					<input type="text" id="message" size=187/>
-					<input type="button" id="sendBtn" value=" 보내기 " />
-					</div>
+</textarea><hr />                  
+					      <div class="input-group">                                 
+					<input type="text" id="message" size=165 placeholder="Type message..."/>
+					<input type="button" id="sendBtn" value=" 보내기 "  class="btn btn-success"/>
+					</div>  
+					</div>        
+					  
 				</div>
-			</section>
+		</div>        
+	</div>   
+	 </section>  
+
 		</div>
 	</div>    
 
 	<tiles:insertDefinition name="left" />
+	<tiles:insertDefinition name="aside" />
 	<tiles:insertDefinition name="footer" />
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- ///////////////////////////////////////right side bar//////////////////////////////////////// -->
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
-
+<%-- 
  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
@@ -161,7 +187,7 @@
     </div>
   </aside>
 <div class="control-sidebar-bg"></div>
-
+ --%>
 
 
 

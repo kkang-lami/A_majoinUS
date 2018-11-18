@@ -84,6 +84,9 @@ public class ProjectroomController {
 	public ModelAndView listAll(HttpServletRequest request) throws Exception {// public List<Board> listAll() {
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
+		
 		String sessionId =(String)session.getAttribute("id");
 		String a_type="참가";
 		List<ProjectListDTO> ongoing_list = dao.ongoing_getListData(sessionId);

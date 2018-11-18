@@ -324,4 +324,9 @@ public class JEJ extends SqlSessionDaoSupport{
 		return admin_review;
 	}
 	
+	  public List<Review_adminDTO> getReviewName() {
+	      List<Review_adminDTO> admin_review_name = getSqlSession().selectList("JEJ_AUS.select_review_name");
+	      return admin_review_name;
+	   }
+	
 }

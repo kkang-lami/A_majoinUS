@@ -38,6 +38,8 @@ public class MypageController {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
 		String receiver =(String)session.getAttribute("id");	
 		
 		String a_type = "참가";

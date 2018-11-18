@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import dao.KMJ;
+
 @Controller
 @RequestMapping("/aus/ProejctRoom")
 public class ProejctRoomController {
@@ -18,6 +20,9 @@ public class ProejctRoomController {
 	public ProejctRoomController() {System.out.println("[공지]프로젝트룸 컨트롤러생성");}
 
 	private ProjectRoomService service;
+	
+	@Autowired
+	private KMJ mj_dao;
 	
 	@Autowired	
 	public void setService(ProjectRoomService service) {
@@ -28,7 +33,22 @@ public class ProejctRoomController {
 	public String form(@RequestParam(value="pj_Num",defaultValue="0") int pageNum,Model model,HttpSession session) {
 		System.out.println(pageNum+"[프로젝트룸 생성중]");
 		String id= (String) session.getAttribute("id");
+		
+
+		int pjm_num = mj_dao.getpjm_num(pageNum, id);
+		session.setAttribute("pjm_num", pjm_num);
+
 		List<Map<String,Object>> list = service.getProgress(pageNum);
+
+		String d_day = (String)list.get(0).get("d_day");
+		
+		if(Integer.parseInt(d_day) >= 0) {
+			System.out.println("false");
+			session.setAttribute("Dday", "FALSE");
+		}else {
+			System.out.println("true");
+			session.setAttribute("Dday", "TRUE");
+		}
 		
 		model.addAttribute("pj_num",pageNum);
 		model.addAttribute("list", list);

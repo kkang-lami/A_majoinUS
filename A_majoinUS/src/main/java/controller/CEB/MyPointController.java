@@ -50,6 +50,9 @@ public class MyPointController {
 	
 	@RequestMapping(value = "/MyPoint")
 	public String show_content(ModelMap model, @RequestParam(value="pageNum", defaultValue="1")int pageNum,	String search, String string, HttpSession session) {
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
+		
 		String id = (String) session.getAttribute("id");
 		if(id == null) {
 			return "main";

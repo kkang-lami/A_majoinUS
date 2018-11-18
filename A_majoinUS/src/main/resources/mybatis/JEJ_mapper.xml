@@ -246,4 +246,9 @@
 	from review_admin, projectroom where projectroom.pj_num = review_admin.pj_num) order by r) 
 		where r>=#{startRow} and r<=#{endRow}]]>
 </select>
+
+<select id="select_review_name" resultType="project.DTO.Review_adminDTO">
+   select distinct pr.pj_name, pr.pj_num from projectroom pr, review_admin ra where pr.pj_num = ra.pj_num
+</select>
+
 </mapper>

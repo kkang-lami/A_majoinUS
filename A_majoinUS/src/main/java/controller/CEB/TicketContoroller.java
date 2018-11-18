@@ -39,6 +39,9 @@ public class TicketContoroller {
 	    
 	@RequestMapping(value = "/buying")
 	public String content (ModelMap model,HttpSession session) {
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
+		
 		String id = (String) session.getAttribute("id");
 		if(id == null) {
 			return "redirect:/aus/main";

@@ -3,6 +3,8 @@ package controller.CEB;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,8 +39,12 @@ public class NoticeController {
 		
 	@RequestMapping("/notice") 
 	public String show_list(ModelMap model, 
-			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) {
+			@RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string,HttpSession session) {
         
+		session.removeAttribute("Dday");
+		session.removeAttribute("pjm_num");
+		
+		
 		int pageSize = 10;
 		int currentPage = pageNum;
 		int startRow = (currentPage - 1) * pageSize + 1;

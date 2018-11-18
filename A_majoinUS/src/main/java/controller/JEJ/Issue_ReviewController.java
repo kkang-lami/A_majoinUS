@@ -75,7 +75,7 @@ public class Issue_ReviewController {
 	}
 	
 	
-	@RequestMapping(value = "/aus/review_admin")
+	/*@RequestMapping(value = "/aus/review_admin")
 	public String review(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
 		//model.addAttribute("reviewList", service.getReviewpage(dto));
 		//return "JEJ/review_admin";
@@ -104,7 +104,44 @@ public class Issue_ReviewController {
 		model.addAttribute("reviewList", service.getReviewPage(dto));
 		
 		return "JEJ/review_admin";
-	}
+	}*/
+
 	
+	 @RequestMapping(value = "/aus/review_admin")
+	   public String review(Model model, @RequestParam(value="pageNum", defaultValue="1")int pageNum, String search, String string) throws Exception {
+	      //model.addAttribute("reviewList", service.getReviewpage(dto));
+	      //return "JEJ/review_admin";
+	      
+	      int pageSize = 10;
+	      int currentPage = pageNum;
+	      int startRow = (currentPage - 1) * pageSize + 1;
+	      int endRow = currentPage * pageSize;
+	      int number = 0;
+	      int count = service.countReview();
+	      
+	      PageDTO dto = new PageDTO();
+	      dto.setEndRow(endRow);
+	      dto.setStartRow(startRow);
+	      
+	      System.out.println("count"+count);
+	      System.out.println("getReviewPage"+service.getReviewPage(dto));
+	      
+	      
+	      number=count-(currentPage-1)*pageSize;
+	      
+	      model.addAttribute("number",number);
+	      model.addAttribute("count",count);
+	      model.addAttribute("pageSize",pageSize);
+	      model.addAttribute("currentPage",currentPage);
+	      model.addAttribute("reviewList", service.getReviewPage(dto));
+	      
+	      //
+	      model.addAttribute("name", service.getReviewName());
+	/*      System.out.println("은주당"+service.getReviewList());
+	      System.out.println("dld"+service.getReviewName());*/
+	      
+	      return "JEJ/review_admin";
+	   }
+
 	
 }
