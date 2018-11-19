@@ -11,22 +11,30 @@
 <title>Document</title>
 <link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style>
-#btn-group12 {
-	text-align: center;
-}
-
 #hr_style{
 	border-top: 1px solid #d2d6de !important;
 }
 
-/* .out {
-	width: 100%;
-	text-align: center; 
+.m:hover {
+    background: #00a65a !important;
+    color: #fff !important;
 }
-
-.row {
-	display: inline-block;
-} */
+.pp:hover {
+    background: #168ed4 !important;
+    color: #fff !important;
+}
+.bg-light-blue-activeblue { 
+    background-color: #1b99e2 !important;
+}
+.box.box-primary {
+    border-top-color: #46bbff   !important; 
+}
+.box.box-danger {
+    border-top-color: #62b790 !important;
+}
+.btn-app {
+	background-color: #ffffff !important;
+}
 </style>
 </head>
 <body>
@@ -52,18 +60,21 @@
 		<!-- 콘텐츠 -->
 		<section class="content">
 			<!-- 은주 코딩 -->
-			
-			<div id="btn-group12">
-<input type="button" class="btn btn-success" style="width: 300px; margin-bottom:10px;" value="팀원 검색" onclick = "location.href='SearchUserForm'">
-<input type="button" class="btn btn-primary" style="width: 300px; margin-bottom:10px;" value="프로젝트 검색" onclick = "location.href='SearchTeamForm'">
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-md-6">
+		<a class="btn btn-app btn-block m" onclick = "location.href='SearchUserForm'" style="margin-bottom: 0px;margin-left: 0px;padding-bottom: 50px;"><i class="fa fa-user"></i> 팀원 검색</a>
+	</div>
+	<div class="col-md-6" >
+		<a class="btn btn-app btn-block pp" onclick = "location.href='SearchTeamForm'" style="margin-bottom: 0px;margin-left: 0px;padding-bottom: 50px;"><i class="fa fa-users"></i> 프로젝트 검색</a>
+	</div>
+	<br><br>
 </div>
-
 <div class="out">
 <div class="row">
         <div class="col-xs-12">              
-          <div class="box box-success">
+          <div class="box box-warning">
             <div class="box-header">
-              <h3 class="box-title" style="text-align: left !important;">최근 알림</h3>
+              <h3 class="box-title" style="text-align: left !important;"><i class="fa fa-fw fa-bell text-yellow"></i> 최근 알림</h3>
 
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -86,7 +97,7 @@
         <c:if test="${projectApplyAlarm_size > 0 }">
         <c:forEach items="${projectApplyAlarm}" var="alarm">
         <tr>                                  
-          <td>"${alarm.pj_name}" 프로젝트 <span class="label label-primary">${alarm.a_type}신청</span></td>
+          <td>"${alarm.pj_name}" 프로젝트 <small class="badge bg-light-blue-activeblue">${alarm.a_type}신청</small></td>
           <td>${alarm.sender }</td>
           <td>
 	<c:set var="reg" value="${fn:substring(alarm.a_date,0,10)}" />${reg}</td>                  
@@ -101,7 +112,7 @@
         <c:if test="${projectProposalAlarm_size >0 }">
          <c:forEach items="${projectProposalAlarm}" var="projectProposalAlarm">
         <tr>
-        <td>${projectProposalAlarm.name} 프로젝트  <span class="label label-success">${projectProposalAlarm.a_type}신청</span>
+        <td>${projectProposalAlarm.name} 프로젝트  <small class="badge bg-green">${projectProposalAlarm.a_type}신청</small>
 		</td>
 		<td>
 			${projectProposalAlarm.sender}
@@ -130,9 +141,9 @@
 <div class="out">
 <div class="row">    
         <div class="col-xs-12">    
-          <div class="box box-info">
+          <div class="box box-primary">
             <div class="box-header">
-              <h3 class="box-title" style="text-align: left !important;">진행 중인 프로젝트</h3>
+              <h3 class="box-title" style="text-align: left !important;"><i class="fa fa-fw fa-rocket" style="color: #289bde;"></i>진행 중인 프로젝트</h3>
 
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -176,8 +187,8 @@
 			<!-- 성희 코딩 -->
 			<div class="box box-danger todo_box">
 			
-	            <div class="box-header ui-sortable-handle" style="cursor: move;">
-	              <i class="ion ion-clipboard"></i>
+	            <div class="box-header ui-sortable-handle" style="cursor: move;padding-left: 15px;">
+	               <i class="ion ion-clipboard"></i>
 	              <h3 class="box-title">To Do List</h3>
 	            </div>
 	            <!-- /.box-header -->

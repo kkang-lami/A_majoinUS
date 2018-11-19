@@ -14,7 +14,7 @@
 		        	
 		        	<!-- 장바구니 목록 -->
 		           	<div class="modal-body">
-						<div class="box box-info">
+						<div class="box box-primary">
 							<div class="box-header with-border"><strong>스크랩 목록</strong><small id="cart_len">(${fn:length(cart)})</small></div>
 
 							<div class="box-body">

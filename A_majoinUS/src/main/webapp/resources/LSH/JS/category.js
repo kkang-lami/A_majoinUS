@@ -66,31 +66,6 @@ function real_level2(url,params,id){
 	});
 }
 
-/*function show_search_tag() {
-
-	var html1 = "<div id='job_list' class='inline'>",
-		html2 = "";
-
-	<c:forEach var="item" items="${command.job}">
-		html1 += "<div id="+global.i+">${item}<button id="+global.i+" class='del_btn'>x</button></div>";
-		html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
-		global.i++;
-	</c:forEach>
-
-		html1 += "</div><br><div id='local_list' class='inline'>";
-
-	<c:forEach var="item" items="${command.local}" >
-		html1 += "<div id="+global.i+">${item}<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
-		html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
-		global.i++;
-	</c:forEach>
-
-		html1 += "</div>";
-
-		$('#result').append(html1);
-		$('#hidden').append(html2);
-}*/
-
 function add(element) {
 	var list = [],
 		html1 = "",
@@ -108,8 +83,8 @@ function add(element) {
 		} else if (len >= 3) {
 			alert("3개 까지 지정가능합니다. (현재 입력수:" + len + ")");
 		} else {
-			html1 += "<div id="+global.i+">" + str + " ";
-			html1 += "<button type='button' id="+global.i+" class='del_btn'>x</button></div>";
+			html1 += "<span id="+global.i+">" + str + " ";
+			html1 += "<span id="+global.i+" class='del_btn'><i class='fa fa-fw fa-times-circle'></i></span></span>";
 			html2 += "<input type='hidden' id='"+global.i+"' name='"+what+"' value='"+str+"'>";
 
 			$('#' + what + '_list').append(html1);

@@ -13,6 +13,14 @@
 <title>프로젝트 찾기</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<style>
+	.bg-light-blue:hover{
+	    background-color: #43adea !important; 
+	}
+	.fa-times-circle{
+		margin-right: 10px;
+	}
+</style>
 </head>
 <body>
 <div class="wrapper">
@@ -35,7 +43,7 @@
 			<!-- 검색창 -->
 			<div class="box box-primary">
 
-				<div class="box-header with-border"><h3 class="box-title">프로젝트 상세검색</h3></div>
+				<div class="box-header with-border"><h3 class="box-title">프로젝트 검색</h3></div>
 							
 				<!-- 검색창 폼시작 -->
 				<form id="SearchForm" method="post" class="form-horizontal">
@@ -86,7 +94,7 @@
 						<div title="넘겨질 job과 local" id="hidden"></div>
 	
 						<hr>
-						검색조건
+						검색조건<br>
 						<div id="result"></div>
 							
 					</div>
@@ -295,12 +303,12 @@
 	});
 	
 	function show_search_tag() {
-
-		var html1 = "<div id='job_list' class='inline'>",
+		
+		var html1 = "<div id='job_list'>",
 			html2 = "";
 
 		<c:forEach var="item" items="${command.job}">
-			html1 += "<div id="+global.i+">${item}<button id="+global.i+" class='del_btn'>x</button></div>";
+			html1 += "<span id="+global.i+">${item}<span id="+global.i+" class='del_btn' ><i class='fa fa-fw fa-times-circle'></i></span></span>";
 			html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
 			global.i++;
 		</c:forEach>
@@ -308,7 +316,7 @@
 			html1 += "</div><br><div id='local_list' class='inline'>";
 
 		<c:forEach var="item" items="${command.local}" >
-			html1 += "<div id="+global.i+">${item}<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+			html1 += "<span id="+global.i+">${item}<span id="+global.i+" class='del_btn'><i class='fa fa-fw fa-times-circle'></i></span></span>"; 
 			html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
 			global.i++;
 		</c:forEach>

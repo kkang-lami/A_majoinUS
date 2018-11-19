@@ -6,7 +6,7 @@ $('body').on('show.bs.modal','.modal', function (e) {
 	    content : '<textarea class="popover-textarea" rows="5" cols="30" placeholder="(10글자 이상)"></textarea>',
 	    template: '<div class="popover">'+
 	              '<h3 class="popover-title"></h3><div class="popover-content">'+
-	              '</div><div class="popover-footer"><button type="button" class="btn btn-danger popover-submit">'+
+	              '</div><div class="popover-footer" align="center" style="padding-bottom: 10px;"><button type="button" class="btn btn-danger popover-submit">'+
 	              '등록</button>&nbsp;'+
 	              '<button type="button" class="btn btn-default popover-cancel">'+
 	              '취소</button></div></div>' 
