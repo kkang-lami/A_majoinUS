@@ -191,7 +191,7 @@ public class SearchService {
 			}
 		}catch (Exception e) {
 			System.out.println("[에러] 프로젝트룸 서비스 실패 ::"+e.toString());
-		}
+		} 
 		return map;
 	}
 	
