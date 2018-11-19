@@ -12,24 +12,48 @@
 	</insert>
 
 	<!-- 프로젝트 관심분야 -->
-	
+	<select id="pjj_mem_search" resultType="Integer">
+		select max(pjj_num) from PJ_Job
+	</select>
 	
 	<insert id="createProjectJob" parameterType="Map">
+		insert all 
+			<foreach collection="list" separator=" " item="item">
+				into PJ_Job values (#{item.pjj_num},${item.pj_num}, #{item.category})
+			</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	<!--
+	<insert>	 
 		<foreach collection="list" item="item"  separator=";" open="DECLARE BEGIN" close="; END;">
 			insert into PJ_Job values (PJ_JOB_SEQ.nextval, ${item.pj_num}, #{item.category})
 		</foreach>
-	</insert>
+	</insert> 
+	-->
 	<insert id="createProjectJob2" parameterType="map">
 		insert into PJ_Job values
 		(PJ_JOB_SEQ.nextval, #{pj_num}, #{pj_cate})
 	</insert> 
 
 	<!-- 프로젝트 모집지역 -->
+	<select id="pjl_mem_search" resultType="Integer">
+		select max(pjl_num) from PJ_location
+	</select>
+	
 	<insert id="createProjectLocation" parameterType="Map">
+		insert all 
+			<foreach collection="list" separator=" " item="item">
+				into PJ_LOCATION values (#{item.pjl_num},${item.pj_num}, #{item.category})
+			</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	
+	<!-- <insert id="createProjectLocation" parameterType="Map">
 		<foreach collection="list" item="item"  separator=";" open="DECLARE BEGIN" close="; END;">
 			insert into PJ_LOCATION values (PJ_LOCATION_SEQ.nextval, ${item.pj_num}, #{item.category})
 		</foreach>
-	</insert>
+	</insert> -->
 	<insert id="createProjectLocation2" parameterType="project.DTO.Pj_locationDTO">
 		insert into PJ_LOCATION values
 		(PJ_LOCATION_SEQ.nextval, #{pj_num}, #{pj_loc})

@@ -28,14 +28,22 @@ public class PHE extends SqlSessionDaoSupport {
 	}
 
 	public int createProjectJob(List<String> pj_cate,int pj_num) {
+		
+		int pjj_num = getSqlSession().selectOne("PHE_AUS.pjj_mem_search");
+		
 		List<PHE_CategoryDTO> category = new ArrayList<PHE_CategoryDTO>();
 		for(String pc : pj_cate) {
+			pjj_num++;
 			PHE_CategoryDTO dto = new PHE_CategoryDTO();
+			dto.setPjj_num(pjj_num);
 			dto.setPj_num(pj_num);
 			dto.setCategory(pc);
+			category.add(dto);
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("map", category);
+		map.put("list", category);
+		
+		System.out.println(category.size());
 		
 		int y = getSqlSession().insert("PHE_AUS.createProjectJob", map);
 		return y;
@@ -51,14 +59,20 @@ public class PHE extends SqlSessionDaoSupport {
 	}
 	
 	public int createProjectLocation(List<String> pj_loc,int pj_num) {
+		
+		int pjl_num=getSqlSession().selectOne("PHE_AUS.pjl_mem_search");
+		
 		List<PHE_CategoryDTO> category = new ArrayList<PHE_CategoryDTO>();
 		for(String pc : pj_loc) {
+			pjl_num++;
 			PHE_CategoryDTO dto = new PHE_CategoryDTO();
+			dto.setPjl_num(pjl_num);
 			dto.setPj_num(pj_num);
 			dto.setCategory(pc);
+			category.add(dto);  
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("map", category);
+		map.put("list", category);
 		
 		int z = getSqlSession().insert("PHE_AUS.createProjectLocation", map);
 		return z;

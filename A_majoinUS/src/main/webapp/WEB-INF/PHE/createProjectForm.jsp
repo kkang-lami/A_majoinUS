@@ -663,7 +663,16 @@ transition:.7s;
       var start_d = new Date(document.form.start_d.value);
       var end_d = new Date(document.form.end_d.value);
       var today = new Date();
-         
+      
+      
+      var limitD = new Date(document.form.start_d.value);
+      limitD=limitD.setMonth(limitD.getMonth() + 3);
+   
+   if(limitD <end_d){
+      alert("프로젝트의 최장 기간은 3개월입니다. 3개월 이상은 티켓을 구입해주세요.")
+      return false;
+   }
+      
       if (!document.form.pj_name.value) {
          alert("제목을 입력해 주세요!");
          document.form.pj_name.focus();

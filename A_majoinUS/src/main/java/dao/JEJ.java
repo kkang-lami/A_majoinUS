@@ -328,5 +328,22 @@ public class JEJ extends SqlSessionDaoSupport{
 	      List<Review_adminDTO> admin_review_name = getSqlSession().selectList("JEJ_AUS.select_review_name");
 	      return admin_review_name;
 	   }
-	
+	  
+	  
+	  
+	  
+	  public int countVisit(String visit12) {
+	      int visit = getSqlSession().selectOne("JEJ_AUS.count_visit_1",visit12);
+	      return visit;
+	   }
+	   
+	   public void insertVisit(String visit_date) {
+	      getSqlSession().insert("JEJ_AUS.insert_visit",visit_date);
+	   }
+	   
+	   public void updateVisit(String visit_date) {
+	      
+	      getSqlSession().update("JEJ_AUS.update_visit",visit_date);
+	   }
+
 }

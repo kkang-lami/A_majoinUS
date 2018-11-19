@@ -47,7 +47,6 @@ public class ProjectroomController {
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("error");
 		}
@@ -55,20 +54,16 @@ public class ProjectroomController {
 		session = request.getSession(true);
 		String sessionId =(String)session.getAttribute("id");
 		
-		System.out.println(end_d);
-		  
-		System.out.println("create controller");
-		//System.out.println("controller command1"+command1);
-		
 		dao.createProject(command1);
-		System.out.println(command1);
 		
 		if(!job.get(0).equals("null")) {
 			dao.createProjectJob(job,command1.getPj_num());
+			System.out.println("job end");
 		}
 		if(!local.get(0).equals("null")) {
 			dao.createProjectLocation(local,command1.getPj_num());
-		}
+			System.out.println("local end");
+		}  
 		dao.insertToPjMem(sessionId,command1.getPj_num());	
 	
 		String end = "2099-12-31";

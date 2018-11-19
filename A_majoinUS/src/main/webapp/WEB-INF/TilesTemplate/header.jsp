@@ -36,8 +36,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
 
 <body class="hold-transition skin-black sidebar-mini">
-
-
+<!-- sidebar-collapse -->
+        
   <!-- Main Header -->
   <header class="main-header">
     

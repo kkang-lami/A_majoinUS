@@ -1,6 +1,8 @@
 package controller.JHR;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dao.JEJ;
+
 @Controller
 @RequestMapping("/aus")
 public class loginController {
@@ -22,6 +26,14 @@ public class loginController {
 	@Autowired
 	private loginServiceImpl service;
 
+	@Autowired
+	   private JEJ service_jej;
+	   
+	   public void setService_jej(JEJ service_jej) {
+	      this.service_jej = service_jej;
+	   }
+
+	   
 	/*
 	 * //로그인 페이지
 	 * 
@@ -29,7 +41,7 @@ public class loginController {
 	 * }
 	 */
 	// 로그인 확인
-	@RequestMapping(value="/loginCheck",method=RequestMethod.POST)
+	/*@RequestMapping(value="/loginCheck",method=RequestMethod.POST)
 	public String loginCheck(@ModelAttribute MemberDTO dto, HttpSession session,Model m) {
 
 		MemberDTO result = service.loginCheck(dto);
@@ -46,7 +58,47 @@ public class loginController {
 //			mav.addObject("msg", "failure");
 		}
 //		return mav;
-	}
+	}*/
+	   
+	   @RequestMapping(value="/loginCheck",method=RequestMethod.POST)
+	   public String loginCheck(@ModelAttribute MemberDTO dto, HttpSession session,Model m) {
+
+	      MemberDTO result = service.loginCheck(dto);
+	      System.out.println("result : " + result);
+	      //ModelAndView mav = new ModelAndView();
+	      if (result != null) {
+	         
+	         
+	         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ("yyyy/MM/dd");
+	         Date currentTime = new Date ();
+	         String mTime = mSimpleDateFormat.format ( currentTime );
+	         System.out.println("왜 안뜨는뎅ㅇ.."+mTime);
+	         
+	         
+	         if (service_jej.countVisit(mTime) == 0) {
+	         //오늘날짜가 없는 경우 insert
+	         service_jej.insertVisit(mTime);
+	         } else {
+	         //오늘날짜가 있는 경우 update
+	         service_jej.updateVisit(mTime);
+	         }
+	         
+	         
+	         session.setAttribute("id", result.getId());
+	         session.setAttribute("name", result.getName());
+	         session.setAttribute("userphoto", result.getU_img());
+	         
+	         
+	         
+	         return "redirect:/aus/MyPageMain";
+	      } else {
+	         m.addAttribute("msg","아이디 또는 비밀번호가 맞지 않습니다.");
+	         return "main";  
+//	         mav.addObject("msg", "failure");
+	      }
+//	      return mav;
+	   }
+	   
 
 	// 로그인 성공시 바로 이동
 	/*
