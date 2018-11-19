@@ -102,14 +102,14 @@ session.setAttribute("target_id", "aa"); // 세션에 "id" 이름으로 id 등�
 				<!-- 프로젝트이름 출력하는 foreach -->
  
 				<c:forEach items="${pjName}" var="pjName">
-		<div class="box box-success ">    
+		<div class="box box-success collapsed-box">    
 						<div class="box-header with-border">
 							<h3 class="box-title">&nbsp;&nbsp;${pjName.pj_name}</h3>
 								
 
 							<div class="box-tools pull-right">
-							<!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button> -->    
+							<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>    
                 </div>
                               <!-- /.box-tools -->
                 </div>
@@ -126,7 +126,7 @@ session.setAttribute("target_id", "aa"); // 세션에 "id" 이름으로 id 등�
 							</div>
 						</div> -->
 						<!-- /.box-header -->    
-						<div class="box-body no-padding" >
+						<div class="box-body no-padding" style="display: none;">
 							<div class="row">
 								<div class="col-md-9 col-sm-8">
 									<div class="pad" style="margin:15px;">

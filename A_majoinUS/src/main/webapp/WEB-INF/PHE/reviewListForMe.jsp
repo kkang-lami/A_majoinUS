@@ -79,21 +79,21 @@
 				<!-- 프로젝트이름 출력하는 foreach -->
 				<c:forEach items="${pjName}" var="pjName">
 
-					<div class="box box-success">
+					<div class="box box-success collapsed-box">
 						<div class="box-header with-border">
 							<h3 class="box-title">&nbsp;&nbsp;${pjName.pj_name}</h3>
 
 							<div class="box-tools pull-right">
-								<!-- <button type="button" class="btn btn-box-tool"
+								<button type="button" class="btn btn-box-tool"
 									data-widget="collapse">
 									<i class="fa fa-plus"></i>
-								</button> -->
+								</button>
 							</div>
 							<!-- /.box-tools -->
 						</div>
     
 						<!-- /.box-header -->
-						<div class="box-body" >
+						<div class="box-body no-padding" style="display: none;" >
 							<c:forEach items="${reviewListForMe}" var="reviewListForMe">
 
 								<c:if

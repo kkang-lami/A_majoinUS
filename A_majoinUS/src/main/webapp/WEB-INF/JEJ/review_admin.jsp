@@ -60,19 +60,21 @@
 					<!-- /.box-footer -->
 					<!--  -->
 					 <c:forEach items="${name}" var="pjName">
-      <div class="box box-info">
+      <div class="box box-info collapsed-box">
                   <div class="box-header with-border">
                      <h3 class="box-title">
                      <%-- &nbsp;&nbsp;<a href="#" id="modalbutton" class="Team_btn" data-toggle="modal" data-target="#modal_Team">${pjName.pj_name}</a>< --%>
                      <i class="fa fa-fw fa-star"></i>&nbsp;&nbsp;${pjName.pj_name}    </h3>  
   
                      <div class="box-tools pull-right">   
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
                 </div>
                               <!-- /.box-tools -->
                 </div>
                 
 
-                  <div class="box-body no-padding">
+                  <div class="box-body no-padding" style="display: none;">
                      <div class="row">
                         <div class="col-md-12 col-sm-8">
                            <div class="pad" style="margin:15px;" id="result_table">

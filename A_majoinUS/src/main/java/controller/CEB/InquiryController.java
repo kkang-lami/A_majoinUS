@@ -176,6 +176,7 @@ public class InquiryController {
 	@RequestMapping(value="/in_content") 
 	public String show_content_2(ModelMap model,int num) {
 		InquiryDTO inquiry = inquiryDAO.show_listOne_2(num);
+		inquiry.setI_date(inquiry.getI_date().substring(0,inquiry.getI_date().indexOf(" ")));
 		model.addAttribute("inquiry",inquiry);
 		return "CEB/inquiry/in_content"; 
 	}

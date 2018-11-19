@@ -36,7 +36,7 @@ public class InquiryDTO {
 		return i_date;
 	}
 	public void setI_date(String i_date) {
-		this.i_date = i_date.split(" ")[0];
+		this.i_date = i_date;
 	}
 	public String getI_state() {
 		return i_state;
