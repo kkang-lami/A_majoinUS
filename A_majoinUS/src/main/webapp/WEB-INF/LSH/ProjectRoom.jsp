@@ -32,7 +32,7 @@
 			<div class="row">
 			  <div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="info-box">
-						<span class="info-box-icon bg-aqua"><i class="ion-ios-chatbubble-outline"></i></span>
+						<span class="info-box-icon bg-aqua" style="height: 97px;"><i class="ion-ios-chatbubble-outline"></i></span>
 						<div class="info-box-content">
 					    	<span class="info-box-text">프로젝트 진행도</span>
 					    	<span class="info-box-number">${list[0].percent}<small>%</small></span>
