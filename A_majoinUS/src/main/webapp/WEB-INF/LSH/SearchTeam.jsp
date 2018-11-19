@@ -20,6 +20,24 @@
 	.fa-times-circle{
 		margin-right: 10px;
 	}
+	select{
+		width: 15%; 
+		height: 23px;
+		margin-top: 5px !important;
+	}
+	.date_btn{
+		width: 15%; 
+	}
+	#result {
+    	margin-left: 20px;
+    	margin-top: 10px;
+	}
+	#result_table #first{
+		background-color: #f7f7f7;
+	}
+	td{ 
+		vertical-align: middle !important;
+	}
 </style>
 </head>
 <body>
@@ -52,25 +70,25 @@
 					<div class="box-body">
 	
 						<!-- 관심직종 -->
-						<div class="form-group">
-							<label for="job1" class="col-sm-2 control-label">관심분야</label>
+						<div class="form-group row">
+							<label for="job1" class="col-sm-2 control-label">관심직종</label>
 							<div class="col-sm-10">
-								<select id="job1" class="show-level2"></select> <select id="job12"></select>
-								<button type="button" value="job" class="add_btn">추가</button>
+								<select id="job1" class="show-level2"></select>&ensp;<select id="job12"></select>
+								<button type="button" value="job" class="add_btn btn btn-xs btn-default"><i class="fa fa-fw fa-plus"></i>추가</button>
 							</div>
 						</div>
 	
 						<!-- 선호지역 -->
-						<div class="form-group">
-							<label for="local1" class="col-sm-2 control-label">선호직역</label>
+						<div class="form-group row">
+							<label for="local1" class="col-sm-2 control-label">선호지역</label>
 							<div class="col-sm-10">
-								<select id="local1" class="show-level2"></select> <select id="local12"></select>
-								<button type="button" value="local" class="add_btn">추가</button>
+								<select id="local1" class="show-level2"></select>&ensp;<select id="local12"></select>
+								<button type="button" value="local" class="add_btn btn btn-xs btn-default"><i class="fa fa-fw fa-plus"></i>추가</button>
 							</div>
 						</div>
 	
 						<!-- 프로젝트 기간 -->
-						<div class="form-group">
+						<div class="form-group row">
 							<label for="start_d" class="col-sm-2 control-label">프로젝트 기간</label>
 							<div class="col-sm-10">
 								<input type="date" id="start_d" name="start_d" class="date_btn" value="${command.start_d}"> - 
@@ -79,10 +97,10 @@
 						</div>
 	
 						<!-- 포함단어 -->
-						<div class="form-group">
-							<label for="keyword" class="col-sm-2 control-label">포함단어</label>
+						<div class="form-group row">
+							<label for="keyword" class="col-sm-2 control-label">포함단어</label>  
 							<div class="col-sm-10">
-								<input type="text" id="keyword" name="keyword" value="${command.keyword}" placeholder="검색어를 입력해주세요.">
+								<input type="text" id="keyword" name="keyword" value="${command.keyword}" placeholder="검색어를 입력해주세요." style="width: 31%;">
 							</div>
 						</div>
 	
@@ -98,7 +116,6 @@
 						<div id="result"></div>
 							
 					</div>
-					<!-- 바디 종료 -->
 	
 					<!-- 셀렉터 푸터 -->
 					<div class="box-footer">
@@ -135,7 +152,7 @@
 				        		<div class="col-md-4">
 						          <div class="box box-widget widget-user-2">
 						            <div class="widget-user-header bg-light-blue recomend_btn" id="${item.pj_num}" data-toggle="modal" data-target="#modal_Team">
-						              	<h4>${item.pj_name}</h4>
+						              	<h4><b>${item.pj_name}</b></h4>
 						              	<h6>프로젝트 기간: ${item.start_d}~${item.end_d}</h6>
 						              	<h6>관심직군: ${item.pj_cate}</h6>
 						              	<h6>선호지역: ${item.pj_loc}</h6>
@@ -171,7 +188,7 @@
 				<div class="box-body">
 
 					<table id="result_table" class="table table-hover text-center">
-						<tr>
+						<tr id="first">
 							<th colspan="3">모집정보</th>
 							<th>프로젝트 기간</th>
 							<th>팀장</th>
@@ -185,14 +202,14 @@
 						<c:forEach var="item" items="${pdto.list}">
 						<tr id="${item.pj_num}">
 							<c:if test="${item.favs eq 'YES'}">
-							<td><a href="#" id="star_btn" class="star"><i class="fa fa-fw fa-star text-yellow"></i></a></td>
+							<td style="width: 15%;"><a href="#" id="star_btn" class="star"><i class="fa fa-fw fa-star text-yellow"></i></a></td>
 							</c:if>
 							<c:if test="${item.favs ne 'YES'}">
-							<td><a href="#" id="star_btn" class="unstar"><i class="fa fa-fw fa-star-o text-yellow"></i></a></td>
+							<td style="width: 15%;"><a href="#" id="star_btn" class="unstar"><i class="fa fa-fw fa-star-o text-yellow"></i></a></td>
 							</c:if>
-							<td>
-								<ul>
-									<li>${item.pj_name}</li>
+							<td style="width: 30%; text-align: left;">
+								<ul class="list-unstyled">  
+									<li><b>${item.pj_name}</b></li>
 									<li>관심직종:${item.pj_cate}</li>
 									<li>선호지역:${item.pj_loc}</li>
 								</ul>
@@ -242,10 +259,8 @@
 
 		<!-- 장바구니 모달 -->
 		<c:import url="${cp}/resources/LSH/Modal/Cart.jsp"/>
-			
-	</div>
+		</div>
 	<!-- /content-wrapper -->
-	
 	<tiles:insertDefinition name="footer" />
 </div>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/category.js"></script>
@@ -313,7 +328,7 @@
 			global.i++;
 		</c:forEach>
 
-			html1 += "</div><br><div id='local_list' class='inline'>";
+			html1 += "</div><br><div id='local_list'>";
 
 		<c:forEach var="item" items="${command.local}" >
 			html1 += "<span id="+global.i+">${item}<span id="+global.i+" class='del_btn'><i class='fa fa-fw fa-times-circle'></i></span></span>"; 
@@ -443,12 +458,12 @@
 				html += "<tr id='"+item.pj_num+"'>";
 
 				if(item.favs === "YES"){
-				html +=	"<td><a href='#' id='star_btn' class='star'><i class='fa fa-fw fa-star text-yellow'></i></td>";
+				html +=	"<td style='width: 15%;'><a href='#' id='star_btn' class='star'><i class='fa fa-fw fa-star text-yellow'></i></td>";
 				}else{
-				html +=	"<td><a href='#' id='star_btn' class='unstar'><i class='fa fa-fw fa-star-o text-yellow'></i></td>";
+				html +=	"<td style='width: 15%;'><a href='#' id='star_btn' class='unstar'><i class='fa fa-fw fa-star-o text-yellow'></i></td>";
 				}
 				
-				html += "<td><ul><li>"+item.pj_name+"</li>";
+				html += "<td style='width: 30%; text-align: left;'><ul class='list-unstyled'><li><b>"+item.pj_name+"</b></li>";
 				html += "<li>관심직종:"+item.pj_cate+"</li>";
 				html += "<li>선호지역:"+item.pj_loc+"</li></ul></td>";
 				html += "<td><button class='btn btn-default Team_btn' data-toggle='modal' data-target='#modal_Team'>이동</button></td>";

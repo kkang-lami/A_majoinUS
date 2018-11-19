@@ -57,7 +57,7 @@ public class PortfolioController {
 		String id = (String) session.getAttribute("id");
 		
 		if(file.getOriginalFilename() != "") {
-			String path = "c://item//portfolio//";
+			String path = "d://item//portfolio//";
 			String f_name = file.getOriginalFilename();
 			long now = System.currentTimeMillis();
 			String new_name = now + "_" + f_name;
@@ -96,7 +96,7 @@ public class PortfolioController {
 					pdto.setPd_content("");
 				}
 				
-				String path2 = "c://item//portfolio//detail//";
+				String path2 = "d://item//portfolio//detail//";
 				String f_name2 = pdto.getPd_img().getOriginalFilename();
 				f_name2 = f_name2.substring(0, f_name2.indexOf("."));
 				long now2 = System.currentTimeMillis();
@@ -155,7 +155,7 @@ public class PortfolioController {
 		String id = (String) session.getAttribute("id");
 		
 		if(!file.isEmpty()) {
-			String path = "c://item//portfolio//";
+			String path = "d://item//portfolio//";
 			String f_name = file.getOriginalFilename();
 			long now = System.currentTimeMillis();
 			String new_name = now + "_" + f_name;
@@ -225,7 +225,7 @@ public class PortfolioController {
 					pdto.setPd_content("");
 				}
 				
-				String path2 = "c://item//portfolio//detail//";
+				String path2 = "d://item//portfolio//detail//";
 				String f_name2 = pdto.getPd_img().getOriginalFilename();
 				f_name2 = f_name2.substring(0, f_name2.indexOf("."));
 				long now2 = System.currentTimeMillis();

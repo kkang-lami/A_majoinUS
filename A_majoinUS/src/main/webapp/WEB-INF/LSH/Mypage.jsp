@@ -11,10 +11,6 @@
 <title>Document</title>
 <link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style>
-#hr_style{
-	border-top: 1px solid #d2d6de !important;
-}
-
 .m:hover {
     background: #00a65a !important;
     color: #fff !important;
@@ -30,7 +26,7 @@
     border-top-color: #46bbff   !important; 
 }
 .box.box-danger {
-    border-top-color: #62b790 !important;
+    border-top-color: #42c187 !important;
 }
 .btn-app {
 	background-color: #ffffff !important;

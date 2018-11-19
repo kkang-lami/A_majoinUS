@@ -59,7 +59,7 @@ public class FileBoardController {
 		System.out.println("나 호출됨요");
 		int pjm_num = (int)session.getAttribute("pjm_num");
 		String id = (String)session.getAttribute("id");
-		String path = "c://item//";
+		String path = "d://item//";
 		String f_name = file.getOriginalFilename();
 		long now = System.currentTimeMillis();
 		String new_name = now + "_" + f_name;

@@ -10,8 +10,60 @@
 <html>
 <head>
 <title>멤버 찾기</title>
+<style>
+	.on{
+		color:black;
+		font-weight:bold;
+	}
+	.pagination>.active>a{
+		background-color: #009450 !important;
+	}
+	
+	.recomend_btn{ 
+		background-color: #68ad5e !important;
+		color: #fff !important;
+		vertical-align: middle !important; 
+	}
+
+	.recomend_btn:hover{   
+	    background-color: #a0c79b !important;    
+	}
+	
+/* 	.widget-user-image>img{
+		width: 100px;
+		margin-left: 10;
+	}
+	.widget-user-2 .widget-user-username, .widget-user-2 .widget-user-desc{
+		margin-left: 150px;
+	} */
+</style>
+<style>
+	.bg-light-blue:hover{
+	    background-color: #43adea !important; 
+	}
+	.fa-times-circle{
+		margin-right: 10px;
+	}
+	select{
+		width: 15%;
+		height: 23px;
+		margin-top: 5px !important;
+	}
+	.date_btn{
+		width: 123px;
+	}
+	#result {
+    	margin-left: 20px;
+    	margin-top: 10px;
+	}
+	#result_table #first{
+		background-color: #f7f7f7;
+	}
+	td{ 
+		vertical-align: middle !important;
+	}
+</style>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/LSH/CSS/freshslider.min.css">
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
@@ -45,7 +97,7 @@
 							<label for="job1" class="col-sm-2 control-label">관심분야</label>
 							<div class="col-sm-10">
 								<select id="job1" class="show-level2"></select> <select id="job12"></select>
-								<button type="button" value="job" class="add_btn">추가</button>
+								<button type="button" value="job" class="add_btn btn btn-xs btn-default"><i class="fa fa-fw fa-plus"></i>추가</button>
 							</div>
 						</div>
 
@@ -54,14 +106,14 @@
 							<label for="local1" class="col-sm-2 control-label">선호직역</label>
 							<div class="col-sm-10">
 								<select id="local1" class="show-level2"></select> <select id="local12"></select>
-								<button type="button" value="local" class="add_btn">추가</button>
+								<button type="button" value="local" class="add_btn btn btn-xs btn-default"><i class="fa fa-fw fa-plus"></i>추가</button>
 							</div>
 						</div>
 
 						<!-- 평점 -->
 						<div class="form-group">
 							<label for="eval" class="col-sm-2 control-label">평점</label>
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div id="unranged-value"></div>
 								<input id="eval" name="eval" type="hidden" value="${command.eval}">
 							</div>
@@ -71,7 +123,7 @@
 						<div class="form-group">
 							<label for="keyword" class="col-sm-2 control-label">포함단어</label>
 							<div class="col-sm-10">
-								<input type="text" id="keyword" name="keyword" value="${command.keyword}" placeholder="검색어를 입력해주세요.">
+								<input type="text" id="keyword" name="keyword" value="${command.keyword}" placeholder="검색어를 입력해주세요." style="width: 365px;">
 							</div>
 						</div>
 
@@ -82,7 +134,7 @@
 						<div title="넘겨질 job과 local" id="hidden"></div>
 						<hr>
 						검색조건
-						<div id="result"></div>
+						<div id="result" class="row"></div>
 					</div>
 
 					<!-- 셀렉터 푸터 -->
@@ -105,7 +157,7 @@
 								<c:when test="${item.id eq null}">
 				        		<div class="col-md-4">
 						          <div class="box box-widget widget-user-2">
-						            <div class="widget-user-header bg-gray disabled color-palette text-center text-light-blue">
+						            <div class="widget-user-header bg-gray disabled color-palette text-center text-green">
 						              	<h3><b><i class="fa fa-fw fa-smile-o"></i></b></h3>
 						              	<h4><b>해당하는 멤버가 없습니다</b></h4>
 						              	<h5><b>관심직군과 선호지역을 추가해주세요!</b></h5>
@@ -113,28 +165,26 @@
 						          </div>
 						        </div>
 							    </c:when>
-		
+ 
 							    <c:otherwise>
 				        		<div class="col-md-4">
-						          <div class="box box-widget widget-user-2">
-						            <div class="widget-user-header bg-green recomend_btn" id="${item.id}" data-toggle="modal" data-target="#modal_user">
-										<table id="recomend_table" class="table text-center">
-											<tr >
-												<td><img src="${item.u_img}" alt="프사"></td>
-												<td>
-													<ul>
-														<li>${item.name}(${item.id})</li>
-														<li>관심직종:${item.f_cate}</li>
-														<li>선호지역:${item.f_loc}</li>
-														<li>평점:${item.eval}</li>
-													</ul>
-												</td>
-											</tr>
-										</table>
+						          <div class="box box-widget widget-user-2"> 
+									<div class="widget-user-header recomend_btn" id="${item.id}" data-toggle="modal" data-target="#modal_user" style="padding-left: 60px;"> 
+						              <div class="widget-user-image">
+						              	<img class="img-circle" src="<%=request.getContextPath()%>/aus/userImg/${item.u_img}" alt="회원 사진" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:80px; height:80px; margin-right:40px; overflow:hidden;">
+						              </div>
+						              	<ul class="list-unstyled">
+											<li><b>${item.name}(${item.id})</b></li>
+											<li>관심직종:${item.f_cate}</li>
+											<li>선호지역:${item.f_loc}</li>
+											<li>평점:${item.eval}</li>
+										</ul> 
 						            </div>
 						          </div>
 						        </div>
 							    </c:otherwise>
+							    
+							    
 							</c:choose>
 							</c:forEach>
 						</div>
@@ -165,7 +215,7 @@
 				<!-- 검색결과 목록 -->
 				<div class="box-body">
 					<table id="result_table" class="table table-hover text-center">
-						<tr>
+						<tr id="first">
 							<th colspan="3">회원정보</th>
 							<th>가입일</th>
 							<th>멤버초대</th>
@@ -177,10 +227,12 @@
 					
 						<c:forEach var="item" items="${pdto.list}">
 						<tr id="${item.id}">
-							<td><img src="${item.u_img}" alt="프사"></td>
-							<td>
-								<ul>
-									<li>${item.name}(${item.id})</li>
+							<td style="width: 20%;">
+								<img class="img-circle" src="<%=request.getContextPath()%>/aus/userImg/${item.u_img}" alt="회원 사진" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:80px; height:80px; overflow:hidden;">
+							</td>
+							<td style="width: 30%; text-align: left;">
+								<ul class="list-unstyled">
+									<li><b>${item.name}(${item.id})</b></li>
 									<li>관심직종:${item.f_cate}</li>
 									<li>선호지역:${item.f_loc}</li>
 									<li>평점:${item.eval}</li>
@@ -280,19 +332,19 @@
 
 	function show_search_tag() {
 
-		var html1 = "<div id='job_list' class='inline'>",
+		var html1 = "<div id='job_list'>",
 			html2 = "";
 
 		<c:forEach var="item" items="${command.job}">
-			html1 += "<div id="+global.i+">${item}<button id="+global.i+" class='del_btn'>x</button></div>";
+			html1 += "<span id="+global.i+">${item}<span id="+global.i+" class='del_btn'><i class='fa fa-fw fa-times-circle'></i></span></span>";
 			html2 += "<input type='hidden' id='"+global.i+"' name='job' value='${item}'>"
 			global.i++;
 		</c:forEach>
 
-			html1 += "</div><br><div id='local_list' class='inline'>";
+			html1 += "</div><br><div id='local_list'>";
 
 		<c:forEach var="item" items="${command.local}" >
-			html1 += "<div id="+global.i+">${item}<button 'button' id="+global.i+" class='del_btn'>x</button></div>";
+			html1 += "<span id="+global.i+">${item}<span id="+global.i+" class='del_btn'><i class='fa fa-fw fa-times-circle'></i></span></span>";
 			html2 += "<input type='hidden' id='"+global.i+"' name='local' value='${item}'>"
 			global.i++;
 		</c:forEach>
@@ -363,9 +415,11 @@
 		if(list.length === 0){
 				html += "<tr><td colspan='7'><strong>검색 결과가 없습니다.</strong></td></tr>";
 		}else{
+			
 			list.forEach(function(item) {
-				html += "<tr id='"+item.id+"'><td><img src='"+item.u_img+"' alt='프사'></td>";
-				html += "<td><ul><li>"+item.name+"("+item.id+")</li>";
+				html += "<tr id='"+item.id+"'><td style='width: 20%;'>"
+				html += "<img class='img-circle' src='"+getContext()+"/aus/userImg/"+item.u_img+"' onerror='error(this)' alt='회원 사진' style='width:80px; height:80px; overflow:hidden;'></td>";
+				html += "<td style='width: 30%; text-align: left;'><ul class='list-unstyled'><li><b>"+item.name+"("+item.id+")</b></li>";
 				html += "<li>관심직종:"+item.f_cate+"</li>";
 				html += "<li>선호지역:"+item.f_loc+"</li>";
 				html += "<li>평점:"+item.eval+"</li></ul></td>";
@@ -376,7 +430,7 @@
 			});
 		}
 		$("#result_table").append(html);
-	}
+	}  
 	
 	function sort(paramStr) {
 		var url="<%=cp%>/aus/UserSort";
@@ -439,24 +493,26 @@
 		remove_data();
 		profile($(this).attr('id'));
 	});
+	
+	$('body').on('error','img', function() {
+		console.log("이미지에러");
+	});
+	
 	</script>
 	
 	<!-- 레인지 -->
 	<script>
 	    $("#unranged-value").freshslider({
 	        step: 0.1,
-	        value:'${command.eval}'
+	        value:'${command.eval}' 
 	    });
+
+	    function error(element){
+	    	console.log("야!");
+	    	$(element).attr('src',getContext()+"/resources/dist/img/user1-128x128.png"); 
+	    }
+	    
 	</script>
 	
 </body>
-	<style>
-		.sort_area {
-			float: left;
-		}
-		.on{
-			color:black;
-			font-weight:bold;
-		}
-	</style>
 </html>
