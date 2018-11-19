@@ -66,13 +66,13 @@ transition:.7s;
 
 	}   
 
-	$(function () {
+	/* $(function () {
 	    // Replace the <textarea id="editor1"> with a CKEditor
 	    // instance, using default configuration.
 	    CKEDITOR.replace('content')
 	    //bootstrap WYSIHTML5 - text editor
 	    $('.textarea').wysihtml5()  
-	  })
+	  }) */
 
 	
   
@@ -122,15 +122,13 @@ transition:.7s;
               
               <tr><td>
               
-                    <textarea id="content" name="content" rows="10" cols="80" required="required">
-                                           ${notice.content}
-                    </textarea>
+                    <textarea id="content" name="content" rows="10" cols="80" required="required">${notice.content}</textarea>
                     </td></tr>
                     
                     <tr>     
 		   <td align="center">
 				<input type="submit" value="글쓰기" > 
-				<input type="reset" value="재작성">
+				<!-- <input type="reset" value="재작성"> -->
 	     		<input type="button" value="글목록" onclick="document.location.href='notice'">
 		   </td>  
 		</tr>
@@ -145,11 +143,11 @@ transition:.7s;
             <div class="box-footer no-padding">
               <div class="mailbox-controls">
                 <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                </button>
+              <!--   <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                </button> -->
                 
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+               <!--  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="pull-right">
                   Write_notice/EunB
                   

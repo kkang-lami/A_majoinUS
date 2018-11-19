@@ -109,15 +109,13 @@ $(function () {
               <tr></tr>
               <tr><td>
               
-                    <textarea id="content" name="content" rows="10" cols="80">
-                                           ${notice.content}
-                    </textarea>
+                    <textarea id="content" name="content" rows="10" cols="80">${notice.content}</textarea>
                     </td></tr>
                     
                     <tr>     
 		   <td align="center">
 				<input type="submit" value="글수정" > 
-				<input type="reset" value="재작성">
+			<!-- 	<input type="reset" value="재작성"> -->
 	     		<input type="button" value="글목록" onclick="document.location.href='notice'">
 		   </td>
 		</tr>

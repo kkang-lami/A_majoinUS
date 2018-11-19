@@ -325,49 +325,72 @@ function deletecomment(obj){
 	<div class="wrapper">
 		<div class="content-wrapper">
 			<section class="content-header">
-				<div>
-					<h2>업무게시판</h2>
-					<hr />
-				</div>
-				<div class="work">
-				
+            <!-- 들어갈 내용 -->
+            <h1>    
+        업무 게시판
+        <small>팀원들의 업무를 등록 및 설명, 진행도를 확인할 수 있습니다.</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Projectroom</a></li>
+        <li class="active">Workboard</li>
+      </ol>
+    </section>                
+    <section class="content" style="height:auto; overflow:auto;">              
+				<!-- <div class="work"> -->
 					<div class="col-md-3">              
-						<br>
 						<c:if test="${sessionScope.Dday eq 'FALSE'}"> 
-						<input type="button" id=viewchange value="업무추가" style="float:right;" ><!-- onclick="javascript:view();"> -->
+						<input type="button" class="btn btn-block btn-primary" id=viewchange value="업무추가" style="float:right;" ><!-- onclick="javascript:view();"> -->
 						</c:if>
 						<hr/>                
-						<c:forEach var="mem" items="${mwc}">
-							<div id="member">
-								<br>
-								<a href="#" id="${mem.id}" class="${pj_num}" onclick="return false;"> 
-								${mem.name }<br>
+						<c:forEach var="mem" items="${mwc}">     
+							<div id="${mem.id}" class="${pj_num} box box-widget widget-user-2">    
+								<div class="widget-user-header bg-gray" style="height:50px;">
+              						<h5 class="widget-user-desc">${mem.name} (${mem.id})</h5>
+								<%-- <a href="#" id="${mem.id}" class="${pj_num}" onclick="return false;"> --%> 
+							<%-- 	${mem.name }<br>    
 								진행중인 업무 : ${mem.ongoing} (지연 : ${mem.delay})<br>
-								완료된 업무 : ${mem.complet}<br>
-								</a>        
+								완료된 업무 : ${mem.complet}<br> --%>
+								<!-- </a>   -->      
+								</div>
+								     
+								<div class="box-footer no-padding">    
+				            		<ul class="nav nav-stacked">
+				                		<li><a href="#" onclick="return false;">진행중인 업무 <span class="pull-right badge bg-blue">${mem.ongoing}</span></a></li>
+				                		<li><a href="#" onclick="return false;">지연된 업무 <span class="pull-right badge bg-yellow">${mem.delay}</span></a></li>
+				                		<li><a href="#" onclick="return false;">완료된 업무 <span class="pull-right badge bg-green">${mem.complet}</span></a></li>
+				              		</ul>
+				            	</div>
+								
+								
+								
 							</div>
 						</c:forEach>                               
 					</div>              
                        
 					<div class="workboard col-md-9">
-					<div class="box">
+					<div class="box box-primary">    
 						<div id=worklist style="display:block;">
-							<h4>| 전체 업무리스트</h4><br><br><br><br>    
-							<div id="work" class="box-body no-padding">
-								<table align=center id="workboard" class="table table-condensed">
-									<tr>
-										<td width=5%>no.</td>
-										<td width=50%>제목</td>
-			  							<td width=30%>기한</td>
-										<td width=15%>진척도</td>
+							<br>                   
+							<h4 style=" padding-left: 10px;"> 전체 업무리스트</h4>
+							<br>    
+							<div id="work" class="box-body ">
+								<table id="workboard" class="table table-condensed">
+									<tr>      
+										<td align="center" width=5%>no.</td>
+										<td align="center" width=50%>제목</td>
+			  							<td align="center" width=30%>기한</td>
+										<td align="center" width=15%>진척도</td>
 									</tr>
+									<c:set value="1" var="no" />
 									<c:forEach var="list" items="${board }">
-										<tr>
-											<td>1</td>
-											<td><a href="#" id="${list.pw_num }" class="workdetail" onclick="return false;">${list.w_subject }</a></td>
-											<td>${list.w_date }</td>
-											<td>${list.state }</td>
-										</tr>
+										<tr>              
+											<td align="center"><c:out value="${no}"/></td>
+											<td align="center"><a href="#" id="${list.pw_num }" class="workdetail" onclick="return false;">${list.w_subject }</a></td>
+											<td align="center">${list.w_date }</td>
+											<td align="center">${list.state }</td>
+										</tr>      
+										<c:set value="${no+1}" var="no" />
 									</c:forEach>
 								</table>
 							</div>
@@ -437,7 +460,7 @@ function deletecomment(obj){
 						</div>
 					</div>
 					</div>    
-				</div>
+				<!-- </div> -->
 			</section>
 		</div>       
 	</div>         

@@ -112,15 +112,13 @@ $(function () {
               <tr></tr>
               <tr><td>
               
-                    <textarea id="q_content" name="q_content" rows="10" cols="80">
-                                           ${qna.q_content}
-                    </textarea>
+                    <textarea id="q_content" name="q_content" rows="10" cols="80">${qna.q_content}</textarea>
                     </td></tr>
                     
                     <tr>     
 		   <td align="center">
 				<input type="submit" value="글수정" > 
-				<input type="reset" value="재작성">
+				<!-- <input type="reset" value="재작성"> -->
 	     		<input type="button" value="글목록" onclick="document.location.href='qna'">
 		   </td>
 		</tr>
@@ -135,11 +133,11 @@ $(function () {
             <div class="box-footer no-padding">
               <div class="mailbox-controls">
                 <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                <!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                /.btn-group
+                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="pull-right">
                   Update_Qna/EunB
                   

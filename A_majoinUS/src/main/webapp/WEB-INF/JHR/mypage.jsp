@@ -164,6 +164,10 @@ button:hover:after {
   transition: .7s;
 }  
 
+.naranhi{
+	float:left;
+}
+
 </style> 
 
 </head>
@@ -250,12 +254,13 @@ button:hover:after {
 <label for="birth" class="sr-only sr-only-focusable">birth</label>
 <input type="date" class="form-control" name="birth" value="${dto.birth}" >
 </div>
-
-<div class="form-group">
-<img src="<%=request.getContextPath()%>/aus/userImg/${dto.u_img}">
-<input type="file" class="form-control" name="file" accept="image/*" >
+<!-- *********************추가********************* -->        
+<div class="form-group naranhi">
+<input type="file" class="form-control" name="file" id="img_path" accept="image/*" ><br>
+프로필 사진 : <img id="new_img" src="<%=request.getContextPath()%>/aus/userImg/${dto.u_img}" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:128px; height:128px; overflow:hidden;">
+<br>      
 </div>
-
+    
 <div class="form-group">
                 <label for="message" class="sr-only sr-only-focusable">liked_area</label>  
                 <select id="local1" class="show-level2"></select>
@@ -417,6 +422,24 @@ function show_search_tag() {
 	$('#result').append(html1);
 	$('#hidden').append(html2);
 }
+
+$('#img_path').on("change",function(){
+    readURL(this);
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+   		 var reader = new FileReader();
+
+    	 reader.onload = function (e) {
+         	$('#new_img').attr('src', e.target.result);
+         	i++;
+         }
+    	 reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
 
 	</script>	
 </body>

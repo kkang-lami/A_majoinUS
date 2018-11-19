@@ -65,42 +65,36 @@
 
 	//결제
 	function payStatic() {
-		var list1 = new Array();
-		var list2 = new Array();
-		var i;
+      var list1 = new Array();
+      var list2 = new Array();
+      var i;
 
-		<c:forEach items="${pay_stat}" var="pay">
-		list1.push("${pay.pay_date}");
-		list2.push("${pay.pay_price}");
-		i = i + 1;
-		</c:forEach>
+      <c:forEach items="${pay_stat}" var="pay">
+      list1.push("${pay.reg_date}");  
+      list2.push("${pay.pay_price}");
+      i = i + 1;
+      </c:forEach>
+    
+      
+      var data = google.visualization
+            .arrayToDataTable([ [ '날짜', '결제금액' ],
+               [ list1[5], Number(list2[5]) ],
+               [ list1[4], Number(list2[4]) ],
+               [ list1[3], Number(list2[3]) ],
+               [ list1[2], Number(list2[2]) ],
+               [ list1[1], Number(list2[1]) ],
+               [ list1[0], Number(list2[0]) ] ]);
 
-		var data = google.visualization
-				.arrayToDataTable([ [ '날짜', '결제금액' ],
-					[ list1[5], Number(list2[5]) ],
-					[ list1[4], Number(list2[4]) ],
-					[ list1[3], Number(list2[3]) ],
-					[ list1[2], Number(list2[2]) ],
-					[ list1[1], Number(list2[1]) ],
-					[ list1[0], Number(list2[0]) ] ]);
-/* 						[ list1[0], Number(list2[0]) ],
-						[ list1[1], Number(list2[1]) ],
-						[ list1[2], Number(list2[2]) ],
-						[ list1[3], Number(list2[3]) ],
-						[ list1[4], Number(list2[4]) ],
-						[ list1[5], Number(list2[5]) ] ]); */
+      var options = {
+         title : '결제 통계',
+         width : 600,
+         height : 300
+      };
 
-		var options = {
-			//subtitle : '결제 통계'	,
-			title : '결제 통계',
-			width : 600,
-			height : 300
-		};
+      var chart = new google.charts.Bar(document.getElementById('pay_stat'));
 
-		var chart = new google.charts.Bar(document.getElementById('pay_stat'));
-
-		chart.draw(data, google.charts.Bar.convertOptions(options));
-	}
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+   }
 
 	function inquiryStatic() {
 

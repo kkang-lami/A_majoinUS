@@ -61,8 +61,8 @@
 	select SUBSTR(visit_date,0,8) as visit_date, count from visit_stat order by visit_date desc
 </select>
 
-<select id="static_pay" resultType="project.DTO.Point_statDTO">
-	select SUBSTR(reg_date,4,8) as reg_date, pay_price from payment order by reg_date desc
+<select id="static_pay" resultType="project.DTO.PaymentDTO">
+   select SUBSTR(reg_date,4,8) as reg_date, pay_price from payment order by reg_date desc
 </select>
 
 <select id="static_project" resultType="int">

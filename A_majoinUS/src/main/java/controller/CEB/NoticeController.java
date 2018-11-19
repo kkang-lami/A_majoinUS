@@ -105,7 +105,7 @@ public class NoticeController {
 	
 	@RequestMapping(value="/writeForm", method = RequestMethod.GET)
 	public String write_list() {
-	
+		System.out.println("notice write");
 		return "CEB/notice/writeForm";   
 	}		
 
