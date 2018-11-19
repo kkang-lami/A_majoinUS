@@ -717,20 +717,20 @@ select option:hover {
     <!-- 맨위 로고 단 -->
     <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
       <div class="container">
-      <!-- 위 메뉴 하이퍼 링크 -->
-        <a class="navbar-brand" href="#">A_majoinUs</a>
+      <!-- 위 메뉴 하이퍼 링크 -->    
+        <a class="navbar-brand" href="<%=request.getContextPath() %>/aus/main">A_majoinUs</a>
         <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#probootstrap-menu" 
         aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
           <span><i class="ion-navicon"></i></span>  
         </button>
-        <div class="collapse navbar-collapse" id="probootstrap-menu">
+        <!-- <div class="collapse navbar-collapse" id="probootstrap-menu">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
             <li class="nav-item"><a class="nav-link" href="#">find my id/pw</a></li>
             <li class="nav-item"><a class="nav-link" href="#">QnA</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
             </ul>    
-            </div>    
+            </div>  -->   
         </div>    
         </nav>      
         
@@ -1153,6 +1153,23 @@ function show_search_tag() {
 	$('#result').append(html1);
 	$('#hidden').append(html2);
 }
+
+$('#img_path').on("change",function(){
+    readURL(this);
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+   		 var reader = new FileReader();
+
+    	 reader.onload = function (e) {
+         	$('#new_img').attr('src', e.target.result);
+         	i++;
+         }
+    	 reader.readAsDataURL(input.files[0]);
+    }
+}
+
 
 	</script>
 
