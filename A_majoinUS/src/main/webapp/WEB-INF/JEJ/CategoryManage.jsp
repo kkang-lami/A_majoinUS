@@ -431,7 +431,7 @@ function categoryDelete(formName) {
               <span class="info-box-number">직군</span>
 
               <div class="progress">
-                <div class="progress-bar" style="width: 100%"></div>
+                <div class="progress-bar progress-bars" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
                     ${cateSize}개의 카테고리
@@ -495,7 +495,7 @@ function categoryDelete(formName) {
               <span class="info-box-number">지역</span>
 
                <div class="progress">
-                <div class="progress-bar" style="width: 100%"></div>
+                <div class="progress-bar progress-bars" style="width: 100%"></div>
               </div> 
                   <span class="progress-description">
                     ${cateSize1}개의 카테고리

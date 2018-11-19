@@ -96,10 +96,24 @@ public class JEJ extends SqlSessionDaoSupport{
 		return visit;
 	}
 	
-	public List<PaymentDTO> pay_stat() {
-	      List<PaymentDTO> pay = getSqlSession().selectList("JEJ_AUS.static_pay");
-	      return pay;
+	public List<Point_statDTO> pay_stat() { 
+        List<Point_statDTO> pay = getSqlSession().selectList("JEJ_AUS.static_pay_stat");
+        return pay;
+     }
+	 public int paysum(String day) { 
+	      int paysum = getSqlSession().selectOne("JEJ_AUS.pay_count", day);
+	      return paysum;
 	   }
+	   
+	   public Point_statDTO insert_point(String pay_date, int pay_price) { 
+	      Point_statDTO point = new Point_statDTO();
+	      point.setPay_date(pay_date);
+	      point.setPay_price(pay_price);
+	      
+	      getSqlSession().insert("JEJ_AUS.pay_stat",point);
+	      return point;
+	   }
+
 	
 	public List<Integer> count_project() {
 		List<Integer> count = getSqlSession().selectList("JEJ_AUS.count_project");

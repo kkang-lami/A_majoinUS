@@ -123,7 +123,7 @@ function memberwork(get_id){
 	
 	var url = "<%=cp %>/aus/ProejctRoom/workboard/memberwork";
 	var params="id="+id+"&pj_num="+pj_num;
-	
+	var i = 1;
 	$.ajax({
 		type:"post",
 		url:url,
@@ -134,6 +134,24 @@ function memberwork(get_id){
 			$("#memberworkboard").before("<h4>"+args.data[0].name+"의 업무 리스트</h4>");
 			for(var idx=0;idx<args.data.length;idx++){
 				var area = args.data[idx];
+				var html1 = "<tr><td align='center'>"+i+"</td><td align='center'><a href='#' id='"+area['pw_num']+"' class='workdetail' onclick='return false;'>${list.w_subject }</a>"; 
+				
+				
+				<tr>
+				<td align="center"><c:out value="${no}" /></td>
+				<td align="center"><a href="#" id="${list.pw_num }" class="workdetail" onclick="return false;">${list.w_subject }</a></td>
+				<td align="center">${list.w_date }</td>
+				<td align="center">${list.state }</td>
+			</tr>
+				
+				/* <tr>
+				<td>1</td>
+				<td><a href='#' id='"+area['pw_num']+"' class='workdetail' onclick='javascript:workdetail(this)'>"+area['w_subject']+"</a></td>
+				<td>"+area['w_date']+"</td><td>"+area['state']+"</td>
+				</tr> */
+				    
+				
+				
 				$("#memberworkboard").append("<tr><td>1</td><td><a href='#' id='"+area['pw_num']+"' class='workdetail' onclick='javascript:workdetail(this)'>"+area['w_subject']+"</a></td><td>"+area['w_date']+"</td><td>"+area['state']+"</td></tr>");
 			}
 		}
@@ -233,10 +251,9 @@ function workedit(){
 	html1 += "<input type=text class='form-control' id=w_subject name=w_subject placeholder='제목을 입력하세요' value='"+i.w_subject+"'size=100 required='required'></div></td></tr>";
 	html1 += "<tr><td><div class='col-md-12'><br><textarea id=w_content name=w_content class='form-control' rows=20 cols=180 placeholder='내용을 입력하세요' required='required' style='resize: none;'>"+i.w_content+"</textarea></div></td></tr><tr><td>";
 	html1 += "<input type=hidden id=pj_num name=pj_num value='"+i.pj_num+"'><input type=hidden id=pw_num name=pw_num value='"+i.pw_num+"'><div class='input-group date col-md-2' style='padding-left: 20px; float: left;'><div class='input-group-addon'>";
-	html1 += "D-day : <i class='fa fa-calendar'></i> <input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></div></div>";
-	html1 += "<div class='col-md-2' style='float: right; padding-top: 2px;'><input type=button id=cancel name=cancel class='btn btn-block btn-default' value='취소' onclick='javascript:canceledit();'><input type=submit class='btn btn-block btn-danger' value='수정 완료'></div></td></tr></table></div>";
-	html1 += "</table>";
-	      
+	html1 += "D-day : <i class='fa fa-calendar'></i> <input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></div></div>";    
+	html1 += "<div class='col-md-2' style='float: right; padding-top: 2px;'><input type=submit class='btn btn-block btn-danger' value='수정 완료'></div><div class='col-md-2' style='float: right; padding-top: 2px;'><input type=button id=cancel name=cancel class='btn btn-block btn-default' value='취소' onclick='javascript:canceledit();'></div></td></tr></table></div>";
+	html1 += "</table>";     
 	$("#edit_div").append(html1);     
 /* 	$("#editform").append("<tr><td><textarea id=w_content name=w_content rows=20 cols=100 required='required'>"+i.w_content+"</textarea></td></tr>");
 	$("#editform").append("<tr><td><input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></td></tr>");
@@ -443,7 +460,7 @@ function deletecomment(obj){
 							</form>
 						</div>
 						
-						<div id=memberwork style="display:none;">
+						<div id="memberwork" style="display:none;">
 							<div id="work">
 								<table border=1 align=center id="memberworkboard">
 									<tr>
