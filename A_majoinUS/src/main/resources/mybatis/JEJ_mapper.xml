@@ -206,7 +206,7 @@
 </select>
 
 <select id="admin_issue_member" resultType="project.DTO.IssueDTO">
-	select * from issue where pj_num is null
+	select * from issue where pj_num is null  
 </select> 
 
 <select id="admin_issue_page_mem" parameterType="project.DTO.PageDTO" resultType="project.DTO.IssueDTO">

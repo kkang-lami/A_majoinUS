@@ -171,7 +171,7 @@ function workdetail(worknum){
 			commentNum += args.count;
        		var html1 ="";
 			var html2 = "";      
-			    
+			      
 			if((${sessionScope.id eq master})||('${sessionScope.id}' == args.detail.id)){    
 				html1 += "<tr><td><div class='col-md-6' style='float:left;'><h3>"+args.detail.name+"의 업무</h3></div><div class='col-md-4'><h5>기한 : "+args.detail.w_date+"</h5></div><div class='col-md-2'><input type='button' id='complet' class='complet btn btn-block btn-primary' value='완료' onclick='javascript:statecomplet("+args.detail.pw_num+","+args.detail.pj_num+")'></div></td></tr>";
 			}else{    
