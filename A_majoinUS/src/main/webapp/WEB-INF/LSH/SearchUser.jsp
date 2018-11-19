@@ -37,7 +37,7 @@
 	.fa-times-circle{
 		margin-right: 10px;
 	}
-	select{
+	#SearchForm select{
 		width: 15%;
 		height: 23px;
 		margin-top: 5px !important;

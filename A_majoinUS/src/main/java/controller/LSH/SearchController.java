@@ -205,6 +205,7 @@ public class SearchController {
 		dto.setEndRow(endRow);
 		List<ResultDTO> list = service.getResult(dto);
 		
+		
 		return new PagingDTO(pageNum,rowCount,pageCount,startPage,endPage,list,pageBlock);
 	}
 
