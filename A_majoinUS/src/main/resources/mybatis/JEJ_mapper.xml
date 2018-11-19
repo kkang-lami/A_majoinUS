@@ -54,7 +54,7 @@
 </select>
 
 <select id="static_inquiry_ok" resultType="int">
-   select count(*) from inquiry where i_state='답변'
+   select count(*) from inquiry where i_state='답변완료'
 </select>
 
 <select id="static_visit" resultType="project.DTO.Visit_statDTO">
@@ -206,7 +206,7 @@
 </select>
 
 <select id="admin_issue_member" resultType="project.DTO.IssueDTO">
-	select * from issue where pj_num is null
+	select * from issue where pj_num is null  
 </select> 
 
 <select id="admin_issue_page_mem" parameterType="project.DTO.PageDTO" resultType="project.DTO.IssueDTO">
@@ -263,15 +263,15 @@
    update visit_stat set count = count +1 where visit_date=#{visit_date}
 </update>
 
-<select id="pay_count" resultType="int" parameterType="String"> **
+<select id="pay_count" resultType="int" parameterType="String"> 
    select sum(pay_price) from payment where reg_date=#{reg_date}
 </select>
 
-<update id="pay_stat" parameterType="project.DTO.Point_statDTO"> **
+<update id="pay_stat" parameterType="project.DTO.Point_statDTO"> 
    update point_stat set pay_price=#{pay_price} where pay_date=#{pay_date}
 </update>
 
-<select id="static_pay_stat" resultType="project.DTO.Point_statDTO"> **
+<select id="static_pay_stat" resultType="project.DTO.Point_statDTO"> 
    select SUBSTR(pay_date,4,8) as pay_date, pay_price from point_stat order by pay_date desc
 </select>
 

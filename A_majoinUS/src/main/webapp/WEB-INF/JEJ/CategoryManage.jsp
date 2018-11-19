@@ -12,7 +12,7 @@
 
 function categoryUpdate(formName) {
 	window.open("./updatecategory?c_2_num="+formName.c_2_num.value+"&cate_num="+formName.cate_num.value, "a", "width=500, height=400, left=100, top=50");
-}
+}  
 
 function categoryDelete(formName) {
 	var check = confirm("해당 카테고리를 삭제하시겠습니까?");
