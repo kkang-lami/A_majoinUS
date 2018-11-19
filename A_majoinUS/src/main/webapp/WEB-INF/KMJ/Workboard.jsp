@@ -130,29 +130,12 @@ function memberwork(get_id){
 		data:params,
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		dataType:"json",
-		success:function(args){
-			$("#memberworkboard").before("<h4>"+args.data[0].name+"의 업무 리스트</h4>");
+		success:function(args){         
+			$("#memberworkboard").before("<h4 style='display:padding-left:10px;'>"+args.data[0].name+"의 업무 리스트</h4>");
 			for(var idx=0;idx<args.data.length;idx++){
 				var area = args.data[idx];
-				var html1 = "<tr><td align='center'>"+i+"</td><td align='center'><a href='#' id='"+area['pw_num']+"' class='workdetail' onclick='return false;'>${list.w_subject }</a>"; 
-				
-				
-				<tr>
-				<td align="center"><c:out value="${no}" /></td>
-				<td align="center"><a href="#" id="${list.pw_num }" class="workdetail" onclick="return false;">${list.w_subject }</a></td>
-				<td align="center">${list.w_date }</td>
-				<td align="center">${list.state }</td>
-			</tr>
-				
-				/* <tr>
-				<td>1</td>
-				<td><a href='#' id='"+area['pw_num']+"' class='workdetail' onclick='javascript:workdetail(this)'>"+area['w_subject']+"</a></td>
-				<td>"+area['w_date']+"</td><td>"+area['state']+"</td>
-				</tr> */
-				    
-				
-				
-				$("#memberworkboard").append("<tr><td>1</td><td><a href='#' id='"+area['pw_num']+"' class='workdetail' onclick='javascript:workdetail(this)'>"+area['w_subject']+"</a></td><td>"+area['w_date']+"</td><td>"+area['state']+"</td></tr>");
+				var html1 = "<tr><td align='center'>"+i+"</td><td align='center'><a href='#' id='"+area['pw_num']+"' class='workdetail' onclick='javascript:workdetail(this)'>"+area['w_subject']+"</a></td><td align='center'>"+area['w_date']+"</td><td align='center'>"+area['state']+"</td></tr>"; 
+				$("#memberworkboard").append(html1);
 			}
 		}
 	});
@@ -186,36 +169,43 @@ function workdetail(worknum){
 		success:function(args){
 			i = args.detail;
 			commentNum += args.count;
-       
-			if((${sessionScope.id eq master})||('${sessionScope.id}' == args.detail.id)){
-				$("#wd").append("<tr><td width=40%>"+args.detail.name+"의 업무</td><td width=30%>기한 : "+args.detail.w_date+"</td><td width=30%><input type='button' id='complet' class='complet' value='완료' onclick='javascript:statecomplet("+args.detail.pw_num+","+args.detail.pj_num+")'></td></tr>");
-			}else{
-				$("#wd").append("<tr><td width=40%>"+args.detail.name+"의 업무</td><td width=30%>기한 : "+args.detail.w_date+"</td><td width=30%></td>");
-			}
-			$("#wd").append("<tr><td colspan=3>"+args.detail.w_subject+"</td></tr>");      
-			$("#wd").append("<tr><td colspan=3>"+args.detail.w_content+"</td></tr>");
-			if((${sessionScope.id eq master} && ${sessionScope.Dday eq 'FALSE'})){
-				$("#wd").append("<tr><td colspan=3><input type='button' value='수정' id='edit' name='edit' onclick='javascript:workedit();' ><input type='button' id='delete' name='delete' value='삭제' onclick='javascript:deletework("+args.detail.pw_num+","+args.detail.pj_num+")'></td></tr>");
-			}else{
-				$("#wd").append("<tr><td colspan=3></td></tr>");
-			}
-			       
-			$("#wd").append("<tr><td colspan=3><hr/></td></tr>");
-			$("#wd").append("<tr><td colspan=3>${sessionScope.name} : <input type='text' id='comment' name='comment' placeholder='댓글을 입력해주세요' size=100 onkeypress='if(event.keyCode==13) {javascript:writecomment("+args.detail.pw_num+");}'> <input type='button' id='enter' name='enter' value='입력' onclick='javascript:writecomment("+args.detail.pw_num+");'></td></tr>");
-			$("#wd").append("<tr><td colspan=3><hr/></td></tr>");
+       		var html1 ="";
+			var html2 = "";      
+			    
+			if((${sessionScope.id eq master})||('${sessionScope.id}' == args.detail.id)){    
+				html1 += "<tr><td><div class='col-md-6' style='float:left;'><h3>"+args.detail.name+"의 업무</h3></div><div class='col-md-4'><h5>기한 : "+args.detail.w_date+"</h5></div><div class='col-md-2'><input type='button' id='complet' class='complet btn btn-block btn-primary' value='완료' onclick='javascript:statecomplet("+args.detail.pw_num+","+args.detail.pj_num+")'></div></td></tr>";
+			}else{    
+				html1 += "<tr><td><div class='col-md-6' style='float:left;'><h3>"+args.detail.name+"의 업무</h3></div><div class='col-md-4'><h5>기한 : "+args.detail.w_date+"</h5></div><div class='col-md-2'></div></td></tr>";
+			}      
+			html1 += "<tr><td><div class='col-md-12' style='float:left;'><h4>"+args.detail.w_subject+"</h4></div></td></tr><tr><td><div class='col-md-12' style='float:left;'><h5>"+args.detail.w_content+"</h5></div></td></tr>";
 			
+			    
+			if((${sessionScope.id eq master} && ${sessionScope.Dday eq 'FALSE'})){
+				html1 += "<tr><td colspan=3><div class='col-md-2' style='float:right;'><input type='button' value='수정' id='edit' name='edit' class='btn btn-block btn-warning' onclick='javascript:workedit();' ></div><div class='col-md-2' style='float:right;'><input type='button' id='delete' name='delete' value='삭제' class='btn btn-block btn-default' onclick='javascript:deletework("+args.detail.pw_num+","+args.detail.pj_num+")'></div></td></tr>";
+			}else{
+				html1 += "<tr><td colspan=3></td></tr>";
+			}
+			                  
+			html1 += "<tr><td colspan=3><hr/></td></tr>";                    
+			html1 += "<tr><td colspan=3><div class='form-group'><label for='comment' class='col-sm-12'>${sessionScope.name}</label><div class='col-sm-11'><input type='text' id='comment' name='comment' class='form-control' placeholder='댓글을 입력해주세요' size=100 onkeypress='if(event.keyCode==13) {javascript:writecomment("+args.detail.pw_num+");}'></div><div class='col-sm-1'><input type='button' id='enter' name='enter' class='btn btn-block btn-success' value='입력' onclick='javascript:writecomment("+args.detail.pw_num+");'></div></td></tr>";
+			html1 += "<tr><td colspan=3><hr/></td></tr>";
+			      
+			$("#wd").append(html1);
+			               
 			$("#wd").after("<div class='commentlist' id='commentlist'></div>");			
-			$("#commentlist").append("<table id='commentdetail'>");
+			$("#commentlist").append("<table id='commentdetail' class='table table-condensed'>");
 			for(var idx=0;idx<args.comment.length;idx++){
 				var area = args.comment[idx];
-				var compareID = args.comment[idx].id;
-        		if('${sessionScope.id}' == args.comment[idx].id){
-        			$("#commentdetail").append("<tr><td width=20%>"+area['name']+"</td><td width=5%> : </td><td width=50%>"+area['wc_content']+"</td><td width=15%>"+area['pw_date'] + "</td><td width=10%><input type='button' id='delcomment' name='delcomment' value='삭제' class='"+area['wc_num']+"' onclick='javascript:deletecomment(this)'></td></tr>");
+				var compareID = args.comment[idx].id;                     
+        		if('${sessionScope.id}' == args.comment[idx].id){      
+        			html2 += "<tr><td class='"+area['wc_num']+"'><div class='col-md-2' align='center'>"+area['name']+"</div><div class='col-md-1'> : </div><div class='col-md-5'>"+area['wc_content']+"</div><div class='col-md-2'>"+area['pw_date'] + "</div><div class='col-md-2'><input type='button' id='delcomment' name='delcomment' class='btn btn-block btn-default' value='삭제' class='"+area['wc_num']+"' onclick='javascript:deletecomment(this)'></div></td></tr>";
         		}
         		else{
-        			$("#commentdetail").append("<tr><td width=20%>"+area['name']+"</td><td width=5%> : </td><td width=50%>"+area['wc_content']+"</td><td width=15%>"+area['pw_date'] + "</td><td width=10%></td></tr>");
+        			html2 += "<tr><td class='"+area['wc_num']+"'><div class='col-md-2' align='center'>"+area['name']+"</div><div class='col-md-1'> : </div><div class='col-md-5'>"+area['wc_content']+"</div><div class='col-md-2'>"+area['pw_date'] + "</div><div class='col-md-2'></div></td></tr>";
         		}
-			}        
+			}
+			$("#commentdetail").append(html2);
+			
 			if (args.detail.state == '완료'){
 				$('#complet').attr('disabled',true);
 				$('#edit').attr('disabled',true);
@@ -246,20 +236,14 @@ function workedit(){
 	cc.value="업무추가";
 	
 	       
-	var html1 = "<table id='editform'><tr><td><div class='col-md-2'><label>업무 담당자</label>";
+	var html1 = "<tr><td><div class='col-md-2'><label>업무 담당자</label>";
 	html1 += "<select class='form-control' name=id required='required' disabled><option value=''>"+i.name+"</option></select></div><div class='col-md-10'><label>업무 제목</label>";
 	html1 += "<input type=text class='form-control' id=w_subject name=w_subject placeholder='제목을 입력하세요' value='"+i.w_subject+"'size=100 required='required'></div></td></tr>";
 	html1 += "<tr><td><div class='col-md-12'><br><textarea id=w_content name=w_content class='form-control' rows=20 cols=180 placeholder='내용을 입력하세요' required='required' style='resize: none;'>"+i.w_content+"</textarea></div></td></tr><tr><td>";
 	html1 += "<input type=hidden id=pj_num name=pj_num value='"+i.pj_num+"'><input type=hidden id=pw_num name=pw_num value='"+i.pw_num+"'><div class='input-group date col-md-2' style='padding-left: 20px; float: left;'><div class='input-group-addon'>";
 	html1 += "D-day : <i class='fa fa-calendar'></i> <input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></div></div>";    
 	html1 += "<div class='col-md-2' style='float: right; padding-top: 2px;'><input type=submit class='btn btn-block btn-danger' value='수정 완료'></div><div class='col-md-2' style='float: right; padding-top: 2px;'><input type=button id=cancel name=cancel class='btn btn-block btn-default' value='취소' onclick='javascript:canceledit();'></div></td></tr></table></div>";
-	html1 += "</table>";     
-	$("#edit_div").append(html1);     
-/* 	$("#editform").append("<tr><td><textarea id=w_content name=w_content rows=20 cols=100 required='required'>"+i.w_content+"</textarea></td></tr>");
-	$("#editform").append("<tr><td><input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></td></tr>");
-	$("#editform").append("<tr><td><input type=hidden id=pj_num name=pj_num value='"+i.pj_num+"'><input type=hidden id=pw_num name=pw_num value='"+i.pw_num+"'><input type=submit value='수정 완료'></td></tr>");
-	$("#editform").append("<tr><td><input type=button id=cancel name=cancel value='취소' onclick='javascript:canceledit();'></td></tr>");
- */	
+	$("#editform").append(html1);     
 
 } 
 
@@ -296,21 +280,21 @@ function writecomment(pw_num){
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			dataType:"json",
 			success:function(args){
-				$("#commentdetail").append("<tr><td>"+args.newWC.name+"</td><td> : </td><td>"+args.newWC.wc_content+"</td><td>"+args.newWC.pw_date + "</td><td><input type='button' id='delcomment' name='delcomment' value='삭제' class='"+args.newWC.wc_num+"' onclick='javascript:deletecomment(this)'></td></tr>");
+				      
+				$("#commentdetail").append("<tr><td class='"+args.newWC.wc_num+"'><div class='col-md-2' align='center'>"+args.newWC.name+"</div><div class='col-md-1'> : </div><div class='col-md-5'>"+args.newWC.wc_content+"</div><div class='col-md-2'>"+args.newWC.pw_date+ "</div><div class='col-md-2'><input type='button' id='delcomment' name='delcomment' class='btn btn-block btn-default' value='삭제' onclick='javascript:deletecomment(this)'></div></td></tr>");
 				commentNum++;
 				comment.value="";
 			}
 		});  
 	}else{
 		alert('내용을 입력해주세요');
-	}
+	}        
 	
-}
-
+}      
+    
 function deletecomment(obj){
 	
-	var wc_num = $(obj).attr("class");
-	
+	var wc_num = $(obj).parent().parent().attr("class");       
 	var url = "<%=cp %>/aus/ProejctRoom/workboard/delcomment";   
 	var params="wc_num="+wc_num;
 	
@@ -386,111 +370,111 @@ function deletecomment(obj){
 					</div>              
                        
 					<div class="workboard col-md-9">
-					<div class="box box-primary">    
-						<div id=worklist style="display:block;">
-							<br>                   
-							<h4 style=" padding-left: 10px;"> 전체 업무리스트</h4>
-							<br>    
-							<div id="work" class="box-body ">
-								<table id="workboard" class="table table-condensed">
-									<tr>      
-										<td align="center" width=5%>no.</td>
-										<td align="center" width=50%>제목</td>
-			  							<td align="center" width=30%>기한</td>
-										<td align="center" width=15%>진척도</td>
-									</tr>
-									<c:set value="1" var="no" />
-									<c:forEach var="list" items="${board }">
-										<tr>              
-											<td align="center"><c:out value="${no}"/></td>
-											<td align="center"><a href="#" id="${list.pw_num }" class="workdetail" onclick="return false;">${list.w_subject }</a></td>
-											<td align="center">${list.w_date }</td>
-											<td align="center">${list.state }</td>
-										</tr>      
-										<c:set value="${no+1}" var="no" />
-									</c:forEach>
-								</table>
-							</div>
-						</div>
-    
-						<div id=workwrite style="display:none;">
-							<form method=post action='workboard/Writework' name=workboardDTO>
-								<div class="form-group">
-								<br>         
-									<table id='writeform'>
+						<div class="box box-primary">    
+							<div id=worklist style="display:block;">
+								<br>                           
+								<h4 style=" padding-left: 10px;"> 전체 업무리스트</h4>
+								<div id="work" class="box-body ">
+									<table id="workboard" class="table table-condensed">
 										<tr>      
-											<td>	
-												<div class="col-md-2">
-													<label>업무 담당자</label> 
-													<select class="form-control" name=id required="required">
-															<option value="">이름</option>
-															<c:forEach var="ml" items="${pmdto}">
-																<option value="${ml.id }">${ml.name }</option>
-															</c:forEach>
-													</select>
-												</div>     
-												<div class="col-md-10">
-													<label>업무 제목</label> 
-													<input type=text class="form-control" id=w_subject name=w_subject placeholder='제목을 입력하세요' size=100 required="required">
+											<td align="center" width=5%>no.</td>
+											<td align="center" width=50%>제목</td>
+				  							<td align="center" width=30%>기한</td>
+											<td align="center" width=15%>진척도</td>
+										</tr>
+										<c:set value="1" var="no" />
+										<c:forEach var="list" items="${board }">
+											<tr>              
+												<td align="center"><c:out value="${no}"/></td>
+												<td align="center"><a href="#" id="${list.pw_num }" class="workdetail" onclick="return false;">${list.w_subject }</a></td>
+												<td align="center">${list.w_date }</td>
+												<td align="center">${list.state }</td>
+											</tr>      
+											<c:set value="${no+1}" var="no" />
+										</c:forEach>
+									</table>
+								</div>
+							</div>
+	    
+							<div id=workwrite style="display:none;">
+								<form method=post action='workboard/Writework' name=workboardDTO>
+									<div class="form-group">
+									<br>         
+										<table id='writeform'>
+											<tr>      
+												<td>	
+													<div class="col-md-2">
+														<label>업무 담당자</label> 
+														<select class="form-control" name=id required="required">
+																<option value="">이름</option>
+																<c:forEach var="ml" items="${pmdto}">
+																	<option value="${ml.id }">${ml.name }</option>
+																</c:forEach>
+														</select>
+													</div>     
+													<div class="col-md-10">
+														<label>업무 제목</label> 
+														<input type=text class="form-control" id=w_subject name=w_subject placeholder='제목을 입력하세요' size=100 required="required">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>    
+												<div class="col-md-12"><br>    
+												<textarea id=w_content name=w_content class="form-control" rows=20 cols=180 placeholder='내용을 입력하세요' required="required" style="resize: none;"></textarea>
 												</div>
-											</td>
-										</tr>
+												</td>
+											</tr>
+											<tr>                
+												<td>   
+												<input type=hidden id=pj_num name=pj_num value="${pj_num }">         
+												<div class="input-group date col-md-2" style="padding-left: 20px; float: left;">         
+													<div class="input-group-addon">
+														D-day : <i class="fa fa-calendar"></i> <input type=date id=w_date name=w_date required="required">
+													</div>	
+												</div>
+												<div class="col-md-2" style="float: right; padding-top: 2px;">
+												<input type=submit class="btn btn-block btn-danger" value='업무 등록'>
+												</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</form>
+							</div>
+							
+							<div id="memberwork" style="display:none;">
+								<div id="work" class="box-body" class="memberwork_div">
+								<br>
+									<table id="memberworkboard" class="table table-condensed">
 										<tr>
-											<td>    
-											<div class="col-md-12"><br>    
-											<textarea id=w_content name=w_content class="form-control" rows=20 cols=180 placeholder='내용을 입력하세요' required="required" style="resize: none;"></textarea>
-											</div>
-											</td>
-										</tr>
-										<tr>                
-											<td>   
-											<input type=hidden id=pj_num name=pj_num value="${pj_num }">         
-											<div class="input-group date col-md-2" style="padding-left: 20px; float: left;">         
-												<div class="input-group-addon">
-													D-day : <i class="fa fa-calendar"></i> <input type=date id=w_date name=w_date required="required">
-												</div>	
-											</div>
-											<div class="col-md-2" style="float: right; padding-top: 2px;">
-											<input type=submit class="btn btn-block btn-danger" value='업무 등록'>
-											</div>
-											</td>
+											<td align="center" width=5%>no.</td>
+											<td align="center" width=50%>제목</td>
+											<td align="center" width=30%>기한</td>
+											<td align="center" width=15%>진척도</td>
 										</tr>
 									</table>
 								</div>
-							</form>
-						</div>
-						
-						<div id="memberwork" style="display:none;">
-							<div id="work">
-								<table border=1 align=center id="memberworkboard">
-									<tr>
-										<td width=5%>no.</td>
-										<td width=50%>제목</td>
-										<td width=30%>기한</td>
-										<td width=15%>진척도</td>
-									</tr>
-								</table>
 							</div>
-						</div>
-						
-						<div id=detail style="display:none;">
-							<div id="w_detail">
-								<table id="wd" >
-									
-								</table>
-							</div>
-						</div>
-						
-						<div id=editwork style="display:none;">
-							<form method=post action='workboard/editwork' name=editwork>
-								<div class='form-group' id='edit_div'><br>
-								
-								
-									
+							    
+							<div id=detail style="display:none;">
+								<div id="w_detail" class="box box-body">
+									<table id="wd" class="table table-condensed">
+										
+									</table>
 								</div>
-							</form>
+							</div>
+							
+							<div id=editwork style="display:none;">
+								<form method=post action='workboard/editwork' name=editwork>
+									<table id='editform'>
+									
+									
+										
+									</table>
+								</form>
+							</div>
 						</div>
-					</div>
 					</div>    
 			</section>
 		</div>       
