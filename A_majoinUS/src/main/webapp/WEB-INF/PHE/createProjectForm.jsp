@@ -599,7 +599,9 @@ transition:.7s;
    
   }
   
-  
+span{
+  	    margin-right: 8px;
+  }  
 </style>  
 <title>새로운 프로젝트 생성하기</title>
 <%

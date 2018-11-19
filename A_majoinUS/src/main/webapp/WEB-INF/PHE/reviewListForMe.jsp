@@ -93,7 +93,7 @@
 						</div>
     
 						<!-- /.box-header -->
-						<div class="box-body no-padding" style="display: none;" >
+						<div class="box-body" style="display: none;  margin:15px;" >
 							<c:forEach items="${reviewListForMe}" var="reviewListForMe">
 
 								<c:if

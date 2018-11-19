@@ -450,7 +450,9 @@ transition:.7s;
    
   }
   
-  
+  span{
+  	    margin-right: 8px;
+  }
 </style>  
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>

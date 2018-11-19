@@ -391,7 +391,6 @@ a {
 
 </body>
 </html> --%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -404,7 +403,7 @@ a {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>Project List</title>
 <style>
 #hr_style{
 	border-top: 1px solid #d2d6de !important;
@@ -589,7 +588,7 @@ a {
 				<!-- 들어갈 내용 -->
 
 				<h1>
-					Your Projectroom <small>프로젝트 목록을 확인할 수 있습니다.</small>
+					My Projectroom <small>프로젝트 목록을 확인할 수 있습니다.</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -620,8 +619,12 @@ a {
       <th style="text-align: center;">프로젝트 시작</th>
       <th style="text-align: center;">프로젝트 완료예정</th>
       <th colspan="2" style="text-align: center;">프로젝트 관리</th>
-      <th></th>
-      <th></th>
+</tr>
+ 
+ <tr>
+  		<td>   	 <c:if test="${empty ongoing_list}" > 진행중 프로젝트가 없습니다. </c:if>
+  		</td>
+  	</tr>
    <tr>
    <c:forEach items="${ongoing_list}" var="ongoing_list">
    <tr>
@@ -648,6 +651,10 @@ a {
 			      onclick="confirmDelete(${ongoing_list.pj_num})">프로젝트 삭제</button>       
 		       </td>   
 	      </c:if>
+	       <c:if test="${sessionScope.id != ongoing_list.leaderId}" > 
+        	<td colspan='2' align="center">방장이 아닌 프로젝트룸은 수정/삭제 권한이 없습니다.</td>
+        	
+        </c:if>
 	      <%-- <c:if test="${sessionScope.userId != ongoing_list.leaderId}" >   
 	      	<td colspan="2"> 프로젝트 수정/삭제 권한이 없습니다 </td>
 	      </c:if>
@@ -669,7 +676,11 @@ a {
       <th style="text-align: center;">프로젝트 이름&nbsp;&nbsp;<span class="label label-warning">대기중</span></th>
       <th style="text-align: center;">프로젝트 시작</th>
       <th style="text-align: center;">프로젝트 완료예정</th>
-      <!-- <th colspan="2" style="text-align: center;">프로젝트 관리</th> -->
+     </tr>
+    <tr>
+  		<td>   	 <c:if test="${empty apply_list}" > 신청 프로젝트가 없습니다. </c:if>
+  		</td>
+  	</tr>
       
       
       
@@ -702,6 +713,11 @@ a {
       <th style="text-align: center;">프로젝트 시작</th>
       <th style="text-align: center;">프로젝트 완료예정</th>
 	  <th colspan="2" style="text-align: center;">프로젝트 관리</th>
+  </tr>
+  <tr>
+  	<td>   	 <c:if test="${empty finish_list}" > 완료된 프로젝트가 없습니다. </c:if>
+  	</td>
+  </tr>
 
       
    <tr>
@@ -739,7 +755,11 @@ a {
 <!--  -->
 </section>
 	<c:import url="${cp}/resources/LSH/Modal/Team.jsp"/>
-	<c:import url="${cp}/resources/LSH/Modal/Wanna_Project.jsp"/>
+	
+	<!-- 프로젝트 참가 모달 -->
+	<c:import url="${cp}/resources/LSH/Modal/join.jsp"/>
+
+       
 		</div>
 	</div>
 </div>
@@ -766,11 +786,8 @@ a {
 			return sessionid;
 		}         
 		
-
     	</script>
 	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Team.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/Wanna_Project.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/LSH/JS/issue.js"></script>	
+	<script src="<%=request.getContextPath()%>/resources/LSH/JS/User.js"></script>			
 </body>
 </html>

@@ -51,6 +51,12 @@
 									</tr>
 								</thead>
 								<tbody>
+								<c:if test="${empty  portfolioList}">
+									<tr><td>
+										작성된 포트폴리오가 없습니다.
+									</td></tr>
+									</c:if>
+								
 									<c:forEach items="${portfolioList}" var="portfolioList">
 										<tr>
 											<td><a
