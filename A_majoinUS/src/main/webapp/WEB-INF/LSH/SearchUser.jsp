@@ -29,13 +29,6 @@
 	    background-color: #a0c79b !important;    
 	}
 	
-/* 	.widget-user-image>img{
-		width: 100px;
-		margin-left: 10;
-	}
-	.widget-user-2 .widget-user-username, .widget-user-2 .widget-user-desc{
-		margin-left: 150px;
-	} */
 </style>
 <style>
 	.bg-light-blue:hover{
@@ -111,12 +104,12 @@
 						</div>
 
 						<!-- 평점 -->
-						<div class="form-group">
+						<div class="form-group row">
 							<label for="eval" class="col-sm-2 control-label">평점</label>
 							<div class="col-sm-3">
 								<div id="unranged-value"></div>
 								<input id="eval" name="eval" type="hidden" value="${command.eval}">
-							</div>
+							</div>점 이상
 						</div>
 
 						<!-- 포함단어 -->
