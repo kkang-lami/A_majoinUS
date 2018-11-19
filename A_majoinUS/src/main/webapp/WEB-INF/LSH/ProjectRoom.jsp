@@ -8,7 +8,7 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <html>
-<head>
+<head> 
 <title>프로젝트룸</title>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
