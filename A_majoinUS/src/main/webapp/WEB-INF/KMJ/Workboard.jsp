@@ -227,14 +227,23 @@ function workedit(){
 	
 	cc.value="업무추가";
 	
-	
-	$("#editform").before(i.name+"의 업무 수정 ");
-	$("#editform").append("<tr><td><input type=text id=w_subject name=w_subject value='"+i.w_subject+"' size=100 required='required'></td></tr>");
-	$("#editform").append("<tr><td><textarea id=w_content name=w_content rows=20 cols=100 required='required'>"+i.w_content+"</textarea></td></tr>");
+	       
+	var html1 = "<table id='editform'><tr><td><div class='col-md-2'><label>업무 담당자</label>";
+	html1 += "<select class='form-control' name=id required='required' disabled><option value=''>"+i.name+"</option></select></div><div class='col-md-10'><label>업무 제목</label>";
+	html1 += "<input type=text class='form-control' id=w_subject name=w_subject placeholder='제목을 입력하세요' value='"+i.w_subject+"'size=100 required='required'></div></td></tr>";
+	html1 += "<tr><td><div class='col-md-12'><br><textarea id=w_content name=w_content class='form-control' rows=20 cols=180 placeholder='내용을 입력하세요' required='required' style='resize: none;'>"+i.w_content+"</textarea></div></td></tr><tr><td>";
+	html1 += "<input type=hidden id=pj_num name=pj_num value='"+i.pj_num+"'><input type=hidden id=pw_num name=pw_num value='"+i.pw_num+"'><div class='input-group date col-md-2' style='padding-left: 20px; float: left;'><div class='input-group-addon'>";
+	html1 += "D-day : <i class='fa fa-calendar'></i> <input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></div></div>";
+	html1 += "<div class='col-md-2' style='float: right; padding-top: 2px;'><input type=button id=cancel name=cancel class='btn btn-block btn-default' value='취소' onclick='javascript:canceledit();'><input type=submit class='btn btn-block btn-danger' value='수정 완료'></div></td></tr></table></div>";
+	html1 += "</table>";
+	      
+	$("#edit_div").append(html1);     
+/* 	$("#editform").append("<tr><td><textarea id=w_content name=w_content rows=20 cols=100 required='required'>"+i.w_content+"</textarea></td></tr>");
 	$("#editform").append("<tr><td><input type=date id=w_date name=w_date value='"+i.w_date+"' required='required'></td></tr>");
 	$("#editform").append("<tr><td><input type=hidden id=pj_num name=pj_num value='"+i.pj_num+"'><input type=hidden id=pw_num name=pw_num value='"+i.pw_num+"'><input type=submit value='수정 완료'></td></tr>");
 	$("#editform").append("<tr><td><input type=button id=cancel name=cancel value='취소' onclick='javascript:canceledit();'></td></tr>");
-	
+ */	
+
 } 
 
 function canceledit(){
@@ -337,7 +346,6 @@ function deletecomment(obj){
       </ol>
     </section>                
     <section class="content" style="height:auto; overflow:auto;">              
-				<!-- <div class="work"> -->
 					<div class="col-md-3">              
 						<c:if test="${sessionScope.Dday eq 'FALSE'}"> 
 						<input type="button" class="btn btn-block btn-primary" id=viewchange value="업무추가" style="float:right;" ><!-- onclick="javascript:view();"> -->
@@ -347,11 +355,6 @@ function deletecomment(obj){
 							<div id="${mem.id}" class="${pj_num} box box-widget widget-user-2">    
 								<div class="widget-user-header bg-gray" style="height:50px;">
               						<h5 class="widget-user-desc">${mem.name} (${mem.id})</h5>
-								<%-- <a href="#" id="${mem.id}" class="${pj_num}" onclick="return false;"> --%> 
-							<%-- 	${mem.name }<br>    
-								진행중인 업무 : ${mem.ongoing} (지연 : ${mem.delay})<br>
-								완료된 업무 : ${mem.complet}<br> --%>
-								<!-- </a>   -->      
 								</div>
 								     
 								<div class="box-footer no-padding">    
@@ -361,9 +364,6 @@ function deletecomment(obj){
 				                		<li><a href="#" onclick="return false;">완료된 업무 <span class="pull-right badge bg-green">${mem.complet}</span></a></li>
 				              		</ul>
 				            	</div>
-								
-								
-								
 							</div>
 						</c:forEach>                               
 					</div>              
@@ -398,35 +398,48 @@ function deletecomment(obj){
     
 						<div id=workwrite style="display:none;">
 							<form method=post action='workboard/Writework' name=workboardDTO>
-						
-								<table border=1 align=center id='writeform'>
-									<tr>
-										<td>
-										업무 담당자 : 
-										<select name=id required="required">
-												<option value="">이름</option>
-												<c:forEach var="ml" items="${pmdto}">
-													<option value="${ml.id }">${ml.name }</option>
-												</c:forEach>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<input type=text id=w_subject name=w_subject placeholder='제목을 입력하세요' size=100 required="required">
-										</td>
-									</tr>
-									<tr>
-										<td><textarea id=w_content name=w_content rows=20 cols=100 placeholder='내용을 입력하세요' required="required"></textarea></td>
-									</tr>
-									<tr>
-										<td><input type=date id=w_date name=w_date required="required"></td>
-									</tr>
-										<input type=hidden id=pj_num name=pj_num value="${pj_num }">
-									<tr>
-										<td><input type=submit value='업무 등록'></td>
-									</tr>
-								</table>
+								<div class="form-group">
+								<br>         
+									<table id='writeform'>
+										<tr>      
+											<td>	
+												<div class="col-md-2">
+													<label>업무 담당자</label> 
+													<select class="form-control" name=id required="required">
+															<option value="">이름</option>
+															<c:forEach var="ml" items="${pmdto}">
+																<option value="${ml.id }">${ml.name }</option>
+															</c:forEach>
+													</select>
+												</div>     
+												<div class="col-md-10">
+													<label>업무 제목</label> 
+													<input type=text class="form-control" id=w_subject name=w_subject placeholder='제목을 입력하세요' size=100 required="required">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>    
+											<div class="col-md-12"><br>    
+											<textarea id=w_content name=w_content class="form-control" rows=20 cols=180 placeholder='내용을 입력하세요' required="required" style="resize: none;"></textarea>
+											</div>
+											</td>
+										</tr>
+										<tr>                
+											<td>   
+											<input type=hidden id=pj_num name=pj_num value="${pj_num }">         
+											<div class="input-group date col-md-2" style="padding-left: 20px; float: left;">         
+												<div class="input-group-addon">
+													D-day : <i class="fa fa-calendar"></i> <input type=date id=w_date name=w_date required="required">
+												</div>	
+											</div>
+											<div class="col-md-2" style="float: right; padding-top: 2px;">
+											<input type=submit class="btn btn-block btn-danger" value='업무 등록'>
+											</div>
+											</td>
+										</tr>
+									</table>
+								</div>
 							</form>
 						</div>
 						
@@ -453,14 +466,15 @@ function deletecomment(obj){
 						
 						<div id=editwork style="display:none;">
 							<form method=post action='workboard/editwork' name=editwork>
-								<table border=1 align=center id='editform'>
+								<div class='form-group' id='edit_div'><br>
+								
+								
 									
-								</table>
+								</div>
 							</form>
 						</div>
 					</div>
 					</div>    
-				<!-- </div> -->
 			</section>
 		</div>       
 	</div>         
@@ -468,129 +482,6 @@ function deletecomment(obj){
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="aside" />
 	<tiles:insertDefinition name="footer" />        
-
-<!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- ///////////////////////////////////////right side bar//////////////////////////////////////// -->
-<!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
-
-<%--  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><!-- <i class="fa fa-home"></i> --></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane active" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">My project menu</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="Main?pj_Num=${pj_num}">
-            <i class="menu-icon fa fa-home bg-red"></i>
-           <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Home</h4>
-              </div>
-            </a>
-          </li>
-          
-           <li>
-            <a href="workboard?pj_num=${pj_num}">
-            <i class="menu-icon fa fa-fw fa-newspaper-o bg-black"></i>
-           <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Work Board</h4>
-              </div>
-            </a>
-          </li>
-          
-           <li>
-            <a href="pr_fileboard?pj_num=${pj_num }">
-            <i class="menu-icon fa fa-fw fa-database bg-yellow"></i>
-           <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Data Room</h4>
-              </div>
-            </a>
-          </li>
-          
-           <li>
-            <a href="chatting?pj_num=${pj_num}">
-            <i class="menu-icon fa fa-fw fa-commenting bg-blue"></i>
-           <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Chat Room</h4>
-              </div>
-            </a>
-          </li>
-          
-           <li>
-            <a href="ProjectSchedule?pj_num=${pj_num}">
-            <i class="menu-icon fa fa-fw fa-calendar-minus-o bg-purple"></i>
-           <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Calendar</h4>
-              </div>
-            </a>
-          </li>
-          
-           <li>
-            <a href="portfolio?pj_num=${pj_num }">
-            <i class="menu-icon fa fa-fw fa-pencil-square bg-green"></i>
-           <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Writing portfolio</h4>
-              </div>
-            </a>
-          </li>
-          
-           <li>
-            <a href="EnR?pj_num=${pj_num }">
-            <i class="menu-icon fa fa-fw fa-thumbs-o-up bg-red"></i>
-           <!--    <i class="menu-icon fa fa-birthday-cake bg-red"></i> -->
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Evaluation and review</h4>
-              </div>
-            </a>
-          </li>
-        
-        </ul>
-        <!-- /.control-sidebar-menu -->
-      </div>
-      
-      
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
-<div class="control-sidebar-bg"></div>
- --%>
-
-
-
-
 
 <script>
 $('.${pj_num}').on('click',function(){

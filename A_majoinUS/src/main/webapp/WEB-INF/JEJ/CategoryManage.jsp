@@ -374,6 +374,7 @@ function categoryDelete(formName) {
 .wide {
    width : 650px;
 }
+
 </style>
 </head>
 <body>
@@ -383,7 +384,7 @@ function categoryDelete(formName) {
       <div class="content-wrapper">
          <section class="content-header">
             <!-- 들어갈 내용 -->
-<h1>
+<h1>   
         카테고리 관리
         <small>프로젝트 매칭을 위한 카테고리를 관리합니다.</small>
       </h1>
@@ -421,7 +422,7 @@ function categoryDelete(formName) {
 <!--  -->              <!--  -->
 <div class="row">
         <!-- /.col -->
-        <div class="col-md-5 col-sm-6 col-xs-12" style="margin-left: 50px;">
+        <div class="col-md-6 col-sm-6 col-xs-12">
           <div class="info-box bg-yellow">
             <span class="info-box-icon"><i class="fa fa-files-o"></i></span>
 
@@ -442,7 +443,7 @@ function categoryDelete(formName) {
         </div>
 
 <div class="col-md-6 col-sm-12 ">        
-<table class="wide" style="width: 1000px; margin-left: 100px;">
+<table class="wide" style="width: 1000px;">
                   <thead>
                   <tr>
    <!-- <th>카테고리명</th>
@@ -467,10 +468,10 @@ function categoryDelete(formName) {
        <input type="hidden" name="cate_num" value="${category.cate_num}" />
       <input type="hidden" name="cate_1_num" value="${category.cate_1_num}" />
       <input type="hidden" name="c_2_num" value="${category.c_2_num}" />
-      <button type="button" class="btn btn-info btn-flat btn-sm" onclick="categoryUpdate(this.form)">수정</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-flat btn-sm noman" onclick="categoryUpdate(this.form)">수정</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <!-- </td> -->
    <!-- <td> -->
-      <button type="button" class="btn btn-default btn-flat btn-sm" onclick="categoryDelete(this.form)">삭제</button>
+      <button type="button" class="btn btn-default btn-flat btn-sm noman" onclick="categoryDelete(this.form)">삭제</button>
    <!-- </td> -->
     </form>
    </td>
@@ -485,7 +486,7 @@ function categoryDelete(formName) {
 <hr />
 <div class="row">
 
-        <div class="col-md-5 col-sm-6 col-xs-12" style="margin-left: 50px;">
+        <div class="col-md-6 col-sm-6 col-xs-12">
           <div class="info-box bg-green">
             <span class="info-box-icon"><i class="fa fa-flag-o"></i></span>
 
@@ -506,13 +507,14 @@ function categoryDelete(formName) {
         </div>
         
         <div class="col-md-6">
-        <table class="wide" style="width: 1000px; margin-left: 100px;">
+        <table class="wide" style="width: 1000px;">
         <thead>   
                   <tr>
    <!-- <th>카테고리명</th>
    <th>&nbsp;</th> -->
    <th>1차 카테고리</th>
    <th>2차 카테고리</th>
+   <th></th>
    <th></th>
                   </tr>
                   </thead>
@@ -523,6 +525,7 @@ function categoryDelete(formName) {
    <td>&nbsp;</td> --%>
    <td>${category.c_1_name}</td>
    <td>${category.c_2_name}</td>
+   <td></td>
    <td>
     <form name="category_123">
    <!--  <td> -->
