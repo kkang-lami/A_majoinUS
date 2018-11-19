@@ -39,7 +39,14 @@
 					    	<div class="progress active" style="height: 10px;background-color: #38333317;">
 					    		<div class="progress-bar progress-bar-red progress-bar-striped" style="width: ${list[0].percent}%;background-color: #dd4b39;"></div>
 					    	</div> 
-					 		<span class="progress-description">프로젝트 종료까지 ${list[0].d_day}일 남았습니다<small> (${list[0].END_D})</small></span>
+					    	<c:choose>
+							  <c:when test="${list[0].d_day eq '9999'}">
+							     <span class="progress-description">프로젝트 종료까지 &infin;일 남았습니다<small> (${list[0].END_D})</small></span>		
+							  </c:when>
+							  <c:otherwise>
+							     <span class="progress-description">프로젝트 종료까지 ${list[0].d_day}일 남았습니다<small> (${list[0].END_D})</small></span>
+							  </c:otherwise>
+							</c:choose> 
 					  	</div>
 					</div>
 			  </div>
@@ -84,7 +91,7 @@
 					    <div class="collapse" id="collapse">
 					    <ul class="users-list clearfix">
 						<c:forEach var="item" items="${list}" begin="4" step="1">
-						<li>
+						<li>indexOf
 							<img src="<%=request.getContextPath() %>/aus/userImg/${item.U_IMG}" alt="User Image"  onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:128px; height:128px; overflow:hidden;">
 							<c:if test="${item.BLACKLIST eq 'NO'}">
 							<a id="${item.MEM_ID}" class="user_btn users-list-name" href="#" data-toggle='modal' data-target='#modal_user'>${item.NAME}</a>

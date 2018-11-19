@@ -63,7 +63,12 @@ public class ResultTeamDTO {
 		return end_d;
 	}
 	public void setEnd_d(String end_d) {
-		this.end_d = end_d.split(" ")[0];
+		
+		if(end_d.split("-")[0].equals("2099")) {
+			this.end_d="무기한";
+		}else {
+			this.end_d = end_d.split(" ")[0];
+		}
 	}
 	public String getRegdate() {
 		return regdate;

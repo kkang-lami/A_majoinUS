@@ -5,7 +5,7 @@
 		    
 		    if(str === ""){
 		    	$('#modal-warn').modal('show');
-		    }else if($('#modal-leader option:selected').attr('class') === "ban"){
+		    }else if($('#modal-leader option:selected').attr('class') === "ban" && $(this).attr('id') === "transfer"){
 		    	$('#modal-ban').modal('show');
 		    }else{
 		       var arr = str.split('(');

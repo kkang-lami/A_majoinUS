@@ -76,7 +76,6 @@ public class SearchService {
 		List<ResultTeamDTO> list = null;
 		try {
 			list = dao.getTeamResult("LSH_AUS.searchTeam",dto);
-			
 		}catch (Exception e) {
 			System.out.println("[에러] Result Team서비스실패 ::"+e.toString());
 		}
@@ -187,6 +186,9 @@ public class SearchService {
 			map = dao.getProjectRoom("LSH_AUS.getProjectRoom",pj_num);
 			map.replace("START_D", map.get("START_D").toString().split(" ")[0]);
 			map.replace("END_D", map.get("END_D").toString().split(" ")[0]);
+			if(map.get("END_D").toString().split("-")[0].equals("2099")) {
+				map.replace("END_D", "무기한");
+			}
 		}catch (Exception e) {
 			System.out.println("[에러] 프로젝트룸 서비스 실패 ::"+e.toString());
 		}

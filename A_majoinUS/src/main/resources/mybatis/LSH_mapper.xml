@@ -276,8 +276,7 @@
 				WHERE  total.RNUM = 1
 				order by ${sort} ${sort_way}
 			) fin
-			<![CDATA[ WHERE rownum <= #{endRow} ]]>
-		) <![CDATA[ where r >= #{startRow} ]]>
+		) <![CDATA[ where r >= #{startRow} and r<=#{endRow}]]>
 	</select>
 	
 	<select id="searchTeamNumber" parameterType="controller.LSH.SearchTeamDTO" resultType="int">

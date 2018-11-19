@@ -52,7 +52,7 @@ public class ProjectRoomService {
 			
 			if(Integer.parseInt(temp[0]) >= 2099){
 				end_d = "무기한";
-				d_day = "&infin;";
+				d_day = "9999";
 			}else {
 				end_d = temp[0]+"-"+temp[1]+"-"+temp[2].split(" ")[0];
 				

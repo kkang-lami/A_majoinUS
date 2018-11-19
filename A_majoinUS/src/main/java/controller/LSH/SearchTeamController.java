@@ -107,6 +107,7 @@ public class SearchTeamController {
 		if(!req.getSession().getAttribute("id").toString().equals("amajoinus@gmail.com")) {
 			updateView(pj_num);
 		}
+		
 		JSONObject jso = new JSONObject();
 		jso.put("x", x);
 		PrintWriter out = resp.getWriter();
@@ -145,7 +146,7 @@ public class SearchTeamController {
 			pageNum = 1;
 		}
 
-		int pageSize = 2;
+		int pageSize = 4;
 		int pageBlock = 3;
 		
 		int rowCount = service.getNumberTeam(dto);
