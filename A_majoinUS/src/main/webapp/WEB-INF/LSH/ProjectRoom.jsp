@@ -36,7 +36,9 @@
 						<div class="info-box-content">
 					    	<span class="info-box-text">프로젝트 진행도</span>
 					    	<span class="info-box-number">${list[0].percent}<small>%</small></span>
-					    	<div class="progress"><div class="progress-bar" style="width: ${list[0].percent}%"></div></div> 
+					    	<div class="progress active" style="height: 10px;background-color: #38333317;">
+					    		<div class="progress-bar progress-bar-red progress-bar-striped" style="width: ${list[0].percent}%;background-color: #dd4b39;"></div>
+					    	</div> 
 					 		<span class="progress-description">프로젝트 종료까지 ${list[0].d_day}일 남았습니다<small> (${list[0].END_D})</small></span>
 					  	</div>
 					</div>

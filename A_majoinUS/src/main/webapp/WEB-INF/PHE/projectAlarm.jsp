@@ -85,7 +85,7 @@
               <div class="timeline-item">   
                 <span class="time"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<c:set var="dd1" value="${fn:substring(projectProposalAlarm.a_date,0,10)}" />${dd1}</span>
 
-                <h3 class="timeline-header"><a href="#">${projectProposalAlarm.name}</a> commented on your post</h3>
+                <h3 class="timeline-header"><a href="#" id="${projectProposalAlarm.sender}" class="user_btn" data-toggle='modal' data-target='#modal_user'>${projectProposalAlarm.name}</a> commented on your post</h3>
 
                 <div class="timeline-body">
                   ${projectProposalAlarm.name}(${projectProposalAlarm.sender})님께서 회원님께 &lt;   
