@@ -69,13 +69,12 @@
       var list2 = new Array();
       var i;
 
-      <c:forEach items="${pay_stat}" var="pay">
-      list1.push("${pay.reg_date}");  
+       <c:forEach items="${pay_stat}" var="pay">
+      list1.push("${pay.pay_date}");
       list2.push("${pay.pay_price}");
       i = i + 1;
-      </c:forEach>
-    
-      
+      </c:forEach> 
+
       var data = google.visualization
             .arrayToDataTable([ [ '날짜', '결제금액' ],
                [ list1[5], Number(list2[5]) ],
@@ -86,6 +85,7 @@
                [ list1[0], Number(list2[0]) ] ]);
 
       var options = {
+         //subtitle : '결제 통계'   ,
          title : '결제 통계',
          width : 600,
          height : 300
@@ -95,7 +95,6 @@
 
       chart.draw(data, google.charts.Bar.convertOptions(options));
    }
-
 	function inquiryStatic() {
 
 		var inquiry = '${inquiry}';

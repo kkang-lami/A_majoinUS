@@ -263,6 +263,16 @@
    update visit_stat set count = count +1 where visit_date=#{visit_date}
 </update>
 
+<select id="pay_count" resultType="int" parameterType="String"> **
+   select sum(pay_price) from payment where reg_date=#{reg_date}
+</select>
 
+<update id="pay_stat" parameterType="project.DTO.Point_statDTO"> **
+   update point_stat set pay_price=#{pay_price} where pay_date=#{pay_date}
+</update>
+
+<select id="static_pay_stat" resultType="project.DTO.Point_statDTO"> **
+   select SUBSTR(pay_date,4,8) as pay_date, pay_price from point_stat order by pay_date desc
+</select>
 
 </mapper>
