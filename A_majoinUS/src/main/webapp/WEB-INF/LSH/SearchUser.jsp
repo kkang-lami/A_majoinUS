@@ -108,8 +108,8 @@
 							<label for="eval" class="col-sm-2 control-label">평점</label>
 							<div class="col-sm-3">
 								<div id="unranged-value"></div>
-								<input id="eval" name="eval" type="hidden" value="${command.eval}">
-							</div>점 이상
+								<input id="eval" name="eval" type="hidden" value="${command.eval}">점 이상
+							</div>
 						</div>
 
 						<!-- 포함단어 -->
@@ -170,7 +170,7 @@
 											<li><b>${item.name}(${item.id})</b></li>
 											<li>관심직종:${item.f_cate}</li>
 											<li>선호지역:${item.f_loc}</li>
-											<li>평점:${item.eval}</li>
+											<li>평점:${item.eval}점</li>
 										</ul> 
 						            </div>
 						          </div>
@@ -228,7 +228,7 @@
 									<li><b>${item.name}(${item.id})</b></li>
 									<li>관심직종:${item.f_cate}</li>
 									<li>선호지역:${item.f_loc}</li>
-									<li>평점:${item.eval}</li>
+									<li>평점:${item.eval}점</li>
 								</ul>
 							</td>
 							<td><button class="btn btn-default user_btn" data-toggle="modal" data-target="#modal_user">이동</button></td>
@@ -415,7 +415,7 @@
 				html += "<td style='width: 30%; text-align: left;'><ul class='list-unstyled'><li><b>"+item.name+"("+item.id+")</b></li>";
 				html += "<li>관심직종:"+item.f_cate+"</li>";
 				html += "<li>선호지역:"+item.f_loc+"</li>";
-				html += "<li>평점:"+item.eval+"</li></ul></td>";
+				html += "<li>평점:"+item.eval+"점</li></ul></td>";
 				html += "<td><button class='btn btn-default user_btn' data-toggle='modal' data-target='#modal_user' >이동</button></td>";
 				html += "<td>"+item.joindate+"</td>";
 				html += "<td><button class='btn btn-success plus_btn' id='"+item.id+"' data-toggle='modal' data-target='#modal-join'>";
