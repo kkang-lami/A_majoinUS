@@ -638,7 +638,7 @@ button:hover:after {
     <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
       <div class="container">
       <!-- 위 메뉴 하이퍼 링크 -->
-        <a class="navbar-brand" href="#">A_majoinUs</a>
+        <a class="navbar-brand" href="<%=request.getContextPath() %>/aus/main">A_majoinUs</a>
         <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#probootstrap-menu" 
         aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
           <span><i class="ion-navicon"></i></span>  

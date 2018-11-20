@@ -53,7 +53,7 @@ public class JoinController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(MemberDTO dto, @RequestParam("file") MultipartFile file) throws Exception {
 		if(!file.isEmpty()) {
-		String path = "c://item//profile//";
+		String path = "d://item//profile//";
 		String f_name = file.getOriginalFilename();
 		f_name = f_name.substring(0, f_name.indexOf("."));
 		long now = System.currentTimeMillis();
@@ -107,36 +107,35 @@ public class JoinController {
 	}*/
 
 	// 회원 가입 이메일 보내기
-	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
-	@ResponseBody
-	private void sendMail(HttpServletResponse resp, HttpSession session, @RequestParam("id") String id) throws Exception {
-		resp.setContentType("text/html;charset=utf-8");
-		JSONObject jso = new JSONObject();
-		PrintWriter out =null;
-		//실례합니다
-		int count = mj_dao.idconfirm(id);
-		if(count >0) {
-			jso.put("string",  "다른사람이 사용중인 이메일입니다.");
+		@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+		@ResponseBody
+		private void sendMail(HttpServletResponse resp, HttpSession session, @RequestParam("id") String id) throws Exception {
+			resp.setContentType("text/html;charset=utf-8");
+			JSONObject jso = new JSONObject();
+			PrintWriter out =null;
+			//실례합니다
+			int count = mj_dao.idconfirm(id);
+			if(count >0) {
+				jso.put("string",  "다른사람이 사용중인 이메일입니다.");
 
+				out = resp.getWriter();
+				out.print(jso);
+			}else {
+			
+			int randomCode = new Random().nextInt(10000) + 10000;
+			String joinCode = String.valueOf(randomCode);
+			session.setAttribute("joinCode", joinCode);
+
+			String subject = "AMAJOINUS 회원가입 승인 번호 입니다";
+			StringBuilder sb = new StringBuilder();
+			sb.append("환영합니다. 회원님의 회원가입 승인번호는 ").append(joinCode).append("입니다");   
+			mailService.send(subject, sb.toString(), "gpflswkd89@gmail.com", id);        
+			jso.put("string",  "입력하신 이메일로 인증번호를 보냈습니다. 메일을 확인해주세요");
+			jso.put("emailcode",  randomCode);
 			out = resp.getWriter();
-			out.print(jso);
-		}else {
-		
-		int randomCode = new Random().nextInt(1000) + 1000;
-		String joinCode = String.valueOf(randomCode);
-		session.setAttribute("joinCode", joinCode);
-
-		String subject = "회원가입 승인 번호 입니다";
-		StringBuilder sb = new StringBuilder();
-		sb.append("회원가입 승인번호는 ").append(joinCode).append("입니다");
-
-		mailService.send(subject, sb.toString(), "gpflswkd89@gmail.com", id);
-		jso.put("string",  "입력하신 이메일로 인증번호를 보냈습니다. 메일을 확인해주세요");
-		jso.put("emailcode",  randomCode);
-		out = resp.getWriter();
-		out.print(jso);
+			out.print(jso); 
+			}
 		}
-	}
 
 	// 찾기
 	@RequestMapping("/findMain")
@@ -161,29 +160,29 @@ public class JoinController {
 	}
 
 	// 비밀번호 찾기
-	@RequestMapping(value = "/findMail", method = RequestMethod.POST)
-	@ResponseBody
-	public String find_pw_Mail(HttpServletResponse resp, HttpSession session, @RequestParam("id") String id, @RequestParam("name") String name) {
-		resp.setContentType("text/html;charset=utf-8");
-		MemberDTO getdto = new MemberDTO();
-		getdto.setId(id);
-		getdto.setName(name);
-		MemberDTO dto = joinService.findPw(getdto);
-		if (dto != null) {
-			if (!dto.getName().equals(name)) {
-				return "no matched";
-			}
-			int ran = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
-			String password = String.valueOf(ran);
-			joinService.memberUpdate(dto.getId(), "password", password); // 해당 유저의 DB정보 변경
+		@RequestMapping(value = "/findMail", method = RequestMethod.POST)
+		@ResponseBody
+		public String find_pw_Mail(HttpServletResponse resp, HttpSession session, @RequestParam("id") String id, @RequestParam("name") String name) {
+			resp.setContentType("text/html;charset=utf-8");
+			MemberDTO getdto = new MemberDTO();
+			getdto.setId(id);
+			getdto.setName(name);
+			MemberDTO dto = joinService.findPw(getdto);
+			if (dto != null) {
+				if (!dto.getName().equals(name)) {
+					return "no matched";
+				}
+				int ran = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
+				String password = String.valueOf(ran);
+				joinService.memberUpdate(dto.getId(), "password", password); // 해당 유저의 DB정보 변경
 
-			String subject = "임시 비밀번호 발급 안내 입니다.";
-			String content = "귀하의 임시 비밀번호는 " + password + " 입니다.";
-			mailService.send(subject, content, "gpflswkd89@gmail.com", id);
-			return "success";
-		} else {
-			return "no matched";
-			
+				String subject = "AMAJOINUS 임시 비밀번호 발급 안내 입니다.";
+				String content = "귀하의 임시 비밀번호는 "+ password + " 입니다.";
+				mailService.send(subject, content, "gpflswkd89@gmail.com", id);
+				return "success";
+			} else {
+				return "no matched";
+				
+			}
 		}
-	}
 }

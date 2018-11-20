@@ -263,7 +263,7 @@
    update visit_stat set count = count +1 where visit_date=#{visit_date}
 </update>
 
-<select id="pay_count" resultType="int" parameterType="String"> 
+<select id="pay_count" resultType="String" parameterType="String"> 
    select sum(pay_price) from payment where reg_date=#{reg_date}
 </select>
 

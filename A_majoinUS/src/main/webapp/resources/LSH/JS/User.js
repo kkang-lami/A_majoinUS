@@ -65,7 +65,7 @@ function load_port(data){
 	for(;i<data.length;i+=1){
 			html += "<tr><td>"
 				
-		if(data[i].p_private === "on"){
+		if(data[i].p_private === "off"){
 			html += "<i class='fa fa-fw fa-lock'></i>"+data[i].subject;					
 		}else{
 			html += "<a href='"+getContext()+"/aus/portfolioContent?port_num="+data[i].port_num+"'>"+data[i].subject+"</a>";					

@@ -99,14 +99,22 @@ public class JHR extends SqlSessionDaoSupport{
 	 getSqlSession().insert("JHR_AUS.register",dto);
 	}
 	
+	public int fj_num_job() {
+		int fj_num = getSqlSession().selectOne("JHR_AUS.fj_num_job");
+		return fj_num;
+	}
 	public void insert_job(List<Map<String,Object>> dto) {
 		getSqlSession().insert("JHR_AUS.insert_job",dto);
 	}
 	
+	public int fl_num_local() {
+		int fl_num = getSqlSession().selectOne("JHR_AUS.fl_num_local");
+		return fl_num;
+	}
 	public void insert_local(List<Map<String,Object>> dto) {
 		getSqlSession().insert("JHR_AUS.insert_local",dto);
 	}
-
+	
 	
 }
 	/*//회원 가입

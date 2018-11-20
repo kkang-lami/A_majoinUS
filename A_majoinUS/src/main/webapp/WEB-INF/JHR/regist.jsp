@@ -762,7 +762,7 @@ select option:hover {
 <h3 class="display-4 border-bottom probootstrap-section-heading">Member register</h3>
 
 
-  
+      
 
 
  <section class="probootstrap_section bg-light" id="section-contact">
@@ -1051,7 +1051,10 @@ $('#mail').on('click',function(){
 	});
 });
 
-function fn_signUp(){  
+function fn_signUp(){
+	var pw = document.getElementById("password").value;
+    var pwck = document.getElementById("confirm").value;
+
 	if($("#idchake").val().length < 1){	
 		alert("인증키를 입력해주세요");
 		return false;
@@ -1081,6 +1084,10 @@ function fn_signUp(){
 		alert("약관에 동의해 주시기 바랍니다");	
 		return false;
 	}
+	else if (pw != pwck) {
+        alert('비밀번호가 일치하지 않습니다. 다시 입력해 주세요');
+        return false;
+    }
 	else{
 		if($("#idchake").val() != emailcode){
 			alert("인증키가 올바르지 않습니다.");
@@ -1092,16 +1099,6 @@ function fn_signUp(){
 		}
 	}         
 }
- function fn_signUp(){ 
-	var pw = document.getElementById("password").value;
-    var pwck = document.getElementById("confirm").value;
-
-    if (pw != pwck) {
-        alert('비밀번호가 틀렸습니다. 다시 입력해 주세요');
-        return false;
-    }
-}   
- 
 
 $(document).ready(initPage);
 

@@ -4,8 +4,11 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
+<script src="<%=request.getContextPath() %>/resources/bower_components/bower_components/ckeditor/ckeditor.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="<%=request.getContextPath() %>/resources/bower_components/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <html>
-<head>
+<head>  
 
 <style type="text/css">
 
@@ -43,6 +46,40 @@ opacity: 1;
 transition:.7s;	
 }
  
+  textarea{
+ 
+ background: none;
+ color: #ccc;
+ width: 1000px;
+ height: 400px;      
+ border: 1px solid #D8D8D8;
+ font-size: 18px;          
+ border-radius: 4px;      
+ transition: .6s;
+ overflow: hidden;  
+ }    
+    
+ 
+textarea:hover{
+background: #E6E6E6;
+cursor: pointer;    
+color: white;
+  
+}
+	  
+	
+ textarea:hover:before {
+transform: translateX(300px) skewX(-15deg);
+opacity: .6;
+transition:.7s;	
+}
+ 
+ textarea:hover:after {
+transform: translateX(300px) skewX(-15deg);
+opacity: 1;    
+transition:.7s;	
+}
+ 
  
    
 </style>
@@ -73,15 +110,7 @@ transition:.7s;
 
 	}   
    
-/* 
-$(function () {
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
-    CKEDITOR.replace('i_content')
-    //bootstrap WYSIHTML5 - text editor
-    $('.textarea').wysihtml5()  
-  })
- */
+
 
 
 </script>
@@ -105,16 +134,13 @@ $(function () {
         <li class="active">Editors</li>
       </ol>
     </section>  
-        <!-- /.col -->
         <div class="col-md-12">    
           <div class="box box-primary">   
             <div class="box-header with-border">
               <h3 class="box-title">Inquiry-Writing</h3>  
               <div class="box-tools pull-right">
               </div>  
-              <!-- /.box-tools -->  
             </div>
-            <!-- /.box-header -->
             <div class="box-body no-padding">
               <div class="mailbox-controls">
               </div>
@@ -134,7 +160,7 @@ $(function () {
 		</tr>
 		<tr>
 			<td>
-				<textarea name="i_content" rows="10" cols="80" required="required"></textarea><form:errors path="content" />
+				<textarea class="textarea" name="i_content" rows="10" cols="80" required="required"></textarea><form:errors path="content" />
 			</td>
 		</tr>
 		<tr>  
@@ -147,33 +173,19 @@ $(function () {
 		</tbody>
 	</table>
 </form:form>
-                <!-- /.table -->
               </div>  
-              <!-- /.mail-box-messages -->
             </div>
-            <!-- /.box-body -->
             <div class="box-footer no-padding">
               <div class="mailbox-controls">
-                <!-- Check all button -->
-               <!--  <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                </button> -->
-                
-                <!-- /.btn-group -->
-                <!-- <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> -->
                 <div class="pull-right">
                   Inquiry/EunB
                   
-                  <!-- /.btn-group -->
                 </div>
-                <!-- /.pull-right -->
               </div>
             </div>
           </div>  
-          <!-- /. box -->
         </div>    
-        <!-- /.col -->  
       </div>
-      <!-- /.row -->    
 
 	<tiles:insertDefinition name="left" />
 	<tiles:insertDefinition name="footer" />

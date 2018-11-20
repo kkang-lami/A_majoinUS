@@ -21,38 +21,45 @@ public class JoinServiceImpl implements JoinService {
 	//회원가입
 	@Override
 	public void register(MemberDTO dto)  {
-		System.out.println("[팝]");
 
+		dao.register(dto);
+		
 		String id = dto.getId();
 		String[] list = dto.getLocal();
 		String[] list2 = dto.getJob();
 		List<Map<String,Object>> job_list = new ArrayList<Map<String,Object>>();		
 		List<Map<String,Object>> local_list = new ArrayList<Map<String,Object>>();		
 		
+		int fj_num = dao.fj_num_job();
+		System.out.println("fj_num : "+ fj_num);
 		if(list2 != null) {
 			for(String st : list2) {
+				fj_num++;
 				Map<String,Object> temp = new HashMap<String,Object>();
+				temp.put("fj_num", fj_num);
 				temp.put("id", id);
 				temp.put("f_job", st);
 				job_list.add(temp);
+				System.out.println(temp);
 			}
 			dao.insert_job(job_list);
 		}
-		System.out.println("잡"+job_list);
 		
+		
+		int fl_num = dao.fl_num_local();
+		System.out.println("fl_num : "+ fl_num);
 		if(list != null) {
 			for(String st : list) {
+				fl_num++;
 				Map<String,Object> temp = new HashMap<String,Object>();
+				temp.put("fl_num", fl_num);
 				temp.put("id", id);
 				temp.put("f_local", st);
 				local_list.add(temp);
-			}
+				System.out.println(temp);
+			}  
 			dao.insert_local(local_list);
 		}
-		System.out.println("로컬"+local_list);
-		
-		dao.register(dto);
-		
 		
 	}
 	

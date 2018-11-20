@@ -351,6 +351,9 @@ function deletecomment(obj){
 						<c:if test="${sessionScope.Dday eq 'FALSE'}"> 
 						<input type="button" class="btn btn-block btn-primary" id=viewchange value="업무추가" style="float:right;" ><!-- onclick="javascript:view();"> -->
 						</c:if>
+						<c:if test="${sessionScope.Dday eq 'TRUE'}"> 
+						<input type="button" class="btn btn-block btn-primary" id=viewchange value="업무추가" style="float:right;" disabled="disabled">
+						</c:if>
 						<hr/>                
 						<c:forEach var="mem" items="${mwc}">     
 							<div id="${mem.id}" class="${pj_num} box box-widget widget-user-2">    

@@ -101,9 +101,13 @@ public class JEJ extends SqlSessionDaoSupport{
         return pay;
      }
 	 public int paysum(String day) { 
-	      int paysum = getSqlSession().selectOne("JEJ_AUS.pay_count", day);
-	      return paysum;
-	   }
+		 int paysum = 0;
+		 String pay = getSqlSession().selectOne("JEJ_AUS.pay_count", day);
+	     if(pay != null) {
+	    	 paysum = Integer.parseInt(pay);
+	     }
+	     return paysum;
+	 }
 	   
 	   public Point_statDTO insert_point(String pay_date, int pay_price) { 
 	      Point_statDTO point = new Point_statDTO();

@@ -4,6 +4,10 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
+<script src="<%=request.getContextPath() %>/resources/bower_components/bower_components/ckeditor/ckeditor.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="<%=request.getContextPath() %>/resources/bower_components/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    
 <html>
 <head>
 <title>게시판</title>
@@ -14,7 +18,7 @@
  
  background: none;
  color: #ccc;
- width: 150px;
+ width: 200px;
  height: 30px;
  border: 1px solid #FBFAFA;
  font-size: 18px;
@@ -43,6 +47,40 @@ transform: translateX(300px) skewX(-15deg);
 opacity: 1;
 transition:.7s;	
 }
+
+  textarea{
+ 
+ background: none;
+ color: #ccc;
+ width: 1000px;
+ height: 400px;      
+ border: 1px solid #D8D8D8;
+ font-size: 18px;          
+ border-radius: 4px;      
+ transition: .6s;
+ overflow: hidden;  
+ }
+    
+ 
+textarea:hover{
+background: #E6E6E6;
+cursor: pointer;    
+color: white;
+  
+}
+	  
+	
+ textarea:hover:before {
+transform: translateX(300px) skewX(-15deg);
+opacity: .6;
+transition:.7s;	
+}
+ 
+ textarea:hover:after {
+transform: translateX(300px) skewX(-15deg);
+opacity: 1;    
+transition:.7s;	
+}
  
  
    
@@ -65,18 +103,19 @@ transition:.7s;
 		}
 
 	}   
-
-	/* $(function () {
+    
+	/*  $(function () {
 	    // Replace the <textarea id="editor1"> with a CKEditor
 	    // instance, using default configuration.
 	    CKEDITOR.replace('content')
-	    //bootstrap WYSIHTML5 - text editor
+	    // bootstrap WYSIHTML5 - text editor
 	    $('.textarea').wysihtml5()  
-	  }) */
-
+	  })           
+ */    
 	
-  
-</script>
+    
+</script>      
+    
 <script src="<%=request.getContextPath() %>/resources/bower_components/ckeditor/ckeditor.js"></script>
 </head>
 <tiles:insertDefinition name="header" />
@@ -119,22 +158,22 @@ transition:.7s;
 		    </td>
               </tr>
               <tr></tr>
-              
+                
               <tr><td>
               
-                    <textarea id="content" name="content" rows="10" cols="80" required="required">${notice.content}</textarea>
-                    </td></tr>
+                    <textarea id="content" class="textarea" name="content" rows="10" cols="80" required="required">${notice.content}</textarea>
+                    </td></tr>    
                     
                     <tr>     
 		   <td align="center">
-				<input type="submit" value="글쓰기" > 
+				<input type="submit" value="글쓰기" >   
 				<!-- <input type="reset" value="재작성"> -->
 	     		<input type="button" value="글목록" onclick="document.location.href='notice'">
 		   </td>  
 		</tr>
                   </tbody>
                 </table>  
-              </form:form>  
+              </form:form>        
                 <!-- /.table -->
               </div>  
               <!-- /.mail-box-messages -->

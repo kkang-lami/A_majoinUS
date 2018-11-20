@@ -68,12 +68,16 @@
 									<!--  -->
 									
 									<td align="left">
-									<a class="btn btn-app" href="javascript:add_schedule()">
-                					 <i class="fa fa-edit" onclick="add_schedule()"></i> Add Schedule
-              	</a><!-- 여기부터... -->
+									<c:if test="${sessionScope.Dday eq 'FALSE'}"> 
+										<a class="btn btn-app" href="javascript:add_schedule()"><i class="fa fa-edit" onclick="add_schedule()"></i> Add Schedule</a>
+									</c:if>
+									<c:if test="${sessionScope.Dday eq 'TRUE'}">           
+										<a class="btn btn-app" href="#" onclick='return false;' style='opacity: 0.5;'><i class="fa fa-edit" onclick="return false;"></i> Add Schedule</a>
+									</c:if>	
+              	<!-- 여기부터... -->
               	<a class="btn btn-app" href="ProjectSchedule?pj_num=${pj_num}">
                 <i class="fa fa-repeat"></i> Today
-              </a>
+              </a>       
 									</td>
 									
 									<!--  -->

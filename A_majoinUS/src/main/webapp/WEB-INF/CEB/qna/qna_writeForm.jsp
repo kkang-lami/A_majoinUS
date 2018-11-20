@@ -43,6 +43,42 @@ transform: translateX(300px) skewX(-15deg);
 opacity: 1;
 transition:.7s;	
 }
+
+ textarea{
+ 
+ background: none;
+ color: #ccc;
+ width: 1000px;
+ height: 400px;      
+ border: 1px solid #D8D8D8;
+ font-size: 18px;          
+ border-radius: 4px;      
+ transition: .6s;
+ overflow: hidden;  
+ }
+    
+ 
+textarea:hover{
+background: #E6E6E6;
+cursor: pointer;    
+color: white;
+  
+}
+	    
+	
+ textarea:hover:before {
+transform: translateX(300px) skewX(-15deg);
+opacity: .6;
+transition:.7s;	
+}
+ 
+ textarea:hover:after {
+transform: translateX(300px) skewX(-15deg);
+opacity: 1;    
+transition:.7s;	
+}
+ 
+ 
  
  
    

@@ -726,7 +726,7 @@ a {
       <td style="text-align: center;"><a href="ProejctRoom/Main?pj_Num=${finish_list.pj_num}">${finish_list.pj_name}</a></td>
       <td style="text-align: center;">
       <c:set var="sday" value="${fn:substring(finish_list.start_d,0,10)}" />
-		 ${reg}
+		 ${sday}
       </td>
       <td style="text-align: center;">
       <c:set var="eDay" value="${fn:substring(finish_list.end_d,0,10)}" />

@@ -150,10 +150,10 @@ public class loginController {
 
 	// 회원 정보 업데이트
 	@RequestMapping(value = "/memberUpdate")
-    public String memberUpdate(@ModelAttribute MemberDTO dto,@RequestParam("file") MultipartFile file,Model model){
+    public String memberUpdate(@ModelAttribute MemberDTO dto,@RequestParam("file") MultipartFile file,Model model,HttpSession session){
 		System.out.println(dto);
 		if(!file.isEmpty()) {
-			String path = "c://item//profile//";
+			String path = "d://item//profile//";
 			String f_name = file.getOriginalFilename();
 			f_name = f_name.substring(0, f_name.indexOf("."));
 			long now = System.currentTimeMillis();
@@ -170,6 +170,9 @@ public class loginController {
 				dto.setU_img("");
 			}
 		service.memberUpdate(dto);
+		
+		session.setAttribute("userphoto", dto.getU_img());
+		
 		return "redirect:/aus/MyPageMain";
 	}
 

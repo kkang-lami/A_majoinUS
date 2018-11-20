@@ -20,16 +20,40 @@
 	insert into member (id,password,name,birth,phone,profile,u_img) values(#{id},#{password},#{name},#{birth},#{phone},#{profile},#{u_img})
 </insert>
 
-<insert id="insert_local" parameterType="list">
+<!-- <insert id="insert_local" parameterType="list">
 	<foreach collection="list" separator=";" item="item" open="DECLARE BEGIN" close="; END;">
 		INSERT INTO F_LOCATION VALUES(F_LOCATION_SEQ.NEXTVAL,#{item.id},#{item.f_local})
 	</foreach>
+</insert> -->
+
+<select id='fl_num_local' resultType='Integer'>
+	select max(fl_num) from F_LOCATION
+</select>
+
+<insert id="insert_local" parameterType="list">
+		insert all
+			<foreach collection="list" separator=" " item="item">
+				into F_LOCATION values(#{item.fl_num},#{item.id},#{item.f_local})
+			</foreach>
+		SELECT * FROM DUAL
 </insert>
 
-<insert id="insert_job" parameterType="list">
+<!-- <insert id="insert_job" parameterType="list">
 	<foreach collection="list" separator=";" item="item" open="DECLARE BEGIN" close="; END;">
-		INSERT INTO F_JOB VALUES(F_JOB_SEQ.NEXTVAL,#{item.id},#{item.f_job})
+		INSERT INTO F_JOB VALUES(#{fj_num},#{item.id},#{item.f_job})
 	</foreach>
+</insert> -->
+
+<select id='fj_num_job' resultType='Integer'>
+	select max(fj_num) from f_job
+</select>
+
+<insert id="insert_job" parameterType="list">
+		insert all
+			<foreach collection="list" separator=" " item="item">
+				into F_JOB values(#{item.fj_num},#{item.id},#{item.f_job})
+			</foreach>
+		SELECT * FROM DUAL
 </insert>
 
 
