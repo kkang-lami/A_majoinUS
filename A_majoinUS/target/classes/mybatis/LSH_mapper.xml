@@ -4,7 +4,7 @@
 
 <mapper namespace="LSH_AUS">
 
-	<!-- ///////////////////////////////////////// 마이페이지 ///////////////////////////////////////////// -->
+	<!-- ///////////////////////////////////////// 투두리스트 ///////////////////////////////////////////// -->
 	<select id="getTodo" parameterType="String" resultType="project.DTO.Todo_listDTO" >
 		select * from Todo_list where id = #{id} order by todo_num
 	</select>
@@ -340,6 +340,9 @@
 		        			#{item}
 		  				</foreach>
 		  			</if>
+		  			<if test="local == null">
+		  				''
+		  			</if>
 		            ) then 1 else 0 end) loc
 		            from pj_location
 		            group by pj_num
@@ -353,6 +356,9 @@
 		  				<foreach item="item" collection="job" separator=",">
 		        			#{item}
 		  				</foreach>
+		  			</if>
+		  			<if test="job == null">
+		  				''
 		  			</if>
 		  			) then 1 else 0 end) job
 		            from pj_job
@@ -383,6 +389,9 @@
 		        			#{item}
 		  				</foreach>
 		  			</if>
+		  			<if test="local == null">
+		  				''
+		  			</if>
 		            ) then 1 else 0 end) loc
 		            from f_location
 		            group by id
@@ -396,6 +405,9 @@
 		  				<foreach item="item" collection="job" separator=",">
 		        			#{item}
 		  				</foreach>
+		  			</if>
+		  			<if test="job == null">
+		  				''
 		  			</if>
 		            ) then 1 else 0 end) job
 		            from f_job

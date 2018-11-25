@@ -32,7 +32,6 @@ public class SearchService {
 	
 	public List<String> getLevel1(String col){
 		List<String> list = null;
-		
 		try {
 			list = dao.getCategory1("LSH_AUS.select1",col);
 		}catch (Exception e) {
@@ -246,6 +245,7 @@ public class SearchService {
 		Map<String,Object> map= new HashMap<String,Object>();
 		List<String> list = new ArrayList<String>();
 		String[] arr = {};
+		map.put("id", id);
 		try {
 			ResultDTO dto = dao.getMy_fav("LSH_AUS.getMy_fav",id);
 			
@@ -262,7 +262,6 @@ public class SearchService {
 				list.add(arr[i]);
 			}
 			map.put("local", list);
-			map.put("id", id);
 		}catch (Exception e) {
 			System.out.println("[에러] getMy_fav 서비스 실패 ::"+e.toString());
 		}

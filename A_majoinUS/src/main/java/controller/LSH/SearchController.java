@@ -33,11 +33,10 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value="/SearchUserForm",method=RequestMethod.GET)
-	public String form(@ModelAttribute("command") SearchDTO dto,HttpServletRequest req,Model model) {
-		System.out.println("[프로젝트룸]▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
-		
+	public String form(@ModelAttribute("command") SearchDTO dto,HttpServletRequest req,Model model) {		
 		String id = req.getSession().getAttribute("id").toString();
-		
+		System.out.println("[프로젝트룸]▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼"+id);
+
 		dto.setSort("joindate");
 		dto.setSort_way("DESC");
 		
