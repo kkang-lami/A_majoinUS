@@ -252,7 +252,7 @@
 			    FROM(
 			    	SELECT ROW_NUMBER() OVER (PARTITION BY PJ_NUM ORDER BY regdate)  AS RNUM, base.* 
 			    	FROM(
-			        	SELECT pj.PJ_NUM,pj_name,start_d,end_d,pj.id,regdate,pj_view,name,pj_loc,pj_cate,favs
+			        	SELECT pj.PJ_NUM,pj_name,start_d,end_d,pj.id,regdate,name,pj_loc,pj_cate,(NVL(favs, 0)*50+pj_view) pj_view
 			        	FROM PROJECTROOM pj
 							INNER JOIN member m ON (pj.id = m.id)
 		                    LEFT JOIN PJ_LOCATION lo on(pj.PJ_NUM = lo.PJ_NUM) 

@@ -12,16 +12,7 @@ public class ResultTeamDTO {
 	private String end_d;
 	private String regdate;
 	private int pj_view;
-	private int favs;
 	
-	
-	
-	public int getFavs() {
-		return favs;
-	}
-	public void setFavs(int favs) {
-		this.favs = favs;
-	}
 	
 	public String getId() {
 		return id;
@@ -95,7 +86,7 @@ public class ResultTeamDTO {
 	public String toString() {
 		return "ResultTeamDTO [pj_num=" + pj_num + ", pj_loc=" + pj_loc + ", pj_cate=" + pj_cate + ", pj_name="
 				+ pj_name + ", name=" + name + ", id=" + id + ", start_d=" + start_d + ", end_d=" + end_d + ", regdate="
-				+ regdate + ", pj_view=" + pj_view + ", favs=" + favs + "]";
+				+ regdate + ", pj_view=" + pj_view + "]";
 	}
 
 	
