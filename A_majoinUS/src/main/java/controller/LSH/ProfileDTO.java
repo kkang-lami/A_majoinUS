@@ -8,6 +8,8 @@ public class ProfileDTO {
 	private String u_img;
 	private double eval;
 	private int isfriend;
+	private int follower;
+	private int pj_count;
 
 	private String job;
 	private String local ;
@@ -21,6 +23,19 @@ public class ProfileDTO {
 	private String p_private;
 	
 	
+	
+	public int getPj_count() {
+		return pj_count;
+	}
+	public void setPj_count(int pj_count) {
+		this.pj_count = pj_count;
+	}
+	public int getFollower() {
+		return follower;
+	}
+	public void setFollower(int follower) {
+		this.follower = follower;
+	}
 	public String getId() {
 		return id;
 	}

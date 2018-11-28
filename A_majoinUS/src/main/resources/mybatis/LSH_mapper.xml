@@ -57,14 +57,16 @@
 	<!-- 유저프로필 -->
 	<select id="getProfile" parameterType="map" resultType="controller.LSH.ProfileDTO">
 		<![CDATA[
-		select a.*,local,job,isfriend,review_content,port_num,subject,start_d,end_d,p_private from (
-			(SELECT id,name,profile,u_img,eval from member m where id=#{id}) a
+		select a.*,local,job,follower,pj_count,isfriend,review_content,port_num,subject,start_d,end_d,p_private from (
+			(SELECT id,name,profile,u_img,eval,follower from member m where id=#{id}) a
+			LEFT OUTER join
+			(select p.id, count(*) pj_count from pj_mem p inner join projectroom b on (p.pj_num=b.pj_num) and end_d< trunc(sysdate) group by p.id)pj on(a.id=pj.id)
             LEFT OUTER join
-			(SELECT id,LISTAGG(f_loc,', ') WITHIN GROUP (ORDER BY f_loc) local from f_location where id=#{id} group by id) b
-            on(a.id = b.id) LEFT OUTER join
+			(SELECT id,LISTAGG(f_loc,', ') WITHIN GROUP (ORDER BY f_loc) local from f_location where id=#{id} group by id) b on(a.id = b.id) 
+			LEFT OUTER join
 			(SELECT id,LISTAGG(f_cate,', ') WITHIN GROUP (ORDER BY f_cate) job from f_job where id=#{id} group by id)c on(a.id = c.id)
 			LEFT OUTER join
-			(SELECT friend_id,count(*) isfriend from follow where id=#{login_id} and friend_id=#{id} group by friend_id)d on(a.id = d.friend_id)
+			(SELECT friend_id,COUNT(CASE WHEN id=#{login_id} THEN 1 END)isfriend from follow where friend_id=#{id} group by friend_id)d on(a.id = d.friend_id)
 			LEFT OUTER join
 			(select target_id,review_content from REVIEW where target_id=#{id}) e on(a.id = e.target_id)
 			LEFT OUTER join
@@ -86,7 +88,7 @@
 		)
 	</select>
 
-	<!-- 뷰 증가 -->
+	<!-- 뷰 증가  -->
 	<update id="update_view" parameterType="map">
 		update ${table} set ${colum} = ${colum}+1  where ${where}=#{what}
 	</update>
@@ -131,6 +133,10 @@
 	<insert id="follow" parameterType="map">
 		INSERT INTO FOLLOW VALUES(FOLLOW_SEQ.NEXTVAL,#{id},#{friend_id})
 	</insert>
+	
+	<update id="follow_update" parameterType="map">
+		update member set follower = follower+#{num} where id = #{friend_id}
+	</update>
 
 	<delete id="unfollow" parameterType="map">
 		delete FOLLOW where id=#{id} and friend_id = #{friend_id}
@@ -173,7 +179,7 @@
 				from(
 				    SELECT ROW_NUMBER() OVER (PARTITION BY id ORDER BY f_cate)  AS RNUM, base.* 
 				    from(
-				        SELECT member.id id,name,u_img,eval,joindate,mem_view,f_cate,f_loc 
+				        SELECT member.id id,name,u_img,eval,joindate,f_cate,f_loc,(follower*50+mem_view) mem_view 
 				        FROM member 
 				            LEFT OUTER join f_location on(member.id = f_location.id) 
 				            LEFT OUTER join f_job ON (member.id = f_job.id )
@@ -248,10 +254,10 @@
 			    	FROM(
 			        	SELECT pj.PJ_NUM,pj_name,start_d,end_d,pj.id,regdate,pj_view,name,pj_loc,pj_cate,favs
 			        	FROM PROJECTROOM pj
+							INNER JOIN member m ON (pj.id = m.id)
 		                    LEFT JOIN PJ_LOCATION lo on(pj.PJ_NUM = lo.PJ_NUM) 
 		                    LEFT JOIN PJ_JOB jo ON (pj.PJ_NUM = jo.PJ_NUM )
-		                    INNER JOIN member m ON (pj.id = m.id)
-							LEFT JOIN (select id, listagg(pj_num,',') within group (order by pj_num) favs from favorite group by id) on 1 = 1
+							LEFT JOIN (select pj_num,count(*) favs from favorite group by pj_num) f on(pj.PJ_NUM = f.pj_num)
 		                <![CDATA[ where blacklist = 'NO' and trunc(sysdate) <= end_d ]]>
 		                <if test="start_d != ''">
 		    			<![CDATA[ and start_d >= #{start_d} ]]>

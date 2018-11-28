@@ -50,7 +50,6 @@ public class SearchController {
 			Map<String,Object> map = service.getMy_fav(id);
 			Recomend_User = service.recommend_User(map);			
 		}
-		for(ResultDTO m : Recomend_User) {System.out.println(m);}
 		return Recomend_User;
 	} 
 	
@@ -184,7 +183,7 @@ public class SearchController {
 			pageNum = 1;
 		}
 
-		int pageSize = 2;
+		int pageSize = 3;
 		int pageBlock = 3;
 		int startRow = (pageNum - 1) * pageSize + 1;
 		int endRow = pageNum * pageSize;

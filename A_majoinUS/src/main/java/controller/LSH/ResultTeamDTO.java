@@ -12,16 +12,16 @@ public class ResultTeamDTO {
 	private String end_d;
 	private String regdate;
 	private int pj_view;
-	private String favs;
+	private int favs;
 	
 	
-	public String getFavs() {
+	
+	public int getFavs() {
 		return favs;
 	}
-	public void setFavs(String favs) {
+	public void setFavs(int favs) {
 		this.favs = favs;
 	}
-	
 	
 	public String getId() {
 		return id;

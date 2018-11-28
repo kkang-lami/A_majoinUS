@@ -415,7 +415,7 @@
 				html += "<td style='width: 30%; text-align: left;'><ul class='list-unstyled'><li><b>"+item.name+"("+item.id+")</b></li>";
 				html += "<li>관심직종:"+item.f_cate+"</li>";
 				html += "<li>선호지역:"+item.f_loc+"</li>";
-				html += "<li>평점:"+item.eval+"점</li></ul></td>";
+				html += "<li>평점:"+parseFloat(item.eval).toFixed(1)+"점</li></ul></td>";
 				html += "<td><button class='btn btn-default user_btn' data-toggle='modal' data-target='#modal_user' >이동</button></td>";
 				html += "<td>"+item.joindate+"</td>";
 				html += "<td><button class='btn btn-success plus_btn' id='"+item.id+"' data-toggle='modal' data-target='#modal-join'>";
@@ -481,6 +481,7 @@
 		remove_data();
 		profile($(this).parents("tr").attr('id'));
 	});
+	
 	$('body').on('click','.recomend_btn', function() {
 		console.log("8.[추천유저 프로필]"+$(this).attr('id'));
 		remove_data();

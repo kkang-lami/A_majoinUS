@@ -29,9 +29,15 @@ function profile(userid){
 
 function load_head(data,login_id){
 	
+	var eval = parseFloat(data.eval).toFixed(1);
+	
+	$('.widget-user-username').html(data.name);
+	$('.widget-user-desc').html(data.id);
 	$('.profile-user-img').attr('src',getContext()+"/aus/userImg/"+data.u_img);
-	$('.profile-username').html(data.name+"<small>("+data.id+")</small>");
-	$('.profile-star').html(data.eval+"점");
+		
+	$('.project-count').html(data.pj_count);
+	$('.follower-count').html(data.follower);
+	$('.star-count').html(eval);
 	
 	if(data.job){
 		$('.profile-job').html(data.job);
@@ -93,7 +99,7 @@ function remove_data(){
 	$('#follow_btn').attr('class','btn btn-primary btn-block');
 	$('#issue_btn').attr('class','btn btn-danger btn-block');
 	$('.profile-text').html('자기소개가 없습니다');
-	$('.port_table tbody').html("<tr><th>프로젝트명</th><th>프로젝트기간</th></tr><tr><td colspan='2'>등록된 프로젝트가 없습니다</td></tr>");
+	$('.port_table tbody').html("<tr><th>프로젝트명</th><th>프로젝트기간</th></tr><tr><td colspan='2'>등록된 포트폴리오가 없습니다</td></tr>");
 	$('.review_table tbody').html("<tr><td>등록된 후기가 없습니다</td></tr>");
 }
 
@@ -111,7 +117,8 @@ $('body').on('click','.unfollow_btn', function() {
 
 function follow(status){
 	var url=getContext()+"/aus/follow";
-	var id = $('.profile-username small').text().slice(1,-1);
+	var id = $('.widget-user-desc').text();
+	var count = Number($('.follower-count').text());
 	var params = "id="+id+"&login_id="+getSessionId()+"&status="+status;
 
 		$.ajax({
@@ -123,9 +130,11 @@ function follow(status){
 			if(status === "add"){
 				$('#follow_btn').attr('class','btn btn-primary btn-block unfollow_btn');
 				$('#follow_btn').html('<b>Unfollow</b>');
+				$('.follower-count').text(count+1);
 			}else{
 				$('#follow_btn').attr('class','btn btn-primary btn-block follow_btn');
 				$('#follow_btn').html('<b>Follow</b>');
+				$('.follower-count').text(count-1);
 			}
 		},
 		error:function(e){

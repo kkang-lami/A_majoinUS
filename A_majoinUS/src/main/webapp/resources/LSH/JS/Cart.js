@@ -1,6 +1,8 @@
 	$("body").on('click','.unstar', function() {
 		console.log("13.카트 추가");
 		var pj_num = $(this).parents("tr").attr('id');
+
+		global.cart_list.push(pj_num);
 		add_cart(pj_num);
 		star(pj_num,"add");
 	});
@@ -8,6 +10,13 @@
 	$("body").on('click','.star', function() {
 		console.log("14.카트 제거");
 		var pj_num = $(this).parents("tr").attr('id');
+		
+		for(var i =0; i<global.cart_list.length;i+=1){
+			if(global.cart_list[i] === pj_num){
+				global.cart_list.splice(i,1);
+			}
+		}
+		
 		del_cart(pj_num);
 		star(pj_num,"del");
 	});

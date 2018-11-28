@@ -201,12 +201,7 @@
 						
 						<c:forEach var="item" items="${pdto.list}">
 						<tr id="${item.pj_num}">
-							<c:if test="${item.favs eq 'YES'}">
-							<td style="width: 15%;"><a href="#" id="star_btn" class="star"><i class="fa fa-fw fa-star text-yellow"></i></a></td>
-							</c:if>
-							<c:if test="${item.favs ne 'YES'}">
 							<td style="width: 15%;"><a href="#" id="star_btn" class="unstar"><i class="fa fa-fw fa-star-o text-yellow"></i></a></td>
-							</c:if>
 							<td style="width: 30%; text-align: left;">
 								<ul class="list-unstyled">  
 									<li><b>${item.pj_name}</b></li>
@@ -280,6 +275,8 @@
 			show_search_tag();
 			show_sort();
 			$('.pagination #${pdto.pageNum}').addClass("active");
+			getCartList();
+			add_star();
 		}
 		
 		function getPageNum(){
@@ -301,8 +298,31 @@
 			    i : 0,
 			    origin_d : "",
 			    receiver : "",
-			    pj_num: 0
+			    pj_num: 0,
+			    cart_list: []
 		};
+		
+		function getCartList(){
+			<c:forEach var="item" items="${cart}">
+				global.cart_list.push('${item.pj_num}');
+			</c:forEach>
+		}
+		
+ 		function add_star(){
+ 			
+ 			var len = $("#result_table tr").length;
+ 			var len2 = global.cart_list.length;
+ 			
+ 			for(var j=1;j<len;j+=1){
+ 				for(var i=0;i<len2;i+=1){
+					if($("#result_table tr:eq("+j+")").attr('id') === global.cart_list[i]){
+ 						console.log("일치함");
+ 						$("#result_table tr:eq("+j+") td:eq(0)").html('<a href="#" id="star_btn" class="star"><i class="fa fa-fw fa-star text-yellow"></i></a>');
+ 					}
+ 				}
+ 			}
+		} 
+
 	</script>
 
 	<!-- 검색창 이벤트 -->
@@ -456,13 +476,7 @@
 		}else{
 			list.forEach(function(item) {
 				html += "<tr id='"+item.pj_num+"'>";
-
-				if(item.favs === "YES"){
-				html +=	"<td style='width: 15%;'><a href='#' id='star_btn' class='star'><i class='fa fa-fw fa-star text-yellow'></i></td>";
-				}else{
 				html +=	"<td style='width: 15%;'><a href='#' id='star_btn' class='unstar'><i class='fa fa-fw fa-star-o text-yellow'></i></td>";
-				}
-				
 				html += "<td style='width: 30%; text-align: left;'><ul class='list-unstyled'><li><b>"+item.pj_name+"</b></li>";
 				html += "<li>관심직종:"+item.pj_cate+"</li>";
 				html += "<li>선호지역:"+item.pj_loc+"</li></ul></td>";
@@ -473,6 +487,7 @@
 			});			
 		}
 		$("#result_table").append(html);
+		add_star();
 	}
 	
 	function page_btn(pdto){

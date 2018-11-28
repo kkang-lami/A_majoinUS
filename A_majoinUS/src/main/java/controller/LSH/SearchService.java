@@ -120,9 +120,12 @@ public class SearchService {
 		try {
 			if(status.equals("add")) {
 				x = dao.map_insert("LSH_AUS.follow", m);
+				m.put("num", 1);
 			}else {
 				x = dao.map_delete("LSH_AUS.unfollow", m);
+				m.put("num", -1);
 			}
+			x = dao.map_update("LSH_AUS.follow_update", m);
 		}catch (Exception e) {
 			System.out.println("[에러] 팔로우 서비스 실패 ::"+e.toString());
 		}
@@ -195,13 +198,13 @@ public class SearchService {
 	}
 	
 	public Map<String,Object> get_profile(Map<String,Object> param){
-		Map<String,Object> map = new HashMap<String,Object>();
-		
 		List<ProfileDTO> x = null;
-		List<PortfolioDTO> port =  new ArrayList<PortfolioDTO>();
 		
+		List<PortfolioDTO> port =  new ArrayList<PortfolioDTO>();		
 		HashSet<String> count = new HashSet<String>();
 		HashSet<String> review = new HashSet<String>();
+		
+		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			x = dao.getProfile("LSH_AUS.getProfile", param);
 			for(ProfileDTO m : x) {

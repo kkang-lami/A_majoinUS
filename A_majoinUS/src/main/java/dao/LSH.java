@@ -117,6 +117,11 @@ public class LSH extends SqlSessionDaoSupport{
 		return x;
 	}
 	
+	public int map_update(String mapper,Map<String,Object> m){
+		int x = getSqlSession().update(mapper,m);
+		return x;
+	}
+	
 	public int map_delete(String mapper,Map<String,Object> m){
 		int x = getSqlSession().delete(mapper,m);
 		return x;

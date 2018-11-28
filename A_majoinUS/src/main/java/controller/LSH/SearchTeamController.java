@@ -173,17 +173,6 @@ public class SearchTeamController {
 		dto.setEndRow(endRow);
 		List<ResultTeamDTO> list = service.getResultTeam(dto);
 		
-		for(ResultTeamDTO mm : list) {
-			if(mm.getFavs() != null) {
-				String[] strarr = mm.getFavs().split(",");
-				for(String str : strarr) {
-					if(str.equals(mm.getPj_num()+"")) {
-						mm.setFavs("YES");
-					}
-				}
-			}
-		}
-		
 		PagingDTO pdto = new PagingDTO(pageNum,rowCount,pageCount,startPage,endPage,list,pageBlock);
 		
 		return pdto;
