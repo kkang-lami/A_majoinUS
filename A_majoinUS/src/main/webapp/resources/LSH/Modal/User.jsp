@@ -13,6 +13,9 @@
 	.profile-user-img{
     	height: 90px !important;
 	}
+	.scrollBlind{
+	    height:10%; overflow-y:scroll;
+	}
 </style>
 
 <!-- 멤버상세 모달 -->
@@ -118,11 +121,13 @@
 						</h3>
 					</div>
 					<div class="box-body">
+						<div class="scrollBlind">
 						<table class="table table-hover text-center review_table">
 							<tr>
 								<td>등록된 후기가 없습니다</td>
 							</tr>
 						</table>
+						</div>
 					</div>
 				</div>
 			</div>
