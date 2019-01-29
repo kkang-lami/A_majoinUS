@@ -1,2 +1,1 @@
-# A_majoinUS
-### KH Final project
+## A_majoinUS
