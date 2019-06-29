@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import controller.LSH.DTO.PagingDTO;
 import controller.LSH.DTO.ResultDTO;
 import controller.LSH.DTO.SearchDTO;
+import interceptor.NoLoginCheck;
 import net.sf.json.JSONObject;
 import project.DTO.AlarmDTO;
 import project.DTO.IssueDTO;
 
 @Controller
 @RequestMapping("/aus")
+@NoLoginCheck
 public class SearchController {
 	
 	@Autowired

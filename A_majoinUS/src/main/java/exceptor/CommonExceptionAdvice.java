@@ -12,14 +12,11 @@ public class CommonExceptionAdvice {
 	private static final Logger logger = LoggerFactory.getLogger(CommonExceptionAdvice.class);
 	
 	@ExceptionHandler					
-	public ModelAndView commonException(Exception e) {
+	public String commonException(Exception e) {
 
+		System.out.println("...??");
 		logger.info(e.toString());
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("exception",e);
-		mav.setViewName("/LSH/error/common_error");
-		
-		return mav;
+		return "/KMJ/error";
 	}
 	
 	
