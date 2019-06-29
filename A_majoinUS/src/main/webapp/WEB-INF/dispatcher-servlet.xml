@@ -7,22 +7,22 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!-- bean scan -->
 	<context:annotation-config />         
 	<context:component-scan base-package="controller" />
+	
 	<!-- viewResolver -->
-	<bean id="beanViewResolver"
-		class="org.springframework.web.servlet.view.BeanNameViewResolver"
-		p:order="1" />
+	<bean id="beanViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" />
 	
 	<bean id = "viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-			<!-- view로 보여줌. /web-inf/views/ ~~~ .jsp 로 링크연결해준다. -->
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
@@ -41,16 +41,27 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:mybatis/*.xml" />
 	</bean>
+	
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- Interceptor -->
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/aus/*"/>
+			<bean class="interceptor.UserInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>	
+
+
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 	
 	<!-- RestFul -->
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+  	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
 		<property name="alwaysUseFullPath" value="true" />
 	</bean>
 	
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="alwaysUseFullPath" value="true" />		
-	</bean>
+ 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
 	
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 	
@@ -95,51 +106,47 @@
 	
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-<bean id="download" class="controller.KMJ.DownloadView" />
-<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-
-<bean id="echoHandler" class="controller.KMJ.EchoHandler"/>
-
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/chat"/>
-		<websocket:sockjs/>
-	</websocket:handlers>
-
-
-
-	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>
-							text/html;charset=UTF-8
-						</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
+	<bean id="download" class="controller.KMJ.DownloadView" />
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	
+	<bean id="echoHandler" class="controller.KMJ.EchoHandler"/>
 	
-	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    <property name="host" value="smtp.gmail.com" />
-    <property name="port" value="587" />
-    <property name="username" value="gpflswkd89@gmail.com" />
-    <property name="password" value="QKqh1004" />
-    <property name="javaMailProperties">
-        <props>
-           <prop key="mail.transport.protocol">smtp</prop>
-            <prop key="mail.smtp.auth">true</prop>
-            <prop key="mail.smtp.starttls.enable">true</prop>
-            <prop key="mail.debug">true</prop>
-        </props>
-    </property>
-</bean>
-<bean id="mailService" class="controller.JHR.MailServiceImpl">
-    <property name="javaMailSender" ref="javaMailSender" />
-</bean>
+		<websocket:handlers>
+			<websocket:mapping handler="echoHandler" path="/chat"/>
+			<websocket:sockjs/>
+		</websocket:handlers>
 	
-	
-
+ 		<mvc:annotation-driven>
+			<mvc:message-converters>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>
+								text/html;charset=UTF-8
+							</value>
+						</list>
+					</property>
+				</bean>
+			</mvc:message-converters>
+		</mvc:annotation-driven>
+		
+		
+		<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <property name="username" value="gpflswkd89@gmail.com" />
+	    <property name="password" value="QKqh1004" />
+	    <property name="javaMailProperties">
+	        <props>
+	           <prop key="mail.transport.protocol">smtp</prop>
+	            <prop key="mail.smtp.auth">true</prop>
+	            <prop key="mail.smtp.starttls.enable">true</prop>
+	            <prop key="mail.debug">true</prop>
+	        </props>
+	    </property>
+	</bean>
+	<bean id="mailService" class="controller.JHR.MailServiceImpl">
+	    <property name="javaMailSender" ref="javaMailSender" />
+	</bean>
+		
 </beans>

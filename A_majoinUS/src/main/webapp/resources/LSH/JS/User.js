@@ -1,19 +1,22 @@
 function profile(userid){
 	var url= getContext()+"/aus/UserProfile";
-	var login_id = getSessionId();
+
 	$.ajax({
-		type:"post",
+		type:"get",
 		url:url,
-		data:{	"id": userid,
-				"login_id" : login_id
+		data:{	"id": userid
 			},
 		dataType:"json",
+		beforeSend: function(xmlHttpRequest){
+			xmlHttpRequest.setRequestHeader("AJAX","true");	
+		},
 		success:function(args){
 			
 			global.pj_num = 0;
 			global.receiver = userid;
 			
-			load_head(args.x.profile,login_id);
+			load_head(args.x.profile);
+			
 			if(args.x.port.length>0){
 				load_port(args.x.port);
 			}
@@ -21,13 +24,13 @@ function profile(userid){
 				load_review(args.x.review);
 			}
 		},
-		error:function(e){
-			alert(e.responseText);
+		error : function(xhr,textStatus,error) {
+			warn(xhr.status);
 		}
 	});
 }
 
-function load_head(data,login_id){
+function load_head(data){
 	
 	var eval = parseFloat(data.eval).toFixed(1);
 	
@@ -47,7 +50,7 @@ function load_head(data,login_id){
 		$('.profile-local').html(data.local);
 	}
 	
-	if(login_id.indexOf(data.id) !== -1){
+	if(getSessionId().indexOf(data.id) !== -1){
 		$('#follow_btn').attr('class','btn btn-default btn-block disabled');
 		$('#follow_btn').html('<span class="text-muted">자신을 추가할 수 없습니다</span>');
 		$('#issue_btn').attr('class','btn btn-default btn-block disabled');
@@ -125,6 +128,9 @@ function follow(status){
 		type:"post",
 		url:url,
 		data: params,
+		beforeSend: function(xmlHttpRequest){
+			xmlHttpRequest.setRequestHeader("AJAX","true");	
+		},
 		success:function(args){
 			console.log("[*]팔로우도착");
 			if(status === "add"){
@@ -137,8 +143,15 @@ function follow(status){
 				$('.follower-count').text(count-1);
 			}
 		},
-		error:function(e){
-			alert(e.responseText);
+		error : function(xhr,textStatus,error) {
+			warn(xhr.status);
 		}
 	}); 
+}
+
+function warn(e){
+	if(e=="400"){
+		alert('로그아웃 되었습니다');
+	}
+	location.href="/A_majoinUS/aus/main";
 }

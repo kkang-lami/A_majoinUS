@@ -12,11 +12,6 @@ import project.DTO.Todo_listDTO;
 public class MypageService {
 
 	private LSH dao;
-
-	@Autowired	
-	public void setDao(LSH dao) {
-		this.dao = dao;
-	}
 	
 	public List<Todo_listDTO> getTodo(String id){
 		List<Todo_listDTO> list = null;
@@ -53,7 +48,6 @@ public class MypageService {
 		try {
 			System.out.println("실행");
 			x = dao.deleteFin("LSH_AUS.deleteFin",num);
-			System.out.println(x);
 		}catch (Exception e) {
 			System.out.println("[에러] deleteFin서비스실패 ::"+e.toString());
 		}
@@ -70,5 +64,9 @@ public class MypageService {
 		return x;
 	}
 
+	@Autowired	
+	public void setDao(LSH dao) {
+		this.dao = dao;
+	}
 	
 }

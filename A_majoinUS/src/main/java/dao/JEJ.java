@@ -30,8 +30,8 @@ public class JEJ extends SqlSessionDaoSupport{
 		parameters.put("receiver", receiver);
 		parameters.put("a_type", a_type);
 
-		System.out.println("초대알림DAO");
-		System.out.println("parameters : " + parameters);
+//		System.out.println("초대알림DAO");
+//		System.out.println("parameters : " + parameters);
 		return getSqlSession().selectList("JEJ_AUS.projectApplyAlarm", parameters);
 	}
 	

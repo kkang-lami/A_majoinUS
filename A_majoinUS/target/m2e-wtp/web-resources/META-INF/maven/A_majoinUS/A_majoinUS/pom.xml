@@ -16,7 +16,7 @@
     </dependency>
     
      
-    <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+    	<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -129,42 +129,43 @@
 
 		<!-- ///////////////////////////////////// 이 아래로 추가할 것 //////////////////////////////////////////// -->
 
-	<dependency>
-		<groupId>org.codehaus.jackson</groupId>
-		<artifactId>jackson-mapper-asl</artifactId>
-		<version>1.9.13</version>
-	</dependency>
-
-
-	<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras -->
-<dependency>
-    <groupId>org.apache.tiles</groupId>
-    <artifactId>tiles-extras</artifactId>
-    <version>3.0.8</version>
-</dependency>
-		
-
-	<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-servlet -->
-	<dependency>
-		<groupId>org.apache.tiles</groupId>
-		<artifactId>tiles-servlet</artifactId>
-		<version>3.0.8</version>
-	</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 	
-<!--  비밀번호 암호화 -->
-<dependency>
-<groupId>org.mindrot</groupId>
-<artifactId>jbcrypt</artifactId>
-<version>0.4</version>
-</dependency>
+	
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-extras</artifactId>
+		    <version>3.0.8</version>
+		</dependency>
+			
+	
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-servlet -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>3.0.8</version>
+		</dependency>
+	
+		<!--  비밀번호 암호화 -->
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
 
-<!-- java 메일 발송에 필요한 lib -->
-<dependency>
-  <groupId>javax.mail</groupId>
-  <artifactId>mail</artifactId>
-  <version>1.4.7</version>
-</dependency>
- <dependency>
+		<!-- java 메일 발송에 필요한 lib -->
+		<dependency>
+		  <groupId>javax.mail</groupId>
+		  <artifactId>mail</artifactId>
+		  <version>1.4.7</version>
+		</dependency>
+		
+ 		<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>4.3.9.RELEASE</version>
@@ -177,17 +178,15 @@
         </dependency>
 
 
-    <!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
-<dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-websocket</artifactId>
-    <version>4.3.9.RELEASE</version>
-</dependency>
+	    <!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>4.3.9.RELEASE</version>
+		</dependency>
 	
-    
-    
-    
   </dependencies>
+  
   <build>
     <finalName>A_majoinUS</finalName>
      <plugins>

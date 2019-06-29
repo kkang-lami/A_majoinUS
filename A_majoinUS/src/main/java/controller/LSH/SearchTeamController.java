@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import controller.LSH.DTO.PagingDTO;
+import controller.LSH.DTO.ResultTeamDTO;
+import controller.LSH.DTO.SearchTeamDTO;
 import net.sf.json.JSONObject;
 import project.DTO.ProjectroomDTO;
 
@@ -45,17 +48,7 @@ public class SearchTeamController {
 		model.addAttribute("recomend",getRecomendTeam(id));
 		return "LSH/SearchTeam"; 
 	}
-	
-	public List<ResultTeamDTO> getRecomendTeam(String id){
-		List<ResultTeamDTO> Recomend_Team = new ArrayList<ResultTeamDTO>();
-		if(!id.equals("amajoinus@gmail.com")) {
-			Map<String,Object> map = service.getMy_fav(id);
-			Recomend_Team = service.recommend_Team(map);			
-		}
-/*		for(ResultTeamDTO m : Recomend_Team) {System.out.println(m);}*/		
-		return Recomend_Team;
-	} 
-	
+		
 	@RequestMapping(value="/SearchTeamForm",method=RequestMethod.POST)
 	public String post(@ModelAttribute("command") SearchTeamDTO dto,HttpServletRequest req,Model model) {
 		System.out.println("[프로젝트룸] 포스트실행"+dto);
@@ -65,6 +58,16 @@ public class SearchTeamController {
 		model.addAttribute("recomend",getRecomendTeam(req.getSession().getAttribute("id").toString()));
 		return "LSH/SearchTeam";
 	}
+	
+	public List<ResultTeamDTO> getRecomendTeam(String id){
+		List<ResultTeamDTO> Recomend_Team = new ArrayList<ResultTeamDTO>();
+		if(!id.equals("amajoinus@gmail.com")) {
+			Map<String,Object> map = service.getMy_fav(id);
+			Recomend_Team = service.recommend_Team(map);			
+		}
+		return Recomend_Team;
+	} 
+	
 	
 	@RequestMapping(value="/TeamSort",method=RequestMethod.POST)
 	public void sort(SearchTeamDTO dto,int pageNum,HttpServletResponse resp) throws Exception{
@@ -98,22 +101,25 @@ public class SearchTeamController {
 
 	@RequestMapping(value="/ProjectProfile",method=RequestMethod.POST)
 	public void profile(String pj_num,HttpServletResponse resp,HttpServletRequest req) throws Exception{
-
-		System.out.println("[프로젝트룸] 상세보기 "+ pj_num);
-		resp.setContentType("text/html;charset=utf-8");
+		System.out.println("[프로젝트룸] 상세보기 "+ pj_num); resp.setContentType("text/html;charset=utf-8");
 		
-		Map<String, Object> x = service.get_ProjectRoom(pj_num);
+		boolean accessCheck = req.getHeader("referer").contains("SearchTeamForm");
+		Map<String, Object> param = new HashMap<String, Object>();
 		
-		if(!req.getSession().getAttribute("id").toString().equals("amajoinus@gmail.com")) {
-			updateView(pj_num);
+		if(accessCheck && !req.getSession().getAttribute("id").toString().equals("amajoinus@gmail.com")) {
+			param.put("view_count", true);
 		}
+		
+		param.put("pj_num", pj_num);
+		Map<String, Object> x = service.get_project_profile(param);
+		
 		
 		JSONObject jso = new JSONObject();
 		jso.put("x", x);
 		PrintWriter out = resp.getWriter();
 		out.print(jso);
 	}
-	
+
 	@RequestMapping(value="/favorite",method=RequestMethod.POST)
 	public void favorite(int pj_num,String login_id,String status,HttpServletResponse resp) throws Exception{
 
@@ -122,17 +128,6 @@ public class SearchTeamController {
 		
 		int result = service.favorite(pj_num,login_id,status);
 		System.out.println("결과는? 두구두구:: "+result);
-	}
-	
-	public void updateView(String pj_num) {
-
-		Map<String,Object> m = new HashMap<String,Object>();
-		m.put("what", pj_num);
-		m.put("colum", "pj_view");
-		m.put("table", "projectroom");
-		m.put("where", "pj_num");
-		int result = service.update_view(m);
-		System.out.println("[-]조회수"+result);
 	}
 	
 	public List<ProjectroomDTO> getCart(HttpServletRequest req) {

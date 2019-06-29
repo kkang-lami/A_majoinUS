@@ -1,31 +1,28 @@
 package controller.JHR;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dao.KMJ;
+import interceptor.NoLoginCheck;
 import net.sf.json.JSONObject;
 
 @Controller // 해당 클래스가 controller임을 나타내기 위한 어노테이션
 @RequestMapping("/aus") // 요청에 대해 어떤Controller,어떤 메소드가 처리할지를 맵핑하기위한 어노테이션
+@NoLoginCheck
 public class JoinController {
 
 	@Autowired

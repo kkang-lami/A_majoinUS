@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import controller.LSH.DTO.PagingDTO;
+import controller.LSH.DTO.ResultDTO;
+import controller.LSH.DTO.SearchDTO;
 import net.sf.json.JSONObject;
 import project.DTO.AlarmDTO;
 import project.DTO.IssueDTO;
@@ -25,17 +28,13 @@ import project.DTO.IssueDTO;
 @RequestMapping("/aus")
 public class SearchController {
 	
+	@Autowired
 	private SearchService service;
-	
-	@Autowired	
-	public void setSearchService(SearchService service) {
-		this.service = service;
-	}
 	
 	@RequestMapping(value="/SearchUserForm",method=RequestMethod.GET)
 	public String form(@ModelAttribute("command") SearchDTO dto,HttpServletRequest req,Model model) {		
 		String id = req.getSession().getAttribute("id").toString();
-		System.out.println("[프로젝트룸]▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼"+id);
+		System.out.println("[유저 검색]"+id);
 
 		dto.setSort("joindate");
 		dto.setSort_way("DESC");
@@ -43,16 +42,6 @@ public class SearchController {
 		model.addAttribute("recomend",getRecomendUser(id));
 		return "LSH/SearchUser";
 	}
-	
-	public List<ResultDTO> getRecomendUser(String id){
-		List<ResultDTO> Recomend_User = new ArrayList<ResultDTO>();
-		if(!id.equals("amajoinus@gmail.com")) {
-			Map<String,Object> map = service.getMy_fav(id);
-			Recomend_User = service.recommend_User(map);			
-		}
-		return Recomend_User;
-	} 
-	
 	
 	@RequestMapping(value="/SearchUserForm",method=RequestMethod.POST)
 	public String post(@ModelAttribute("command") SearchDTO dto,HttpServletRequest req,Model model) {
@@ -63,6 +52,15 @@ public class SearchController {
 		model.addAttribute("recomend",getRecomendUser(req.getSession().getAttribute("id").toString()));
 		return "LSH/SearchUser";
 	}
+
+	public List<ResultDTO> getRecomendUser(String id){
+		List<ResultDTO> Recomend_User = new ArrayList<ResultDTO>();
+		if(!id.equals("amajoinus@gmail.com")) {
+			Map<String,Object> map = service.getMy_fav(id);
+			Recomend_User = service.recommend_User(map);			
+		}
+		return Recomend_User;
+	} 
 	
 	@RequestMapping(value="/first_List_LSH",method=RequestMethod.POST)
 	public void first_List(HttpServletResponse resp) throws Exception{
@@ -95,7 +93,7 @@ public class SearchController {
 
 	@RequestMapping(value="/UserSort",method=RequestMethod.POST)
 	public void sort(SearchDTO dto,@RequestParam(defaultValue="0")int pageNum,HttpServletResponse resp) throws Exception{
-		System.out.print("[멤버](∩ 'ω')⊃━♡°.*・｡♡° sort실행 ::"+pageNum);
+		System.out.print("[멤버] sort실행 ::"+pageNum);
 		resp.setContentType("text/html;charset=utf-8");
 		
 		PagingDTO pdto = DB(dto,pageNum);
@@ -122,23 +120,27 @@ public class SearchController {
 		System.out.println("[통합] 메세지전송 ::"+ alarm.getA_type());
 		resp.setContentType("text/html;charset=utf-8");
 		int result = service.insert_Message(alarm);
-		System.out.println("결과는? 두구두구:: "+result);
+		System.out.println("결과는?:: "+result);
 	}
 	
-	@RequestMapping(value="/UserProfile",method=RequestMethod.POST)
-	public void profile(String id,String login_id,HttpServletResponse resp) throws Exception{
-		System.out.println("[멤버] 상세보기 "+ id +"~"+ login_id);
-		resp.setContentType("text/html;charset=utf-8");
+	
+	@RequestMapping(value="/UserProfile",method=RequestMethod.GET)
+	public void profile(String id,HttpServletRequest req,HttpServletResponse resp) throws Exception{
+		System.out.println("[멤버] 상세보기 "+id); resp.setContentType("text/html;charset=utf-8");
+		
+		String login_id = req.getSession().getAttribute("id").toString();
+		boolean accessCheck = req.getHeader("referer").contains("SearchUserForm");
 		
 		Map<String, Object> param = new HashMap<String, Object>();
+
+		if(accessCheck && !login_id.equals("amajoinus@gmail.com")) {
+			param.put("view_count", true);
+		}
+		
 		param.put("id", id);
 		param.put("login_id", login_id);
-		Map<String,Object> x = service.get_profile(param);
-		System.out.println("[-]멤버정보 "+x);
-		
-		if(!login_id.equals("amajoinus@gmail.com")) {
-			updateView(id);
-		}
+		Map<String,Object> x = service.get_user_profile(param);
+
 		
 		JSONObject jso = new JSONObject();
 		jso.put("x", x);
@@ -146,36 +148,27 @@ public class SearchController {
 		out.print(jso);
 	}
 
+	
 	@RequestMapping(value="/follow",method=RequestMethod.POST)
 	public void follow(String id,String login_id,String status,HttpServletResponse resp) throws Exception{
 		System.out.println("[멤버] 친구 등록&삭제 "+ id +"~"+ login_id+"~"+status);
 		resp.setContentType("text/html;charset=utf-8");
 		int result = service.follow(login_id, id, status);
-		System.out.println("결과는? 두구두구:: "+result);
+		System.out.println("결과는?:: "+result);
 	}
 	
 	@RequestMapping(value="/issue",method=RequestMethod.POST)
 	public void issue(String id,String login_id,@RequestParam(defaultValue="0")int pj_num,String is_content,HttpServletResponse resp) throws Exception{
-		System.out.println("[통합] 신고 "+ id +"~"+ login_id+" ~ "+is_content+"!!!!! "+pj_num);
 		resp.setContentType("text/html;charset=utf-8");
+
+		System.out.println("[통합] 신고"+ id +"-"+ login_id+"-"+is_content+"-"+pj_num);
 		
 		int result = service.issue(new IssueDTO(login_id,id,pj_num,is_content));
 		
-		System.out.println("결과는? 두구두구:: "+result);
 		JSONObject jso = new JSONObject();
 		jso.put("x", result);
 		PrintWriter out = resp.getWriter();
 		out.print(jso);
-	}
-	
-	public void updateView(String id) {
-		Map<String,Object> m = new HashMap<String,Object>();
-		m.put("what", id);
-		m.put("colum", "mem_view");
-		m.put("table", "member");
-		m.put("where", "id");
-		int result = service.update_view(m);
-		System.out.println("[-]조회수"+result);
 	}
 	
 	public PagingDTO DB(SearchDTO dto,int pageNum) {

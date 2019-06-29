@@ -35,7 +35,6 @@ public class MypageController {
 	@RequestMapping(value="/MyPageMain")
 	public String main(HttpServletRequest request,Model model) throws Exception{
 		
-		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
 		session.removeAttribute("Dday");
@@ -53,10 +52,8 @@ public class MypageController {
 		List<ProjectListDTO> ongoing_list = dao.ongoing_getListData(receiver);
 
 		
-		
-		System.out.println("[투두리스트 실행]");
-		String id = request.getSession().getAttribute("id").toString();
-		
+		// LSH. getTodo
+		String id = session.getAttribute("id").toString();
 		List<Todo_listDTO> list = service.getTodo(id);
 
 		model.addAttribute("ongoing_list",ongoing_list);
@@ -70,15 +67,13 @@ public class MypageController {
 	
 	@RequestMapping(value="/insertTodo")
 	public void insertTodo(Todo_listDTO dto,HttpServletResponse resp) throws Exception{
-		resp.setContentType("text/html;charset=utf-8");
-		System.out.println("[+]"+dto);
-		int x = service.insertTodo(dto);
-		System.out.println("결과"+x);
+		System.out.println("[todo 등록]");
+		resp.sendError(service.insertTodo(dto));
 	}
 	
 	@RequestMapping(value="/Fin")
 	public void Fin(String todo_num,String status,HttpServletResponse resp) throws Exception{
-		System.out.println("[++]"+todo_num+"~"+status);
+		System.out.println("[todo 완료]"+todo_num+"~"+status);
 		int x = 0;
 		if(status.equals("추가")) {
 			x = service.updateFin(todo_num);
@@ -90,8 +85,7 @@ public class MypageController {
 	
 	@RequestMapping(value="/deleteTodo")
 	public void deleteTodo(@RequestParam(value="todo_nums[]") List<String> todo_nums,HttpServletResponse resp) throws Exception{
-		resp.setContentType("text/html;charset=utf-8");
-		System.out.println("[-]"+todo_nums);
+		System.out.println("[todo 삭제]"+todo_nums);
 		int x = service.deleteTodo(todo_nums);
 		System.out.println("결과 ::"+x);
 	}

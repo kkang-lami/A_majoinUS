@@ -28,6 +28,9 @@
 			type:"post",
 			url:url,
 			data: params,
+			beforeSend: function(xmlHttpRequest){
+				xmlHttpRequest.setRequestHeader("AJAX","true");	
+			},
 			success:function(args){
 				console.log("[*]"+status+"즐겨찾기도착");
 				
@@ -39,8 +42,8 @@
 					$('#result_table #'+pj_num+' #star_btn').html('<i class="fa fa-fw fa-star-o text-yellow"></i>');
 				}
 			},
-			error:function(e){
-				alert(e.responseText);
+			error : function(xhr,textStatus,error) {
+				warn(xhr.status);
 			}
 		}); 
 		
@@ -74,3 +77,11 @@
 		}
 		$('#cart_len').text('('+length+')');
 	}
+	
+	function warn(e){
+		if(e=="400"){
+			alert('로그아웃 되었습니다');
+		}
+		location.href="/A_majoinUS/aus/main";
+	}
+	

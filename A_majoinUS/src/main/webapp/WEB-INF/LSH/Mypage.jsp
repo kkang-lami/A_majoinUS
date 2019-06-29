@@ -243,7 +243,7 @@ window.onload = () => {
 	var todos = document.querySelector('#todos');
 	var removeCheckedBtn = document.querySelector("#removeAllChecked");
 	var removeAll = document.querySelector("#removeAll");
-    
+	
 	// todo관련 데이터 저장 변수 설정
     var inputValue;
     var todoListData = new Map();
@@ -262,6 +262,7 @@ window.onload = () => {
         }
     });
     
+    //제거버튼 이벤트 추가
     removeCheckedBtn.addEventListener("click", function() {
        	var allTodos = document.querySelectorAll(".todo");
        	for (var i = 0; i < allTodos.length; i++) {
@@ -282,6 +283,7 @@ window.onload = () => {
 		}
     });
     
+    //모두제거버튼 이벤트 추가
     removeAll.onclick = function() {
     	var allTodos = document.querySelectorAll(".todo");
         for (var i = 0; i < allTodos.length; i++) {
@@ -296,7 +298,7 @@ window.onload = () => {
         todoListData = new Map();
     }
     
-    // 글 등록
+    // 등록버튼 이벤트 추가
     inputSumbitBtn.onclick = function() {
         if (inputValue == undefined || inputValue == "") {
             alert("데이터를 입력해 주세요");
@@ -312,6 +314,7 @@ window.onload = () => {
         }
     }
   
+    // response로 받아온 리스트값 -> todoListData에 저장.
     function load(){
     	<c:forEach var="item" items="${todo}">
     		todoListData.set('${item.todo_num}', '${item.todo}');
@@ -322,89 +325,109 @@ window.onload = () => {
     load();
 };
 
-function makeList(target, data) {
-	var targetChild = document.querySelectorAll('.todo');
-	var template = "";
-    
-	for (var child of targetChild) {
-        target.removeChild(child);
-    }
+	// 리스트 생성
+	function makeList(target, data) {
+		var targetChild = document.querySelectorAll('.todo');
+		var template = "";
+	    
+		for (var child of targetChild) {
+	        target.removeChild(child);
+	    }
+		
+		for (var [key, value] of data) {
 	
-	for (var [key, value] of data) {
-
-		if(value.indexOf("[$완]") >= 0){
-			template = '<li class="todo list-group-item checked done">';
-			template += '<input id="'+key+'" type="checkbox" class="checkbox-inline" checked="">';
-			template += '<span class="text">'+value.split('[$완]')[1]+'</span></li>';
-		}else{
-			template = '<li class="todo list-group-item">';
-			template += '<input id="'+key+'" type="checkbox" class="checkbox-inline">';
-			template += '<span class="text">'+value+'</span></li>';
+			if(value.indexOf("[$완]") >= 0){
+				template = '<li class="todo list-group-item checked done">';
+				template += '<input id="'+key+'" type="checkbox" class="checkbox-inline" checked="">';
+				template += '<span class="text">'+value.split('[$완]')[1]+'</span></li>';
+			}else{
+				template = '<li class="todo list-group-item">';
+				template += '<input id="'+key+'" type="checkbox" class="checkbox-inline">';
+				template += '<span class="text">'+value+'</span></li>';
+			}
+			
+			target.innerHTML += template;
 		}
-		target.innerHTML += template;
 	}
-}
-//디비등록
-function insertTodo(todo_num,todo){
-	var url="<%=cp%>/aus/insertTodo";
-	var params = "id=${sessionScope.id}&todo_num="+todo_num+"&todo="+todo;
-	console.log("[params] "+params);
 	
-	$.ajax({
-		type : "post",
-		url : url,
-		data : params,
-		success : function(args) {
-			console.log("[*]성공");
-		},
-		error : function(e) {
-			alert(e.responseText);
-		}
-	});
-}
+	// 디비등록
+	function insertTodo(todo_num,todo){
+		console.log("등록실행");
+		
+		var url="<%=cp%>/aus/insertTodo";
+		var params = "id=${sessionScope.id}&todo_num="+todo_num+"&todo="+todo;
+		
+		$.ajax({
+			type : "post",
+			url : url,
+			data : params,
+			beforeSend: function(xmlHttpRequest){
+				xmlHttpRequest.setRequestHeader("AJAX","true");	
+			},
+			success : function(args) {
+				console.log("[*]등록성공");
+			},
+			error : function(xhr,textStatus,error) {
+				warn(xhr.status);
+			}
+		});
+	}
 
-//디비 업데이트
-function updateTodo(todo_num,status){
-	var url="<%=cp%>/aus/Fin";
-	
-	$.ajax({
-		type : "post",
-		url : url,
-		data : { 
-			"todo_num": todo_num,
-			"status": status
-		},
-		success : function(args) {
-			console.log("[*]성공");
-		},
-		error : function(e) {
-			alert(e.responseText);
+	function warn(e){
+		if(e=="400"){
+			alert('로그아웃 되었습니다');
+			location.href="/A_majoinUS/aus/main";
+		}else if(e=="401"){
+			alert('정상적으로 처리되지 않았습니다');
 		}
-	});
-}
+	}
 
-//디비삭제
-function deleteTodo(todo_nums){
+
+	//디비 업데이트
+	function updateTodo(todo_num,status){
+		var url="<%=cp%>/aus/Fin";
+		
+		$.ajax({
+			type : "post",
+			url : url,
+			data : { 
+				"todo_num": todo_num,
+				"status": status
+			},
+			beforeSend: function(xmlHttpRequest){
+				xmlHttpRequest.setRequestHeader("AJAX","true");	
+			},
+			success : function(args) {
+				console.log("[*]성공");
+			},
+			error : function(xhr,textStatus,error) {
+				warn(xhr.status);
+			}
+		});
+	}
 	
-	console.log("들어옴");
-	
-	var url="<%=cp%>/aus/deleteTodo";
-	
-	$.ajax({
-		type : "post",
-		url : url,
-		data : { 
-			"id": '${sessionScope.id}',
-			"todo_nums": todo_nums 
-		},
-		success : function(args) {
-			console.log("[*]성공");
-		},
-		error : function(e) {
-			alert(e.responseText);
-		}
-	});
-}
+	//디비삭제
+	function deleteTodo(todo_nums){
+		var url="<%=cp%>/aus/deleteTodo";
+		
+		$.ajax({
+			type : "post",
+			url : url,
+			data : { 
+				"id": '${sessionScope.id}',
+				"todo_nums": todo_nums 
+			},
+			beforeSend: function(xmlHttpRequest){
+				xmlHttpRequest.setRequestHeader("AJAX","true");	
+			},
+			success : function(args) {
+				console.log("[*]성공");
+			},
+			error : function(xhr,textStatus,error) {
+				warn(xhr.status);
+			}
+		});
+	}
 
 </script>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>

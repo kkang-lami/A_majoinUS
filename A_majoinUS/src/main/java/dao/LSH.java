@@ -7,11 +7,11 @@ import java.util.Map;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import controller.LSH.ProfileDTO;
-import controller.LSH.ResultDTO;
-import controller.LSH.ResultTeamDTO;
-import controller.LSH.SearchDTO;
-import controller.LSH.SearchTeamDTO;
+import controller.LSH.DTO.ProfileDTO;
+import controller.LSH.DTO.ResultDTO;
+import controller.LSH.DTO.ResultTeamDTO;
+import controller.LSH.DTO.SearchDTO;
+import controller.LSH.DTO.SearchTeamDTO;
 import project.DTO.AlarmDTO;
 import project.DTO.IssueDTO;
 import project.DTO.ProjectroomDTO;
@@ -53,13 +53,11 @@ public class LSH extends SqlSessionDaoSupport{
 	}
 
 	public int updateFin(String mapper,String dto){
-		System.out.println("실행");
 		int x = getSqlSession().update(mapper,dto);
 		return x;
 	}
 
 	public int deleteFin(String mapper,String dto){
-		System.out.println("실행");
 		int x = getSqlSession().update(mapper,dto);
 		return x;
 	}
@@ -134,7 +132,7 @@ public class LSH extends SqlSessionDaoSupport{
 	}
 
 	// 프로젝트룸 정보 // 
-	public Map<String, Object> getProjectRoom(String mapper,String pj_num){
+	public Map<String, Object> get_project_profile(String mapper,String pj_num){
 		HashMap<String, Object> x = getSqlSession().selectOne(mapper, pj_num);
 		return x;
 	}

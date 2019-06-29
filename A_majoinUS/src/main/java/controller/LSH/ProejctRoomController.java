@@ -17,8 +17,6 @@ import dao.KMJ;
 @RequestMapping("/aus/ProejctRoom")
 public class ProejctRoomController {
 	
-	public ProejctRoomController() {System.out.println("[공지]프로젝트룸 컨트롤러생성");}
-
 	private ProjectRoomService service;
 	
 	@Autowired

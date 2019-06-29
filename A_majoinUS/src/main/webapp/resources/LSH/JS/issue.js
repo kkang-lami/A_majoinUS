@@ -43,16 +43,25 @@ function issue(params){
 		url:url,
 		data: params,
 		dataType:"json",
+		beforeSend: function(xmlHttpRequest){
+			xmlHttpRequest.setRequestHeader("AJAX","true");	
+		},
 		success:function(args){
-			console.log("[*]멤버신고도착"+args.x);
 			if(args.x === -1){
 				alert("신고횟수를 초과하였습니다");
 			}else{
 				alert("신고완료되었습니다");					
 			}
 		},
-		error:function(e){
-			alert(e.responseText);
+		error : function(xhr,textStatus,error) {
+			warn(xhr.status);
 		}
 	});
+}
+
+function warn(e){
+	if(e=="400"){
+		alert('로그아웃 되었습니다');
+	}
+	location.href="/A_majoinUS/aus/main";
 }

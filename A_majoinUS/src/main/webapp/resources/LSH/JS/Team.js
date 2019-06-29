@@ -22,11 +22,14 @@
 			url:url,
 			data:{"pj_num": pj_num},
 			dataType:"json",
+			beforeSend: function(xmlHttpRequest){
+				xmlHttpRequest.setRequestHeader("AJAX","true");	
+			},
 			success:function(args){
 				load_projectRoom(args.x);
 			},
-			error:function(e){
-				alert(e.responseText);
+			error : function(xhr,textStatus,error) {
+				warn(xhr.status);
 			}
 		});
 	}
@@ -74,3 +77,10 @@
 		console.log("팝오버제거");
 		$("[data-toggle=popover]").popover('hide');
 	})
+	
+	function warn(e){
+		if(e=="400"){
+			alert('로그아웃 되었습니다');
+		}
+		location.href="/A_majoinUS/aus/main";
+	}

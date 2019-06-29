@@ -1,4 +1,4 @@
-package controller.LSH;
+package controller.LSH.DTO;
 
 public class ProfileDTO {
 

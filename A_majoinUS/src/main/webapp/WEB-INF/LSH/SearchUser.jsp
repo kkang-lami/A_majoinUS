@@ -141,7 +141,7 @@
 			<!-- 추천 멤버 -->
 			<c:if test="${fn:length(recomend) > 0}">
 		    	<div class="box box-solid">
-		            <div class="box-header with-border"><h4 class="box-title">추천 프로젝트</h4></div>
+		            <div class="box-header with-border"><h4 class="box-title">추천 멤버</h4></div>
 		        
 		            <div class="box-body">
 			        	<div class="row">
@@ -434,13 +434,16 @@
 				url : url,
 				data : params,
 				dataType: "json",
+				beforeSend: function(xmlHttpRequest){
+					xmlHttpRequest.setRequestHeader("AJAX","true");	
+				},
 				success : function(args) {
 					show_sort();
 					show_mem_list(args.pdto.list);
 					page_btn(args.pdto);
 				},
-				error : function(e) {
-					alert(e.responseText);
+				error : function(xhr,textStatus,error) {
+					warn(xhr.status);
 				}
 			});
 	}	
@@ -502,7 +505,6 @@
 	    });
 
 	    function error(element){
-	    	console.log("야!");
 	    	$(element).attr('src',getContext()+"/resources/dist/img/user1-128x128.png"); 
 	    }
 	    

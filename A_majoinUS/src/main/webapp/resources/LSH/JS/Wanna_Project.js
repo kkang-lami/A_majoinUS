@@ -19,11 +19,21 @@
 			type:"post",
 			url:url,
 			data : params,
+			beforeSend: function(xmlHttpRequest){
+				xmlHttpRequest.setRequestHeader("AJAX","true");	
+			},
 			success:function(args){
 				console.log("[*]메서지전송성공");
 			},
-			error:function(e){
-				alert(e.responseText);
+			error : function(xhr,textStatus,error) {
+				warn(xhr.status);
 			}
 		});
+	}
+	
+	function warn(e){
+		if(e=="400"){
+			alert('로그아웃 되었습니다');
+		}
+		location.href="/A_majoinUS/aus/main";
 	}

@@ -18,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dao.JEJ;
+import interceptor.NoLoginCheck;
 
 @Controller
 @RequestMapping("/aus")
+@NoLoginCheck
 public class loginController {
 
 	@Autowired
@@ -64,15 +66,12 @@ public class loginController {
 	   public String loginCheck(@ModelAttribute MemberDTO dto, HttpSession session,Model m) {
 
 	      MemberDTO result = service.loginCheck(dto);
-	      System.out.println("result : " + result);
-	      //ModelAndView mav = new ModelAndView();
+
 	      if (result != null) {
-	         
 	         
 	         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ("yyyy/MM/dd");
 	         Date currentTime = new Date ();
 	         String mTime = mSimpleDateFormat.format ( currentTime );
-	         System.out.println("왜 안뜨는뎅ㅇ.."+mTime);
 	         
 	         
 	         if (service_jej.countVisit(mTime) == 0) {
@@ -84,6 +83,7 @@ public class loginController {
 	         }
 	         
 	         
+	         session.setMaxInactiveInterval(60);
 	         session.setAttribute("id", result.getId());
 	         session.setAttribute("name", result.getName());
 	         session.setAttribute("userphoto", result.getU_img());
@@ -94,9 +94,8 @@ public class loginController {
 	      } else {
 	         m.addAttribute("msg","아이디 또는 비밀번호가 맞지 않습니다.");
 	         return "main";  
-//	         mav.addObject("msg", "failure");
 	      }
-//	      return mav;
+
 	   }
 	   
 

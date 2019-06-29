@@ -1,20 +1,20 @@
-package controller.LSH;
+package controller.LSH.DTO;
 
 import java.util.List;
 
-public class PagingDTO {
+public class PagingTeamDTO {
 
 	private int pageNum;
 	private int rowCount;
 	private int pageCount;	
 	private int startPage;	
 	private int endPage;	
-	private List list;
+	private List<ResultTeamDTO> list;
 	private int pageBlock;
 	
-	public PagingDTO() {}
+	public PagingTeamDTO() {}
 	
-	public PagingDTO(int pageNum, int rowCount, int pageCount, int startPage, int endPage, List list,int pageBlock) {
+	public PagingTeamDTO(int pageNum, int rowCount, int pageCount, int startPage, int endPage, List<ResultTeamDTO> list,int pageBlock) {
 		this.pageNum = pageNum;
 		this.rowCount = rowCount;
 		this.pageCount = pageCount;
@@ -32,11 +32,11 @@ public class PagingDTO {
 		this.pageBlock = pageBlock;
 	}
 
-	public List getList() {
+	public List<ResultTeamDTO> getList() {
 		return list;
 	}
 
-	public void setList(List list) {
+	public void setList(List<ResultTeamDTO> list) {
 		this.list = list;
 	}
 

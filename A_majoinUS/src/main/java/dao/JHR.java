@@ -17,10 +17,6 @@ import project.DTO.F_locationDTO;
 @Repository //현재 클래스를 스프링에서 관리하는 dao bean으로 등록
 public class JHR extends SqlSessionDaoSupport{
 	 
-	public JHR() {
-		System.out.println("[공지] 혜린DAO 생성");
-	}
-	
 // login 부분-------------------------------------------------------------------------------	
 	//회원 로그인 체크
 	public boolean loginCheck(MemberDTO dto) {
