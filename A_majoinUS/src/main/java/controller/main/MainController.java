@@ -14,7 +14,7 @@ import interceptor.NoLoginCheck;
 @NoLoginCheck
 public class MainController {
 	
-	
+	 
 	@RequestMapping("/main")
 	public String start(HttpSession session) {
 		
