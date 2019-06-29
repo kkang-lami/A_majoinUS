@@ -55,6 +55,9 @@
 	td{ 
 		vertical-align: middle !important;
 	}
+	.fsslider{
+	    width: 400px !important; 
+	}
 </style>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/LSH/CSS/freshslider.min.css">
@@ -106,9 +109,9 @@
 						<!-- 평점 -->
 						<div class="form-group row">
 							<label for="eval" class="col-sm-2 control-label">평점</label>
-							<div class="col-sm-3">
-								<div id="unranged-value"></div>
-								<input id="eval" name="eval" type="hidden" value="${command.eval}">점 이상
+							<div class="col-sm-10"> 
+								<div id="unranged-value" style="display: inline-block;"></div> 점 이상
+								<input id="eval" name="eval" type="hidden" value="${command.eval}"> 
 							</div>
 						</div>
 
@@ -150,7 +153,7 @@
 								<c:when test="${item.id eq null}">
 				        		<div class="col-md-4">
 						          <div class="box box-widget widget-user-2">
-						            <div class="widget-user-header bg-gray disabled color-palette text-center text-green">
+						            <div class="widget-user-header bg-gray disabled color-palette text-center text-green" style="padding-bottom: 7px;padding-top: 7px;">
 						              	<h3><b><i class="fa fa-fw fa-smile-o"></i></b></h3>
 						              	<h4><b>해당하는 멤버가 없습니다</b></h4>
 						              	<h5><b>관심직군과 선호지역을 추가해주세요!</b></h5>
@@ -162,9 +165,9 @@
 							    <c:otherwise>
 				        		<div class="col-md-4">
 						          <div class="box box-widget widget-user-2"> 
-									<div class="widget-user-header recomend_btn" id="${item.id}" data-toggle="modal" data-target="#modal_user" style="padding-left: 60px;"> 
+									<div class="widget-user-header recomend_btn" id="${item.id}" data-toggle="modal" data-target="#modal_user" style="padding-left: 30px;"> 
 						              <div class="widget-user-image">
-						              	<img class="img-circle" src="<%=request.getContextPath()%>/aus/userImg/${item.u_img}" alt="회원 사진" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:80px; height:80px; margin-right:40px; overflow:hidden;">
+						              	<img class="img-circle" src="<%=request.getContextPath()%>/aus/userImg/${item.u_img}" alt="회원 사진" onError="this.src='<%=request.getContextPath() %>/resources/dist/img/user1-128x128.png';" style="width:80px; height:80px; margin-right:20px; overflow:hidden;">
 						              </div>
 						              	<ul class="list-unstyled">
 											<li><b>${item.name}(${item.id})</b></li>

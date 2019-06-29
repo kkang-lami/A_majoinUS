@@ -259,6 +259,9 @@
 		                    LEFT JOIN PJ_JOB jo ON (pj.PJ_NUM = jo.PJ_NUM )
 							LEFT JOIN (select pj_num,count(*) favs from favorite group by pj_num) f on(pj.PJ_NUM = f.pj_num)
 		                <![CDATA[ where blacklist = 'NO' and trunc(sysdate) <= end_d ]]>
+		                <if test="end_d != ''">
+		    			<![CDATA[ and end_d <= #{end_d} ]]>
+		  				</if>
 		                <if test="start_d != ''">
 		    			<![CDATA[ and start_d >= #{start_d} ]]>
 		  				</if>
@@ -296,6 +299,9 @@
 		                    LEFT OUTER join PJ_JOB jo ON (pj.PJ_NUM = jo.PJ_NUM)
 		                    INNER JOIN member m ON (pj.id = m.id)
 		                where blacklist = 'NO' and <![CDATA[ trunc(sysdate) <= end_d ]]>
+		                <if test="end_d != ''">
+		    			<![CDATA[ and end_d <= #{end_d} ]]>
+		  				</if>
 		                 <if test="start_d != ''">
 		    				<![CDATA[ and start_d >= #{start_d} ]]>
 		  				</if>
@@ -421,7 +427,8 @@
 		        ) c on (a.id = c.id)
 		    where <![CDATA[
 		        blacklist = 'NO'
-		        and a.id != #{id} 
+		        and a.id != 'amajoinus@gmail.com'
+		        and a.id != #{id}
 		)where rank <4 ]]>
 	</select>
 
