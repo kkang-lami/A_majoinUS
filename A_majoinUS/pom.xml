@@ -22,7 +22,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.3.9.RELEASE</version>
 		</dependency>
-
+		
 		<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -73,7 +73,7 @@
 			<artifactId>c3p0</artifactId>
 			<version>0.9.5.2</version>
 		</dependency>
-
+		
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-oxm -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -94,6 +94,7 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.6</version>
 		</dependency>
+	
 
 		<!-- /////////////////////////////////////////////////////////////////////////////// -->
 		<!-- /////////////////////////////////////////////////////////////////////////////// -->
@@ -129,11 +130,11 @@
 
 		<!-- ///////////////////////////////////// 이 아래로 추가할 것 //////////////////////////////////////////// -->
 
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
-		</dependency>
+		</dependency> -->
 	
 	
 		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras -->

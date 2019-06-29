@@ -77,10 +77,3 @@
 		console.log("팝오버제거");
 		$("[data-toggle=popover]").popover('hide');
 	})
-	
-	function warn(e){
-		if(e=="400"){
-			alert('로그아웃 되었습니다');
-		}
-		location.href="/A_majoinUS/aus/main";
-	}

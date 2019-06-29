@@ -116,25 +116,24 @@ public class SearchService {
 		return x;
 	}
 
-	public int follow(String id, String friend_id,String status){
+	@Transactional
+	public void follow(String id, String friend_id,String status){
 		Map<String,Object> m = new HashMap<String,Object>();
 		m.put("id", id);
 		m.put("friend_id", friend_id);
 		
-		int x = 0;
 		try {
 			if(status.equals("add")) {
-				x = dao.map_insert("LSH_AUS.follow", m);
+				dao.map_insert("LSH_AUS.follow", m);
 				m.put("num", 1);
 			}else {
-				x = dao.map_delete("LSH_AUS.unfollow", m);
+				dao.map_delete("LSH_AUS.unfollow", m);
 				m.put("num", -1);
 			}
-			x = dao.map_update("LSH_AUS.follow_update", m);
+			dao.map_update("LSH_AUS.follow_update", m);
 		}catch (Exception e) {
 			System.out.println("[에러] 팔로우 서비스 실패 ::"+e.toString());
 		}
-		return x;
 	}
 	
 	public int favorite(int pj_num,String id,String status){
@@ -208,7 +207,7 @@ public class SearchService {
 	}
 		
 	@Transactional
-	public Map<String,Object> get_user_profile(Map<String,Object> param) throws Exception{
+	public Map<String,Object> get_user_profile(Map<String,Object> param){
 		List<ProfileDTO> x = null;
 		
 		List<PortfolioDTO> port =  new ArrayList<PortfolioDTO>();		
@@ -242,7 +241,6 @@ public class SearchService {
 
 		}catch (Exception e) {
 			System.out.println("[에러] 프로필 가져오기 서비스 실패 ::"+e.toString());
-			throw new Exception();
 		}
 		return map;
 	}

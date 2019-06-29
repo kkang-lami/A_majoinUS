@@ -255,6 +255,15 @@
 				profile($(this).attr('id'));		
 			}
 		});
+		
+		function warn(e){
+			if(e=="400"){
+				alert('로그아웃 되었습니다');
+			}else{
+				alert('잠시 후 다시 시도해주십시요');
+			}
+		location.href="/A_majoinUS/aus/main";
+		}
 
 	</script>
 </body>

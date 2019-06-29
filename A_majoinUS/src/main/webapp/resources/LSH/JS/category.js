@@ -2,9 +2,8 @@ function level1(){
 	var url=getContext()+"/aus/first_List_LSH";
 
 	$.ajax({
-		type:"post",
+		type:"get",
 		url:url,
-		dataType:"json",
 		success:function(args){
 			var i = 0,
 			    array = [],
@@ -41,23 +40,21 @@ function level2(element) {
 	var url=getContext()+"/aus/second_List_LSH";
 	var params = "hint=" + $(element).val();
 	var id = $(element).attr("id") + "2";
-
 	real_level2(url,params,id);
 }
 
 function real_level2(url,params,id){
 	$.ajax({
-		type : "post",
+		type : "get",
 		url : url,
 		data : params,
-		dataType : "json",
 		success : function(args) {
 			$("#" + id + " option").each(function() {
 				$("#" + id + " option:eq(0)").remove();
 			});
 
-			for (var idx = 0; idx < args.list.length; idx++) {
-				$("#" + id).append("<option value='"+args.list[idx]+"'>"+ args.list[idx] + "</option>");
+			for (var idx = 0; idx < args.length; idx++) {
+				$("#" + id).append("<option value='"+args[idx]+"'>"+ args[idx]+ "</option>");
 			}
 		},
 		error : function(e) {

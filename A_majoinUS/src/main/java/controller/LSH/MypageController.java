@@ -33,7 +33,7 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value="/MyPageMain")
-	public String main(HttpServletRequest request,Model model) throws Exception{
+	public String main(HttpServletRequest request,Model model){
 		
 		HttpSession session = request.getSession();
 		session = request.getSession(true);
@@ -67,12 +67,12 @@ public class MypageController {
 	
 	@RequestMapping(value="/insertTodo")
 	public void insertTodo(Todo_listDTO dto,HttpServletResponse resp) throws Exception{
-		System.out.println("[todo 등록]");
+		System.out.println("[todo 등록]"+dto.toString());
 		resp.sendError(service.insertTodo(dto));
 	}
 	
 	@RequestMapping(value="/Fin")
-	public void Fin(String todo_num,String status,HttpServletResponse resp) throws Exception{
+	public void Fin(String todo_num,String status,HttpServletResponse resp){
 		System.out.println("[todo 완료]"+todo_num+"~"+status);
 		int x = 0;
 		if(status.equals("추가")) {

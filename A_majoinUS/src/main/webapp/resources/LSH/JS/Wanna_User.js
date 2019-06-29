@@ -28,15 +28,14 @@
 		var url= getContext()+"/aus/show";
 		
  		$.ajax({
-			type:"post",
+			type:"get",
 			url:url,
 			data : { "id": getSessionId()},
-			dataType:"json",
 			beforeSend: function(xmlHttpRequest){
 				xmlHttpRequest.setRequestHeader("AJAX","true");	
 			},
 			success:function(args){
-				show_myPro(args.mine);
+				show_myPro(args);
 			},
 			error : function(xhr,textStatus,error) {
 				warn(xhr.status);
@@ -64,7 +63,6 @@
 		var pj_num = $("#my_project").val();
 		var url=getContext()+"/aus/insert_Message";
 		var params = "receiver="+global.receiver+"&sender="+getSessionId()+"&pj_num="+pj_num+"&a_type=초대";
-		console.log(params);
 		
  		$.ajax({
 			type:"post",
@@ -74,17 +72,10 @@
 				xmlHttpRequest.setRequestHeader("AJAX","true");	
 			},
 			success:function(args){
-				console.log("[*]메서지전송성공");
+				//console.log("[*]메서지전송성공");
 			},
 			error : function(xhr,textStatus,error) {
 				warn(xhr.status);
 			}
 		});
-	}
-	
-	function warn(e){
-		if(e=="400"){
-			alert('로그아웃 되었습니다');
-		}
-		location.href="/A_majoinUS/aus/main";
 	}

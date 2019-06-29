@@ -19,6 +19,7 @@
 	<context:annotation-config />         
 	<context:component-scan base-package="controller" />
 	
+	
 	<!-- viewResolver -->
 	<bean id="beanViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" />
 	
@@ -46,13 +47,16 @@
 
 	<!-- Interceptor -->
 
-	<mvc:interceptors>
+ 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/aus/*"/>
 			<bean class="interceptor.UserInterceptor"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors>	
+	</mvc:interceptors>
 
+	<!-- Exceptor -->
+	<mvc:annotation-driven/>
+	<bean id="customExceptionHandler" class="exceptor.CommonExceptionAdvice"/>
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 	
@@ -116,21 +120,6 @@
 			<websocket:sockjs/>
 		</websocket:handlers>
 	
- 		<mvc:annotation-driven>
-			<mvc:message-converters>
-				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-					<property name="supportedMediaTypes">
-						<list>
-							<value>
-								text/html;charset=UTF-8
-							</value>
-						</list>
-					</property>
-				</bean>
-			</mvc:message-converters>
-		</mvc:annotation-driven>
-		
-		
 		<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.gmail.com" />
 	    <property name="port" value="587" />

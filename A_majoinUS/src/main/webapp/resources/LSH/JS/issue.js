@@ -42,7 +42,6 @@ function issue(params){
 		type:"post",
 		url:url,
 		data: params,
-		dataType:"json",
 		beforeSend: function(xmlHttpRequest){
 			xmlHttpRequest.setRequestHeader("AJAX","true");	
 		},
@@ -57,11 +56,4 @@ function issue(params){
 			warn(xhr.status);
 		}
 	});
-}
-
-function warn(e){
-	if(e=="400"){
-		alert('로그아웃 되었습니다');
-	}
-	location.href="/A_majoinUS/aus/main";
 }

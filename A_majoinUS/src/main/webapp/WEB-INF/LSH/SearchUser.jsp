@@ -430,17 +430,16 @@
 		var params = $("#SearchForm").serialize()+"&"+paramStr;
 
  			$.ajax({
-				type : "post",
+				type : "get",
 				url : url,
 				data : params,
-				dataType: "json",
 				beforeSend: function(xmlHttpRequest){
 					xmlHttpRequest.setRequestHeader("AJAX","true");	
 				},
 				success : function(args) {
 					show_sort();
-					show_mem_list(args.pdto.list);
-					page_btn(args.pdto);
+					show_mem_list(args.list);
+					page_btn(args);
 				},
 				error : function(xhr,textStatus,error) {
 					warn(xhr.status);
@@ -473,6 +472,15 @@
 	function getPageNum(){
 		var pageNum = $('.pagination .active').attr('id');
 		return (pageNum === undefined)? 1 : pageNum;
+	}
+	
+	function warn(e){
+		if(e=="400"){
+			alert('로그아웃 되었습니다');
+		}else{
+			alert('잠시 후 다시 시도해주십시요');
+		}
+		location.href="/A_majoinUS/aus/main";
 	}
 
 	</script>

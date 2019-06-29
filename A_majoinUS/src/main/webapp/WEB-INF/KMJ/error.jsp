@@ -15,7 +15,7 @@
 			<section class="content-header">
 				<!-- 들어갈 내용 -->
 			
-				error!
+				잘못된 경로로 도착하였습니다. 
 
 
 

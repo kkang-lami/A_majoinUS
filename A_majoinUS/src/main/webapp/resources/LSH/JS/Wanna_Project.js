@@ -31,9 +31,3 @@
 		});
 	}
 	
-	function warn(e){
-		if(e=="400"){
-			alert('로그아웃 되었습니다');
-		}
-		location.href="/A_majoinUS/aus/main";
-	}

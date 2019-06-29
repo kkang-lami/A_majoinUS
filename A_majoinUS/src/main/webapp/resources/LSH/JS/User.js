@@ -6,7 +6,6 @@ function profile(userid){
 		url:url,
 		data:{	"id": userid
 			},
-		dataType:"json",
 		beforeSend: function(xmlHttpRequest){
 			xmlHttpRequest.setRequestHeader("AJAX","true");	
 		},
@@ -15,13 +14,13 @@ function profile(userid){
 			global.pj_num = 0;
 			global.receiver = userid;
 			
-			load_head(args.x.profile);
+			load_head(args.profile);
 			
-			if(args.x.port.length>0){
-				load_port(args.x.port);
+			if(args.port.length>0){
+				load_port(args.port);
 			}
 			if(args.x.review.length>0){
-				load_review(args.x.review);
+				load_review(args.review);
 			}
 		},
 		error : function(xhr,textStatus,error) {
@@ -132,7 +131,6 @@ function follow(status){
 			xmlHttpRequest.setRequestHeader("AJAX","true");	
 		},
 		success:function(args){
-			console.log("[*]팔로우도착");
 			if(status === "add"){
 				$('#follow_btn').attr('class','btn btn-primary btn-block unfollow_btn');
 				$('#follow_btn').html('<b>Unfollow</b>');
@@ -147,11 +145,4 @@ function follow(status){
 			warn(xhr.status);
 		}
 	}); 
-}
-
-function warn(e){
-	if(e=="400"){
-		alert('로그아웃 되었습니다');
-	}
-	location.href="/A_majoinUS/aus/main";
 }
