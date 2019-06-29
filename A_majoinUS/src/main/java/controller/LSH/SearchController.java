@@ -66,7 +66,7 @@ public class SearchController {
 	public void first_List(HttpServletResponse resp) throws Exception{
 		System.out.println("[1] first_List실행");
 		resp.setContentType("text/html;charset=utf-8");
-		
+		  
 		List<String> job_list = service.getLevel1("직군");
 		List<String> local_list = service.getLevel1("지역");
 		
